@@ -1,0 +1,76 @@
+{
+  "nav": {
+    "orderPaymentTag": "Order Payment Tag",
+    "howItWorks": "How It Works",
+    "whyPaytap": "Why Paytap",
+    "myfleetAi": "Myfleet AI",
+    "faq": "FAQ",
+    "support": "Support",
+    "login": "Login"
+  },
+  "hero": {
+    "badge": "RBI & NPCI Compliant",
+    "title": "India's Most Trusted Contactless Payment Tag",
+    "subtitle": "Accept payments anywhere with just a tap. No app required, no internet needed. Works with all UPI apps & card payments.",
+    "orderNow": "Order PayTap Tag Now",
+    "setupTime": "Setup in 5 minutes",
+    "rupayPartner": "RuPay Network Partner",
+    "stats": {
+      "terminals": "RuPay Terminals",
+      "fleetOwners": "Fleet owners trust us",
+      "successRate": "Success Rate"
+    }
+  },
+  "howItWorks": {
+    "title": "How It Works",
+    "subtitle": "Get started in just 3 simple steps"
+  },
+  "myfleet": {
+    "title": "Myfleet AI",
+    "description": "Boost your fleet business with AI-powered management tools and smart analytics.",
+    "learnMore": "Learn More"
+  },
+  "cta": {
+    "socialProof": {
+      "users": "Active Users",
+      "rating": "Rating",
+      "security": "Bank Level Security"
+    },
+    "title": "Ready to Transform Your Business?",
+    "description": "Join thousands of merchants already using PayTap for seamless contactless payments.",
+    "orderNow": "Order PayTap Tag Now",
+    "features": {
+      "freeShipping": "Free shipping nationwide",
+      "support": "24/7 customer support"
+    },
+    "bonus": "Limited time: Get setup assistance worth ₹500 absolutely FREE!"
+  },
+  "footer": {
+    "company": "PayTap",
+    "description": "India's most trusted contactless payment solution for modern businesses.",
+    "quickLinks": "Quick Links",
+    "links": {
+      "about": "About Us",
+      "howItWorks": "How It Works",
+      "pricing": "Pricing",
+      "support": "Support",
+      "faq": "FAQ",
+      "contact": "Contact"
+    },
+    "legal": "Legal",
+    "legalLinks": {
+      "privacy": "Privacy Policy",
+      "terms": "Terms of Service",
+      "cancellation": "Cancellation & Refunds",
+      "shipping": "Shipping Policy"
+    },
+    "newsletter": {
+      "title": "Stay Updated",
+      "description": "Get the latest updates on PayTap features and offers.",
+      "placeholder": "Enter your email",
+      "subscribe": "Subscribe"
+    },
+    "copyright": "© 2024 PayTap. All rights reserved.",
+    "status": "All systems operational"
+  }
+}
