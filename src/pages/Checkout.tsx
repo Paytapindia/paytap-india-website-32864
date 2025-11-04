@@ -52,7 +52,7 @@ const Checkout = () => {
       
       const payuOrderData: PayUOrderData = {
         txnid,
-        amount: 499, // Amount in rupees (will be normalized to 2 decimals)
+        amount: 1180, // Amount in rupees (will be normalized to 2 decimals)
         productinfo: "PayTap NFC Payment Tag",
         firstname: orderData.name,
         email: orderData.email,
@@ -67,7 +67,7 @@ const Checkout = () => {
       sessionStorage.setItem('payuOrderData', JSON.stringify({
         ...orderData,
         txnid,
-        amount: "499.00"
+        amount: "1180.00"
       }));
 
       // Initiate PayU payment (redirects to PayU)
@@ -256,7 +256,7 @@ const Checkout = () => {
                   ) : (
                     <>
                       <CreditCard className="mr-2 h-4 w-4" />
-                      Pay ₹499 & Place Order
+                      Pay ₹1180 & Place Order
                     </>
                   )}
                 </Button>
@@ -281,7 +281,7 @@ const Checkout = () => {
                     <p className="text-sm text-gray-500">Quantity: 1</p>
                   </div>
                   <div className="text-right">
-                    <p className="font-semibold">₹499</p>
+                    <p className="font-semibold">₹1180</p>
                   </div>
                 </div>
 
@@ -290,20 +290,20 @@ const Checkout = () => {
                 <div className="space-y-2">
                   <div className="flex justify-between">
                     <span>Subtotal</span>
-                    <span>₹499</span>
+                    <span>₹1000</span>
                   </div>
                   <div className="flex justify-between">
                     <span>Shipping</span>
                     <span className="text-green-600">Free</span>
                   </div>
                   <div className="flex justify-between">
-                    <span>Tax</span>
-                    <span>Included</span>
+                    <span>GST (18%)</span>
+                    <span>₹180</span>
                   </div>
                   <Separator />
                   <div className="flex justify-between font-semibold text-lg">
                     <span>Total</span>
-                    <span>₹499</span>
+                    <span>₹1180</span>
                   </div>
                 </div>
               </CardContent>

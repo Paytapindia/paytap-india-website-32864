@@ -9,7 +9,7 @@ const CTASection = () => {
   const { t } = useTranslation();
   
   const handleRedirect = () => {
-    navigate('/checkout');
+    window.open('https://u.payu.in/GJQ7BfPFgiV0', '_blank');
   };
   
   return (

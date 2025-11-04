@@ -41,12 +41,16 @@ const CheckoutCancel = () => {
           </CardHeader>
           <CardContent>
             <p className="text-gray-700 mb-4">
-              Your PayTap NFC payment tag is still available for ₹499 with free shipping across India.
+              Your PayTap NFC payment tag is still available for ₹1180 with free shipping across India.
             </p>
             <div className="space-y-2">
               <div className="flex items-center justify-between text-sm">
                 <span>PayTap NFC Tag</span>
-                <span className="font-semibold">₹499</span>
+                <span className="font-semibold">₹1000</span>
+              </div>
+              <div className="flex items-center justify-between text-sm">
+                <span>GST (18%)</span>
+                <span className="font-semibold">₹180</span>
               </div>
               <div className="flex items-center justify-between text-sm">
                 <span>Shipping</span>
@@ -54,7 +58,7 @@ const CheckoutCancel = () => {
               </div>
               <div className="border-t pt-2 flex items-center justify-between font-semibold">
                 <span>Total</span>
-                <span>₹499</span>
+                <span>₹1180</span>
               </div>
             </div>
           </CardContent>

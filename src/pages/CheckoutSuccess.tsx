@@ -66,7 +66,7 @@ const CheckoutSuccess = () => {
             )}
             <div className="flex justify-between">
               <span className="text-gray-600">Amount Paid:</span>
-              <span className="font-semibold">₹499</span>
+              <span className="font-semibold">₹1180</span>
             </div>
             <div className="flex justify-between">
               <span className="text-gray-600">Payment Method:</span>
