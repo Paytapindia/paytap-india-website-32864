@@ -12,7 +12,7 @@ const TrustSection = () => {
   const navigate = useNavigate();
   
   const handleRedirect = () => {
-    navigate('/checkout');
+    window.open('https://u.payu.in/PAYUMN/KIQlHVfA6z3b', '_blank');
   };
 
   const scrollToHowItWorks = () => {

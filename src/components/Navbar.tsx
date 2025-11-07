@@ -44,10 +44,13 @@ const Navbar = () => {
         
         {/* Desktop navigation - simplified */}
         <nav className="hidden md:flex space-x-6 lg:space-x-8">
-          <Link to="/checkout" className="text-sm font-medium text-gray-600 hover:text-blue-600 transition-colors relative group">
+          <button 
+            onClick={() => window.open('https://u.payu.in/PAYUMN/KIQlHVfA6z3b', '_blank')}
+            className="text-sm font-medium text-gray-600 hover:text-blue-600 transition-colors relative group"
+          >
             {t('nav.orderPaymentTag')}
             <span className="absolute -bottom-1 left-0 w-0 h-0.5 bg-blue-600 transition-all group-hover:w-full"></span>
-          </Link>
+          </button>
           <a href="/#how-it-works" className="text-sm font-medium text-gray-600 hover:text-blue-600 transition-colors relative group">
             {t('nav.howItWorks')}
             <span className="absolute -bottom-1 left-0 w-0 h-0.5 bg-blue-600 transition-all group-hover:w-full"></span>
@@ -99,13 +102,15 @@ const Navbar = () => {
               <span className="text-sm font-medium text-gray-500">Language</span>
               <LanguageSelector />
             </div>
-            <Link 
-              to="/checkout"
-              className="block text-base font-medium text-gray-700 hover:text-blue-600 py-3 px-2 border-b border-gray-100 transition-colors min-h-[48px] flex items-center"
-              onClick={handleNavClick}
+            <button 
+              onClick={() => {
+                window.open('https://u.payu.in/PAYUMN/KIQlHVfA6z3b', '_blank');
+                handleNavClick();
+              }}
+              className="block w-full text-left text-base font-medium text-gray-700 hover:text-blue-600 py-3 px-2 border-b border-gray-100 transition-colors min-h-[48px] flex items-center"
             >
               {t('nav.orderPaymentTag')}
-            </Link>
+            </button>
             <a 
               href="/#how-it-works" 
               className="block text-base font-medium text-gray-700 hover:text-blue-600 py-3 px-2 border-b border-gray-100 transition-colors min-h-[48px] flex items-center"

@@ -16,7 +16,7 @@ const HowItWorksSection = () => {
   const [activeStep, setActiveStep] = useState(1);
   
   const handleRedirect = () => {
-    navigate('/checkout');
+    window.open('https://u.payu.in/PAYUMN/KIQlHVfA6z3b', '_blank');
   };
 
   const handleStepClick = (stepId: number) => {
