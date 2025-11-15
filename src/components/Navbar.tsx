@@ -5,6 +5,14 @@ import { useState, useEffect } from "react";
 import { Menu, X } from "lucide-react";
 import { useTranslation } from "react-i18next";
 import LanguageSelector from "@/components/LanguageSelector";
+import {
+  NavigationMenu,
+  NavigationMenuContent,
+  NavigationMenuItem,
+  NavigationMenuLink,
+  NavigationMenuList,
+  NavigationMenuTrigger,
+} from "@/components/ui/navigation-menu";
 
 const Navbar = () => {
   const { t } = useTranslation();
@@ -43,7 +51,7 @@ const Navbar = () => {
         </Link>
         
         {/* Desktop navigation - simplified */}
-        <nav className="hidden md:flex space-x-6 lg:space-x-8">
+        <nav className="hidden md:flex items-center space-x-6 lg:space-x-8">
           <button 
             onClick={() => window.open('https://u.payu.in/PAYUMN/KIQlHVfA6z3b', '_blank')}
             className="text-sm font-medium text-gray-600 hover:text-blue-600 transition-colors relative group"
@@ -51,16 +59,57 @@ const Navbar = () => {
             {t('nav.orderPaymentTag')}
             <span className="absolute -bottom-1 left-0 w-0 h-0.5 bg-blue-600 transition-all group-hover:w-full"></span>
           </button>
+          
+          <NavigationMenu>
+            <NavigationMenuList>
+              <NavigationMenuItem>
+                <NavigationMenuTrigger className="text-sm font-medium text-gray-600 hover:text-blue-600 transition-colors bg-transparent h-auto p-0 hover:bg-transparent data-[state=open]:bg-transparent">
+                  {t('nav.ourProducts')}
+                </NavigationMenuTrigger>
+                <NavigationMenuContent>
+                  <ul className="grid w-[240px] gap-1 p-3 bg-white">
+                    <li>
+                      <NavigationMenuLink asChild>
+                        <a
+                          href="https://www.myfleets.in"
+                          className="block select-none space-y-1 rounded-md p-3 leading-none no-underline outline-none transition-colors hover:bg-accent hover:text-accent-foreground focus:bg-accent focus:text-accent-foreground"
+                        >
+                          <div className="text-sm font-medium leading-none">
+                            {t('nav.myfleetAi')}
+                          </div>
+                          <p className="line-clamp-2 text-sm leading-snug text-muted-foreground">
+                            AI-powered fleet management
+                          </p>
+                        </a>
+                      </NavigationMenuLink>
+                    </li>
+                    <li>
+                      <NavigationMenuLink asChild>
+                        <a
+                          href="#"
+                          className="block select-none space-y-1 rounded-md p-3 leading-none no-underline outline-none transition-colors hover:bg-accent hover:text-accent-foreground focus:bg-accent focus:text-accent-foreground"
+                        >
+                          <div className="text-sm font-medium leading-none">
+                            {t('nav.expensePro')}
+                          </div>
+                          <p className="line-clamp-2 text-sm leading-snug text-muted-foreground">
+                            Smart expense management
+                          </p>
+                        </a>
+                      </NavigationMenuLink>
+                    </li>
+                  </ul>
+                </NavigationMenuContent>
+              </NavigationMenuItem>
+            </NavigationMenuList>
+          </NavigationMenu>
+          
           <a href="/#how-it-works" className="text-sm font-medium text-gray-600 hover:text-blue-600 transition-colors relative group">
             {t('nav.howItWorks')}
             <span className="absolute -bottom-1 left-0 w-0 h-0.5 bg-blue-600 transition-all group-hover:w-full"></span>
           </a>
           <a href="/#trust" className="text-sm font-medium text-gray-600 hover:text-blue-600 transition-colors relative group">
             {t('nav.whyPaytap')}
-            <span className="absolute -bottom-1 left-0 w-0 h-0.5 bg-blue-600 transition-all group-hover:w-full"></span>
-          </a>
-          <a href="https://www.myfleets.in" className="text-sm font-medium text-gray-600 hover:text-blue-600 transition-colors relative group">
-            {t('nav.myfleetAi')}
             <span className="absolute -bottom-1 left-0 w-0 h-0.5 bg-blue-600 transition-all group-hover:w-full"></span>
           </a>
           <Link to="/faq" className="text-sm font-medium text-gray-600 hover:text-blue-600 transition-colors relative group">
@@ -125,13 +174,26 @@ const Navbar = () => {
             >
               {t('nav.whyPaytap')}
             </a>
-            <a 
-              href="https://www.myfleets.in" 
-              className="block text-base font-medium text-gray-700 hover:text-blue-600 py-3 px-2 border-b border-gray-100 transition-colors min-h-[48px] flex items-center"
-              onClick={handleNavClick}
-            >
-              {t('nav.myfleetAi')}
-            </a>
+            
+            <div className="border-b border-gray-100">
+              <div className="py-2 px-2 text-xs font-semibold text-gray-500 uppercase tracking-wide">
+                {t('nav.ourProducts')}
+              </div>
+              <a 
+                href="https://www.myfleets.in" 
+                className="block text-base font-medium text-gray-700 hover:text-blue-600 py-3 px-4 ml-2 border-b border-gray-100 transition-colors min-h-[48px] flex items-center"
+                onClick={handleNavClick}
+              >
+                {t('nav.myfleetAi')}
+              </a>
+              <a 
+                href="#" 
+                className="block text-base font-medium text-gray-700 hover:text-blue-600 py-3 px-4 ml-2 transition-colors min-h-[48px] flex items-center"
+                onClick={handleNavClick}
+              >
+                {t('nav.expensePro')}
+              </a>
+            </div>
             <Link 
               to="/faq" 
               className="block text-base font-medium text-gray-700 hover:text-blue-600 py-3 px-2 border-b border-gray-100 transition-colors min-h-[48px] flex items-center"

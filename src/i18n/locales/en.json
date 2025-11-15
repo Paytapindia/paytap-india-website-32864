@@ -1,9 +1,11 @@
 {
   "nav": {
     "orderPaymentTag": "Order Payment Tag",
+    "ourProducts": "Our Products",
     "howItWorks": "How It Works",
     "whyPaytap": "Why Paytap",
     "myfleetAi": "Myfleet AI",
+    "expensePro": "ExpensePro",
     "faq": "FAQ",
     "support": "Support",
     "login": "Login"

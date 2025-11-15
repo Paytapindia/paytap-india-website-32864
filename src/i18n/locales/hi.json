@@ -1,9 +1,11 @@
 {
   "nav": {
     "orderPaymentTag": "पेमेंट टैग ऑर्डर करें",
+    "ourProducts": "हमारे उत्पाद",
     "howItWorks": "कैसे काम करता है",
     "whyPaytap": "पेटैप क्यों",
     "myfleetAi": "माईफ्लीट AI",
+    "expensePro": "एक्सपेंसप्रो",
     "faq": "सामान्य प्रश्न",
     "support": "सहायता",
     "login": "लॉगिन"
