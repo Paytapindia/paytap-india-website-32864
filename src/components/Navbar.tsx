@@ -71,7 +71,9 @@ const Navbar = () => {
                     <li>
                       <NavigationMenuLink asChild>
                         <a
-                          href="https://www.myfleets.in"
+                          href="https://www.myfleetai.in"
+                          target="_blank"
+                          rel="noopener noreferrer"
                           className="block select-none space-y-1 rounded-md p-3 leading-none no-underline outline-none transition-colors hover:bg-accent hover:text-accent-foreground focus:bg-accent focus:text-accent-foreground"
                         >
                           <div className="text-sm font-medium leading-none">
@@ -86,7 +88,9 @@ const Navbar = () => {
                     <li>
                       <NavigationMenuLink asChild>
                         <a
-                          href="#"
+                          href="https://www.expensepro.in"
+                          target="_blank"
+                          rel="noopener noreferrer"
                           className="block select-none space-y-1 rounded-md p-3 leading-none no-underline outline-none transition-colors hover:bg-accent hover:text-accent-foreground focus:bg-accent focus:text-accent-foreground"
                         >
                           <div className="text-sm font-medium leading-none">
@@ -210,14 +214,18 @@ const Navbar = () => {
                 {t('nav.ourProducts')}
               </div>
               <a 
-                href="https://www.myfleets.in" 
+                href="https://www.myfleetai.in" 
+                target="_blank"
+                rel="noopener noreferrer"
                 className="block text-base font-medium text-gray-700 hover:text-blue-600 py-3 px-4 ml-2 border-b border-gray-100 transition-colors min-h-[48px] flex items-center"
                 onClick={handleNavClick}
               >
                 {t('nav.myfleetAi')}
               </a>
               <a 
-                href="#" 
+                href="https://www.expensepro.in" 
+                target="_blank"
+                rel="noopener noreferrer"
                 className="block text-base font-medium text-gray-700 hover:text-blue-600 py-3 px-4 ml-2 border-b border-gray-100 transition-colors min-h-[48px] flex items-center"
                 onClick={handleNavClick}
               >
