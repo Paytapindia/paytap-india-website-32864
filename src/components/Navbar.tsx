@@ -98,6 +98,36 @@ const Navbar = () => {
                         </a>
                       </NavigationMenuLink>
                     </li>
+                    <li>
+                      <NavigationMenuLink asChild>
+                        <a
+                          href="#"
+                          className="block select-none space-y-1 rounded-md p-3 leading-none no-underline outline-none transition-colors hover:bg-accent hover:text-accent-foreground focus:bg-accent focus:text-accent-foreground"
+                        >
+                          <div className="text-sm font-medium leading-none">
+                            {t('nav.paytapSafeVaultz')}
+                          </div>
+                          <p className="line-clamp-2 text-sm leading-snug text-muted-foreground">
+                            Secure digital vault
+                          </p>
+                        </a>
+                      </NavigationMenuLink>
+                    </li>
+                    <li>
+                      <NavigationMenuLink asChild>
+                        <a
+                          href="#"
+                          className="block select-none space-y-1 rounded-md p-3 leading-none no-underline outline-none transition-colors hover:bg-accent hover:text-accent-foreground focus:bg-accent focus:text-accent-foreground"
+                        >
+                          <div className="text-sm font-medium leading-none">
+                            {t('nav.paytapKidsPay')}
+                          </div>
+                          <p className="line-clamp-2 text-sm leading-snug text-muted-foreground">
+                            Safe payments for kids
+                          </p>
+                        </a>
+                      </NavigationMenuLink>
+                    </li>
                   </ul>
                 </NavigationMenuContent>
               </NavigationMenuItem>
@@ -188,10 +218,24 @@ const Navbar = () => {
               </a>
               <a 
                 href="#" 
-                className="block text-base font-medium text-gray-700 hover:text-blue-600 py-3 px-4 ml-2 transition-colors min-h-[48px] flex items-center"
+                className="block text-base font-medium text-gray-700 hover:text-blue-600 py-3 px-4 ml-2 border-b border-gray-100 transition-colors min-h-[48px] flex items-center"
                 onClick={handleNavClick}
               >
                 {t('nav.expensePro')}
+              </a>
+              <a 
+                href="#" 
+                className="block text-base font-medium text-gray-700 hover:text-blue-600 py-3 px-4 ml-2 border-b border-gray-100 transition-colors min-h-[48px] flex items-center"
+                onClick={handleNavClick}
+              >
+                {t('nav.paytapSafeVaultz')}
+              </a>
+              <a 
+                href="#" 
+                className="block text-base font-medium text-gray-700 hover:text-blue-600 py-3 px-4 ml-2 transition-colors min-h-[48px] flex items-center"
+                onClick={handleNavClick}
+              >
+                {t('nav.paytapKidsPay')}
               </a>
             </div>
             <Link 
