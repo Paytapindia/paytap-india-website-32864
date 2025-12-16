@@ -47,20 +47,12 @@ const Navbar = () => {
           <img 
             src={paytapLogo} 
             alt="Paytap Logo" 
-            className="h-8 md:h-10 w-auto"
+            className="h-12 md:h-14 w-auto"
           />
         </Link>
         
         {/* Desktop navigation - simplified */}
         <nav className="hidden md:flex items-center space-x-6 lg:space-x-8">
-          <button 
-            onClick={() => window.open('https://u.payu.in/PAYUMN/KIQlHVfA6z3b', '_blank')}
-            className="text-sm font-medium text-gray-600 hover:text-paytap-dark transition-colors relative group"
-          >
-            {t('nav.orderPaymentTag')}
-            <span className="absolute -bottom-1 left-0 w-0 h-0.5 bg-paytap-dark transition-all group-hover:w-full"></span>
-          </button>
-          
           <NavigationMenu>
             <NavigationMenuList>
               <NavigationMenuItem>
@@ -186,15 +178,6 @@ const Navbar = () => {
               <span className="text-sm font-medium text-gray-500">Language</span>
               <LanguageSelector />
             </div>
-            <button 
-              onClick={() => {
-                window.open('https://u.payu.in/PAYUMN/KIQlHVfA6z3b', '_blank');
-                handleNavClick();
-              }}
-              className="block w-full text-left text-base font-medium text-gray-700 hover:text-paytap-dark py-3 px-2 border-b border-gray-100 transition-colors min-h-[48px] flex items-center"
-            >
-              {t('nav.orderPaymentTag')}
-            </button>
             <a 
               href="/#how-it-works" 
               className="block text-base font-medium text-gray-700 hover:text-paytap-dark py-3 px-2 border-b border-gray-100 transition-colors min-h-[48px] flex items-center"
