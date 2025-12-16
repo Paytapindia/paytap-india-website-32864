@@ -33,7 +33,7 @@ const HowItWorksSection = () => {
         <div className="text-center mb-12 md:mb-16">
           <div className="inline-flex items-center gap-2 bg-blue-50 text-blue-700 px-4 py-2 rounded-full text-sm font-medium mb-6">
             <CheckCircle className="w-4 h-4" />
-            Trusted by 1M+ Users
+            Enterprise-Grade Infrastructure
           </div>
           <h2 className="text-3xl md:text-5xl font-bold mb-6 text-gray-900 bg-gradient-to-r from-blue-600 to-purple-600 bg-clip-text text-transparent">
             {t('howItWorks.title')}
@@ -191,10 +191,10 @@ const HowItWorksSection = () => {
               className="bg-gradient-to-r from-blue-600 to-purple-600 hover:from-blue-700 hover:to-purple-700 text-white px-10 py-6 text-xl font-bold shadow-2xl hover:shadow-3xl transition-all duration-300 rounded-2xl hover:scale-105 min-h-[60px]"
               onClick={handleRedirect}
             >
-              Order Your PayTap Tag Now
+              Get Started
               <ArrowRight className="ml-3 w-6 h-6" />
             </Button>
-            <p className="text-gray-500">✓ Free delivery • ✓ 24/7 support • ✓ Works offline</p>
+            <p className="text-gray-500">Free delivery • Works offline • 24/7 support</p>
           </div>
         </div>
       </div>
