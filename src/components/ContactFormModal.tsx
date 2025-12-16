@@ -129,7 +129,7 @@ const ContactFormModal = ({ open, onOpenChange }: ContactFormModalProps) => {
               <Button 
                 type="submit" 
                 disabled={isSubmitting}
-                className="bg-blue-600 hover:bg-blue-700 text-white"
+                className="bg-paytap-dark hover:bg-paytap-navy text-white"
               >
                 {isSubmitting ? "Submitting..." : "Submit"}
               </Button>

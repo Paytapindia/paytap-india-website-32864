@@ -6,22 +6,22 @@
 @layer base {
   :root {
     --background: 0 0% 100%;
-    --foreground: 220 20% 10%;
+    --foreground: 223 98% 21%;
 
     --card: 0 0% 100%;
-    --card-foreground: 220 20% 10%;
+    --card-foreground: 223 98% 21%;
 
     --popover: 0 0% 100%;
-    --popover-foreground: 220 20% 10%;
+    --popover-foreground: 223 98% 21%;
 
-    --primary: 214 100% 27%;
+    --primary: 214 100% 26%;
     --primary-foreground: 0 0% 100%;
 
-    --secondary: 220 14% 96%;
-    --secondary-foreground: 220 20% 10%;
+    --secondary: 210 11% 97%;
+    --secondary-foreground: 223 98% 21%;
 
-    --muted: 220 14% 96%;
-    --muted-foreground: 220 10% 46%;
+    --muted: 210 11% 97%;
+    --muted-foreground: 223 30% 40%;
 
     --accent: 197 100% 44%;
     --accent-foreground: 0 0% 100%;
@@ -29,16 +29,17 @@
     --destructive: 0 84.2% 60.2%;
     --destructive-foreground: 0 0% 100%;
 
-    --border: 220 13% 91%;
-    --input: 220 13% 91%;
-    --ring: 214 100% 27%;
+    --border: 210 11% 90%;
+    --input: 210 11% 90%;
+    --ring: 214 100% 26%;
 
     --radius: 0.75rem;
 
-    /* PayPal color palette */
-    --paypal-dark: 214 100% 27%;
-    --paypal-light: 197 100% 44%;
-    --paypal-navy: 220 100% 20%;
+    /* Paytap Brand Colors */
+    --paytap-dark: 214 100% 26%;
+    --paytap-navy: 223 98% 21%;
+    --paytap-light: 197 100% 44%;
+    --paytap-gray: 210 11% 97%;
   }
 
   .dark {

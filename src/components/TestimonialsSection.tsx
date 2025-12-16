@@ -30,22 +30,22 @@ const testimonials = [
 
 const TestimonialsSection = () => {
   return (
-    <section id="testimonials" className="py-24 px-6 md:px-12 bg-gradient-to-br from-blue-50 via-purple-50 to-white relative overflow-hidden">
+    <section id="testimonials" className="py-24 px-6 md:px-12 bg-gradient-to-br from-paytap-gray via-white to-white relative overflow-hidden">
       {/* Background decorations */}
       <div className="absolute inset-0 overflow-hidden">
-        <div className="absolute top-20 left-10 w-40 h-40 bg-blue-200 rounded-full mix-blend-multiply filter blur-xl opacity-20"></div>
-        <div className="absolute bottom-20 right-10 w-60 h-60 bg-purple-200 rounded-full mix-blend-multiply filter blur-xl opacity-20"></div>
+        <div className="absolute top-20 left-10 w-40 h-40 bg-paytap-light/20 rounded-full mix-blend-multiply filter blur-xl opacity-20"></div>
+        <div className="absolute bottom-20 right-10 w-60 h-60 bg-paytap-dark/10 rounded-full mix-blend-multiply filter blur-xl opacity-20"></div>
       </div>
 
       <div className="max-w-7xl mx-auto relative z-10">
         <div className="text-center mb-16">
-          <div className="inline-flex items-center gap-2 bg-blue-100 text-blue-700 px-4 py-2 rounded-full text-sm font-medium mb-6">
+          <div className="inline-flex items-center gap-2 bg-paytap-gray text-paytap-dark px-4 py-2 rounded-full text-sm font-medium mb-6">
             <Star className="w-4 h-4 fill-current" />
             <span>Loved by 50K+ fleet owners</span>
           </div>
           
           <h2 className="text-4xl md:text-5xl font-bold text-gray-900 mb-6">
-            What Our <span className="bg-gradient-to-r from-blue-600 to-purple-600 bg-clip-text text-transparent">Users Say</span>
+            What Our <span className="text-paytap-light">Users Say</span>
           </h2>
           <p className="text-xl text-gray-600 max-w-2xl mx-auto">
             Join thousands of satisfied users who've transformed their payment experience
@@ -61,7 +61,7 @@ const TestimonialsSection = () => {
             >
               {/* Quote icon */}
               <div className="flex justify-center mb-6">
-                <div className="w-16 h-16 bg-gradient-to-br from-blue-600 to-purple-600 rounded-full flex items-center justify-center">
+                <div className="w-16 h-16 bg-paytap-dark rounded-full flex items-center justify-center">
                   <Quote className="w-8 h-8 text-white" />
                 </div>
               </div>
@@ -80,7 +80,7 @@ const TestimonialsSection = () => {
               
               {/* Author */}
               <div className="flex items-center justify-center gap-4">
-                <div className="w-12 h-12 bg-gradient-to-br from-blue-100 to-purple-100 rounded-full flex items-center justify-center text-2xl">
+                <div className="w-12 h-12 bg-paytap-gray rounded-full flex items-center justify-center text-2xl">
                   {testimonial.avatar}
                 </div>
                 <div className="text-center">
@@ -96,11 +96,11 @@ const TestimonialsSection = () => {
         <div className="mt-20 text-center">
           <div className="grid grid-cols-2 md:grid-cols-4 gap-8">
             <div className="bg-white/60 backdrop-blur-sm p-6 rounded-2xl">
-              <div className="text-3xl font-bold text-blue-600 mb-2">4.8★</div>
+              <div className="text-3xl font-bold text-paytap-dark mb-2">4.8★</div>
               <div className="text-gray-600 text-sm">Average Rating</div>
             </div>
             <div className="bg-white/60 backdrop-blur-sm p-6 rounded-2xl">
-              <div className="text-3xl font-bold text-purple-600 mb-2">50K+</div>
+              <div className="text-3xl font-bold text-paytap-light mb-2">50K+</div>
               <div className="text-gray-600 text-sm">Fleet owners</div>
             </div>
             <div className="bg-white/60 backdrop-blur-sm p-6 rounded-2xl">

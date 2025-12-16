@@ -45,7 +45,7 @@ const LanguageSelector = () => {
             key={language.code}
             onClick={() => handleLanguageChange(language.code)}
             className={`cursor-pointer hover:bg-gray-50 ${
-              i18n.language === language.code ? 'bg-blue-50 text-blue-600' : ''
+              i18n.language === language.code ? 'bg-paytap-gray text-paytap-dark' : ''
             }`}
           >
             <div className="flex flex-col">

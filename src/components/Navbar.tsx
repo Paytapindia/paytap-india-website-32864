@@ -55,16 +55,16 @@ const Navbar = () => {
         <nav className="hidden md:flex items-center space-x-6 lg:space-x-8">
           <button 
             onClick={() => window.open('https://u.payu.in/PAYUMN/KIQlHVfA6z3b', '_blank')}
-            className="text-sm font-medium text-gray-600 hover:text-blue-600 transition-colors relative group"
+            className="text-sm font-medium text-gray-600 hover:text-paytap-dark transition-colors relative group"
           >
             {t('nav.orderPaymentTag')}
-            <span className="absolute -bottom-1 left-0 w-0 h-0.5 bg-blue-600 transition-all group-hover:w-full"></span>
+            <span className="absolute -bottom-1 left-0 w-0 h-0.5 bg-paytap-dark transition-all group-hover:w-full"></span>
           </button>
           
           <NavigationMenu>
             <NavigationMenuList>
               <NavigationMenuItem>
-                <NavigationMenuTrigger className="text-sm font-medium text-gray-600 hover:text-blue-600 transition-colors bg-transparent h-auto p-0 hover:bg-transparent data-[state=open]:bg-transparent">
+                <NavigationMenuTrigger className="text-sm font-medium text-gray-600 hover:text-paytap-dark transition-colors bg-transparent h-auto p-0 hover:bg-transparent data-[state=open]:bg-transparent">
                   {t('nav.ourProducts')}
                 </NavigationMenuTrigger>
                 <NavigationMenuContent>
@@ -139,21 +139,21 @@ const Navbar = () => {
             </NavigationMenuList>
           </NavigationMenu>
           
-          <a href="/#how-it-works" className="text-sm font-medium text-gray-600 hover:text-blue-600 transition-colors relative group">
+          <a href="/#how-it-works" className="text-sm font-medium text-gray-600 hover:text-paytap-dark transition-colors relative group">
             {t('nav.howItWorks')}
-            <span className="absolute -bottom-1 left-0 w-0 h-0.5 bg-blue-600 transition-all group-hover:w-full"></span>
+            <span className="absolute -bottom-1 left-0 w-0 h-0.5 bg-paytap-dark transition-all group-hover:w-full"></span>
           </a>
-          <a href="/#trust" className="text-sm font-medium text-gray-600 hover:text-blue-600 transition-colors relative group">
+          <a href="/#trust" className="text-sm font-medium text-gray-600 hover:text-paytap-dark transition-colors relative group">
             {t('nav.whyPaytap')}
-            <span className="absolute -bottom-1 left-0 w-0 h-0.5 bg-blue-600 transition-all group-hover:w-full"></span>
+            <span className="absolute -bottom-1 left-0 w-0 h-0.5 bg-paytap-dark transition-all group-hover:w-full"></span>
           </a>
-          <Link to="/faq" className="text-sm font-medium text-gray-600 hover:text-blue-600 transition-colors relative group">
+          <Link to="/faq" className="text-sm font-medium text-gray-600 hover:text-paytap-dark transition-colors relative group">
             {t('nav.faq')}
-            <span className="absolute -bottom-1 left-0 w-0 h-0.5 bg-blue-600 transition-all group-hover:w-full"></span>
+            <span className="absolute -bottom-1 left-0 w-0 h-0.5 bg-paytap-dark transition-all group-hover:w-full"></span>
           </Link>
-          <Link to="/support" className="text-sm font-medium text-gray-600 hover:text-blue-600 transition-colors relative group">
+          <Link to="/support" className="text-sm font-medium text-gray-600 hover:text-paytap-dark transition-colors relative group">
             {t('nav.support')}
-            <span className="absolute -bottom-1 left-0 w-0 h-0.5 bg-blue-600 transition-all group-hover:w-full"></span>
+            <span className="absolute -bottom-1 left-0 w-0 h-0.5 bg-paytap-dark transition-all group-hover:w-full"></span>
           </Link>
         </nav>
       </div>
@@ -162,7 +162,7 @@ const Navbar = () => {
         <LanguageSelector />
         <Button 
           variant="default" 
-          className="bg-gradient-to-r from-blue-600 to-purple-600 hover:from-blue-700 hover:to-purple-700 text-white px-4 md:px-6 py-2 rounded-full shadow-lg hover:shadow-xl transition-all duration-300 transform hover:scale-105 text-sm md:text-base min-h-[40px] md:min-h-[44px]"
+          className="bg-paytap-dark hover:bg-paytap-navy text-white px-4 md:px-6 py-2 rounded-full shadow-lg hover:shadow-xl transition-all duration-300 transform hover:scale-105 text-sm md:text-base min-h-[40px] md:min-h-[44px]"
           onClick={handleRedirect}
         >
           {t('nav.login')}
@@ -191,20 +191,20 @@ const Navbar = () => {
                 window.open('https://u.payu.in/PAYUMN/KIQlHVfA6z3b', '_blank');
                 handleNavClick();
               }}
-              className="block w-full text-left text-base font-medium text-gray-700 hover:text-blue-600 py-3 px-2 border-b border-gray-100 transition-colors min-h-[48px] flex items-center"
+              className="block w-full text-left text-base font-medium text-gray-700 hover:text-paytap-dark py-3 px-2 border-b border-gray-100 transition-colors min-h-[48px] flex items-center"
             >
               {t('nav.orderPaymentTag')}
             </button>
             <a 
               href="/#how-it-works" 
-              className="block text-base font-medium text-gray-700 hover:text-blue-600 py-3 px-2 border-b border-gray-100 transition-colors min-h-[48px] flex items-center"
+              className="block text-base font-medium text-gray-700 hover:text-paytap-dark py-3 px-2 border-b border-gray-100 transition-colors min-h-[48px] flex items-center"
               onClick={handleNavClick}
             >
               {t('nav.howItWorks')}
             </a>
             <a 
               href="/#trust" 
-              className="block text-base font-medium text-gray-700 hover:text-blue-600 py-3 px-2 border-b border-gray-100 transition-colors min-h-[48px] flex items-center"
+              className="block text-base font-medium text-gray-700 hover:text-paytap-dark py-3 px-2 border-b border-gray-100 transition-colors min-h-[48px] flex items-center"
               onClick={handleNavClick}
             >
               {t('nav.whyPaytap')}
@@ -218,7 +218,7 @@ const Navbar = () => {
                 href="https://www.myfleetai.in" 
                 target="_blank"
                 rel="noopener noreferrer"
-                className="block text-base font-medium text-gray-700 hover:text-blue-600 py-3 px-4 ml-2 border-b border-gray-100 transition-colors min-h-[48px] flex items-center"
+                className="block text-base font-medium text-gray-700 hover:text-paytap-dark py-3 px-4 ml-2 border-b border-gray-100 transition-colors min-h-[48px] flex items-center"
                 onClick={handleNavClick}
               >
                 {t('nav.myfleetAi')}
@@ -227,21 +227,21 @@ const Navbar = () => {
                 href="https://www.expensepro.in" 
                 target="_blank"
                 rel="noopener noreferrer"
-                className="block text-base font-medium text-gray-700 hover:text-blue-600 py-3 px-4 ml-2 border-b border-gray-100 transition-colors min-h-[48px] flex items-center"
+                className="block text-base font-medium text-gray-700 hover:text-paytap-dark py-3 px-4 ml-2 border-b border-gray-100 transition-colors min-h-[48px] flex items-center"
                 onClick={handleNavClick}
               >
                 {t('nav.expensePro')}
               </a>
               <a 
                 href="#" 
-                className="block text-base font-medium text-gray-700 hover:text-blue-600 py-3 px-4 ml-2 border-b border-gray-100 transition-colors min-h-[48px] flex items-center"
+                className="block text-base font-medium text-gray-700 hover:text-paytap-dark py-3 px-4 ml-2 border-b border-gray-100 transition-colors min-h-[48px] flex items-center"
                 onClick={handleNavClick}
               >
                 {t('nav.paytapSafeVaultz')}
               </a>
               <a 
                 href="#" 
-                className="block text-base font-medium text-gray-700 hover:text-blue-600 py-3 px-4 ml-2 transition-colors min-h-[48px] flex items-center"
+                className="block text-base font-medium text-gray-700 hover:text-paytap-dark py-3 px-4 ml-2 transition-colors min-h-[48px] flex items-center"
                 onClick={handleNavClick}
               >
                 {t('nav.paytapKidsPay')}
@@ -249,21 +249,21 @@ const Navbar = () => {
             </div>
             <Link 
               to="/faq" 
-              className="block text-base font-medium text-gray-700 hover:text-blue-600 py-3 px-2 border-b border-gray-100 transition-colors min-h-[48px] flex items-center"
+              className="block text-base font-medium text-gray-700 hover:text-paytap-dark py-3 px-2 border-b border-gray-100 transition-colors min-h-[48px] flex items-center"
               onClick={handleNavClick}
             >
               {t('nav.faq')}
             </Link>
             <Link 
               to="/support" 
-              className="block text-base font-medium text-gray-700 hover:text-blue-600 py-3 px-2 border-b border-gray-100 transition-colors min-h-[48px] flex items-center"
+              className="block text-base font-medium text-gray-700 hover:text-paytap-dark py-3 px-2 border-b border-gray-100 transition-colors min-h-[48px] flex items-center"
               onClick={handleNavClick}
             >
               {t('nav.support')}
             </Link>
             <Button 
               variant="outline" 
-              className="w-full mt-3 border-2 border-blue-600 text-blue-600 hover:bg-blue-600 hover:text-white py-3 rounded-full font-semibold transition-all duration-300 min-h-[48px]"
+              className="w-full mt-3 border-2 border-paytap-dark text-paytap-dark hover:bg-paytap-dark hover:text-white py-3 rounded-full font-semibold transition-all duration-300 min-h-[48px]"
               onClick={() => {
                 handleRedirect();
                 handleNavClick();

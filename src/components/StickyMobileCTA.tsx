@@ -27,7 +27,7 @@ const StickyMobileCTA = () => {
     <div className="fixed bottom-4 left-4 right-4 z-40 md:hidden">
       <Button
         onClick={handleRedirect}
-        className="w-full bg-gradient-to-r from-blue-600 to-purple-600 hover:from-blue-700 hover:to-purple-700 text-white py-4 rounded-2xl shadow-xl hover:shadow-2xl transition-all duration-300 transform hover:scale-105 font-semibold text-base min-h-[56px]"
+        className="w-full bg-paytap-dark hover:bg-paytap-navy text-white py-4 rounded-2xl shadow-xl hover:shadow-2xl transition-all duration-300 transform hover:scale-105 font-semibold text-base min-h-[56px]"
       >
         Login
         <ArrowRight className="ml-2 w-5 h-5" />
