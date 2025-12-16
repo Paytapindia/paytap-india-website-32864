@@ -6,7 +6,7 @@ const products = [
   {
     id: 1,
     name: "Myfleet AI",
-    description: "AI-powered fleet management platform for modern logistics",
+    description: "Automated expense control for fleets. Zero manual reconciliation.",
     icon: Truck,
     link: "https://www.myfleetai.in",
     gradient: "from-primary to-accent",
@@ -14,7 +14,7 @@ const products = [
   {
     id: 2,
     name: "ExpensePro",
-    description: "Smart expense tracking and management for businesses",
+    description: "Real-time spend visibility. Instant reimbursements.",
     icon: Receipt,
     link: "https://www.expensepro.in",
     gradient: "from-accent to-primary",
@@ -22,7 +22,7 @@ const products = [
   {
     id: 3,
     name: "Paytap SafeVaultz",
-    description: "Secure digital vault for your financial assets",
+    description: "Encrypted storage for cards, credentials, and documents.",
     icon: Shield,
     link: "#",
     gradient: "from-primary to-accent",
@@ -30,7 +30,7 @@ const products = [
   {
     id: 4,
     name: "Paytap Kids Pay",
-    description: "Safe and controlled payments designed for kids",
+    description: "Controlled spending for children. Parents stay in charge.",
     icon: Users,
     link: "#",
     gradient: "from-accent to-primary",

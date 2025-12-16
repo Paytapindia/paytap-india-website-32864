@@ -14,15 +14,15 @@
   },
   "hero": {
     "badge": "RBI & NPCI Compliant",
-    "title": "Powering Payments Without Friction",
-    "subtitle": "Reimagining UPI and cards — through instant offline tap payments",
-    "orderNow": "Order PayTap Tag Now",
-    "setupTime": "Setup in 5 minutes",
+    "title": "Prepaid Payments. Zero Banking Friction.",
+    "subtitle": "Issue controlled prepaid cards to teams, vendors, or vehicles — instantly.",
+    "orderNow": "Get Started in Minutes",
+    "setupTime": "Activate in 5 minutes",
     "rupayPartner": "RuPay Network Partner",
     "stats": {
-      "terminals": "RuPay Terminals",
-      "fleetOwners": "Fleet owners trust us",
-      "successRate": "Success Rate"
+      "terminals": "Acceptance Points",
+      "fleetOwners": "Fleet Operators",
+      "successRate": "Uptime"
     }
   },
   "ourProducts": {
@@ -42,16 +42,16 @@
     "socialProof": {
       "users": "Active Users",
       "rating": "Rating",
-      "security": "Bank Level Security"
+      "security": "Bank-Grade Security"
     },
-    "title": "Ready to Transform Your Payments?",
-    "description": "Join thousands of businesses already using PayTap for seamless contactless payments.",
-    "orderNow": "Order PayTap Tag Now",
+    "title": "Start Issuing Prepaid Cards Today",
+    "description": "Trusted by 50,000+ fleet operators and enterprises across India.",
+    "orderNow": "Get Started in Minutes",
     "features": {
-      "freeShipping": "Free shipping nationwide",
-      "support": "24/7 customer support"
+      "freeShipping": "Free delivery",
+      "support": "24/7 support"
     },
-    "bonus": "Limited time: Get setup assistance worth ₹500 absolutely FREE!"
+    "bonus": ""
   },
   "footer": {
     "company": "PayTap",

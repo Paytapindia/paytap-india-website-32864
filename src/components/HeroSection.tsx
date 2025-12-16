@@ -49,10 +49,13 @@ const HeroSection = () => {
               </span>
             </div>
 
-            {/* Trust indicator */}
-            <div className="animate-fade-in" style={{ animationDelay: '0.4s' }}>
-              <div className="text-muted-foreground text-sm font-medium tracking-wide">
-                {t('hero.rupayPartner')}
+            {/* Trust indicators */}
+            <div className="animate-fade-in space-y-3" style={{ animationDelay: '0.4s' }}>
+              <div className="text-muted-foreground text-sm tracking-wide">
+                PPI-licensed • RBI-compliant • Works at 8L+ terminals
+              </div>
+              <div className="text-muted-foreground/70 text-xs">
+                Built for businesses that operate beyond traditional bank accounts.
               </div>
             </div>
           </div>
