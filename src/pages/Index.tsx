@@ -1,12 +1,11 @@
 
 import Navbar from "@/components/Navbar";
 import HeroSection from "@/components/HeroSection";
+import OurProductsSection from "@/components/OurProductsSection";
 import MyfleetPromo from "@/components/MyfleetPromo";
-import HowItWorksSection from "@/components/HowItWorksSection";
 import TrustSection from "@/components/TrustSection";
 import TestimonialsSection from "@/components/TestimonialsSection";
 import CTASection from "@/components/CTASection";
-
 import FooterSection from "@/components/FooterSection";
 import ContactFormModal from "@/components/ContactFormModal";
 import StickyMobileCTA from "@/components/StickyMobileCTA";
@@ -16,10 +15,10 @@ const Index = () => {
   const { isContactFormOpen, setContactFormOpen } = useModal();
   
   return (
-    <div className="min-h-screen bg-white">
+    <div className="min-h-screen bg-background">
       <Navbar />
       <HeroSection />
-      <HowItWorksSection />
+      <OurProductsSection />
       <MyfleetPromo />
       <TrustSection />
       <TestimonialsSection />

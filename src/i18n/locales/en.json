@@ -25,6 +25,10 @@
       "successRate": "Success Rate"
     }
   },
+  "ourProducts": {
+    "title": "Our Products",
+    "subtitle": "Explore our ecosystem of payment solutions"
+  },
   "howItWorks": {
     "title": "How It Works",
     "subtitle": "Get started in just 3 simple steps"
@@ -40,8 +44,8 @@
       "rating": "Rating",
       "security": "Bank Level Security"
     },
-    "title": "Ready to Transform Your Business?",
-    "description": "Join thousands of merchants already using PayTap for seamless contactless payments.",
+    "title": "Ready to Transform Your Payments?",
+    "description": "Join thousands of businesses already using PayTap for seamless contactless payments.",
     "orderNow": "Order PayTap Tag Now",
     "features": {
       "freeShipping": "Free shipping nationwide",
