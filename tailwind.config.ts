@@ -66,10 +66,12 @@ export default {
 					border: 'hsl(var(--sidebar-border))',
 					ring: 'hsl(var(--sidebar-ring))'
 				},
-				paypal: {
-					dark: 'hsl(214, 100%, 27%)',
-					light: 'hsl(197, 100%, 44%)',
-					navy: 'hsl(220, 100%, 20%)',
+				paytap: {
+					dark: '#003087',
+					navy: '#012169',
+					light: '#009CDE',
+					white: '#FFFFFF',
+					gray: '#F6F7F8',
 				}
 			},
 			borderRadius: {

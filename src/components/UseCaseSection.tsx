@@ -30,7 +30,7 @@ const useCases = [
 
 const UseCaseSection = () => {
   return (
-    <section id="use-cases" className="py-16 px-6 md:px-12 bg-blue-50">
+    <section id="use-cases" className="py-16 px-6 md:px-12 bg-paytap-gray">
       <div className="max-w-5xl mx-auto">
         <h2 className="text-3xl font-bold text-center mb-12">Where to Use Paytap</h2>
         
@@ -40,7 +40,7 @@ const UseCaseSection = () => {
               key={useCase.id} 
               className="bg-white p-6 rounded-lg shadow-md hover:shadow-lg transition-shadow"
             >
-              <div className="mb-4 text-blue-600">
+              <div className="mb-4 text-paytap-dark">
                 <useCase.icon size={36} />
               </div>
               <h3 className="text-xl font-semibold mb-2">{useCase.title}</h3>
