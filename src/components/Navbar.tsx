@@ -5,6 +5,7 @@ import { useState, useEffect } from "react";
 import { Menu, X } from "lucide-react";
 import { useTranslation } from "react-i18next";
 import LanguageSelector from "@/components/LanguageSelector";
+import paytapLogo from "@/assets/paytap-logo.png";
 import {
   NavigationMenu,
   NavigationMenuContent,
@@ -44,7 +45,7 @@ const Navbar = () => {
       <div className="flex items-center">
         <Link to="/" className="flex items-center gap-2 md:gap-3 font-bold text-lg md:text-xl mr-8 md:mr-12 hover:opacity-80 transition-opacity">
           <img 
-            src="/lovable-uploads/5767cf4b-96a0-4e43-96e9-ee8b18b10193.png" 
+            src={paytapLogo} 
             alt="Paytap Logo" 
             className="h-8 md:h-10 w-auto"
           />
