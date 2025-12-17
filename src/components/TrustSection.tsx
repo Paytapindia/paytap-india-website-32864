@@ -30,7 +30,7 @@ const TrustSection = () => {
             {[
               { icon: WifiOff, title: "Offline-First Architecture", desc: "Tap and pay instantly, even offline. Works without mobile data." },
               { icon: CreditCard, title: "8L+ Acceptance Points", desc: "Use it at fuel pumps, tolls, metros, parking & more across India." },
-              { icon: Shield, title: "RBI-Licensed, PCI-DSS Certified", desc: "PCI-DSS, 256-bit encryption, and full RBI + NPCI approval." },
+              { icon: Shield, title: "Enterprise-Grade Security", desc: "RBI-Compliant • NPCI-Enabled • RuPay Network Powered • PCI-DSS Secured • VAPT Audited" },
               { icon: BarChart3, title: "Real-Time Visibility", desc: "Load, spend, and manage everything from one dashboard." },
               { icon: Users, title: "Individuals to Enterprise", desc: "One solution for personal vehicles, families, and logistics teams." },
               { icon: Lock, title: "Zero Bank Exposure", desc: "Tokenized wallet keeps your banking info private and secure." },
