@@ -61,7 +61,7 @@ const OurProductsSection = () => {
               href={product.link}
               target={product.link !== "#" ? "_blank" : undefined}
               rel={product.link !== "#" ? "noopener noreferrer" : undefined}
-              className="group relative bg-card rounded-2xl p-8 md:p-10 border border-border hover:border-primary/30 transition-all duration-300 hover:shadow-xl animate-fade-in"
+              className="group relative bg-card rounded-2xl p-5 sm:p-8 md:p-10 border border-border hover:border-primary/30 transition-all duration-300 hover:shadow-xl animate-fade-in"
               style={{ animationDelay: `${index * 0.1}s` }}
             >
               {/* Icon */}
