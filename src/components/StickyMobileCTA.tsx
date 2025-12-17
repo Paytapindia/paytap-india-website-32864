@@ -7,7 +7,7 @@ const StickyMobileCTA = () => {
   const [isVisible, setIsVisible] = useState(false);
 
   const handleRedirect = () => {
-    window.open('https://dashboard.paytap.co.in/login', '_blank');
+    window.open('https://u.payu.in/PAYUMN/KIQlHVfA6z3b', '_blank');
   };
 
   useEffect(() => {
@@ -29,7 +29,7 @@ const StickyMobileCTA = () => {
         onClick={handleRedirect}
         className="w-full bg-paytap-dark hover:bg-paytap-navy text-white py-4 rounded-2xl shadow-xl hover:shadow-2xl transition-all duration-300 transform hover:scale-105 font-semibold text-base min-h-[56px]"
       >
-        Login
+        Order Card
         <ArrowRight className="ml-2 w-5 h-5" />
       </Button>
     </div>

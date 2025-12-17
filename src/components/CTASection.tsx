@@ -7,7 +7,7 @@ const CTASection = () => {
   const { t } = useTranslation();
   
   const handleRedirect = () => {
-    window.open('https://u.payu.in/PAYUMN/KIQlHVfA6z3b', '_blank');
+    window.open('https://dashboard.paytap.co.in/login', '_blank');
   };
   
   return (
