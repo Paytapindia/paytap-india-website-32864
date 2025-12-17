@@ -13,7 +13,7 @@ const CTASection = () => {
   return (
     <section id="cta" className="py-24 md:py-32 px-6 md:px-12 bg-paytap-navy text-white">
       <div className="max-w-4xl mx-auto text-center">
-        <h2 className="text-3xl md:text-5xl font-semibold mb-6 leading-tight tracking-tight">
+        <h2 className="text-2xl sm:text-3xl md:text-5xl font-semibold mb-6 leading-tight tracking-tight">
           {t('cta.title')}
         </h2>
         <p className="text-lg md:text-xl text-gray-300 mb-10 max-w-2xl mx-auto leading-relaxed">

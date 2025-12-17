@@ -7,21 +7,21 @@ const TrustSection = () => {
     <section id="trust" className="py-24 md:py-32 px-6 md:px-12 bg-secondary/30">
       <div className="max-w-6xl mx-auto">
         {/* Product Image */}
-        <div className="flex justify-center mb-20">
+        <div className="flex justify-center mb-12 sm:mb-20">
           <img 
             src="/lovable-uploads/fe142899-4158-4cd8-a890-1336deb7c4b4.png" 
             alt="PayTap Payment Sticker" 
-            className="w-full max-w-sm h-auto object-contain"
+            className="w-full max-w-[240px] sm:max-w-[300px] md:max-w-sm h-auto object-contain"
           />
         </div>
 
         {/* Features Section */}
         <div>
-          <div className="text-center mb-16">
-            <h2 className="text-3xl md:text-5xl font-semibold text-foreground mb-4 tracking-tight">
+          <div className="text-center mb-10 sm:mb-16">
+            <h2 className="text-2xl sm:text-3xl md:text-5xl font-semibold text-foreground mb-3 sm:mb-4 tracking-tight">
               Designed for Businesses Beyond Traditional Banking
             </h2>
-            <p className="text-muted-foreground text-lg md:text-xl max-w-2xl mx-auto">
+            <p className="text-muted-foreground text-base sm:text-lg md:text-xl max-w-2xl mx-auto">
               Secure, compliant, and built for scale.
             </p>
           </div>

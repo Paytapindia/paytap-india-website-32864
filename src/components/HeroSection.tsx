@@ -61,39 +61,39 @@ const HeroSection = () => {
           </div>
 
           {/* Right side - Hero Visual Composition */}
-          <div className="relative h-[400px] md:h-[500px] lg:h-[550px] animate-fade-in" style={{ animationDelay: '0.3s' }}>
+          <div className="relative h-[320px] sm:h-[400px] md:h-[500px] lg:h-[550px] animate-fade-in" style={{ animationDelay: '0.3s' }}>
             {/* Main Card */}
-            <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-72 md:w-80 h-44 md:h-48 bg-[#003087] rounded-2xl shadow-2xl p-6 transform rotate-[-5deg] hover:rotate-0 transition-all duration-500 z-20">
-              <div className="flex justify-between items-start mb-8">
-                <div className="w-10 h-8 bg-gradient-to-br from-yellow-400 to-yellow-600 rounded-md" />
-                <Wifi className="w-6 h-6 text-white/80 rotate-90" />
+            <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-56 sm:w-72 md:w-80 h-36 sm:h-44 md:h-48 bg-[#003087] rounded-2xl shadow-2xl p-4 sm:p-6 transform rotate-[-5deg] hover:rotate-0 transition-all duration-500 z-20">
+              <div className="flex justify-between items-start mb-4 sm:mb-8">
+                <div className="w-8 sm:w-10 h-6 sm:h-8 bg-gradient-to-br from-yellow-400 to-yellow-600 rounded-md" />
+                <Wifi className="w-5 h-5 sm:w-6 sm:h-6 text-white/80 rotate-90" />
               </div>
-              <div className="text-white/80 text-sm tracking-[0.3em] mb-2">•••• •••• •••• 4589</div>
+              <div className="text-white/80 text-xs sm:text-sm tracking-[0.3em] mb-2">•••• •••• •••• 4589</div>
               <div className="flex justify-between items-end">
                 <div>
-                  <div className="text-white/60 text-xs">CARDHOLDER</div>
-                  <div className="text-white text-sm font-medium">PAYTAP USER</div>
+                  <div className="text-white/60 text-[10px] sm:text-xs">CARDHOLDER</div>
+                  <div className="text-white text-xs sm:text-sm font-medium">PAYTAP USER</div>
                 </div>
                 <div className="text-right">
-                  <div className="text-white/60 text-xs">EXPIRES</div>
-                  <div className="text-white text-sm font-medium">12/28</div>
+                  <div className="text-white/60 text-[10px] sm:text-xs">EXPIRES</div>
+                  <div className="text-white text-xs sm:text-sm font-medium">12/28</div>
                 </div>
               </div>
             </div>
 
             {/* Phone Mockup */}
-            <div className="absolute top-4 right-4 md:right-8 w-40 md:w-48 bg-white rounded-3xl shadow-xl p-3 z-30 border border-border/20">
-              <div className="bg-[#003087] rounded-2xl p-4 text-center">
-                <Wallet className="w-8 h-8 text-white mx-auto mb-2" />
-                <div className="text-white/70 text-xs">Available Balance</div>
-                <div className="text-white text-2xl font-bold">₹5,000</div>
+            <div className="absolute top-2 sm:top-4 right-2 sm:right-4 md:right-8 w-32 sm:w-40 md:w-48 bg-white rounded-3xl shadow-xl p-2 sm:p-3 z-30 border border-border/20">
+              <div className="bg-[#003087] rounded-2xl p-3 sm:p-4 text-center">
+                <Wallet className="w-6 h-6 sm:w-8 sm:h-8 text-white mx-auto mb-1 sm:mb-2" />
+                <div className="text-white/70 text-[10px] sm:text-xs">Available Balance</div>
+                <div className="text-white text-lg sm:text-2xl font-bold">₹5,000</div>
               </div>
-              <div className="mt-3 space-y-2">
-                <div className="flex items-center justify-between text-xs p-2 bg-secondary/50 rounded-lg">
+              <div className="mt-2 sm:mt-3 space-y-1.5 sm:space-y-2">
+                <div className="flex items-center justify-between text-[10px] sm:text-xs p-1.5 sm:p-2 bg-secondary/50 rounded-lg">
                   <span className="text-muted-foreground">Fuel</span>
                   <span className="text-foreground font-medium">-₹500</span>
                 </div>
-                <div className="flex items-center justify-between text-xs p-2 bg-secondary/50 rounded-lg">
+                <div className="flex items-center justify-between text-[10px] sm:text-xs p-1.5 sm:p-2 bg-secondary/50 rounded-lg">
                   <span className="text-muted-foreground">Toll</span>
                   <span className="text-foreground font-medium">-₹120</span>
                 </div>
@@ -101,46 +101,46 @@ const HeroSection = () => {
             </div>
 
             {/* NFC Tag */}
-            <div className="absolute bottom-8 left-4 md:left-8 w-20 h-20 md:w-24 md:h-24 bg-[#009cde] rounded-full shadow-lg flex items-center justify-center z-10 animate-pulse">
-              <Wifi className="w-10 h-10 md:w-12 md:h-12 text-white rotate-45" />
+            <div className="absolute bottom-4 sm:bottom-8 left-2 sm:left-4 md:left-8 w-14 h-14 sm:w-20 sm:h-20 md:w-24 md:h-24 bg-[#009cde] rounded-full shadow-lg flex items-center justify-center z-10 animate-pulse">
+              <Wifi className="w-7 h-7 sm:w-10 sm:h-10 md:w-12 md:h-12 text-white rotate-45" />
             </div>
 
             {/* Mini Statement */}
-            <div className="absolute bottom-16 right-8 md:right-16 w-36 md:w-44 bg-white rounded-xl shadow-lg p-3 z-10 border border-border/20">
-              <div className="flex items-center gap-2 mb-2">
-                <FileText className="w-4 h-4 text-[#003087]" />
-                <span className="text-xs font-medium text-foreground">Statement</span>
+            <div className="absolute bottom-12 sm:bottom-16 right-4 sm:right-8 md:right-16 w-28 sm:w-36 md:w-44 bg-white rounded-xl shadow-lg p-2 sm:p-3 z-10 border border-border/20">
+              <div className="flex items-center gap-1.5 sm:gap-2 mb-1.5 sm:mb-2">
+                <FileText className="w-3 h-3 sm:w-4 sm:h-4 text-[#003087]" />
+                <span className="text-[10px] sm:text-xs font-medium text-foreground">Statement</span>
               </div>
-              <div className="space-y-1.5">
-                <div className="h-2 bg-secondary rounded w-full" />
-                <div className="h-2 bg-secondary rounded w-3/4" />
-                <div className="h-2 bg-[#009cde]/30 rounded w-1/2" />
+              <div className="space-y-1 sm:space-y-1.5">
+                <div className="h-1.5 sm:h-2 bg-secondary rounded w-full" />
+                <div className="h-1.5 sm:h-2 bg-secondary rounded w-3/4" />
+                <div className="h-1.5 sm:h-2 bg-[#009cde]/30 rounded w-1/2" />
               </div>
             </div>
 
             {/* Floating Icons */}
-            <div className="absolute top-16 left-8 md:left-16 w-12 h-12 bg-white rounded-xl shadow-md flex items-center justify-center">
-              <CreditCard className="w-6 h-6 text-[#003087]" />
+            <div className="absolute top-12 sm:top-16 left-4 sm:left-8 md:left-16 w-10 h-10 sm:w-12 sm:h-12 bg-white rounded-xl shadow-md flex items-center justify-center">
+              <CreditCard className="w-5 h-5 sm:w-6 sm:h-6 text-[#003087]" />
             </div>
-            <div className="absolute bottom-32 left-1/2 w-10 h-10 bg-[#003087] rounded-lg shadow-md flex items-center justify-center">
-              <Smartphone className="w-5 h-5 text-white" />
+            <div className="absolute bottom-24 sm:bottom-32 left-1/2 w-8 h-8 sm:w-10 sm:h-10 bg-[#003087] rounded-lg shadow-md flex items-center justify-center">
+              <Smartphone className="w-4 h-4 sm:w-5 sm:h-5 text-white" />
             </div>
           </div>
         </div>
 
         {/* Clean stats section */}
-        <div className="grid grid-cols-3 gap-6 md:gap-12 mt-16 lg:mt-24 animate-fade-in" style={{ animationDelay: '0.5s' }}>
+        <div className="grid grid-cols-3 gap-4 sm:gap-6 md:gap-12 mt-12 sm:mt-16 lg:mt-24 animate-fade-in" style={{ animationDelay: '0.5s' }}>
           <div className="text-center">
-            <div className="text-3xl md:text-5xl font-semibold text-foreground mb-2 tracking-tight">8L+</div>
-            <div className="text-muted-foreground text-sm md:text-base">{t('hero.stats.terminals')}</div>
+            <div className="text-2xl sm:text-3xl md:text-5xl font-semibold text-foreground mb-1 sm:mb-2 tracking-tight">8L+</div>
+            <div className="text-muted-foreground text-xs sm:text-sm md:text-base">{t('hero.stats.terminals')}</div>
           </div>
           <div className="text-center">
-            <div className="text-3xl md:text-5xl font-semibold text-foreground mb-2 tracking-tight">50K+</div>
-            <div className="text-muted-foreground text-sm md:text-base">{t('hero.stats.fleetOwners')}</div>
+            <div className="text-2xl sm:text-3xl md:text-5xl font-semibold text-foreground mb-1 sm:mb-2 tracking-tight">50K+</div>
+            <div className="text-muted-foreground text-xs sm:text-sm md:text-base">{t('hero.stats.fleetOwners')}</div>
           </div>
           <div className="text-center">
-            <div className="text-3xl md:text-5xl font-semibold text-foreground mb-2 tracking-tight">99.9%</div>
-            <div className="text-muted-foreground text-sm md:text-base">{t('hero.stats.successRate')}</div>
+            <div className="text-2xl sm:text-3xl md:text-5xl font-semibold text-foreground mb-1 sm:mb-2 tracking-tight">99.9%</div>
+            <div className="text-muted-foreground text-xs sm:text-sm md:text-base">{t('hero.stats.successRate')}</div>
           </div>
         </div>
       </div>

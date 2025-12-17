@@ -20,7 +20,7 @@ const FooterSection = () => {
       </div>
 
       <div className="max-w-7xl mx-auto relative z-10">
-        <div className="grid md:grid-cols-4 gap-12 mb-12">
+        <div className="grid md:grid-cols-4 gap-8 sm:gap-12 mb-12">
           {/* Company Info */}
           <div className="md:col-span-1">
             <div className="flex items-center gap-3 mb-6">
