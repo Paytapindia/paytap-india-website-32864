@@ -11,7 +11,7 @@ const TrustSection = () => {
           <img 
             src={paytapSticker}
             alt="PayTap Payment Cards" 
-            className="w-full max-w-[320px] sm:max-w-[400px] md:max-w-lg h-auto object-contain"
+            className="w-full max-w-[420px] sm:max-w-[520px] md:max-w-2xl h-auto object-contain"
           />
         </div>
 
