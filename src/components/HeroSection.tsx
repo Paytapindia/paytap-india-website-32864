@@ -38,7 +38,7 @@ const HeroSection = () => {
             {/* Single prominent CTA */}
             <div className="flex flex-col sm:flex-row justify-center lg:justify-start items-center gap-6 mb-8 animate-fade-in" style={{ animationDelay: '0.3s' }}>
               <Button 
-                className="bg-primary hover:bg-primary/90 text-primary-foreground px-10 py-6 text-lg font-medium rounded-xl shadow-lg hover:shadow-xl transition-all duration-300 group min-h-[56px]"
+                className="bg-paytap-light hover:bg-paytap-dark text-white px-10 py-6 text-lg font-medium rounded-xl shadow-lg hover:shadow-xl transition-all duration-300 group min-h-[56px]"
                 onClick={handleGetTag}
               >
                 {t('hero.orderNow')}
