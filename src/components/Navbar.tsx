@@ -154,7 +154,7 @@ const Navbar = () => {
         <LanguageSelector />
         <Button 
           variant="default" 
-          className="bg-paytap-dark hover:bg-paytap-navy text-white px-4 md:px-6 py-2 rounded-full shadow-lg hover:shadow-xl transition-all duration-300 transform hover:scale-105 text-sm md:text-base min-h-[40px] md:min-h-[44px]"
+          className="bg-paytap-light hover:bg-paytap-dark text-white px-4 md:px-6 py-2 rounded-full shadow-lg hover:shadow-xl transition-all duration-300 transform hover:scale-105 text-sm md:text-base min-h-[40px] md:min-h-[44px]"
           onClick={handleRedirect}
         >
           {t('nav.login')}
