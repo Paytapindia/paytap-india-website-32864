@@ -4,7 +4,7 @@ import paytapSticker from "@/assets/paytap-sticker.png";
 
 const TrustSection = () => {
   return (
-    <section id="trust" className="pt-12 md:pt-16 pb-24 md:pb-32 px-6 md:px-12 bg-background">
+    <section id="trust" className="pt-12 md:pt-16 pb-24 md:pb-32 px-6 md:px-12 bg-secondary/30">
       <div className="max-w-6xl mx-auto">
         {/* Product Image */}
         <div className="flex justify-center mb-12 sm:mb-20">
