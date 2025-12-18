@@ -1,7 +1,7 @@
 import { Button } from "@/components/ui/button";
 import { ArrowRight, CreditCard, Smartphone, Wallet, Wifi, FileText } from "lucide-react";
 import { useTranslation } from "react-i18next";
-import paytapLogo from "@/assets/paytap-logo-new.png";
+import paytapCardLogo from "@/assets/paytap-card-logo.png";
 
 const HeroSection = () => {
   const { t } = useTranslation();
@@ -75,10 +75,9 @@ const HeroSection = () => {
               
               {/* Card content */}
               <div className="relative h-full p-3 sm:p-4 flex flex-col justify-between">
-                {/* Top row - Logo, TRANSCORP, India badge */}
+                {/* Top row - Logo and India badge */}
                 <div className="flex items-start justify-between">
-                  <img src={paytapLogo} alt="PayTap" className="h-5 sm:h-6 md:h-7 object-contain" />
-                  <div className="text-white text-[10px] sm:text-xs font-semibold tracking-wider">TRANSCORP</div>
+                  <img src={paytapCardLogo} alt="PayTap" className="h-5 sm:h-6 md:h-7 object-contain" />
                   <div className="w-8 h-8 sm:w-10 sm:h-10 rounded-full border border-white/40 flex items-center justify-center">
                     <div className="text-[5px] sm:text-[6px] text-white/80 text-center leading-tight font-medium">
                       <div>For Use</div>
