@@ -104,11 +104,11 @@ const TestimonialsSection = () => {
               <div className="text-gray-600 text-xs sm:text-sm">Fleet owners</div>
             </div>
             <div className="bg-white/60 backdrop-blur-sm p-4 sm:p-6 rounded-xl sm:rounded-2xl">
-              <div className="text-2xl sm:text-3xl font-bold text-green-600 mb-1 sm:mb-2">1M+</div>
+              <div className="text-2xl sm:text-3xl font-bold text-paytap-dark mb-1 sm:mb-2">1M+</div>
               <div className="text-gray-600 text-xs sm:text-sm">Transactions</div>
             </div>
             <div className="bg-white/60 backdrop-blur-sm p-4 sm:p-6 rounded-xl sm:rounded-2xl">
-              <div className="text-2xl sm:text-3xl font-bold text-orange-600 mb-1 sm:mb-2">99%</div>
+              <div className="text-2xl sm:text-3xl font-bold text-paytap-light mb-1 sm:mb-2">99%</div>
               <div className="text-gray-600 text-xs sm:text-sm">Would Recommend</div>
             </div>
           </div>
