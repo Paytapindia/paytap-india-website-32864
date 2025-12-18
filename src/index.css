@@ -6,24 +6,24 @@
 @layer base {
   :root {
     --background: 0 0% 100%;
-    --foreground: 223 98% 21%;
+    --foreground: 219 96% 14%;
 
     --card: 0 0% 100%;
-    --card-foreground: 223 98% 21%;
+    --card-foreground: 219 96% 14%;
 
     --popover: 0 0% 100%;
-    --popover-foreground: 223 98% 21%;
+    --popover-foreground: 219 96% 14%;
 
-    --primary: 214 100% 26%;
+    --primary: 219 96% 14%;
     --primary-foreground: 0 0% 100%;
 
     --secondary: 210 11% 97%;
-    --secondary-foreground: 223 98% 21%;
+    --secondary-foreground: 219 96% 14%;
 
     --muted: 210 11% 97%;
-    --muted-foreground: 223 30% 40%;
+    --muted-foreground: 219 30% 40%;
 
-    --accent: 197 100% 44%;
+    --accent: 346 92% 55%;
     --accent-foreground: 0 0% 100%;
 
     --destructive: 0 84.2% 60.2%;
@@ -31,14 +31,14 @@
 
     --border: 210 11% 90%;
     --input: 210 11% 90%;
-    --ring: 214 100% 26%;
+    --ring: 219 96% 14%;
 
     --radius: 0.75rem;
 
     /* Paytap Brand Colors */
-    --paytap-dark: 214 100% 26%;
-    --paytap-navy: 223 98% 21%;
-    --paytap-light: 197 100% 44%;
+    --paytap-dark: 219 96% 14%;
+    --paytap-navy: 219 96% 14%;
+    --paytap-light: 346 92% 55%;
     --paytap-gray: 210 11% 97%;
   }
 

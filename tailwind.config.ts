@@ -66,10 +66,10 @@ export default {
 					border: 'hsl(var(--sidebar-border))',
 					ring: 'hsl(var(--sidebar-ring))'
 				},
-				paytap: {
-					dark: '#003087',
-					navy: '#012169',
-					light: '#009CDE',
+			paytap: {
+					dark: '#021a42',
+					navy: '#021a42',
+					light: '#f6245b',
 					white: '#FFFFFF',
 					gray: '#F6F7F8',
 				}
