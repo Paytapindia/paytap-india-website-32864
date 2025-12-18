@@ -14,7 +14,7 @@ const CreateBusinessSection = () => {
             <p className="text-gray-600 mb-6">
               AI solutions make it easy to start your own business and drive growth. Our platform provides all the tools you need to succeed in today's digital marketplace.
             </p>
-            <Button className="bg-purple-600 hover:bg-purple-700">
+            <Button className="bg-paytap-light hover:bg-paytap-dark">
               Start AI
             </Button>
           </div>
