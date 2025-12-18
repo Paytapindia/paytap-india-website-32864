@@ -1,6 +1,6 @@
-
 import { Shield, Lock, CreditCard, WifiOff, BarChart3, Users } from "lucide-react";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
+import paytapSticker from "@/assets/paytap-sticker.png";
 
 const TrustSection = () => {
   return (
@@ -9,9 +9,9 @@ const TrustSection = () => {
         {/* Product Image */}
         <div className="flex justify-center mb-12 sm:mb-20">
           <img 
-            src="/lovable-uploads/fe142899-4158-4cd8-a890-1336deb7c4b4.png" 
-            alt="PayTap Payment Sticker" 
-            className="w-full max-w-[240px] sm:max-w-[300px] md:max-w-sm h-auto object-contain"
+            src={paytapSticker}
+            alt="PayTap Payment Cards" 
+            className="w-full max-w-[320px] sm:max-w-[400px] md:max-w-lg h-auto object-contain"
           />
         </div>
 
