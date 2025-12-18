@@ -3,22 +3,22 @@ import { Clock, Check, User, Infinity } from "lucide-react";
 
 const features = [
   {
-    icon: <Check className="h-8 w-8 text-purple-600" />,
+    icon: <Check className="h-8 w-8 text-paytap-light" />,
     title: "Unique Content",
     description: "Create one-of-a-kind content that stands out from the crowd."
   },
   {
-    icon: <Clock className="h-8 w-8 text-purple-600" />,
+    icon: <Clock className="h-8 w-8 text-paytap-light" />,
     title: "Quick Result",
     description: "Get your content in seconds, not hours or days."
   },
   {
-    icon: <User className="h-8 w-8 text-purple-600" />,
+    icon: <User className="h-8 w-8 text-paytap-light" />,
     title: "User Friendly",
     description: "Simple interface that anyone can use without training."
   },
   {
-    icon: <Infinity className="h-8 w-8 text-purple-600" />,
+    icon: <Infinity className="h-8 w-8 text-paytap-light" />,
     title: "Unlimited Results",
     description: "Generate as many variations as you need for perfect content."
   }
@@ -45,18 +45,18 @@ const SolutionSection = () => {
         </div>
 
         <div className="mt-16 grid grid-cols-2 md:grid-cols-6 gap-4 text-center text-sm text-gray-600">
-          <div className="p-3 hover:text-purple-600 cursor-pointer">Text Generator</div>
-          <div className="p-3 hover:text-purple-600 cursor-pointer">Code Assistant</div>
-          <div className="p-3 hover:text-purple-600 cursor-pointer">Live Chat</div>
-          <div className="p-3 hover:text-purple-600 cursor-pointer">Creative Text</div>
-          <div className="p-3 hover:text-purple-600 cursor-pointer">Grammar Correction</div>
-          <div className="p-3 hover:text-purple-600 cursor-pointer">Essay Lengthener</div>
-          <div className="p-3 hover:text-purple-600 cursor-pointer">Sentence Rewriter</div>
-          <div className="p-3 hover:text-purple-600 cursor-pointer">Query Tool</div>
-          <div className="p-3 hover:text-purple-600 cursor-pointer">Grammar Checker</div>
-          <div className="p-3 hover:text-purple-600 cursor-pointer">Creative Content</div>
-          <div className="p-3 hover:text-purple-600 cursor-pointer">Language Learning</div>
-          <div className="p-3 hover:text-purple-600 cursor-pointer">SEO Improver</div>
+          <div className="p-3 hover:text-paytap-light cursor-pointer">Text Generator</div>
+          <div className="p-3 hover:text-paytap-light cursor-pointer">Code Assistant</div>
+          <div className="p-3 hover:text-paytap-light cursor-pointer">Live Chat</div>
+          <div className="p-3 hover:text-paytap-light cursor-pointer">Creative Text</div>
+          <div className="p-3 hover:text-paytap-light cursor-pointer">Grammar Correction</div>
+          <div className="p-3 hover:text-paytap-light cursor-pointer">Essay Lengthener</div>
+          <div className="p-3 hover:text-paytap-light cursor-pointer">Sentence Rewriter</div>
+          <div className="p-3 hover:text-paytap-light cursor-pointer">Query Tool</div>
+          <div className="p-3 hover:text-paytap-light cursor-pointer">Grammar Checker</div>
+          <div className="p-3 hover:text-paytap-light cursor-pointer">Creative Content</div>
+          <div className="p-3 hover:text-paytap-light cursor-pointer">Language Learning</div>
+          <div className="p-3 hover:text-paytap-light cursor-pointer">SEO Improver</div>
         </div>
       </div>
     </section>
