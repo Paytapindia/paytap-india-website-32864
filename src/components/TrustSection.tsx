@@ -8,11 +8,15 @@ const TrustSection = () => {
       <div className="max-w-6xl mx-auto">
         {/* Product Image */}
         <div className="flex justify-center mb-12 sm:mb-20">
-          <img 
-            src={paytapSticker}
-            alt="PayTap Payment Cards" 
-            className="w-full max-w-[420px] sm:max-w-[600px] md:max-w-4xl lg:max-w-5xl h-auto object-contain drop-shadow-2xl"
-          />
+          <div className="relative">
+            {/* Glow effect */}
+            <div className="absolute inset-0 bg-primary/20 blur-3xl rounded-full scale-75 -z-10" />
+            <img 
+              src={paytapSticker}
+              alt="PayTap Payment Cards" 
+              className="relative w-full max-w-[420px] sm:max-w-[600px] md:max-w-4xl lg:max-w-5xl h-auto object-contain drop-shadow-2xl"
+            />
+          </div>
         </div>
 
         {/* Features Section */}
