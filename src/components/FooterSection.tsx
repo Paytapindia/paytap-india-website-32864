@@ -2,6 +2,7 @@
 import { Link, useNavigate } from "react-router-dom";
 import { Facebook, Instagram, Linkedin, Youtube, X, Mail, Phone, MapPin } from "lucide-react";
 import { useTranslation } from "react-i18next";
+import paytapFooterLogo from "@/assets/paytap-footer-logo.png";
 
 const FooterSection = () => {
   const navigate = useNavigate();
@@ -24,12 +25,7 @@ const FooterSection = () => {
           {/* Company Info */}
           <div className="md:col-span-1">
             <div className="flex items-center gap-3 mb-6">
-              <div className="w-10 h-10 bg-paytap-dark rounded-xl flex items-center justify-center">
-                <span className="text-white font-bold">P</span>
-              </div>
-              <h3 className="font-bold text-2xl text-white">
-                {t('footer.company')}
-              </h3>
+              <img src={paytapFooterLogo} alt="PayTap" className="h-10 w-auto" />
             </div>
             <p className="text-gray-300 text-lg leading-relaxed mb-6">
               {t('footer.description')}
