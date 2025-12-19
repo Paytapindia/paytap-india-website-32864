@@ -19,6 +19,7 @@ import CheckoutSuccess from "./pages/CheckoutSuccess";
 import CheckoutCancel from "./pages/CheckoutCancel";
 import NotFound from "./pages/NotFound";
 import FAQ from "./pages/FAQ";
+import SafeVaults from "./pages/SafeVaults";
 
 const queryClient = new QueryClient({
   defaultOptions: {
@@ -42,6 +43,7 @@ const App = () => (
               <Route path="/" element={<Index />} />
               <Route path="/about" element={<About />} />
               <Route path="/faq" element={<FAQ />} />
+              <Route path="/safevaults" element={<SafeVaults />} />
               <Route path="/support" element={<Support />} />
               <Route path="/terms-and-conditions" element={<TermsAndConditions />} />
               <Route path="/privacy-policy" element={<PrivacyPolicy />} />
