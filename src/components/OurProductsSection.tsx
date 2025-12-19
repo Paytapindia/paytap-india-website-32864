@@ -22,9 +22,9 @@ const products = [
   {
     id: 3,
     name: "Paytap SafeVaultz",
-    description: "Encrypted storage for cards, credentials, and documents.",
+    description: "Save in gold and spend securely online—protect your primary bank card details.",
     icon: Shield,
-    link: "#",
+    link: "/safevaults",
     gradient: "from-primary to-accent",
   },
   {
