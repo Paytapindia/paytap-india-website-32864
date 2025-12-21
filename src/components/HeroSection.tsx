@@ -62,7 +62,7 @@ const HeroSection = () => {
           </div>
 
           {/* Right side - Hero Visual Composition */}
-          <div className="relative h-[320px] sm:h-[400px] md:h-[500px] lg:h-[550px] animate-fade-in" style={{ animationDelay: '0.3s' }}>
+          <div className="relative h-[400px] sm:h-[450px] md:h-[520px] lg:h-[560px] animate-fade-in" style={{ animationDelay: '0.3s' }}>
             {/* Main PayTap Card - Matching exact design */}
             <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-64 sm:w-80 md:w-[340px] h-40 sm:h-48 md:h-52 rounded-2xl shadow-2xl transform rotate-[-5deg] hover:rotate-0 transition-all duration-500 z-20 overflow-hidden" style={{ backgroundColor: '#021a42' }}>
               {/* Wave pattern background */}
@@ -149,7 +149,7 @@ const HeroSection = () => {
             </div>
 
             {/* Phone Mockup */}
-            <div className="absolute top-2 sm:top-4 right-2 sm:right-4 md:right-8 w-32 sm:w-40 md:w-48 bg-white rounded-3xl shadow-xl p-2 sm:p-3 z-30 border border-border/20">
+            <div className="absolute -top-6 sm:-top-4 md:top-0 -right-2 sm:right-0 md:right-4 w-28 sm:w-36 md:w-48 bg-white rounded-3xl shadow-xl p-2 sm:p-3 z-30 border border-border/20">
               <div className="bg-paytap-dark rounded-2xl p-3 sm:p-4 text-center">
                 <Wallet className="w-6 h-6 sm:w-8 sm:h-8 text-white mx-auto mb-1 sm:mb-2" />
                 <div className="text-white/70 text-[10px] sm:text-xs">Available Balance</div>
