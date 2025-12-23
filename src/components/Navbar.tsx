@@ -131,10 +131,10 @@ const Navbar = () => {
             </NavigationMenuList>
           </NavigationMenu>
           
-          <a href="/#how-it-works" className="text-sm font-medium text-gray-600 hover:text-paytap-dark transition-colors relative group">
+          <Link to="/how-it-works" className="text-sm font-medium text-gray-600 hover:text-paytap-dark transition-colors relative group">
             {t('nav.howItWorks')}
             <span className="absolute -bottom-1 left-0 w-0 h-0.5 bg-paytap-dark transition-all group-hover:w-full"></span>
-          </a>
+          </Link>
           <a href="/#trust" className="text-sm font-medium text-gray-600 hover:text-paytap-dark transition-colors relative group">
             {t('nav.whyPaytap')}
             <span className="absolute -bottom-1 left-0 w-0 h-0.5 bg-paytap-dark transition-all group-hover:w-full"></span>
@@ -178,13 +178,13 @@ const Navbar = () => {
               <span className="text-sm font-medium text-gray-500">Language</span>
               <LanguageSelector />
             </div>
-            <a 
-              href="/#how-it-works" 
+            <Link 
+              to="/how-it-works" 
               className="block text-base font-medium text-gray-700 hover:text-paytap-dark py-3 px-2 border-b border-gray-100 transition-colors min-h-[48px] flex items-center"
               onClick={handleNavClick}
             >
               {t('nav.howItWorks')}
-            </a>
+            </Link>
             <a 
               href="/#trust" 
               className="block text-base font-medium text-gray-700 hover:text-paytap-dark py-3 px-2 border-b border-gray-100 transition-colors min-h-[48px] flex items-center"
