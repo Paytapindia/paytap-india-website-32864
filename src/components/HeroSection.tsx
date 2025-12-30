@@ -1,5 +1,5 @@
 import { Button } from "@/components/ui/button";
-import { ArrowRight, CreditCard, Smartphone, Wallet, Wifi, FileText } from "lucide-react";
+import { ArrowRight, CreditCard, Smartphone, Wallet, Wifi, FileText, Play } from "lucide-react";
 import { useTranslation } from "react-i18next";
 import paytapCardLogo from "@/assets/paytap-card-logo.png";
 
@@ -36,7 +36,7 @@ const HeroSection = () => {
             </p>
 
             {/* Single prominent CTA */}
-            <div className="flex flex-col sm:flex-row justify-center lg:justify-start items-center gap-6 mb-8 animate-fade-in" style={{ animationDelay: '0.3s' }}>
+            <div className="flex flex-col sm:flex-row justify-center lg:justify-start items-center gap-4 mb-8 animate-fade-in" style={{ animationDelay: '0.3s' }}>
               <Button 
                 className="bg-paytap-light hover:bg-paytap-dark text-white px-10 py-6 text-lg font-medium rounded-xl shadow-lg hover:shadow-xl transition-all duration-300 group min-h-[56px]"
                 onClick={handleGetTag}
@@ -45,6 +45,18 @@ const HeroSection = () => {
                 <ArrowRight className="ml-2 w-5 h-5 group-hover:translate-x-1 transition-transform" />
               </Button>
               
+              <a
+                href="https://youtube.com/shorts/ODRQcGWRaiE?si=MFu07J6YK6JzI8rB"
+                target="_blank"
+                rel="noopener noreferrer"
+                className="inline-flex items-center gap-2 px-6 py-3 bg-[#FF0000] hover:bg-[#CC0000] text-white font-medium rounded-full shadow-lg hover:shadow-xl hover:scale-105 transition-all duration-300"
+              >
+                <Play className="w-5 h-5 fill-current" />
+                Watch Live Demo
+              </a>
+            </div>
+            
+            <div className="animate-fade-in" style={{ animationDelay: '0.35s' }}>
               <span className="text-muted-foreground text-sm">
                 {t('hero.setupTime')}
               </span>

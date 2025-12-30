@@ -86,13 +86,13 @@ const HeroStep = () => {
 
         {/* Watch Demo Button */}
         <motion.a
-          href="https://www.instagram.com/reel/DSiH4D9gS9d/?utm_source=ig_web_button_share_sheet&igsh=MzRlODBiNWFlZA=="
+          href="https://youtube.com/shorts/ODRQcGWRaiE?si=MFu07J6YK6JzI8rB"
           target="_blank"
           rel="noopener noreferrer"
           initial={{ opacity: 0, y: 20 }}
           animate={{ opacity: 1, y: 0 }}
           transition={{ delay: 0.7, duration: 0.8 }}
-          className="inline-flex items-center gap-2 mt-8 px-6 py-3 bg-gradient-to-r from-[#833AB4] via-[#FD1D1D] to-[#F77737] text-white font-medium rounded-full shadow-lg hover:shadow-xl hover:scale-105 transition-all duration-300"
+          className="inline-flex items-center gap-2 mt-8 px-6 py-3 bg-[#FF0000] hover:bg-[#CC0000] text-white font-medium rounded-full shadow-lg hover:shadow-xl hover:scale-105 transition-all duration-300"
         >
           <Play className="w-5 h-5 fill-current" />
           Watch Live Demo
