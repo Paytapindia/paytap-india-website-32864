@@ -7,7 +7,7 @@ const HeroSection = () => {
   const { t } = useTranslation();
   
   const handleGetTag = () => {
-    window.open('https://u.payu.in/PAYUMN/KIQlHVfA6z3b', '_blank');
+    window.open('https://u.payu.in/PAYUMN/7IhlCW7USFZ7', '_blank');
   };
 
   return (
