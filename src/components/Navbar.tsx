@@ -5,7 +5,7 @@ import { useState, useEffect } from "react";
 import { Menu, X } from "lucide-react";
 import { useTranslation } from "react-i18next";
 import LanguageSelector from "@/components/LanguageSelector";
-import paytapLogo from "@/assets/paytap-logo-new.png";
+import paytapLogo from "@/assets/paytap-logo-navbar.png";
 import {
   NavigationMenu,
   NavigationMenuContent,
