@@ -33,7 +33,7 @@ const products = [
     name: "Paytap Kids Pay",
     description: "Controlled spending for children. Parents stay in charge.",
     icon: Users,
-    link: "#",
+    link: "/kids-pay",
     gradient: "from-accent to-primary",
   },
 ];

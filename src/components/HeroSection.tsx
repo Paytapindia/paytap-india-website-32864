@@ -1,13 +1,13 @@
 import { Button } from "@/components/ui/button";
-import { ArrowRight, CreditCard, Smartphone, Wallet, Wifi, FileText, Play } from "lucide-react";
+import { ArrowRight, CreditCard, Smartphone, Wallet, Wifi, FileText } from "lucide-react";
 import { useTranslation } from "react-i18next";
 import paytapCardLogo from "@/assets/paytap-card-logo.png";
 
 const HeroSection = () => {
   const { t } = useTranslation();
   
-  const handleGetTag = () => {
-    window.open('https://u.payu.in/PAYUMN/7IhlCW7USFZ7', '_blank');
+  const handleCreateAccount = () => {
+    window.open('https://dashboard.paytap.co.in/login', '_blank');
   };
 
   return (
@@ -26,34 +26,25 @@ const HeroSection = () => {
             </div>
 
             {/* Large, bold headline */}
-            <h1 className="text-4xl md:text-5xl lg:text-6xl font-semibold text-foreground mb-8 leading-[1.1] tracking-tight animate-fade-in text-balance" style={{ animationDelay: '0.1s' }}>
-              {t('hero.title')}
+            <h1 className="text-4xl md:text-5xl lg:text-6xl font-semibold text-foreground mb-6 leading-[1.1] tracking-tight animate-fade-in text-balance" style={{ animationDelay: '0.1s' }}>
+              One Wallet.<br />
+              <span className="text-primary">Smarter Payments</span> for Everyday India.
             </h1>
 
             {/* Clean subtitle */}
-            <p className="text-muted-foreground text-lg md:text-xl max-w-xl leading-relaxed mb-12 animate-fade-in mx-auto lg:mx-0" style={{ animationDelay: '0.2s' }}>
-              {t('hero.subtitle')}
+            <p className="text-muted-foreground text-lg md:text-xl max-w-xl leading-relaxed mb-10 animate-fade-in mx-auto lg:mx-0" style={{ animationDelay: '0.2s' }}>
+              Create your PayTap account in minutes using your mobile number. Start managing payments, fleet expenses, and more—all in one place.
             </p>
 
-            {/* Single prominent CTA */}
-            <div className="flex flex-col sm:flex-row justify-center lg:justify-start items-center gap-4 mb-8 animate-fade-in" style={{ animationDelay: '0.3s' }}>
+            {/* Primary CTA - Center aligned and prominent */}
+            <div className="flex justify-center lg:justify-start mb-8 animate-fade-in" style={{ animationDelay: '0.3s' }}>
               <Button 
-                className="bg-paytap-dark hover:bg-paytap-dark/90 text-white px-10 py-6 text-lg font-medium rounded-xl shadow-lg hover:shadow-xl transition-all duration-300 group min-h-[56px]"
-                onClick={handleGetTag}
+                className="bg-primary hover:bg-primary/90 text-primary-foreground px-12 py-7 text-lg font-semibold rounded-2xl shadow-xl hover:shadow-2xl hover:scale-[1.02] transition-all duration-300 group min-h-[64px]"
+                onClick={handleCreateAccount}
               >
-                {t('hero.orderNow')}
-                <ArrowRight className="ml-2 w-5 h-5 group-hover:translate-x-1 transition-transform" />
+                Create Account to Get Started
+                <ArrowRight className="ml-3 w-5 h-5 group-hover:translate-x-1 transition-transform" />
               </Button>
-              
-              <a
-                href="https://youtube.com/shorts/ODRQcGWRaiE?si=MFu07J6YK6JzI8rB"
-                target="_blank"
-                rel="noopener noreferrer"
-                className="inline-flex items-center gap-2 px-6 py-3 bg-[#FF0000] hover:bg-[#CC0000] text-white font-medium rounded-full shadow-lg hover:shadow-xl hover:scale-105 transition-all duration-300"
-              >
-                <Play className="w-5 h-5 fill-current" />
-                Watch Live Demo
-              </a>
             </div>
             
             <div className="animate-fade-in" style={{ animationDelay: '0.35s' }}>
@@ -63,7 +54,7 @@ const HeroSection = () => {
             </div>
 
             {/* Trust indicators */}
-            <div className="animate-fade-in space-y-3" style={{ animationDelay: '0.4s' }}>
+            <div className="animate-fade-in space-y-3 mt-6" style={{ animationDelay: '0.4s' }}>
               <div className="text-muted-foreground text-sm tracking-wide">
                 PPI-licensed • RBI-compliant • Works at 8L+ terminals
               </div>
