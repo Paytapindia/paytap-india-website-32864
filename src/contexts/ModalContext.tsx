@@ -1,4 +1,3 @@
-
 import { createContext, useState, useContext, ReactNode } from "react";
 
 interface ModalContextType {
@@ -6,16 +5,23 @@ interface ModalContextType {
   openContactForm: () => void;
   closeContactForm: () => void;
   setContactFormOpen: (open: boolean) => void;
+  isDashboardOpen: boolean;
+  openDashboard: () => void;
+  closeDashboard: () => void;
 }
 
 const ModalContext = createContext<ModalContextType | undefined>(undefined);
 
 export const ModalProvider = ({ children }: { children: ReactNode }) => {
   const [isContactFormOpen, setIsContactFormOpen] = useState(false);
+  const [isDashboardOpen, setIsDashboardOpen] = useState(false);
 
   const openContactForm = () => setIsContactFormOpen(true);
   const closeContactForm = () => setIsContactFormOpen(false);
   const setContactFormOpen = (open: boolean) => setIsContactFormOpen(open);
+
+  const openDashboard = () => setIsDashboardOpen(true);
+  const closeDashboard = () => setIsDashboardOpen(false);
 
   return (
     <ModalContext.Provider
@@ -24,6 +30,9 @@ export const ModalProvider = ({ children }: { children: ReactNode }) => {
         openContactForm,
         closeContactForm,
         setContactFormOpen,
+        isDashboardOpen,
+        openDashboard,
+        closeDashboard,
       }}
     >
       {children}

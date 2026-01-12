@@ -2,13 +2,11 @@ import { Button } from "@/components/ui/button";
 import { ArrowRight, CreditCard, Smartphone, Wallet, Wifi, FileText } from "lucide-react";
 import { useTranslation } from "react-i18next";
 import paytapCardLogo from "@/assets/paytap-card-logo.png";
+import { useModal } from "@/contexts/ModalContext";
 
 const HeroSection = () => {
   const { t } = useTranslation();
-  
-  const handleCreateAccount = () => {
-    window.open('https://dashboard.paytap.co.in/login', '_blank');
-  };
+  const { openDashboard } = useModal();
 
   return (
     <section className="relative pt-32 md:pt-40 pb-24 md:pb-32 px-6 md:px-12 min-h-screen flex items-center bg-background">
@@ -40,7 +38,7 @@ const HeroSection = () => {
             <div className="flex justify-center lg:justify-start mb-8 animate-fade-in" style={{ animationDelay: '0.3s' }}>
               <Button 
                 className="bg-primary hover:bg-primary/90 text-primary-foreground px-12 py-7 text-lg font-semibold rounded-2xl shadow-xl hover:shadow-2xl hover:scale-[1.02] transition-all duration-300 group min-h-[64px]"
-                onClick={handleCreateAccount}
+                onClick={openDashboard}
               >
                 Create Account to Get Started
                 <ArrowRight className="ml-3 w-5 h-5 group-hover:translate-x-1 transition-transform" />
