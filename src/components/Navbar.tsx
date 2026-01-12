@@ -97,8 +97,8 @@ const Navbar = () => {
                     </li>
                     <li>
                       <NavigationMenuLink asChild>
-                        <a
-                          href="#"
+                        <Link
+                          to="/safevaults"
                           className="block select-none space-y-1 rounded-md p-3 leading-none no-underline outline-none transition-colors hover:bg-accent hover:text-accent-foreground focus:bg-accent focus:text-accent-foreground"
                         >
                           <div className="text-sm font-medium leading-none">
@@ -107,7 +107,7 @@ const Navbar = () => {
                           <p className="line-clamp-2 text-sm leading-snug text-muted-foreground">
                             Secure digital vault
                           </p>
-                        </a>
+                        </Link>
                       </NavigationMenuLink>
                     </li>
                     <li>
@@ -215,13 +215,13 @@ const Navbar = () => {
               >
                 {t('nav.expensePro')}
               </a>
-              <a 
-                href="#" 
+              <Link 
+                to="/safevaults" 
                 className="block text-base font-medium text-gray-700 hover:text-paytap-dark py-3 px-4 ml-2 border-b border-gray-100 transition-colors min-h-[48px] flex items-center"
                 onClick={handleNavClick}
               >
                 {t('nav.paytapSafeVaultz')}
-              </a>
+              </Link>
               <a 
                 href="#" 
                 className="block text-base font-medium text-gray-700 hover:text-paytap-dark py-3 px-4 ml-2 transition-colors min-h-[48px] flex items-center"
