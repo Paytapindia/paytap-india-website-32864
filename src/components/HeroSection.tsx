@@ -17,15 +17,8 @@ const HeroSection = () => {
         <div className="grid grid-cols-1 lg:grid-cols-2 gap-12 lg:gap-16 items-center">
           {/* Left side - Text content */}
           <div className="text-center lg:text-left">
-            {/* Minimal badge */}
-            <div className="inline-flex items-center gap-2 text-primary text-sm font-medium mb-8 animate-fade-in tracking-wide">
-              <span className="w-2 h-2 rounded-full bg-primary" />
-              {t('hero.badge')}
-            </div>
-
             {/* Large, bold headline */}
-            <h1 className="text-4xl md:text-5xl lg:text-6xl font-semibold text-foreground mb-6 leading-[1.1] tracking-tight animate-fade-in text-balance" style={{ animationDelay: '0.1s' }}>
-              One Wallet.<br />
+            <h1 className="text-4xl md:text-5xl lg:text-6xl font-semibold text-foreground mb-6 leading-[1.1] tracking-tight animate-fade-in text-balance">
               <span className="text-primary">Smarter Payments</span> for Everyday India.
             </h1>
 
