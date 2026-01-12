@@ -10,7 +10,6 @@ const products = [
     description: "Automated expense control for fleets. Zero manual reconciliation.",
     icon: Truck,
     link: "https://www.myfleetai.in",
-    gradient: "from-primary to-accent",
   },
   {
     id: 2,
@@ -18,7 +17,6 @@ const products = [
     description: "Real-time spend visibility. Instant reimbursements.",
     icon: Receipt,
     link: "https://www.expensepro.in",
-    gradient: "from-accent to-primary",
   },
   {
     id: 3,
@@ -26,7 +24,6 @@ const products = [
     description: "Save in gold and spend securely online—protect your primary bank card details.",
     icon: Shield,
     link: "/safevaults",
-    gradient: "from-primary to-accent",
   },
   {
     id: 4,
@@ -34,7 +31,6 @@ const products = [
     description: "Controlled spending for children. Parents stay in charge.",
     icon: Users,
     link: "/kids-pay",
-    gradient: "from-accent to-primary",
   },
 ];
 
@@ -42,7 +38,7 @@ const OurProductsSection = () => {
   const { t } = useTranslation();
 
   return (
-    <section id="our-products" className="py-24 md:py-32 px-6 md:px-12 bg-background">
+    <section id="our-products" className="py-24 md:py-32 px-6 md:px-12 bg-gradient-to-b from-background to-paytap-dark/5">
       <div className="max-w-6xl mx-auto">
         {/* Section header */}
         <div className="text-center mb-16 md:mb-20">
@@ -62,36 +58,39 @@ const OurProductsSection = () => {
             
             const cardContent = (
               <>
-                {/* Icon */}
-                <div className={`w-14 h-14 rounded-xl bg-gradient-to-br ${product.gradient} flex items-center justify-center mb-6 mx-auto`}>
-                  <product.icon className="w-7 h-7 text-primary-foreground" />
+                {/* Icon with navy blue gradient */}
+                <div className="w-14 h-14 rounded-xl bg-gradient-to-br from-paytap-dark to-paytap-dark/70 flex items-center justify-center mb-6 mx-auto shadow-lg shadow-paytap-dark/20 group-hover:shadow-xl group-hover:shadow-paytap-dark/30 transition-shadow duration-300">
+                  <product.icon className="w-7 h-7 text-white" />
                 </div>
 
                 {/* Content */}
-                <h3 className="text-xl md:text-2xl font-semibold text-foreground mb-3 group-hover:text-primary transition-colors text-center">
+                <h3 className="text-xl md:text-2xl font-semibold text-paytap-dark mb-3 group-hover:text-paytap-dark/80 transition-colors text-center">
                   {product.name}
                 </h3>
                 <p className="text-muted-foreground leading-relaxed mb-6 text-center">
                   {product.description}
                 </p>
 
-                {/* Link indicator */}
-                <div className="flex items-center justify-center text-primary font-medium text-sm">
+                {/* Link indicator with navy blue */}
+                <div className="flex items-center justify-center text-paytap-dark font-medium text-sm">
                   <span>Learn more</span>
                   <ArrowUpRight className="w-4 h-4 ml-1 group-hover:translate-x-0.5 group-hover:-translate-y-0.5 transition-transform" />
                 </div>
 
-                {/* Hover effect */}
-                <div className="absolute inset-0 rounded-2xl bg-gradient-to-br from-primary/5 to-accent/5 opacity-0 group-hover:opacity-100 transition-opacity pointer-events-none" />
+                {/* Hover effect with navy blue tint */}
+                <div className="absolute inset-0 rounded-2xl bg-gradient-to-br from-paytap-dark/8 to-paytap-dark/3 opacity-0 group-hover:opacity-100 transition-opacity pointer-events-none" />
               </>
             );
+
+            // Card styling with subtle navy blue background
+            const cardClassName = "group relative bg-gradient-to-br from-paytap-dark/[0.03] to-paytap-dark/[0.08] backdrop-blur-sm rounded-2xl p-5 sm:p-8 md:p-10 border border-paytap-dark/10 hover:border-paytap-dark/25 transition-all duration-300 hover:shadow-xl hover:shadow-paytap-dark/10 animate-fade-in text-center";
 
             if (isInternal) {
               return (
                 <Link
                   key={product.id}
                   to={product.link}
-                  className="group relative bg-card rounded-2xl p-5 sm:p-8 md:p-10 border border-border hover:border-primary/30 transition-all duration-300 hover:shadow-xl animate-fade-in text-center"
+                  className={cardClassName}
                   style={{ animationDelay: `${index * 0.1}s` }}
                 >
                   {cardContent}
@@ -105,7 +104,7 @@ const OurProductsSection = () => {
                 href={product.link}
                 target={isExternal ? "_blank" : undefined}
                 rel={isExternal ? "noopener noreferrer" : undefined}
-                className="group relative bg-card rounded-2xl p-5 sm:p-8 md:p-10 border border-border hover:border-primary/30 transition-all duration-300 hover:shadow-xl animate-fade-in text-center"
+                className={cardClassName}
                 style={{ animationDelay: `${index * 0.1}s` }}
               >
                 {cardContent}
