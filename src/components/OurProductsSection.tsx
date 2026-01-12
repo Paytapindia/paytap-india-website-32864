@@ -1,6 +1,7 @@
 
 import { ArrowUpRight, Truck, Receipt, Shield, Users } from "lucide-react";
 import { useTranslation } from "react-i18next";
+import { Link } from "react-router-dom";
 
 const products = [
   {
@@ -55,38 +56,62 @@ const OurProductsSection = () => {
 
         {/* Products grid */}
         <div className="grid grid-cols-1 md:grid-cols-2 gap-6 md:gap-8">
-          {products.map((product, index) => (
-            <a
-              key={product.id}
-              href={product.link}
-              target={product.link !== "#" ? "_blank" : undefined}
-              rel={product.link !== "#" ? "noopener noreferrer" : undefined}
-              className="group relative bg-card rounded-2xl p-5 sm:p-8 md:p-10 border border-border hover:border-primary/30 transition-all duration-300 hover:shadow-xl animate-fade-in"
-              style={{ animationDelay: `${index * 0.1}s` }}
-            >
-              {/* Icon */}
-              <div className={`w-14 h-14 rounded-xl bg-gradient-to-br ${product.gradient} flex items-center justify-center mb-6`}>
-                <product.icon className="w-7 h-7 text-primary-foreground" />
-              </div>
+          {products.map((product, index) => {
+            const isInternal = product.link.startsWith('/');
+            const isExternal = product.link.startsWith('http');
+            
+            const cardContent = (
+              <>
+                {/* Icon */}
+                <div className={`w-14 h-14 rounded-xl bg-gradient-to-br ${product.gradient} flex items-center justify-center mb-6 mx-auto`}>
+                  <product.icon className="w-7 h-7 text-primary-foreground" />
+                </div>
 
-              {/* Content */}
-              <h3 className="text-xl md:text-2xl font-semibold text-foreground mb-3 group-hover:text-primary transition-colors">
-                {product.name}
-              </h3>
-              <p className="text-muted-foreground leading-relaxed mb-6">
-                {product.description}
-              </p>
+                {/* Content */}
+                <h3 className="text-xl md:text-2xl font-semibold text-foreground mb-3 group-hover:text-primary transition-colors text-center">
+                  {product.name}
+                </h3>
+                <p className="text-muted-foreground leading-relaxed mb-6 text-center">
+                  {product.description}
+                </p>
 
-              {/* Link indicator */}
-              <div className="flex items-center text-primary font-medium text-sm">
-                <span>Learn more</span>
-                <ArrowUpRight className="w-4 h-4 ml-1 group-hover:translate-x-0.5 group-hover:-translate-y-0.5 transition-transform" />
-              </div>
+                {/* Link indicator */}
+                <div className="flex items-center justify-center text-primary font-medium text-sm">
+                  <span>Learn more</span>
+                  <ArrowUpRight className="w-4 h-4 ml-1 group-hover:translate-x-0.5 group-hover:-translate-y-0.5 transition-transform" />
+                </div>
 
-              {/* Hover effect */}
-              <div className="absolute inset-0 rounded-2xl bg-gradient-to-br from-primary/5 to-accent/5 opacity-0 group-hover:opacity-100 transition-opacity pointer-events-none" />
-            </a>
-          ))}
+                {/* Hover effect */}
+                <div className="absolute inset-0 rounded-2xl bg-gradient-to-br from-primary/5 to-accent/5 opacity-0 group-hover:opacity-100 transition-opacity pointer-events-none" />
+              </>
+            );
+
+            if (isInternal) {
+              return (
+                <Link
+                  key={product.id}
+                  to={product.link}
+                  className="group relative bg-card rounded-2xl p-5 sm:p-8 md:p-10 border border-border hover:border-primary/30 transition-all duration-300 hover:shadow-xl animate-fade-in text-center"
+                  style={{ animationDelay: `${index * 0.1}s` }}
+                >
+                  {cardContent}
+                </Link>
+              );
+            }
+
+            return (
+              <a
+                key={product.id}
+                href={product.link}
+                target={isExternal ? "_blank" : undefined}
+                rel={isExternal ? "noopener noreferrer" : undefined}
+                className="group relative bg-card rounded-2xl p-5 sm:p-8 md:p-10 border border-border hover:border-primary/30 transition-all duration-300 hover:shadow-xl animate-fade-in text-center"
+                style={{ animationDelay: `${index * 0.1}s` }}
+              >
+                {cardContent}
+              </a>
+            );
+          })}
         </div>
       </div>
     </section>
