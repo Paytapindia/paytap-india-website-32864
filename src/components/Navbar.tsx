@@ -37,10 +37,10 @@ const Navbar = () => {
   };
 
   return (
-    <header className={`w-full py-3 md:py-4 px-4 md:px-12 flex items-center justify-between fixed top-0 z-50 transition-all duration-300 ${
+    <header className={`w-full py-3 md:py-4 px-4 md:px-12 flex items-center justify-between fixed top-0 z-50 transition-all duration-300 bg-paytap-dark ${
       isScrolled 
-        ? 'bg-white/95 backdrop-blur-lg shadow-lg border-b border-gray-100' 
-        : 'bg-white/90 backdrop-blur-sm shadow-sm'
+        ? 'shadow-lg border-b border-white/10' 
+        : 'shadow-sm'
     }`}>
       <div className="flex items-center">
         <Link to="/" className="flex items-center gap-2 md:gap-3 font-bold text-lg md:text-xl mr-8 md:mr-12 hover:opacity-80 transition-opacity">
@@ -56,7 +56,7 @@ const Navbar = () => {
           <NavigationMenu>
             <NavigationMenuList>
               <NavigationMenuItem>
-                <NavigationMenuTrigger className="text-sm font-medium text-gray-600 hover:text-paytap-dark transition-colors bg-transparent h-auto p-0 hover:bg-transparent data-[state=open]:bg-transparent">
+                <NavigationMenuTrigger className="text-sm font-medium text-white/80 hover:text-white transition-colors bg-transparent h-auto p-0 hover:bg-transparent data-[state=open]:bg-transparent data-[state=open]:text-white">
                   {t('nav.ourProducts')}
                 </NavigationMenuTrigger>
                 <NavigationMenuContent>
@@ -131,21 +131,21 @@ const Navbar = () => {
             </NavigationMenuList>
           </NavigationMenu>
           
-          <Link to="/how-it-works" className="text-sm font-medium text-gray-600 hover:text-paytap-dark transition-colors relative group">
+          <Link to="/how-it-works" className="text-sm font-medium text-white/80 hover:text-white transition-colors relative group">
             {t('nav.howItWorks')}
-            <span className="absolute -bottom-1 left-0 w-0 h-0.5 bg-paytap-dark transition-all group-hover:w-full"></span>
+            <span className="absolute -bottom-1 left-0 w-0 h-0.5 bg-white transition-all group-hover:w-full"></span>
           </Link>
-          <a href="/#trust" className="text-sm font-medium text-gray-600 hover:text-paytap-dark transition-colors relative group">
+          <a href="/#trust" className="text-sm font-medium text-white/80 hover:text-white transition-colors relative group">
             {t('nav.whyPaytap')}
-            <span className="absolute -bottom-1 left-0 w-0 h-0.5 bg-paytap-dark transition-all group-hover:w-full"></span>
+            <span className="absolute -bottom-1 left-0 w-0 h-0.5 bg-white transition-all group-hover:w-full"></span>
           </a>
-          <Link to="/faq" className="text-sm font-medium text-gray-600 hover:text-paytap-dark transition-colors relative group">
+          <Link to="/faq" className="text-sm font-medium text-white/80 hover:text-white transition-colors relative group">
             {t('nav.faq')}
-            <span className="absolute -bottom-1 left-0 w-0 h-0.5 bg-paytap-dark transition-all group-hover:w-full"></span>
+            <span className="absolute -bottom-1 left-0 w-0 h-0.5 bg-white transition-all group-hover:w-full"></span>
           </Link>
-          <Link to="/support" className="text-sm font-medium text-gray-600 hover:text-paytap-dark transition-colors relative group">
+          <Link to="/support" className="text-sm font-medium text-white/80 hover:text-white transition-colors relative group">
             {t('nav.support')}
-            <span className="absolute -bottom-1 left-0 w-0 h-0.5 bg-paytap-dark transition-all group-hover:w-full"></span>
+            <span className="absolute -bottom-1 left-0 w-0 h-0.5 bg-white transition-all group-hover:w-full"></span>
           </Link>
         </nav>
       </div>
@@ -162,11 +162,11 @@ const Navbar = () => {
         
         {/* Mobile menu button */}
         <button 
-          className="md:hidden p-2 rounded-lg hover:bg-gray-100 transition-colors min-h-[44px] min-w-[44px] flex items-center justify-center" 
+          className="md:hidden p-2 rounded-lg hover:bg-white/10 transition-colors min-h-[44px] min-w-[44px] flex items-center justify-center" 
           onClick={() => setIsMenuOpen(!isMenuOpen)}
           aria-label="Toggle menu"
         >
-          {isMenuOpen ? <X className="w-5 h-5" /> : <Menu className="w-5 h-5" />}
+          {isMenuOpen ? <X className="w-5 h-5 text-white" /> : <Menu className="w-5 h-5 text-white" />}
         </button>
       </div>
 
