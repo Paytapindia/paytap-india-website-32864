@@ -16,7 +16,12 @@ import { supabase } from "@/integrations/supabase/client";
 import paytapCheckoutSticker from "@/assets/paytap-checkout-sticker.png";
 import paytapCard from "@/assets/paytap-card-product.png";
 
-const PAYU_PAYMENT_LINK = "https://u.payu.in/PAYUMN/7IhlCW7USFZ7";
+// PayU payment links based on product and quantity
+const PAYU_PAYMENT_LINKS = {
+  sticker_1: "https://u.payu.in/PAYUMN/7IhlCW7USFZ7",  // ₹499
+  sticker_2: "https://u.payu.in/PAYUMN/LJGyX3AmLLHv",  // ₹998
+  card_1: "https://u.payu.in/PAYUMN/7IhlCW7USFZ7"     // ₹499
+};
 
 const checkoutSchema = z.object({
   name: z.string().min(2, "Name must be at least 2 characters").max(50, "Name must be less than 50 characters"),
@@ -55,8 +60,23 @@ const Checkout = () => {
   const [orderPlaced, setOrderPlaced] = useState(false);
   const [selectedState, setSelectedState] = useState("");
   const [productType, setProductType] = useState<ProductType>(initialProduct);
+  const [quantity, setQuantity] = useState(1);
   const { toast } = useToast();
   const navigate = useNavigate();
+
+  // Get correct payment link based on product and quantity
+  const getPaymentLink = () => {
+    const key = `${productType}_${quantity}` as keyof typeof PAYU_PAYMENT_LINKS;
+    return PAYU_PAYMENT_LINKS[key] || PAYU_PAYMENT_LINKS.sticker_1;
+  };
+
+  // Handle product change - reset quantity for card
+  const handleProductChange = (type: ProductType) => {
+    setProductType(type);
+    if (type === 'card') {
+      setQuantity(1); // Card always has quantity 1
+    }
+  };
 
   const {
     register,
@@ -77,8 +97,7 @@ const Checkout = () => {
   }, [searchParams]);
 
   const product = PRODUCTS[productType];
-  const quantity = 1; // Fixed quantity
-  const total = product.price;
+  const total = product.price * quantity;
 
   const onSubmit = async (data: CheckoutFormData) => {
     setIsLoading(true);
@@ -96,7 +115,7 @@ const Checkout = () => {
         state: data.state,
         pincode: data.pincode,
         product_type: productType,
-        quantity: 1,
+        quantity: quantity,
         amount: total,
         txnid: txnid,
         payment_status: 'pending'
@@ -116,7 +135,7 @@ const Checkout = () => {
 
       // Open payment link in new tab after a short delay
       setTimeout(() => {
-        window.open(PAYU_PAYMENT_LINK, '_blank');
+        window.open(getPaymentLink(), '_blank');
       }, 1000);
 
     } catch (error) {
@@ -160,11 +179,11 @@ const Checkout = () => {
             </p>
             <div className="space-y-3">
               <Button 
-                onClick={() => window.open(PAYU_PAYMENT_LINK, '_blank')}
+                onClick={() => window.open(getPaymentLink(), '_blank')}
                 className="w-full bg-paytap-light hover:bg-paytap-dark"
               >
                 <CreditCard className="mr-2 h-4 w-4" />
-                Complete Payment
+                Complete Payment (₹{total})
               </Button>
               <Button 
                 variant="outline" 
@@ -350,7 +369,7 @@ const Checkout = () => {
                       <button
                         key={type}
                         type="button"
-                        onClick={() => setProductType(type)}
+                        onClick={() => handleProductChange(type)}
                         className={`p-3 rounded-lg border-2 transition-all text-left ${
                           productType === type 
                             ? "border-paytap-light bg-paytap-light/5" 
@@ -368,6 +387,39 @@ const Checkout = () => {
                     ))}
                   </div>
                 </div>
+
+                {/* Quantity Selector - Only for Sticker */}
+                {productType === 'sticker' && (
+                  <div className="space-y-3">
+                    <Label>Quantity</Label>
+                    <div className="grid grid-cols-2 gap-3">
+                      <button
+                        type="button"
+                        onClick={() => setQuantity(1)}
+                        className={`p-3 rounded-lg border-2 transition-all ${
+                          quantity === 1 
+                            ? "border-paytap-light bg-paytap-light/5" 
+                            : "border-gray-200 hover:border-gray-300"
+                        }`}
+                      >
+                        <p className="text-lg font-bold">1</p>
+                        <p className="text-sm text-gray-600">₹499</p>
+                      </button>
+                      <button
+                        type="button"
+                        onClick={() => setQuantity(2)}
+                        className={`p-3 rounded-lg border-2 transition-all ${
+                          quantity === 2 
+                            ? "border-paytap-light bg-paytap-light/5" 
+                            : "border-gray-200 hover:border-gray-300"
+                        }`}
+                      >
+                        <p className="text-lg font-bold">2</p>
+                        <p className="text-sm text-gray-600">₹998</p>
+                      </button>
+                    </div>
+                  </div>
+                )}
 
                 <Separator />
 
@@ -394,7 +446,7 @@ const Checkout = () => {
                 <div className="space-y-2">
                   <div className="flex justify-between">
                     <span>Subtotal</span>
-                    <span>₹{product.price}</span>
+                    <span>₹{product.price} × {quantity} = ₹{total}</span>
                   </div>
                   <div className="flex justify-between">
                     <span>Shipping</span>
