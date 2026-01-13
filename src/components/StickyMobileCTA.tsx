@@ -31,7 +31,7 @@ const StickyMobileCTA = () => {
           onClick={handleRedirect}
           className="w-full bg-paytap-light hover:bg-paytap-dark text-white py-4 rounded-2xl shadow-xl hover:shadow-2xl transition-all duration-300 transform hover:scale-105 font-semibold text-base min-h-[56px]"
         >
-          Order Card
+          Order PayTap Card/Tag Now
           <ArrowRight className="ml-2 w-5 h-5" />
         </Button>
       </div>
@@ -42,7 +42,7 @@ const StickyMobileCTA = () => {
           onClick={handleRedirect}
           className="bg-paytap-light hover:bg-paytap-dark text-white px-6 py-4 rounded-full shadow-xl hover:shadow-2xl transition-all duration-300 transform hover:scale-105 font-semibold text-base min-h-[56px]"
         >
-          Order Card
+          Order PayTap Card/Tag Now
           <ArrowRight className="ml-2 w-5 h-5" />
         </Button>
       </div>
