@@ -1,18 +1,24 @@
 import { Shield, Lock, CreditCard, WifiOff, BarChart3, Users } from "lucide-react";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
-import paytapSticker from "@/assets/paytap-sticker.png";
+import ProductCarousel from "@/components/ProductCarousel";
 
 const TrustSection = () => {
   return (
     <section id="trust" className="pt-12 md:pt-16 pb-24 md:pb-32 px-6 md:px-12 bg-secondary/30">
       <div className="max-w-6xl mx-auto">
-        {/* Product Image */}
-        <div className="flex justify-center mb-12 sm:mb-20">
-          <img 
-            src={paytapSticker}
-            alt="PayTap Payment Cards" 
-            className="w-full max-w-[420px] sm:max-w-[600px] md:max-w-4xl lg:max-w-5xl h-auto object-contain drop-shadow-2xl"
-          />
+        {/* Section Header */}
+        <div className="text-center mb-10 sm:mb-16">
+          <h2 className="text-2xl sm:text-3xl md:text-5xl font-semibold text-foreground mb-3 sm:mb-4 tracking-tight">
+            Shop PayTap Products
+          </h2>
+          <p className="text-muted-foreground text-base sm:text-lg md:text-xl max-w-2xl mx-auto">
+            Choose the perfect payment solution for your needs.
+          </p>
+        </div>
+
+        {/* Product Carousel */}
+        <div className="mb-16 sm:mb-24">
+          <ProductCarousel />
         </div>
 
         {/* Features Section */}
