@@ -52,11 +52,12 @@ serve(async (req) => {
       state,
       pincode,
       productType,
-      quantity
+      quantity,
+      debugPreset // For sanity testing
     } = body;
 
-    // Validate required fields
-    if (!name || !phone || !email || !address || !city || !state || !pincode || !productType || !quantity) {
+    // Validate required fields (skip validation for debug preset)
+    if (!debugPreset && (!name || !phone || !email || !address || !city || !state || !pincode || !productType || !quantity)) {
       return new Response(
         JSON.stringify({ error: 'Missing required fields' }),
         { status: 400, headers: { ...corsHeaders, 'Content-Type': 'application/json' } }
@@ -69,53 +70,78 @@ serve(async (req) => {
       card: 499
     };
 
-    const unitPrice = PRODUCT_PRICES[productType];
-    if (!unitPrice) {
-      return new Response(
-        JSON.stringify({ error: 'Invalid product type' }),
-        { status: 400, headers: { ...corsHeaders, 'Content-Type': 'application/json' } }
-      );
+    // Sanity test mode: use hardcoded values
+    let firstname: string;
+    let emailClean: string;
+    let phoneClean: string;
+    let amountStr: string;
+    let productinfo: string;
+    let validQuantity: number;
+
+    if (debugPreset) {
+      // Hardcoded test values for sanity check
+      firstname = 'test';
+      emailClean = 'test@test.com';
+      phoneClean = '9999999999';
+      amountStr = '1.00';
+      productinfo = 'test';
+      validQuantity = 1;
+      console.log('=== SANITY TEST MODE ENABLED ===');
+    } else {
+      // Normal flow: normalize user-provided fields
+      firstname = String(name).trim();
+      emailClean = String(email).trim().toLowerCase();
+      phoneClean = String(phone).trim();
+      
+      const unitPrice = PRODUCT_PRICES[productType];
+      if (!unitPrice) {
+        return new Response(
+          JSON.stringify({ error: 'Invalid product type' }),
+          { status: 400, headers: { ...corsHeaders, 'Content-Type': 'application/json' } }
+        );
+      }
+
+      validQuantity = Math.min(Math.max(1, parseInt(quantity)), 10);
+      const amount = unitPrice * validQuantity;
+      amountStr = amount.toFixed(2);
+      
+      productinfo = productType === 'sticker' 
+        ? `PayTap NFC Sticker x${validQuantity}` 
+        : `PayTap Prepaid Card x${validQuantity}`;
     }
 
-    const validQuantity = Math.min(Math.max(1, parseInt(quantity)), 10);
-    const amount = unitPrice * validQuantity;
-    const amountStr = amount.toFixed(2);
-
-    // Generate transaction ID
-    const txnid = generateTransactionId();
-
-    // Product info
-    const productinfo = productType === 'sticker' 
-      ? `PayTap NFC Sticker x${validQuantity}` 
-      : `PayTap Prepaid Card x${validQuantity}`;
+    // Generate transaction ID (or use fixed for sanity test)
+    const txnid = debugPreset ? 'PAYU_TEST_001' : generateTransactionId();
 
     // Create Supabase client
     const supabase = createClient(SUPABASE_URL, SUPABASE_SERVICE_ROLE_KEY);
 
-    // Save order to database with pending status
-    const { error: insertError } = await supabase
-      .from('orders')
-      .insert({
-        txnid,
-        name,
-        phone,
-        email,
-        address,
-        city,
-        state,
-        pincode,
-        product_type: productType,
-        quantity: validQuantity,
-        amount: amount,
-        payment_status: 'pending'
-      });
+    // Save order to database with pending status (skip for sanity test)
+    if (!debugPreset) {
+      const { error: insertError } = await supabase
+        .from('orders')
+        .insert({
+          txnid,
+          name: firstname,
+          phone: phoneClean,
+          email: emailClean,
+          address,
+          city,
+          state,
+          pincode,
+          product_type: productType,
+          quantity: validQuantity,
+          amount: parseFloat(amountStr),
+          payment_status: 'pending'
+        });
 
-    if (insertError) {
-      console.error('Error saving order:', insertError);
-      return new Response(
-        JSON.stringify({ error: 'Failed to create order' }),
-        { status: 500, headers: { ...corsHeaders, 'Content-Type': 'application/json' } }
-      );
+      if (insertError) {
+        console.error('Error saving order:', insertError);
+        return new Response(
+          JSON.stringify({ error: 'Failed to create order' }),
+          { status: 500, headers: { ...corsHeaders, 'Content-Type': 'application/json' } }
+        );
+      }
     }
 
     // UDF fields (empty for now)
@@ -127,18 +153,19 @@ serve(async (req) => {
 
     // Generate hash
     // PayU hash formula: key|txnid|amount|productinfo|firstname|email|udf1|udf2|udf3|udf4|udf5||||||salt
-    const hashString = `${PAYU_MERCHANT_KEY}|${txnid}|${amountStr}|${productinfo}|${name}|${email}|${udf1}|${udf2}|${udf3}|${udf4}|${udf5}||||||${PAYU_SALT}`;
+    const hashString = `${PAYU_MERCHANT_KEY}|${txnid}|${amountStr}|${productinfo}|${firstname}|${emailClean}|${udf1}|${udf2}|${udf3}|${udf4}|${udf5}||||||${PAYU_SALT}`;
     const hash = await generateHash(hashString);
 
-    // Debug logging
+    // Debug logging with lengths
     console.log('=== PayU Hash Debug ===');
     console.log('Hash String:', hashString);
     console.log('Generated Hash:', hash);
-    console.log('Amount:', amountStr);
-    console.log('Product Info:', productinfo);
-    console.log('Firstname:', name);
-    console.log('Email:', email);
-    console.log('TxnID:', txnid);
+    console.log(`Amount: "${amountStr}" (length: ${amountStr.length})`);
+    console.log(`Product Info: "${productinfo}" (length: ${productinfo.length})`);
+    console.log(`Firstname: "${firstname}" (length: ${firstname.length})`);
+    console.log(`Email: "${emailClean}" (length: ${emailClean.length})`);
+    console.log(`Phone: "${phoneClean}" (length: ${phoneClean.length})`);
+    console.log(`TxnID: "${txnid}" (length: ${txnid.length})`);
 
     // Get origin from request for callbacks
     const origin = req.headers.get('origin') || 'https://paytap.co.in';
@@ -152,9 +179,9 @@ serve(async (req) => {
           txnid,
           amount: amountStr,
           productinfo,
-          firstname: name,
-          email,
-          phone,
+          firstname,
+          email: emailClean,
+          phone: phoneClean,
           surl: `${origin}/checkout/success`,
           furl: `${origin}/checkout/cancel`,
           hash
