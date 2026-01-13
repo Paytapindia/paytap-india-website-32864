@@ -118,15 +118,32 @@ serve(async (req) => {
       );
     }
 
+    // UDF fields (empty for now)
+    const udf1 = '';
+    const udf2 = '';
+    const udf3 = '';
+    const udf4 = '';
+    const udf5 = '';
+
     // Generate hash
-    // Hash formula: key|txnid|amount|productinfo|firstname|email|udf1|udf2|udf3|udf4|udf5||||||salt
-    const hashString = `${PAYU_MERCHANT_KEY}|${txnid}|${amountStr}|${productinfo}|${name}|${email}|||||||||||${PAYU_SALT}`;
+    // PayU hash formula: key|txnid|amount|productinfo|firstname|email|udf1|udf2|udf3|udf4|udf5||||||salt
+    const hashString = `${PAYU_MERCHANT_KEY}|${txnid}|${amountStr}|${productinfo}|${name}|${email}|${udf1}|${udf2}|${udf3}|${udf4}|${udf5}||||||${PAYU_SALT}`;
     const hash = await generateHash(hashString);
+
+    // Debug logging
+    console.log('=== PayU Hash Debug ===');
+    console.log('Hash String:', hashString);
+    console.log('Generated Hash:', hash);
+    console.log('Amount:', amountStr);
+    console.log('Product Info:', productinfo);
+    console.log('Firstname:', name);
+    console.log('Email:', email);
+    console.log('TxnID:', txnid);
 
     // Get origin from request for callbacks
     const origin = req.headers.get('origin') || 'https://paytap.co.in';
 
-    // Return payment parameters
+    // Return payment parameters - minimal required fields only
     return new Response(
       JSON.stringify({
         success: true,
@@ -138,14 +155,8 @@ serve(async (req) => {
           firstname: name,
           email,
           phone,
-          address1: address,
-          city,
-          state,
-          zipcode: pincode,
-          country: 'India',
           surl: `${origin}/checkout/success`,
           furl: `${origin}/checkout/cancel`,
-          curl: `${origin}/checkout/cancel`,
           hash
         }
       }),
