@@ -8,6 +8,7 @@ import { HelmetProvider } from "react-helmet-async";
 import { ModalProvider } from "./contexts/ModalContext";
 import GlobalModals from "./components/GlobalModals";
 import ErrorBoundary from "./components/ErrorBoundary";
+import ScrollToTop from "./components/ScrollToTop";
 import Index from "./pages/Index";
 import About from "./pages/About";
 import Support from "./pages/Support";
@@ -45,6 +46,7 @@ const App = () => (
           <Toaster />
           <Sonner />
           <BrowserRouter>
+            <ScrollToTop />
             <Routes>
               <Route path="/" element={<Index />} />
               <Route path="/about" element={<About />} />
