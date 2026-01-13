@@ -1,5 +1,5 @@
-import { useState } from "react";
-import { ChevronLeft, ChevronRight, ShoppingCart } from "lucide-react";
+import { useNavigate } from "react-router-dom";
+import { ShoppingCart } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { Card, CardContent } from "@/components/ui/card";
 import {
@@ -15,11 +15,12 @@ import paytapTagSticker from "@/assets/paytap-tag-sticker.png";
 const products = [
   {
     id: 1,
-    name: "PayTap NFC Tag/Sticker",
-    description: "Compact, stick-anywhere NFC tag. Tap to pay at fuel pumps, tolls, metros, and more.",
-    price: "₹199",
+    name: "PayTap NFC Tag / Sticker",
+    description: "A compact, stick-anywhere NFC tag for everyday payments. Tap to pay at fuel pumps, recharge FASTag tolls, metros, parking & more — fast and secure.",
+    price: "₹499",
     image: paytapTagSticker,
-    buyLink: "https://u.payu.in/PAYUMN/7IhlCW7USFZ7"
+    buyLink: "/paytap-sticker",
+    isInternal: true
   },
   {
     id: 2,
@@ -27,13 +28,20 @@ const products = [
     description: "Premium contactless prepaid card for seamless payments at 8L+ acceptance points across India.",
     price: "₹299",
     image: paytapCard,
-    buyLink: "https://u.payu.in/PAYUMN/7IhlCW7USFZ7"
+    buyLink: "https://u.payu.in/PAYUMN/7IhlCW7USFZ7",
+    isInternal: false
   }
 ];
 
 const ProductCarousel = () => {
-  const handleOrderNow = (buyLink: string) => {
-    window.open(buyLink, '_blank');
+  const navigate = useNavigate();
+
+  const handleOrderNow = (buyLink: string, isInternal: boolean) => {
+    if (isInternal) {
+      navigate(buyLink);
+    } else {
+      window.open(buyLink, '_blank');
+    }
   };
 
   return (
@@ -73,7 +81,7 @@ const ProductCarousel = () => {
                         {product.price}
                       </span>
                       <Button
-                        onClick={() => handleOrderNow(product.buyLink)}
+                        onClick={() => handleOrderNow(product.buyLink, product.isInternal)}
                         className="bg-paytap-light hover:bg-paytap-dark text-white px-6 py-3 text-sm sm:text-base font-semibold rounded-xl shadow-lg hover:shadow-xl hover:scale-[1.02] transition-all duration-300 group"
                       >
                         <ShoppingCart className="mr-2 w-4 h-4 sm:w-5 sm:h-5" />
