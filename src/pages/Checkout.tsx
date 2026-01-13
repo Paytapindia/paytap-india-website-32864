@@ -19,8 +19,8 @@ import paytapCard from "@/assets/paytap-card-product.png";
 // PayU payment links based on product and quantity
 const PAYU_PAYMENT_LINKS = {
   sticker_1: "https://u.payu.in/PAYUMN/7IhlCW7USFZ7",  // ₹499
-  sticker_2: "https://u.payu.in/PAYUMN/LJGyX3AmLLHv",  // ₹998
-  card_1: "https://u.payu.in/PAYUMN/7IhlCW7USFZ7"     // ₹499
+  card_1: "https://u.payu.in/PAYUMN/7IhlCW7USFZ7",     // ₹499
+  card_2: "https://u.payu.in/PAYUMN/LJGyX3AmLLHv"      // ₹998
 };
 
 const checkoutSchema = z.object({
@@ -70,11 +70,11 @@ const Checkout = () => {
     return PAYU_PAYMENT_LINKS[key] || PAYU_PAYMENT_LINKS.sticker_1;
   };
 
-  // Handle product change - reset quantity for card
+  // Handle product change - reset quantity for sticker
   const handleProductChange = (type: ProductType) => {
     setProductType(type);
-    if (type === 'card') {
-      setQuantity(1); // Card always has quantity 1
+    if (type === 'sticker') {
+      setQuantity(1); // Sticker always has quantity 1
     }
   };
 
@@ -388,8 +388,8 @@ const Checkout = () => {
                   </div>
                 </div>
 
-                {/* Quantity Selector - Only for Sticker */}
-                {productType === 'sticker' && (
+                {/* Quantity Selector - Only for Card */}
+                {productType === 'card' && (
                   <div className="space-y-3">
                     <Label>Quantity</Label>
                     <div className="grid grid-cols-2 gap-3">
