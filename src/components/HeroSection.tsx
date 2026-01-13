@@ -28,13 +28,20 @@ const HeroSection = () => {
               Create your PayTap account in minutes using your mobile number. Start managing payments, fleet expenses, and more—all in one place.
             </p>
 
-            {/* Primary CTA - Center aligned and prominent */}
-            <div className="flex justify-center lg:justify-start mb-8 animate-fade-in" style={{ animationDelay: '0.3s' }}>
+            {/* Primary CTAs - Center aligned and prominent */}
+            <div className="flex flex-col sm:flex-row gap-4 justify-center lg:justify-start mb-8 animate-fade-in" style={{ animationDelay: '0.3s' }}>
               <Button 
-                className="bg-primary hover:bg-primary/90 text-primary-foreground px-12 py-7 text-lg font-semibold rounded-2xl shadow-xl hover:shadow-2xl hover:scale-[1.02] transition-all duration-300 group min-h-[64px]"
+                className="bg-primary hover:bg-primary/90 text-primary-foreground px-8 py-6 text-lg font-semibold rounded-2xl shadow-xl hover:shadow-2xl hover:scale-[1.02] transition-all duration-300 group min-h-[64px]"
                 onClick={handleCreateAccount}
               >
                 Create Account to Get Started
+                <ArrowRight className="ml-3 w-5 h-5 group-hover:translate-x-1 transition-transform" />
+              </Button>
+              <Button 
+                className="bg-paytap-light hover:bg-paytap-dark text-white px-8 py-6 text-lg font-semibold rounded-2xl shadow-xl hover:shadow-2xl hover:scale-[1.02] transition-all duration-300 group min-h-[64px]"
+                onClick={() => window.open('https://u.payu.in/PAYUMN/7IhlCW7USFZ7', '_blank')}
+              >
+                Order PayTap Card/Tag Now
                 <ArrowRight className="ml-3 w-5 h-5 group-hover:translate-x-1 transition-transform" />
               </Button>
             </div>
