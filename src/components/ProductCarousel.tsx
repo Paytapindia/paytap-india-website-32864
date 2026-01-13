@@ -15,18 +15,18 @@ import paytapTagSticker from "@/assets/paytap-tag-sticker.png";
 const products = [
   {
     id: 1,
-    name: "PayTap NFC Card",
-    description: "Premium contactless prepaid card for seamless payments at 8L+ acceptance points across India.",
-    price: "₹299",
-    image: paytapCard,
-    buyLink: "https://u.payu.in/PAYUMN/7IhlCW7USFZ7"
-  },
-  {
-    id: 2,
     name: "PayTap NFC Tag/Sticker",
     description: "Compact, stick-anywhere NFC tag. Tap to pay at fuel pumps, tolls, metros, and more.",
     price: "₹199",
     image: paytapTagSticker,
+    buyLink: "https://u.payu.in/PAYUMN/7IhlCW7USFZ7"
+  },
+  {
+    id: 2,
+    name: "PayTap NFC Card",
+    description: "Premium contactless prepaid card for seamless payments at 8L+ acceptance points across India.",
+    price: "₹299",
+    image: paytapCard,
     buyLink: "https://u.payu.in/PAYUMN/7IhlCW7USFZ7"
   }
 ];
@@ -47,7 +47,7 @@ const ProductCarousel = () => {
       >
         <CarouselContent className="-ml-2 md:-ml-4">
           {products.map((product) => (
-            <CarouselItem key={product.id} className="pl-2 md:pl-4 md:basis-1/2 lg:basis-1/2">
+            <CarouselItem key={product.id} className="pl-2 md:pl-4 basis-full">
               <Card className="bg-card border-border overflow-hidden h-full">
                 <CardContent className="p-0 flex flex-col h-full">
                   {/* Product Image */}
