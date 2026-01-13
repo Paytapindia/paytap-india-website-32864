@@ -1,3 +1,4 @@
+import { useNavigate } from "react-router-dom";
 import { Button } from "@/components/ui/button";
 import { Card, CardContent } from "@/components/ui/card";
 import { 
@@ -25,8 +26,10 @@ import FooterSection from "@/components/FooterSection";
 import paytapCard from "@/assets/paytap-card-product.png";
 
 const PaytapCard = () => {
+  const navigate = useNavigate();
+  
   const handleBuyNow = () => {
-    window.open("https://u.payu.in/PAYUMN/7IhlCW7USFZ7", "_blank");
+    navigate("/checkout?product=card");
   };
 
   const howItWorksSteps = [

@@ -1,4 +1,4 @@
-import { Link } from "react-router-dom";
+import { useNavigate } from "react-router-dom";
 import { Button } from "@/components/ui/button";
 import { Card, CardContent } from "@/components/ui/card";
 import { 
@@ -24,8 +24,10 @@ import FooterSection from "@/components/FooterSection";
 import paytapTagSticker from "@/assets/paytap-tag-sticker.png";
 
 const PaytapSticker = () => {
+  const navigate = useNavigate();
+  
   const handleBuyNow = () => {
-    window.open("https://u.payu.in/PAYUMN/7IhlCW7USFZ7", "_blank");
+    navigate("/checkout?product=sticker");
   };
 
   const howItWorksSteps = [

@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import { useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
 import * as z from "zod";
@@ -10,9 +10,11 @@ import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/com
 import { Separator } from "@/components/ui/separator";
 import { useToast } from "@/hooks/use-toast";
 import { getStates, getCitiesByState } from "@/data/indianStatesAndCities";
-import { useNavigate } from "react-router-dom";
-import { Loader2, ShieldCheck, Truck, CreditCard, Home } from "lucide-react";
-import { initiatePayUPayment, generateTransactionId, type PayUOrderData } from "@/lib/payu";
+import { useNavigate, useSearchParams } from "react-router-dom";
+import { Loader2, ShieldCheck, Truck, CreditCard, Home, Plus, Minus, Package } from "lucide-react";
+import { supabase } from "@/integrations/supabase/client";
+import paytapTagSticker from "@/assets/paytap-tag-sticker.png";
+import paytapCard from "@/assets/paytap-card-product.png";
 
 const checkoutSchema = z.object({
   name: z.string().min(2, "Name must be at least 2 characters").max(50, "Name must be less than 50 characters"),
@@ -26,10 +28,31 @@ const checkoutSchema = z.object({
 
 type CheckoutFormData = z.infer<typeof checkoutSchema>;
 
+const PRODUCTS = {
+  sticker: {
+    name: "PayTap NFC Sticker",
+    description: "Contactless payment sticker",
+    price: 499,
+    image: paytapTagSticker
+  },
+  card: {
+    name: "PayTap Prepaid Card",
+    description: "RuPay-powered prepaid card",
+    price: 499,
+    image: paytapCard
+  }
+};
+
+type ProductType = keyof typeof PRODUCTS;
 
 const Checkout = () => {
+  const [searchParams] = useSearchParams();
+  const initialProduct = (searchParams.get("product") as ProductType) || "sticker";
+  
   const [isLoading, setIsLoading] = useState(false);
   const [selectedState, setSelectedState] = useState("");
+  const [productType, setProductType] = useState<ProductType>(initialProduct);
+  const [quantity, setQuantity] = useState(1);
   const { toast } = useToast();
   const navigate = useNavigate();
 
@@ -38,46 +61,71 @@ const Checkout = () => {
     handleSubmit,
     formState: { errors },
     setValue,
-    watch,
     trigger
   } = useForm<CheckoutFormData>({
     resolver: zodResolver(checkoutSchema)
   });
 
-  const watchedState = watch("state");
+  // Update product from URL params
+  useEffect(() => {
+    const product = searchParams.get("product") as ProductType;
+    if (product && PRODUCTS[product]) {
+      setProductType(product);
+    }
+  }, [searchParams]);
+
+  const product = PRODUCTS[productType];
+  const subtotal = product.price * quantity;
+  const total = subtotal; // GST included in price
 
   const initiatePayment = async (orderData: CheckoutFormData) => {
     try {
-      const txnid = generateTransactionId();
-      
-      const payuOrderData: PayUOrderData = {
-        txnid,
-        amount: 1180, // Amount in rupees (will be normalized to 2 decimals)
-        productinfo: "PayTap NFC Payment Tag",
-        firstname: orderData.name,
-        email: orderData.email,
-        phone: orderData.phone,
-        address1: orderData.address,
-        city: orderData.city,
-        state: orderData.state,
-        zipcode: orderData.pincode,
-        country: "India"
-      };
+      // Call edge function to create payment
+      const { data, error } = await supabase.functions.invoke('create-payment', {
+        body: {
+          ...orderData,
+          productType,
+          quantity
+        }
+      });
 
+      if (error || !data?.success) {
+        throw new Error(error?.message || data?.error || 'Payment initiation failed');
+      }
+
+      const paymentData = data.paymentData;
+
+      // Store order data in session for success page
       sessionStorage.setItem('payuOrderData', JSON.stringify({
         ...orderData,
-        txnid,
-        amount: "1180.00"
+        txnid: paymentData.txnid,
+        amount: paymentData.amount,
+        productType,
+        quantity
       }));
 
-      // Initiate PayU payment (redirects to PayU)
-      initiatePayUPayment(payuOrderData);
+      // Create and submit PayU form
+      const payuForm = document.createElement('form');
+      payuForm.method = 'POST';
+      payuForm.action = 'https://secure.payu.in/_payment'; // Production URL
+      payuForm.style.display = 'none';
+
+      Object.entries(paymentData).forEach(([key, value]) => {
+        const input = document.createElement('input');
+        input.type = 'hidden';
+        input.name = key;
+        input.value = String(value);
+        payuForm.appendChild(input);
+      });
+
+      document.body.appendChild(payuForm);
+      payuForm.submit();
       
     } catch (error) {
-      console.error('PayU payment error:', error);
+      console.error('Payment error:', error);
       toast({
         title: "Payment Error",
-        description: "Failed to initiate payment. Please try again.",
+        description: error instanceof Error ? error.message : "Failed to initiate payment. Please try again.",
         variant: "destructive"
       });
       setIsLoading(false);
@@ -101,13 +149,17 @@ const Checkout = () => {
   const handleStateChange = (state: string) => {
     setSelectedState(state);
     setValue("state", state);
-    setValue("city", ""); // Reset city when state changes
+    setValue("city", "");
     trigger("state");
   };
 
   const handleCityChange = (city: string) => {
     setValue("city", city);
     trigger("city");
+  };
+
+  const adjustQuantity = (delta: number) => {
+    setQuantity(prev => Math.min(Math.max(1, prev + delta), 10));
   };
 
   return (
@@ -127,7 +179,7 @@ const Checkout = () => {
         
         <div className="mb-8 text-center">
           <h1 className="text-3xl font-bold text-gray-900 mb-2">Complete Your Order</h1>
-          <p className="text-gray-600">Get your PayTap NFC payment tag delivered to your doorstep</p>
+          <p className="text-gray-600">Get your PayTap product delivered to your doorstep</p>
         </div>
 
         <div className="grid md:grid-cols-2 gap-8">
@@ -245,7 +297,7 @@ const Checkout = () => {
 
                 <Button 
                   type="submit" 
-                  className="w-full bg-blue-600 hover:bg-blue-700" 
+                  className="w-full bg-paytap-light hover:bg-paytap-dark" 
                   disabled={isLoading}
                 >
                   {isLoading ? (
@@ -256,7 +308,7 @@ const Checkout = () => {
                   ) : (
                     <>
                       <CreditCard className="mr-2 h-4 w-4" />
-                      Pay ₹1180 & Place Order
+                      Pay ₹{total} & Place Order
                     </>
                   )}
                 </Button>
@@ -271,17 +323,78 @@ const Checkout = () => {
                 <CardTitle>Order Summary</CardTitle>
               </CardHeader>
               <CardContent className="space-y-4">
+                {/* Product Selection */}
+                <div className="space-y-3">
+                  <Label>Select Product</Label>
+                  <div className="grid grid-cols-2 gap-3">
+                    {(Object.keys(PRODUCTS) as ProductType[]).map((type) => (
+                      <button
+                        key={type}
+                        type="button"
+                        onClick={() => setProductType(type)}
+                        className={`p-3 rounded-lg border-2 transition-all text-left ${
+                          productType === type 
+                            ? "border-paytap-light bg-paytap-light/5" 
+                            : "border-gray-200 hover:border-gray-300"
+                        }`}
+                      >
+                        <img 
+                          src={PRODUCTS[type].image} 
+                          alt={PRODUCTS[type].name} 
+                          className="w-12 h-12 object-contain mx-auto mb-2"
+                        />
+                        <p className="text-sm font-medium text-center">{type === 'sticker' ? 'NFC Sticker' : 'Prepaid Card'}</p>
+                        <p className="text-xs text-gray-500 text-center">₹{PRODUCTS[type].price}</p>
+                      </button>
+                    ))}
+                  </div>
+                </div>
+
+                <Separator />
+
+                {/* Selected Product Details */}
                 <div className="flex items-center space-x-4">
-                  <div className="w-16 h-16 bg-blue-100 rounded-lg flex items-center justify-center">
-                    <CreditCard className="w-8 h-8 text-blue-600" />
+                  <div className="w-16 h-16 bg-gray-100 rounded-lg flex items-center justify-center p-2">
+                    <img 
+                      src={product.image} 
+                      alt={product.name}
+                      className="w-full h-full object-contain"
+                    />
                   </div>
                   <div className="flex-1">
-                    <h4 className="font-semibold">PayTap NFC Payment Tag</h4>
-                    <p className="text-sm text-gray-600">Contactless payment sticker</p>
-                    <p className="text-sm text-gray-500">Quantity: 1</p>
+                    <h4 className="font-semibold">{product.name}</h4>
+                    <p className="text-sm text-gray-600">{product.description}</p>
                   </div>
                   <div className="text-right">
-                    <p className="font-semibold">₹1180</p>
+                    <p className="font-semibold">₹{product.price}</p>
+                  </div>
+                </div>
+
+                {/* Quantity Selector */}
+                <div className="flex items-center justify-between">
+                  <Label>Quantity</Label>
+                  <div className="flex items-center gap-3">
+                    <Button 
+                      type="button"
+                      variant="outline" 
+                      size="icon"
+                      onClick={() => adjustQuantity(-1)}
+                      disabled={quantity <= 1}
+                      className="h-8 w-8"
+                    >
+                      <Minus className="h-4 w-4" />
+                    </Button>
+                    <span className="w-8 text-center font-medium">{quantity}</span>
+                    <Button 
+                      type="button"
+                      variant="outline" 
+                      size="icon"
+                      onClick={() => adjustQuantity(1)}
+                      disabled={quantity >= 10}
+                      className="h-8 w-8"
+                    >
+                      <Plus className="h-4 w-4" />
+                    </Button>
                   </div>
                 </div>
 
@@ -289,21 +402,21 @@ const Checkout = () => {
 
                 <div className="space-y-2">
                   <div className="flex justify-between">
-                    <span>Subtotal</span>
-                    <span>₹1000</span>
+                    <span>Subtotal ({quantity} × ₹{product.price})</span>
+                    <span>₹{subtotal}</span>
                   </div>
                   <div className="flex justify-between">
                     <span>Shipping</span>
                     <span className="text-green-600">Free</span>
                   </div>
-                  <div className="flex justify-between">
-                    <span>GST (18%)</span>
-                    <span>₹180</span>
+                  <div className="flex justify-between text-sm text-gray-500">
+                    <span>GST (Included)</span>
+                    <span>Included</span>
                   </div>
                   <Separator />
                   <div className="flex justify-between font-semibold text-lg">
                     <span>Total</span>
-                    <span>₹1180</span>
+                    <span>₹{total}</span>
                   </div>
                 </div>
               </CardContent>
@@ -324,7 +437,7 @@ const Checkout = () => {
                   <span className="text-sm">Free shipping across India</span>
                 </div>
                 <div className="flex items-center space-x-3">
-                  <CreditCard className="w-5 h-5 text-green-600" />
+                  <Package className="w-5 h-5 text-green-600" />
                   <span className="text-sm">Easy setup and activation</span>
                 </div>
               </CardContent>
