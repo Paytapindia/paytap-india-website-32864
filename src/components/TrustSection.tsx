@@ -41,15 +41,15 @@ const TrustSection = () => {
               { icon: Users, title: "Individuals to Enterprise", desc: "One solution for personal vehicles, families, and logistics teams." },
               { icon: Lock, title: "Zero Bank Exposure", desc: "Tokenized wallet keeps your banking info private and secure." },
             ].map((feature, index) => (
-              <Card key={index} className="bg-card border-border hover:border-primary/20 transition-colors">
+              <Card key={index} className="bg-paytap-dark border-paytap-dark/80 hover:border-paytap-light/30 transition-colors">
                 <CardHeader>
-                  <div className="w-12 h-12 rounded-xl bg-primary/10 flex items-center justify-center mb-4">
-                    <feature.icon className="h-6 w-6 text-primary" />
+                  <div className="w-12 h-12 rounded-xl bg-white/10 flex items-center justify-center mb-4">
+                    <feature.icon className="h-6 w-6 text-white" />
                   </div>
-                  <CardTitle className="text-lg font-medium">{feature.title}</CardTitle>
+                  <CardTitle className="text-lg font-medium text-white">{feature.title}</CardTitle>
                 </CardHeader>
                 <CardContent>
-                  <p className="text-muted-foreground text-sm leading-relaxed">{feature.desc}</p>
+                  <p className="text-white/70 text-sm leading-relaxed">{feature.desc}</p>
                 </CardContent>
               </Card>
             ))}
