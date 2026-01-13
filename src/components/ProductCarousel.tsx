@@ -51,16 +51,16 @@ const ProductCarousel = () => {
               <Card className="bg-card border-border overflow-hidden h-full">
                 <CardContent className="p-0 flex flex-col h-full">
                   {/* Product Image */}
-                  <div className="relative bg-gradient-to-br from-secondary/50 to-secondary p-6 flex items-center justify-center">
+                  <div className="relative bg-gradient-to-br from-secondary/50 to-secondary p-6 flex items-center justify-center h-[280px] sm:h-[320px]">
                     <img
                       src={product.image}
                       alt={product.name}
-                      className="w-full max-w-[280px] sm:max-w-[320px] h-auto object-contain drop-shadow-xl"
+                      className="max-w-[240px] sm:max-w-[280px] max-h-[240px] sm:max-h-[280px] w-auto h-auto object-contain drop-shadow-xl"
                     />
                   </div>
                   
                   {/* Product Details */}
-                  <div className="p-6 flex flex-col flex-grow">
+                  <div className="p-6 flex flex-col flex-grow min-h-[200px]">
                     <h3 className="text-xl sm:text-2xl font-semibold text-foreground mb-2">
                       {product.name}
                     </h3>
