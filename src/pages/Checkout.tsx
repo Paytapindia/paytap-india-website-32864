@@ -11,10 +11,12 @@ import { Separator } from "@/components/ui/separator";
 import { useToast } from "@/hooks/use-toast";
 import { getStates, getCitiesByState } from "@/data/indianStatesAndCities";
 import { useNavigate, useSearchParams } from "react-router-dom";
-import { Loader2, ShieldCheck, Truck, CreditCard, Home, Plus, Minus, Package } from "lucide-react";
+import { Loader2, ShieldCheck, Truck, CreditCard, Home, Package, CheckCircle } from "lucide-react";
 import { supabase } from "@/integrations/supabase/client";
 import paytapTagSticker from "@/assets/paytap-tag-sticker.png";
 import paytapCard from "@/assets/paytap-card-product.png";
+
+const PAYU_PAYMENT_LINK = "https://u.payu.in/PAYUMN/7IhlCW7USFZ7";
 
 const checkoutSchema = z.object({
   name: z.string().min(2, "Name must be at least 2 characters").max(50, "Name must be less than 50 characters"),
@@ -50,9 +52,9 @@ const Checkout = () => {
   const initialProduct = (searchParams.get("product") as ProductType) || "sticker";
   
   const [isLoading, setIsLoading] = useState(false);
+  const [orderPlaced, setOrderPlaced] = useState(false);
   const [selectedState, setSelectedState] = useState("");
   const [productType, setProductType] = useState<ProductType>(initialProduct);
-  const [quantity, setQuantity] = useState(1);
   const { toast } = useToast();
   const navigate = useNavigate();
 
@@ -75,91 +77,55 @@ const Checkout = () => {
   }, [searchParams]);
 
   const product = PRODUCTS[productType];
-  const subtotal = product.price * quantity;
-  const total = subtotal; // GST included in price
-
-  const initiatePayment = async (orderData: CheckoutFormData, debugPreset = false) => {
-    try {
-      // Call edge function to create payment
-      const { data, error } = await supabase.functions.invoke('create-payment', {
-        body: debugPreset 
-          ? { debugPreset: true }
-          : {
-              ...orderData,
-              productType,
-              quantity
-            }
-      });
-
-      if (error || !data?.success) {
-        throw new Error(error?.message || data?.error || 'Payment initiation failed');
-      }
-
-      const paymentData = data.paymentData;
-
-      // DEBUG: Log exact payload before submission
-      console.log('=== PayU Frontend Debug ===');
-      console.log('paymentData from backend:', paymentData);
-      console.log('Field values with lengths:');
-      Object.entries(paymentData).forEach(([key, value]) => {
-        const strVal = String(value);
-        console.log(`  ${key}: "${strVal}" (length: ${strVal.length})`);
-      });
-
-      // Store order data in session for success page
-      sessionStorage.setItem('payuOrderData', JSON.stringify({
-        ...orderData,
-        txnid: paymentData.txnid,
-        amount: paymentData.amount,
-        productType,
-        quantity
-      }));
-
-      // Create and submit PayU form
-      const payuForm = document.createElement('form');
-      payuForm.method = 'POST';
-      payuForm.action = 'https://secure.payu.in/_payment'; // Production URL
-      payuForm.style.display = 'none';
-
-      Object.entries(paymentData).forEach(([key, value]) => {
-        const input = document.createElement('input');
-        input.type = 'hidden';
-        input.name = key;
-        input.value = String(value);
-        payuForm.appendChild(input);
-      });
-
-      // DEBUG: Log actual form field values before submit
-      console.log('=== Form Fields Before Submit ===');
-      const formInputs = payuForm.querySelectorAll('input');
-      formInputs.forEach((input) => {
-        console.log(`  ${input.name}: "${input.value}" (length: ${input.value.length})`);
-      });
-
-      document.body.appendChild(payuForm);
-      payuForm.submit();
-      
-    } catch (error) {
-      console.error('Payment error:', error);
-      toast({
-        title: "Payment Error",
-        description: error instanceof Error ? error.message : "Failed to initiate payment. Please try again.",
-        variant: "destructive"
-      });
-      setIsLoading(false);
-    }
-  };
+  const quantity = 1; // Fixed quantity
+  const total = product.price;
 
   const onSubmit = async (data: CheckoutFormData) => {
     setIsLoading(true);
     try {
-      await initiatePayment(data);
+      // Generate a simple transaction ID
+      const txnid = `TXN${Date.now()}${Math.random().toString(36).substring(2, 8).toUpperCase()}`;
+      
+      // Save order to database
+      const { error } = await supabase.from('orders').insert({
+        name: data.name.trim(),
+        email: data.email.trim().toLowerCase(),
+        phone: data.phone.trim(),
+        address: data.address.trim(),
+        city: data.city,
+        state: data.state,
+        pincode: data.pincode,
+        product_type: productType,
+        quantity: 1,
+        amount: total,
+        txnid: txnid,
+        payment_status: 'pending'
+      });
+
+      if (error) {
+        throw new Error('Failed to save order');
+      }
+
+      // Show success state
+      setOrderPlaced(true);
+      
+      toast({
+        title: "Order Placed Successfully! 🎉",
+        description: "Order will be processed soon!! Thank you",
+      });
+
+      // Open payment link in new tab after a short delay
+      setTimeout(() => {
+        window.open(PAYU_PAYMENT_LINK, '_blank');
+      }, 1000);
+
     } catch (error) {
       toast({
         title: "Error",
         description: "Something went wrong. Please try again.",
         variant: "destructive"
       });
+    } finally {
       setIsLoading(false);
     }
   };
@@ -176,38 +142,50 @@ const Checkout = () => {
     trigger("city");
   };
 
-  const adjustQuantity = (delta: number) => {
-    setQuantity(prev => Math.min(Math.max(1, prev + delta), 10));
-  };
-
-  // Sanity test function
-  const runSanityTest = async () => {
-    setIsLoading(true);
-    try {
-      await initiatePayment({} as CheckoutFormData, true);
-    } catch (error) {
-      toast({
-        title: "Sanity Test Error",
-        description: error instanceof Error ? error.message : "Failed to run sanity test.",
-        variant: "destructive"
-      });
-      setIsLoading(false);
-    }
-  };
+  // Success state UI
+  if (orderPlaced) {
+    return (
+      <div className="min-h-screen bg-gray-50 py-8 flex items-center justify-center">
+        <div className="container mx-auto px-4 max-w-md text-center">
+          <Card className="p-8">
+            <div className="flex justify-center mb-6">
+              <CheckCircle className="w-20 h-20 text-green-500" />
+            </div>
+            <h1 className="text-2xl font-bold text-gray-900 mb-4">Order Placed Successfully! 🎉</h1>
+            <p className="text-gray-600 mb-6">
+              Order will be processed soon!! Thank you for choosing PayTap.
+            </p>
+            <p className="text-sm text-gray-500 mb-6">
+              A payment window has been opened. Please complete your payment there.
+            </p>
+            <div className="space-y-3">
+              <Button 
+                onClick={() => window.open(PAYU_PAYMENT_LINK, '_blank')}
+                className="w-full bg-paytap-light hover:bg-paytap-dark"
+              >
+                <CreditCard className="mr-2 h-4 w-4" />
+                Complete Payment
+              </Button>
+              <Button 
+                variant="outline" 
+                onClick={() => navigate("/")}
+                className="w-full"
+              >
+                <Home className="mr-2 h-4 w-4" />
+                Go Back Home
+              </Button>
+            </div>
+          </Card>
+        </div>
+      </div>
+    );
+  }
 
   return (
     <div className="min-h-screen bg-gray-50 py-8">
       <div className="container mx-auto px-4 max-w-4xl">
-        {/* Go Back Home Button + Sanity Test */}
-        <div className="flex justify-between mb-4">
-          <Button 
-            variant="destructive" 
-            onClick={runSanityTest}
-            disabled={isLoading}
-            className="flex items-center gap-2"
-          >
-            🧪 Run PayU Sanity Test (₹1)
-          </Button>
+        {/* Go Back Home Button */}
+        <div className="flex justify-end mb-4">
           <Button 
             variant="outline" 
             onClick={() => navigate("/")}
@@ -411,40 +389,12 @@ const Checkout = () => {
                   </div>
                 </div>
 
-                {/* Quantity Selector */}
-                <div className="flex items-center justify-between">
-                  <Label>Quantity</Label>
-                  <div className="flex items-center gap-3">
-                    <Button 
-                      type="button"
-                      variant="outline" 
-                      size="icon"
-                      onClick={() => adjustQuantity(-1)}
-                      disabled={quantity <= 1}
-                      className="h-8 w-8"
-                    >
-                      <Minus className="h-4 w-4" />
-                    </Button>
-                    <span className="w-8 text-center font-medium">{quantity}</span>
-                    <Button 
-                      type="button"
-                      variant="outline" 
-                      size="icon"
-                      onClick={() => adjustQuantity(1)}
-                      disabled={quantity >= 10}
-                      className="h-8 w-8"
-                    >
-                      <Plus className="h-4 w-4" />
-                    </Button>
-                  </div>
-                </div>
-
                 <Separator />
 
                 <div className="space-y-2">
                   <div className="flex justify-between">
-                    <span>Subtotal ({quantity} × ₹{product.price})</span>
-                    <span>₹{subtotal}</span>
+                    <span>Subtotal</span>
+                    <span>₹{product.price}</span>
                   </div>
                   <div className="flex justify-between">
                     <span>Shipping</span>
