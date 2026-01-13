@@ -9,7 +9,7 @@ const FooterSection = () => {
   const { t } = useTranslation();
   
   const handleRedirect = () => {
-    window.open('https://u.payu.in/PAYUMN/KIQlHVfA6z3b', '_blank');
+    navigate('/checkout');
   };
   
   return (
