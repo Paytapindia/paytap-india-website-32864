@@ -19,6 +19,7 @@ import paytapCard from "@/assets/paytap-card-product.png";
 // PayU payment links based on product and quantity
 const PAYU_PAYMENT_LINKS = {
   sticker_1: "https://u.payu.in/PAYUMN/7IhlCW7USFZ7",  // ₹499
+  sticker_2: "https://u.payu.in/PAYUMN/LJGyX3AmLLHv",  // ₹998
   card_1: "https://u.payu.in/PAYUMN/7IhlCW7USFZ7",     // ₹499
   card_2: "https://u.payu.in/PAYUMN/LJGyX3AmLLHv"      // ₹998
 };
@@ -70,12 +71,10 @@ const Checkout = () => {
     return PAYU_PAYMENT_LINKS[key] || PAYU_PAYMENT_LINKS.sticker_1;
   };
 
-  // Handle product change - reset quantity for sticker
+  // Handle product change
   const handleProductChange = (type: ProductType) => {
     setProductType(type);
-    if (type === 'sticker') {
-      setQuantity(1); // Sticker always has quantity 1
-    }
+    setQuantity(1); // Reset quantity when switching products
   };
 
   const {
@@ -388,38 +387,36 @@ const Checkout = () => {
                   </div>
                 </div>
 
-                {/* Quantity Selector - Only for Card */}
-                {productType === 'card' && (
-                  <div className="space-y-3">
-                    <Label>Quantity</Label>
-                    <div className="grid grid-cols-2 gap-3">
-                      <button
-                        type="button"
-                        onClick={() => setQuantity(1)}
-                        className={`p-3 rounded-lg border-2 transition-all ${
-                          quantity === 1 
-                            ? "border-paytap-light bg-paytap-light/5" 
-                            : "border-gray-200 hover:border-gray-300"
-                        }`}
-                      >
-                        <p className="text-lg font-bold">1</p>
-                        <p className="text-sm text-gray-600">₹499</p>
-                      </button>
-                      <button
-                        type="button"
-                        onClick={() => setQuantity(2)}
-                        className={`p-3 rounded-lg border-2 transition-all ${
-                          quantity === 2 
-                            ? "border-paytap-light bg-paytap-light/5" 
-                            : "border-gray-200 hover:border-gray-300"
-                        }`}
-                      >
-                        <p className="text-lg font-bold">2</p>
-                        <p className="text-sm text-gray-600">₹998</p>
-                      </button>
-                    </div>
+                {/* Quantity Selector */}
+                <div className="space-y-3">
+                  <Label>Quantity</Label>
+                  <div className="grid grid-cols-2 gap-3">
+                    <button
+                      type="button"
+                      onClick={() => setQuantity(1)}
+                      className={`p-3 rounded-lg border-2 transition-all ${
+                        quantity === 1 
+                          ? "border-paytap-light bg-paytap-light/5" 
+                          : "border-gray-200 hover:border-gray-300"
+                      }`}
+                    >
+                      <p className="text-lg font-bold">1</p>
+                      <p className="text-sm text-gray-600">₹499</p>
+                    </button>
+                    <button
+                      type="button"
+                      onClick={() => setQuantity(2)}
+                      className={`p-3 rounded-lg border-2 transition-all ${
+                        quantity === 2 
+                          ? "border-paytap-light bg-paytap-light/5" 
+                          : "border-gray-200 hover:border-gray-300"
+                      }`}
+                    >
+                      <p className="text-lg font-bold">2</p>
+                      <p className="text-sm text-gray-600">₹998</p>
+                    </button>
                   </div>
-                )}
+                </div>
 
                 <Separator />
 
