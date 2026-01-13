@@ -24,12 +24,12 @@ const products = [
   },
   {
     id: 2,
-    name: "PayTap NFC Card",
-    description: "Premium contactless prepaid card for seamless payments at 8L+ acceptance points across India.",
+    name: "PayTap Prepaid Physical Card",
+    description: "RuPay-powered expense management solution for corporates and MSMEs",
     price: "₹299",
     image: paytapCard,
-    buyLink: "https://u.payu.in/PAYUMN/7IhlCW7USFZ7",
-    isInternal: false
+    buyLink: "/paytap-card",
+    isInternal: true
   }
 ];
 
