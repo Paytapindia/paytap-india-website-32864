@@ -1,10 +1,12 @@
 import { Button } from "@/components/ui/button";
 import { ArrowRight, CreditCard, Smartphone, Wallet, Wifi, FileText } from "lucide-react";
 import { useTranslation } from "react-i18next";
+import { useNavigate } from "react-router-dom";
 import paytapCardLogo from "@/assets/paytap-card-logo.png";
 
 const HeroSection = () => {
   const { t } = useTranslation();
+  const navigate = useNavigate();
 
   const handleCreateAccount = () => {
     window.open("https://dashboard.paytap.co.in/login", "_blank");
@@ -39,7 +41,7 @@ const HeroSection = () => {
               </Button>
               <Button 
                 className="bg-paytap-light hover:bg-paytap-dark text-white px-8 py-6 text-lg font-semibold rounded-2xl shadow-xl hover:shadow-2xl hover:scale-[1.02] transition-all duration-300 group min-h-[64px]"
-                onClick={() => window.open('https://u.payu.in/PAYUMN/7IhlCW7USFZ7', '_blank')}
+                onClick={() => navigate('/checkout')}
               >
                 Order PayTap Card/Tag Now
                 <ArrowRight className="ml-3 w-5 h-5 group-hover:translate-x-1 transition-transform" />
