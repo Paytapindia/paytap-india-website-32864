@@ -1,9 +1,9 @@
-import { Button } from "@/components/ui/button";
 import { Link } from "react-router-dom";
 import { useState, useEffect } from "react";
 import { Menu, X } from "lucide-react";
 import { useTranslation } from "react-i18next";
 import LanguageSelector from "@/components/LanguageSelector";
+import LoginPopup from "@/components/LoginPopup";
 import paytapLogo from "@/assets/paytap-logo-navbar.png";
 
 import {
@@ -19,9 +19,6 @@ const Navbar = () => {
   const { t } = useTranslation();
   const [isMenuOpen, setIsMenuOpen] = useState(false);
   const [isScrolled, setIsScrolled] = useState(false);
-  const handleLogin = () => {
-    window.open("https://dashboard.paytap.co.in/login", "_blank");
-  };
 
   useEffect(() => {
     const handleScroll = () => {
@@ -151,13 +148,7 @@ const Navbar = () => {
       
       <div className="flex items-center space-x-3 md:space-x-4">
         <LanguageSelector />
-        <Button 
-          variant="default" 
-          className="bg-paytap-light hover:bg-paytap-dark text-white px-4 md:px-6 py-2 rounded-full shadow-lg hover:shadow-xl transition-all duration-300 transform hover:scale-105 text-sm md:text-base min-h-[40px] md:min-h-[44px]"
-          onClick={handleLogin}
-        >
-          {t('nav.login')}
-        </Button>
+        <LoginPopup />
         
         {/* Mobile menu button */}
         <button 
@@ -243,16 +234,13 @@ const Navbar = () => {
             >
               {t('nav.support')}
             </Link>
-            <Button 
-              variant="outline" 
-              className="w-full mt-3 border-2 border-paytap-dark text-paytap-dark hover:bg-paytap-dark hover:text-white py-3 rounded-full font-semibold transition-all duration-300 min-h-[48px]"
-              onClick={() => {
-                handleLogin();
-                handleNavClick();
-              }}
-            >
-              {t('nav.login')}
-            </Button>
+            <div className="mt-3">
+              <LoginPopup 
+                variant="outline" 
+                isMobile={true}
+                onClose={handleNavClick}
+              />
+            </div>
           </div>
         </div>
       )}
