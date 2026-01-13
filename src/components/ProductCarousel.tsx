@@ -9,7 +9,7 @@ import {
   CarouselNext,
   CarouselPrevious,
 } from "@/components/ui/carousel";
-import paytapCard from "@/assets/paytap-sticker.png";
+import paytapCard from "@/assets/paytap-card-product.png";
 import paytapTagSticker from "@/assets/paytap-tag-sticker.png";
 
 const products = [
