@@ -14,7 +14,90 @@ export type Database = {
   }
   public: {
     Tables: {
-      [_ in never]: never
+      leads: {
+        Row: {
+          created_at: string
+          email: string | null
+          id: string
+          name: string | null
+          phone: string
+          source: string | null
+        }
+        Insert: {
+          created_at?: string
+          email?: string | null
+          id?: string
+          name?: string | null
+          phone: string
+          source?: string | null
+        }
+        Update: {
+          created_at?: string
+          email?: string | null
+          id?: string
+          name?: string | null
+          phone?: string
+          source?: string | null
+        }
+        Relationships: []
+      }
+      orders: {
+        Row: {
+          address: string
+          amount: number
+          city: string
+          created_at: string
+          email: string
+          id: string
+          name: string
+          payment_status: string
+          payu_response: Json | null
+          phone: string
+          pincode: string
+          product_type: string
+          quantity: number
+          state: string
+          txnid: string
+          updated_at: string
+        }
+        Insert: {
+          address: string
+          amount: number
+          city: string
+          created_at?: string
+          email: string
+          id?: string
+          name: string
+          payment_status?: string
+          payu_response?: Json | null
+          phone: string
+          pincode: string
+          product_type: string
+          quantity?: number
+          state: string
+          txnid: string
+          updated_at?: string
+        }
+        Update: {
+          address?: string
+          amount?: number
+          city?: string
+          created_at?: string
+          email?: string
+          id?: string
+          name?: string
+          payment_status?: string
+          payu_response?: Json | null
+          phone?: string
+          pincode?: string
+          product_type?: string
+          quantity?: number
+          state?: string
+          txnid?: string
+          updated_at?: string
+        }
+        Relationships: []
+      }
     }
     Views: {
       [_ in never]: never
