@@ -78,15 +78,17 @@ const Checkout = () => {
   const subtotal = product.price * quantity;
   const total = subtotal; // GST included in price
 
-  const initiatePayment = async (orderData: CheckoutFormData) => {
+  const initiatePayment = async (orderData: CheckoutFormData, debugPreset = false) => {
     try {
       // Call edge function to create payment
       const { data, error } = await supabase.functions.invoke('create-payment', {
-        body: {
-          ...orderData,
-          productType,
-          quantity
-        }
+        body: debugPreset 
+          ? { debugPreset: true }
+          : {
+              ...orderData,
+              productType,
+              quantity
+            }
       });
 
       if (error || !data?.success) {
@@ -94,6 +96,15 @@ const Checkout = () => {
       }
 
       const paymentData = data.paymentData;
+
+      // DEBUG: Log exact payload before submission
+      console.log('=== PayU Frontend Debug ===');
+      console.log('paymentData from backend:', paymentData);
+      console.log('Field values with lengths:');
+      Object.entries(paymentData).forEach(([key, value]) => {
+        const strVal = String(value);
+        console.log(`  ${key}: "${strVal}" (length: ${strVal.length})`);
+      });
 
       // Store order data in session for success page
       sessionStorage.setItem('payuOrderData', JSON.stringify({
@@ -116,6 +127,13 @@ const Checkout = () => {
         input.name = key;
         input.value = String(value);
         payuForm.appendChild(input);
+      });
+
+      // DEBUG: Log actual form field values before submit
+      console.log('=== Form Fields Before Submit ===');
+      const formInputs = payuForm.querySelectorAll('input');
+      formInputs.forEach((input) => {
+        console.log(`  ${input.name}: "${input.value}" (length: ${input.value.length})`);
       });
 
       document.body.appendChild(payuForm);
@@ -162,11 +180,34 @@ const Checkout = () => {
     setQuantity(prev => Math.min(Math.max(1, prev + delta), 10));
   };
 
+  // Sanity test function
+  const runSanityTest = async () => {
+    setIsLoading(true);
+    try {
+      await initiatePayment({} as CheckoutFormData, true);
+    } catch (error) {
+      toast({
+        title: "Sanity Test Error",
+        description: error instanceof Error ? error.message : "Failed to run sanity test.",
+        variant: "destructive"
+      });
+      setIsLoading(false);
+    }
+  };
+
   return (
     <div className="min-h-screen bg-gray-50 py-8">
       <div className="container mx-auto px-4 max-w-4xl">
-        {/* Go Back Home Button */}
-        <div className="flex justify-end mb-4">
+        {/* Go Back Home Button + Sanity Test */}
+        <div className="flex justify-between mb-4">
+          <Button 
+            variant="destructive" 
+            onClick={runSanityTest}
+            disabled={isLoading}
+            className="flex items-center gap-2"
+          >
+            🧪 Run PayU Sanity Test (₹1)
+          </Button>
           <Button 
             variant="outline" 
             onClick={() => navigate("/")}
