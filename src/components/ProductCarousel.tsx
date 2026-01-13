@@ -26,7 +26,7 @@ const products = [
     id: 2,
     name: "PayTap Prepaid Physical Card",
     description: "RuPay-powered expense management solution for corporates and MSMEs",
-    price: "₹299",
+    price: "₹499",
     image: paytapCard,
     buyLink: "/paytap-card",
     isInternal: true
