@@ -41,7 +41,7 @@ const HeroSection = () => {
               </Button>
               <Button 
                 className="bg-paytap-light hover:bg-paytap-dark text-white px-8 py-6 text-lg font-semibold rounded-2xl shadow-xl hover:shadow-2xl hover:scale-[1.02] transition-all duration-300 group min-h-[64px]"
-                onClick={() => navigate('/checkout')}
+                onClick={() => navigate('/paytap-sticker')}
               >
                 Order PayTap Card/Tag Now
                 <ArrowRight className="ml-3 w-5 h-5 group-hover:translate-x-1 transition-transform" />
