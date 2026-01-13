@@ -13,7 +13,7 @@ import { getStates, getCitiesByState } from "@/data/indianStatesAndCities";
 import { useNavigate, useSearchParams } from "react-router-dom";
 import { Loader2, ShieldCheck, Truck, CreditCard, Home, Package, CheckCircle } from "lucide-react";
 import { supabase } from "@/integrations/supabase/client";
-import paytapTagSticker from "@/assets/paytap-tag-sticker.png";
+import paytapCheckoutSticker from "@/assets/paytap-checkout-sticker.png";
 import paytapCard from "@/assets/paytap-card-product.png";
 
 const PAYU_PAYMENT_LINK = "https://u.payu.in/PAYUMN/7IhlCW7USFZ7";
@@ -35,7 +35,7 @@ const PRODUCTS = {
     name: "PayTap NFC Sticker",
     description: "Contactless payment sticker",
     price: 499,
-    image: paytapTagSticker
+    image: paytapCheckoutSticker
   },
   card: {
     name: "PayTap Prepaid Card",
