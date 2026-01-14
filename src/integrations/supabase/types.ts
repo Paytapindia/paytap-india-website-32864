@@ -43,56 +43,59 @@ export type Database = {
       }
       orders: {
         Row: {
-          address: string
+          address: string | null
           amount: number
-          city: string
+          city: string | null
           created_at: string
-          email: string
+          details_pending: boolean | null
+          email: string | null
           id: string
-          name: string
+          name: string | null
           payment_status: string
           payu_response: Json | null
-          phone: string
-          pincode: string
+          phone: string | null
+          pincode: string | null
           product_type: string
           quantity: number
-          state: string
+          state: string | null
           txnid: string
           updated_at: string
         }
         Insert: {
-          address: string
+          address?: string | null
           amount: number
-          city: string
+          city?: string | null
           created_at?: string
-          email: string
+          details_pending?: boolean | null
+          email?: string | null
           id?: string
-          name: string
+          name?: string | null
           payment_status?: string
           payu_response?: Json | null
-          phone: string
-          pincode: string
+          phone?: string | null
+          pincode?: string | null
           product_type: string
           quantity?: number
-          state: string
+          state?: string | null
           txnid: string
           updated_at?: string
         }
         Update: {
-          address?: string
+          address?: string | null
           amount?: number
-          city?: string
+          city?: string | null
           created_at?: string
-          email?: string
+          details_pending?: boolean | null
+          email?: string | null
           id?: string
-          name?: string
+          name?: string | null
           payment_status?: string
           payu_response?: Json | null
-          phone?: string
-          pincode?: string
+          phone?: string | null
+          pincode?: string | null
           product_type?: string
           quantity?: number
-          state?: string
+          state?: string | null
           txnid?: string
           updated_at?: string
         }
