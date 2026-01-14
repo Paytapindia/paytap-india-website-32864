@@ -25,7 +25,7 @@ const FooterSection = () => {
           {/* Company Info */}
           <div className="md:col-span-1">
             <div className="flex items-center gap-3 mb-6">
-              <img src={paytapFooterLogo} alt="PayTap" className="h-10 w-auto" />
+              <img src={paytapFooterLogo} alt="Paytap" className="h-10 w-auto" />
             </div>
             <p className="text-gray-300 text-lg leading-relaxed mb-6">
               {t('footer.description')}

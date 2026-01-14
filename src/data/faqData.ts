@@ -2,36 +2,36 @@
 export const generalFAQs = [
   {
     id: "general-1",
-    question: "What is PayTap?",
-    answer: "PayTap is a contactless payment tag that enables seamless tap-and-pay experiences for fuel, tolls, metro, parking, and other everyday utility payments. It works using NFC technology and a prepaid wallet."
+    question: "What is Paytap?",
+    answer: "Paytap is a contactless payment tag that enables seamless tap-and-pay experiences for fuel, tolls, metro, parking, and other everyday utility payments. It works using NFC technology and a prepaid wallet."
   },
   {
     id: "general-2",
-    question: "Who can use PayTap?",
-    answer: "Anyone with a vehicle or a recurring need to pay for daily services like fuel, tolls, or parking can use PayTap. It's designed for individuals, fleet operators, gig workers, and businesses alike."
+    question: "Who can use Paytap?",
+    answer: "Anyone with a vehicle or a recurring need to pay for daily services like fuel, tolls, or parking can use Paytap. It's designed for individuals, fleet operators, gig workers, and businesses alike."
   },
   {
     id: "general-3",
-    question: "Where can I use PayTap?",
-    answer: "You can use your PayTap tag at over 8 lakh+ RuPay-enabled POS terminals across India. This includes fuel stations, toll booths (via FASTag integration), metro stations (NCMC), service centers, parking lots, and partner retail outlets."
+    question: "Where can I use Paytap?",
+    answer: "You can use your Paytap tag at over 8 lakh+ RuPay-enabled POS terminals across India. This includes fuel stations, toll booths (via FASTag integration), metro stations (NCMC), service centers, parking lots, and partner retail outlets."
   },
   {
     id: "general-4",
-    question: "Is internet required to use PayTap?",
-    answer: "No. PayTap works without the need for an internet connection at the point of sale. The tag uses offline NFC to communicate with supported POS terminals."
+    question: "Is internet required to use Paytap?",
+    answer: "No. Paytap works without the need for an internet connection at the point of sale. The tag uses offline NFC to communicate with supported POS terminals."
   },
   {
     id: "general-5",
-    question: "Is PayTap RBI approved?",
-    answer: "Yes. PayTap operates in partnership with Transcorp International Ltd, an RBI-authorized Prepaid Payment Instrument (PPI) issuer."
+    question: "Is Paytap RBI approved?",
+    answer: "Yes. Paytap operates in partnership with Transcorp International Ltd, an RBI-authorized Prepaid Payment Instrument (PPI) issuer."
   }
 ];
 
 export const gettingStartedFAQs = [
   {
     id: "start-1",
-    question: "How do I get a PayTap tag?",
-    answer: "You can order a PayTap tag directly from our website or mobile app. It will be delivered to your address along with activation instructions."
+    question: "How do I get a Paytap tag?",
+    answer: "You can order a Paytap tag directly from our website or mobile app. It will be delivered to your address along with activation instructions."
   },
   {
     id: "start-2",
@@ -40,7 +40,7 @@ export const gettingStartedFAQs = [
   },
   {
     id: "start-3",
-    question: "Do I need an app to use PayTap?",
+    question: "Do I need an app to use Paytap?",
     answer: "No app is required to make a payment. However, our companion app helps you manage your wallet, view transactions, track expenses, and load funds."
   },
   {
@@ -56,7 +56,7 @@ export const gettingStartedFAQs = [
   {
     id: "start-6",
     question: "How do I load money into my wallet?",
-    answer: "To load money into your PayTap wallet, open the app, go to the \"Wallet\" section, and choose \"Add Money.\" You can add funds using UPI, debit cards, or net banking."
+    answer: "To load money into your Paytap wallet, open the app, go to the \"Wallet\" section, and choose \"Add Money.\" You can add funds using UPI, debit cards, or net banking."
   }
 ];
 
@@ -91,8 +91,8 @@ export const kycFAQs = [
 export const walletFAQs = [
   {
     id: "wallet-1",
-    question: "How do I load money into my PayTap wallet?",
-    answer: "Funds can be added via UPI, debit card, net banking, or through the PayTap app."
+    question: "How do I load money into my Paytap wallet?",
+    answer: "Funds can be added via UPI, debit card, net banking, or through the Paytap app."
   },
   {
     id: "wallet-2",
@@ -101,8 +101,8 @@ export const walletFAQs = [
   },
   {
     id: "wallet-3",
-    question: "Can I connect my bank account to PayTap?",
-    answer: "No. PayTap is a prepaid wallet, not a bank account. You can add money from your bank via UPI."
+    question: "Can I connect my bank account to Paytap?",
+    answer: "No. Paytap is a prepaid wallet, not a bank account. You can add money from your bank via UPI."
   },
   {
     id: "wallet-4",
@@ -111,8 +111,8 @@ export const walletFAQs = [
   },
   {
     id: "wallet-5",
-    question: "Does PayTap work on metro stations?",
-    answer: "Yes, PayTap supports NCMC metro terminals across select Indian cities."
+    question: "Does Paytap work on metro stations?",
+    answer: "Yes, Paytap supports NCMC metro terminals across select Indian cities."
   }
 ];
 
@@ -120,7 +120,7 @@ export const transactionsFAQs = [
   {
     id: "trans-1",
     question: "How can I view my transaction history?",
-    answer: "All transactions are logged in the PayTap app and are accessible via your dashboard."
+    answer: "All transactions are logged in the Paytap app and are accessible via your dashboard."
   },
   {
     id: "trans-2",
@@ -142,8 +142,8 @@ export const transactionsFAQs = [
 export const securityFAQs = [
   {
     id: "security-1",
-    question: "Is PayTap secure?",
-    answer: "Absolutely. PayTap uses PCI-DSS-compliant systems and 256-bit encryption. Your transactions are tokenized and secure."
+    question: "Is Paytap secure?",
+    answer: "Absolutely. Paytap uses PCI-DSS-compliant systems and 256-bit encryption. Your transactions are tokenized and secure."
   },
   {
     id: "security-2",
@@ -188,7 +188,7 @@ export const supportFAQs = [
   },
   {
     id: "support-3",
-    question: "How do I close my PayTap account?",
+    question: "How do I close my Paytap account?",
     answer: "You can request closure from your account dashboard. Remaining wallet balance (if any) will be refunded post verification."
   }
 ];

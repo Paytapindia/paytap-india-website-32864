@@ -106,8 +106,8 @@ serve(async (req) => {
       amountStr = amount.toFixed(2);
       
       productinfo = productType === 'sticker' 
-        ? `PayTap NFC Sticker x${validQuantity}` 
-        : `PayTap Prepaid Card x${validQuantity}`;
+        ? `Paytap NFC Sticker x${validQuantity}` 
+        : `Paytap Prepaid Card x${validQuantity}`;
     }
 
     // Generate transaction ID (or use fixed for sanity test)

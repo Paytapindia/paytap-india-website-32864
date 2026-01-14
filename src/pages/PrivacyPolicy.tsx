@@ -18,7 +18,7 @@ const PrivacyPolicy = () => {
           <div className="flex items-center space-x-3">
             <Shield className="h-6 w-6 text-blue-600" />
             <div>
-              <h1 className="text-xl font-bold text-gray-900">PayTap Privacy Policy</h1>
+              <h1 className="text-xl font-bold text-gray-900">Paytap Privacy Policy</h1>
               <p className="text-sm text-gray-600">Effective Date: 1-1-2025</p>
             </div>
           </div>
@@ -50,10 +50,10 @@ const PrivacyPolicy = () => {
         {/* Introduction */}
         <div className="bg-white rounded-lg shadow-sm p-8 mb-6">
           <p className="text-gray-700 mb-6">
-            At PayTap, your privacy is a priority. This Privacy Policy explains how DriveTap Innovation India Pvt. Ltd. (hereinafter "PayTap", "we", "our", or "us") collects, uses, discloses, and safeguards your information when you use our services.
+            At Paytap, your privacy is a priority. This Privacy Policy explains how DriveTap Innovation India Pvt. Ltd. (hereinafter "Paytap", "we", "our", or "us") collects, uses, discloses, and safeguards your information when you use our services.
           </p>
           <p className="text-gray-700">
-            By accessing or using PayTap, you agree to the practices described in this Privacy Policy.
+            By accessing or using Paytap, you agree to the practices described in this Privacy Policy.
           </p>
         </div>
 
@@ -66,7 +66,7 @@ const PrivacyPolicy = () => {
               </AccordionTrigger>
               <AccordionContent className="prose max-w-none">
                 <p>
-                  PayTap is a registered product of DriveTap Innovation India Pvt. Ltd. headquartered in Bengaluru, India. All personal data collected is managed and processed by this legal entity in compliance with applicable Indian laws.
+                  Paytap is a registered product of DriveTap Innovation India Pvt. Ltd. headquartered in Bengaluru, India. All personal data collected is managed and processed by this legal entity in compliance with applicable Indian laws.
                 </p>
               </AccordionContent>
             </AccordionItem>
@@ -154,7 +154,7 @@ const PrivacyPolicy = () => {
                 7. Data Security Measures
               </AccordionTrigger>
               <AccordionContent className="prose max-w-none">
-                <p>PayTap uses:</p>
+                <p>Paytap uses:</p>
                 <ul className="list-disc list-inside space-y-1">
                   <li>PCI-DSS compliant systems</li>
                   <li>256-bit SSL encryption</li>
@@ -227,7 +227,7 @@ const PrivacyPolicy = () => {
               </AccordionTrigger>
               <AccordionContent className="prose max-w-none">
                 <p>
-                  PayTap is not intended for individuals under 18. We do not knowingly collect data from minors. If such data is identified, it will be deleted immediately.
+                  Paytap is not intended for individuals under 18. We do not knowingly collect data from minors. If such data is identified, it will be deleted immediately.
                 </p>
               </AccordionContent>
             </AccordionItem>
@@ -249,7 +249,7 @@ const PrivacyPolicy = () => {
               </AccordionTrigger>
               <AccordionContent className="prose max-w-none">
                 <p>
-                  We reserve the right to modify this Privacy Policy at any time. Substantial changes will be posted prominently on our website. Continued use of PayTap after such updates implies acceptance.
+                  We reserve the right to modify this Privacy Policy at any time. Substantial changes will be posted prominently on our website. Continued use of Paytap after such updates implies acceptance.
                 </p>
               </AccordionContent>
             </AccordionItem>

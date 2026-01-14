@@ -11,7 +11,7 @@ import paytapCard from '@/assets/paytap-card-product.png';
 const products = [
   {
     id: 1,
-    name: "PayTap NFC Tag / Sticker",
+    name: "Paytap NFC Tag / Sticker",
     description: "A compact, stick-anywhere NFC tag for everyday payments. Tap to pay at fuel pumps, recharge FASTag tolls, metros, parking & more — fast and secure.",
     price: "₹499",
     image: paytapTagSticker,
@@ -19,7 +19,7 @@ const products = [
   },
   {
     id: 2,
-    name: "PayTap Prepaid Physical Card",
+    name: "Paytap Prepaid Physical Card",
     description: "RuPay-powered expense management solution for corporates and MSMEs. Perfect for employee expenses, corporate gifting, and vendor payments.",
     price: "₹499",
     image: paytapCard,
@@ -46,7 +46,7 @@ const BuyStep = () => {
             Step 01
           </div>
           <h2 className="text-3xl sm:text-4xl md:text-5xl font-semibold text-foreground mb-4 tracking-tight">
-            Order Your PayTap
+            Order Your Paytap
           </h2>
           <p className="text-lg text-muted-foreground max-w-md mx-auto">
             Choose your payment tool — Tag or Card. Both at just ₹499.

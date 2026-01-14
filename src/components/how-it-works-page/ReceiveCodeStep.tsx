@@ -32,7 +32,7 @@ const ReceiveCodeStep = () => {
                   <MessageCircle className="w-5 h-5 text-white" />
                 </div>
                 <div>
-                  <div className="text-white font-medium text-sm">PayTap Support</div>
+                  <div className="text-white font-medium text-sm">Paytap Support</div>
                   <div className="text-white/70 text-xs">online</div>
                 </div>
               </div>
@@ -47,7 +47,7 @@ const ReceiveCodeStep = () => {
                   className="bg-white rounded-lg p-3 shadow-sm max-w-[85%]"
                 >
                   <p className="text-sm text-gray-800">
-                    🎉 Thank you for ordering PayTap!
+                    🎉 Thank you for ordering Paytap!
                   </p>
                   <p className="text-sm text-gray-800 mt-2">
                     Your order has been confirmed and is being processed.
@@ -63,7 +63,7 @@ const ReceiveCodeStep = () => {
                   className="bg-white rounded-lg p-3 shadow-sm max-w-[85%]"
                 >
                   <p className="text-sm text-gray-800 mb-3">
-                    Welcome to PayTap! Your account is almost ready 🎉
+                    Welcome to Paytap! Your account is almost ready 🎉
                   </p>
                   <div className="bg-primary/10 rounded-lg p-3 border border-primary/20">
                     <div className="text-xs text-muted-foreground mb-1">Your Activation Code</div>
@@ -72,7 +72,7 @@ const ReceiveCodeStep = () => {
                     </div>
                   </div>
                   <p className="text-xs text-gray-600 mt-2">
-                    Enter this code during sign-up to activate your PayTap account and get started.
+                    Enter this code during sign-up to activate your Paytap account and get started.
                   </p>
                   <div className="text-[10px] text-gray-500 text-right mt-1">
                     <Check className="w-3 h-3 inline text-[#53BDEB]" /> 2:45 PM
@@ -97,7 +97,7 @@ const ReceiveCodeStep = () => {
               Receive Your Activation Code
             </h2>
             <p className="text-lg text-muted-foreground max-w-md">
-              Once your PayTap is delivered, we'll send your unique activation code via WhatsApp.
+              Once your Paytap is delivered, we'll send your unique activation code via WhatsApp.
             </p>
             
             <div className="mt-8 flex items-center gap-3 text-muted-foreground md:justify-start justify-center">

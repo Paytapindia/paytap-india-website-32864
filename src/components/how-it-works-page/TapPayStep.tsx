@@ -100,7 +100,7 @@ const TapPayStep = () => {
               Tap & Pay Anywhere
             </h2>
             <p className="text-lg text-muted-foreground max-w-md mb-8">
-              Your PayTap is ready. Just tap and go — fuel, tolls, metro, and more.
+              Your Paytap is ready. Just tap and go — fuel, tolls, metro, and more.
             </p>
 
             {/* Use cases */}
