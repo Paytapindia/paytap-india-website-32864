@@ -43,7 +43,7 @@ const HowItWorks = () => {
         
         <main>
           {/* Header Section */}
-          <section className="pt-24 pb-8 text-center px-4">
+          <section className="pt-24 pb-4 text-center px-4">
             <h1 className="text-3xl md:text-4xl lg:text-5xl font-bold text-foreground">
               Let's Get You Onboarded
             </h1>
