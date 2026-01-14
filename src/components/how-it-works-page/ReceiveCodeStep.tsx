@@ -63,16 +63,16 @@ const ReceiveCodeStep = () => {
                   className="bg-white rounded-lg p-3 shadow-sm max-w-[85%]"
                 >
                   <p className="text-sm text-gray-800 mb-3">
-                    📦 Your PayTap has been delivered!
+                    Welcome to PayTap! Your account is almost ready 🎉
                   </p>
                   <div className="bg-primary/10 rounded-lg p-3 border border-primary/20">
                     <div className="text-xs text-muted-foreground mb-1">Your Activation Code</div>
                     <div className="text-xl font-bold text-primary tracking-widest font-mono">
-                      PT-8X4K-2M9L
+                      N1U7NBU2
                     </div>
                   </div>
                   <p className="text-xs text-gray-600 mt-2">
-                    Use this code to activate your wallet in the PayTap app.
+                    Enter this code during sign-up to activate your PayTap account and get started.
                   </p>
                   <div className="text-[10px] text-gray-500 text-right mt-1">
                     <Check className="w-3 h-3 inline text-[#53BDEB]" /> 2:45 PM
