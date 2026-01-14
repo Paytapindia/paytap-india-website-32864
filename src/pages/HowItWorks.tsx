@@ -3,7 +3,6 @@ import { Helmet } from 'react-helmet-async';
 import Navbar from '@/components/Navbar';
 import FooterSection from '@/components/FooterSection';
 import ProgressIndicator from '@/components/how-it-works-page/ProgressIndicator';
-import HeroStep from '@/components/how-it-works-page/HeroStep';
 import BuyStep from '@/components/how-it-works-page/BuyStep';
 import ReceiveCodeStep from '@/components/how-it-works-page/ReceiveCodeStep';
 import SignUpStep from '@/components/how-it-works-page/SignUpStep';
@@ -12,7 +11,7 @@ import ActivateInstallStep from '@/components/how-it-works-page/ActivateInstallS
 import TapPayStep from '@/components/how-it-works-page/TapPayStep';
 import ClosingStep from '@/components/how-it-works-page/ClosingStep';
 
-const TOTAL_STEPS = 7;
+const TOTAL_STEPS = 6;
 
 const HowItWorks = () => {
   const [currentStep, setCurrentStep] = useState(0);
@@ -43,7 +42,6 @@ const HowItWorks = () => {
         <Navbar />
         
         <main>
-          <HeroStep />
           <BuyStep />
           <ReceiveCodeStep />
           <SignUpStep />
