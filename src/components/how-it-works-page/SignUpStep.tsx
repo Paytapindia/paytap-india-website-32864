@@ -139,7 +139,7 @@ const SignUpStep = () => {
               Step 03
             </div>
             <h2 className="text-3xl sm:text-4xl md:text-5xl font-semibold text-foreground mb-4 tracking-tight">
-              Create Your Wallet
+              Create Your Account
             </h2>
             <p className="text-lg text-muted-foreground max-w-md">
               Enter your activation code and complete minimum-KYC in under 60 seconds.
