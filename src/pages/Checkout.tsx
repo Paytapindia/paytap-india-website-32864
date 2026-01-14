@@ -249,7 +249,7 @@ const Checkout = () => {
 
         {/* ORDER SUMMARY CARD - HERO SECTION */}
         <Card className="shadow-lg border-0 overflow-hidden">
-          <div className="bg-gradient-to-r from-paytap-light to-paytap-dark p-4 text-white">
+          <div className="bg-paytap-dark p-4 text-white">
             <h1 className="text-xl font-bold">Complete Your Order</h1>
             <p className="text-white/80 text-sm">Select quantity and pay instantly</p>
           </div>
