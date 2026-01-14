@@ -8,10 +8,11 @@ import BuyStep from '@/components/how-it-works-page/BuyStep';
 import ReceiveCodeStep from '@/components/how-it-works-page/ReceiveCodeStep';
 import SignUpStep from '@/components/how-it-works-page/SignUpStep';
 import AddMoneyStep from '@/components/how-it-works-page/AddMoneyStep';
+import ActivateInstallStep from '@/components/how-it-works-page/ActivateInstallStep';
 import TapPayStep from '@/components/how-it-works-page/TapPayStep';
 import ClosingStep from '@/components/how-it-works-page/ClosingStep';
 
-const TOTAL_STEPS = 6;
+const TOTAL_STEPS = 7;
 
 const HowItWorks = () => {
   const [currentStep, setCurrentStep] = useState(0);
@@ -47,6 +48,7 @@ const HowItWorks = () => {
           <ReceiveCodeStep />
           <SignUpStep />
           <AddMoneyStep />
+          <ActivateInstallStep />
           <TapPayStep />
           <ClosingStep />
         </main>
