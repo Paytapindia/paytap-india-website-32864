@@ -95,7 +95,7 @@ const AddMoneyStep = () => {
             transition={{ duration: 0.8 }}
           >
             <div className="inline-block px-3 py-1 bg-primary/10 text-primary rounded-full text-sm font-medium mb-4">
-              Step 03
+              Step 04
             </div>
             <h2 className="text-3xl sm:text-4xl md:text-5xl font-semibold text-foreground mb-4 tracking-tight">
               Add money your way.

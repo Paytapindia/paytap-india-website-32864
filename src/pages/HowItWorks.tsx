@@ -4,13 +4,14 @@ import Navbar from '@/components/Navbar';
 import FooterSection from '@/components/FooterSection';
 import ProgressIndicator from '@/components/how-it-works-page/ProgressIndicator';
 import HeroStep from '@/components/how-it-works-page/HeroStep';
+import BuyStep from '@/components/how-it-works-page/BuyStep';
+import ReceiveCodeStep from '@/components/how-it-works-page/ReceiveCodeStep';
 import SignUpStep from '@/components/how-it-works-page/SignUpStep';
-import VirtualCardStep from '@/components/how-it-works-page/VirtualCardStep';
 import AddMoneyStep from '@/components/how-it-works-page/AddMoneyStep';
-import ChoosePaymentStep from '@/components/how-it-works-page/ChoosePaymentStep';
+import TapPayStep from '@/components/how-it-works-page/TapPayStep';
 import ClosingStep from '@/components/how-it-works-page/ClosingStep';
 
-const TOTAL_STEPS = 5;
+const TOTAL_STEPS = 6;
 
 const HowItWorks = () => {
   const [currentStep, setCurrentStep] = useState(0);
@@ -33,7 +34,7 @@ const HowItWorks = () => {
         <title>How It Works - PayTap | Set Up in Under a Minute</title>
         <meta 
           name="description" 
-          content="Set up PayTap in under a minute. From sign-up to first payment — instantly. Quick KYC, virtual card, and contactless payments." 
+          content="Order your PayTap, receive your activation code, and start paying in minutes. Simple setup from order to first tap." 
         />
       </Helmet>
       
@@ -42,10 +43,11 @@ const HowItWorks = () => {
         
         <main>
           <HeroStep />
+          <BuyStep />
+          <ReceiveCodeStep />
           <SignUpStep />
-          <VirtualCardStep />
           <AddMoneyStep />
-          <ChoosePaymentStep />
+          <TapPayStep />
           <ClosingStep />
         </main>
 

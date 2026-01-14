@@ -1,7 +1,8 @@
 import { motion, useInView } from 'framer-motion';
 import { useRef } from 'react';
-import { Coffee, ShoppingCart, Smartphone } from 'lucide-react';
+import { Coffee, ShoppingCart, Smartphone, ShoppingBag } from 'lucide-react';
 import { Button } from '@/components/ui/button';
+import { Link } from 'react-router-dom';
 
 const scenes = [
   { icon: Coffee, label: 'Tap at café' },
@@ -12,10 +13,6 @@ const scenes = [
 const ClosingStep = () => {
   const ref = useRef(null);
   const isInView = useInView(ref, { once: true, margin: "-100px" });
-
-  const handleGetStarted = () => {
-    window.open('https://app.mypaytap.com/signup', '_blank');
-  };
 
   return (
     <section 
@@ -75,18 +72,21 @@ const ClosingStep = () => {
           </p>
         </motion.div>
 
-        {/* Single CTA */}
+        {/* Single CTA - Now links to /checkout */}
         <motion.div
           initial={{ opacity: 0, y: 20 }}
           animate={isInView ? { opacity: 1, y: 0 } : {}}
           transition={{ duration: 0.6, delay: 0.8 }}
         >
           <Button
-            onClick={handleGetStarted}
+            asChild
             size="lg"
             className="h-14 px-10 text-lg rounded-full shadow-lg hover:shadow-xl transition-all duration-300 hover:scale-105"
           >
-            Get Started
+            <Link to="/checkout" className="inline-flex items-center gap-2">
+              <ShoppingBag className="w-5 h-5" />
+              Order Your PayTap Now
+            </Link>
           </Button>
         </motion.div>
       </div>

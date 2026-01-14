@@ -81,7 +81,7 @@ const HeroStep = () => {
           transition={{ delay: 0.5, duration: 0.8 }}
           className="text-lg sm:text-xl text-muted-foreground max-w-md mx-auto"
         >
-          From sign-up to first payment — instantly.
+          From order to first tap — instantly.
         </motion.p>
 
         {/* Watch Demo Button */}
