@@ -33,7 +33,7 @@ const BuyStep = () => {
   const navigate = useNavigate();
 
   return (
-    <ScrollSection className="min-h-screen flex items-center justify-center py-20 px-4 bg-background">
+    <ScrollSection className="min-h-screen flex items-center justify-center pt-8 pb-20 px-4 bg-background">
       <div ref={ref} className="max-w-6xl mx-auto text-center">
         {/* Text content */}
         <motion.div
