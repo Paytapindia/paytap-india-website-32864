@@ -337,7 +337,7 @@ const Checkout = () => {
             {/* BIG CTA BUTTON */}
             <Button 
               onClick={onSubmit}
-              className="w-full h-14 text-lg font-bold bg-paytap-light hover:bg-paytap-dark shadow-lg transition-all hover:shadow-xl" 
+              className="w-full h-14 text-lg font-bold bg-paytap-dark hover:bg-[#031d4a] shadow-lg transition-all hover:shadow-xl" 
               disabled={isLoading}
             >
               {isLoading ? (
