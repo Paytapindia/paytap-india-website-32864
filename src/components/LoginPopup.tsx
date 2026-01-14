@@ -64,7 +64,7 @@ const LoginPopup = ({ className, variant = "default", isMobile = false, onClose 
 
       // Show success toast
       toast({
-        title: "Welcome to PayTap!",
+        title: "Welcome to Paytap!",
         description: "Redirecting you to the dashboard...",
       });
 
@@ -111,7 +111,7 @@ const LoginPopup = ({ className, variant = "default", isMobile = false, onClose 
               Sign Up / Login
             </h4>
             <p className="text-sm text-muted-foreground">
-              Enter your mobile number to continue to PayTap Dashboard
+              Enter your mobile number to continue to Paytap Dashboard
             </p>
           </div>
           

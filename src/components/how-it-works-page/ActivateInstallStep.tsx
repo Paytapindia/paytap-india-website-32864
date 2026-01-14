@@ -25,7 +25,7 @@ const ActivateInstallStep = () => {
             Activate & Install Your Tag
           </h2>
           <p className="text-lg text-muted-foreground max-w-md mx-auto">
-            Get your PayTap ready for your first tap.
+            Get your Paytap ready for your first tap.
           </p>
         </motion.div>
 
@@ -50,7 +50,7 @@ const ActivateInstallStep = () => {
               <div className="bg-background rounded-xl p-4 shadow-inner">
                 {/* App header */}
                 <div className="text-center mb-4">
-                  <div className="text-sm font-medium text-foreground">PayTap App</div>
+                  <div className="text-sm font-medium text-foreground">Paytap App</div>
                 </div>
 
                 {/* Steps */}
@@ -100,7 +100,7 @@ const ActivateInstallStep = () => {
 
             {/* Instructions */}
             <div className="space-y-2 text-sm text-muted-foreground">
-              <p>1. Open the PayTap app on your phone</p>
+              <p>1. Open the Paytap app on your phone</p>
               <p>2. Navigate to Card Settings</p>
               <p>3. Tap "Add Card" and enter the activation code</p>
               <p>4. Your tag is ready to use!</p>
@@ -125,7 +125,7 @@ const ActivateInstallStep = () => {
             <div className="bg-muted/50 rounded-2xl p-4 mb-6">
               <motion.img
                 src={installTagCar}
-                alt="Install PayTap tag on windshield or dashboard"
+                alt="Install Paytap tag on windshield or dashboard"
                 initial={{ opacity: 0, scale: 0.95 }}
                 animate={isInView ? { opacity: 1, scale: 1 } : {}}
                 transition={{ delay: 0.5, duration: 0.6 }}

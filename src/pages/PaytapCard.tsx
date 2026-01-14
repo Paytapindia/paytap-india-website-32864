@@ -36,12 +36,12 @@ const PaytapCard = () => {
     {
       icon: <Package className="w-8 h-8" />,
       title: "Receive Your Card",
-      description: "Get your PayTap prepaid card delivered to your office in 3-5 business days."
+      description: "Get your Paytap prepaid card delivered to your office in 3-5 business days."
     },
     {
       icon: <Smartphone className="w-8 h-8" />,
       title: "Activate via App",
-      description: "Download PayTap app and complete quick business KYC verification."
+      description: "Download Paytap app and complete quick business KYC verification."
     },
     {
       icon: <Wallet className="w-8 h-8" />,
@@ -66,7 +66,7 @@ const PaytapCard = () => {
   const activationSteps = [
     { step: "01", title: "Order Your Card", description: "Place order online with business details" },
     { step: "02", title: "Receive via Courier", description: "Card delivered in 3-5 business days" },
-    { step: "03", title: "Download PayTap App", description: "Available on iOS and Android app stores" },
+    { step: "03", title: "Download Paytap App", description: "Available on iOS and Android app stores" },
     { step: "04", title: "Complete Business KYC", description: "Quick verification with GST or business documents" },
     { step: "05", title: "Link Card & Load Funds", description: "Ready to pay at 8L+ acceptance points" }
   ];
@@ -123,10 +123,10 @@ const PaytapCard = () => {
             {/* Left Content */}
             <div className="flex-1 text-center lg:text-left">
               <span className="inline-block px-4 py-2 bg-primary/10 text-primary rounded-full text-sm font-medium mb-6">
-                PayTap Prepaid Card
+                Paytap Prepaid Card
               </span>
               <h1 className="text-4xl sm:text-5xl lg:text-6xl font-bold text-foreground mb-6 leading-tight">
-                PayTap Prepaid Physical Card
+                Paytap Prepaid Physical Card
               </h1>
               <p className="text-xl text-muted-foreground mb-4 max-w-xl">
                 RuPay-powered expense management solution for corporates and MSMEs.
@@ -152,7 +152,7 @@ const PaytapCard = () => {
                 <div className="absolute inset-0 bg-gradient-to-br from-primary/20 to-paytap-light/20 rounded-3xl blur-3xl" />
                 <img 
                   src={paytapCard} 
-                  alt="PayTap Prepaid Physical Card" 
+                  alt="Paytap Prepaid Physical Card" 
                   className="relative max-w-[320px] sm:max-w-[400px] w-full drop-shadow-2xl"
                 />
               </div>
@@ -166,7 +166,7 @@ const PaytapCard = () => {
         <div className="max-w-6xl mx-auto">
           <div className="text-center mb-16">
             <h2 className="text-3xl sm:text-4xl font-bold text-foreground mb-4">
-              How PayTap Card Works
+              How Paytap Card Works
             </h2>
             <p className="text-lg text-muted-foreground max-w-2xl mx-auto">
               Simple onboarding for businesses of all sizes
@@ -300,15 +300,15 @@ const PaytapCard = () => {
             <CardContent className="p-8 sm:p-12">
               <div className="flex flex-col lg:flex-row items-center gap-8">
                 <div className="flex-shrink-0">
-                  <img 
+                <img 
                     src={paytapCard} 
-                    alt="PayTap Prepaid Physical Card" 
+                    alt="Paytap Prepaid Physical Card" 
                     className="w-48 sm:w-56 drop-shadow-xl"
                   />
                 </div>
                 <div className="flex-1 text-center lg:text-left">
                   <h2 className="text-2xl sm:text-3xl font-bold text-foreground mb-4">
-                    Get Your PayTap Prepaid Card Today
+                    Get Your Paytap Prepaid Card Today
                   </h2>
                   <p className="text-muted-foreground mb-6">
                     Start managing business expenses smarter with India's most trusted prepaid solution.

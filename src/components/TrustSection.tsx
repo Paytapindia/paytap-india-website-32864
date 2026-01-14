@@ -9,7 +9,7 @@ const TrustSection = () => {
         {/* Section Header */}
         <div className="text-center mb-10 sm:mb-16">
           <h2 className="text-2xl sm:text-3xl md:text-5xl font-semibold text-foreground mb-3 sm:mb-4 tracking-tight">
-            Shop PayTap Products
+            Shop Paytap Products
           </h2>
           <p className="text-muted-foreground text-base sm:text-lg md:text-xl max-w-2xl mx-auto">
             Choose the perfect payment solution for your needs.

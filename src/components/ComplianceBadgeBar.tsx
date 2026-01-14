@@ -31,7 +31,7 @@ const ComplianceBadgeBar = () => {
 
         {/* Disclaimer */}
         <p className="text-xs text-muted-foreground/70 text-center max-w-3xl mx-auto">
-          PayTap operates as a regulated Prepaid Payment Instrument (PPI) under RBI guidelines through authorized banking partners. PayTap does not hold customer funds.
+          Paytap operates as a regulated Prepaid Payment Instrument (PPI) under RBI guidelines through authorized banking partners. Paytap does not hold customer funds.
         </p>
       </div>
     </section>

@@ -27,7 +27,7 @@ const HeroSection = () => {
 
             {/* Clean subtitle */}
             <p className="text-muted-foreground text-lg md:text-xl max-w-xl leading-relaxed mb-10 animate-fade-in mx-auto lg:mx-0" style={{ animationDelay: '0.2s' }}>
-              Create your PayTap account in minutes using your mobile number. Start managing payments, fleet expenses, and more—all in one place.
+              Create your Paytap account in minutes using your mobile number. Start managing payments, fleet expenses, and more—all in one place.
             </p>
 
             {/* Primary CTAs - Center aligned and prominent */}
@@ -43,7 +43,7 @@ const HeroSection = () => {
                 className="bg-paytap-light hover:bg-paytap-dark text-white px-8 py-6 text-lg font-semibold rounded-2xl shadow-xl hover:shadow-2xl hover:scale-[1.02] transition-all duration-300 group min-h-[64px]"
                 onClick={() => navigate('/paytap-sticker')}
               >
-                Order PayTap Card/Tag Now
+                Order Paytap Card/Tag Now
                 <ArrowRight className="ml-3 w-5 h-5 group-hover:translate-x-1 transition-transform" />
               </Button>
             </div>
@@ -81,7 +81,7 @@ const HeroSection = () => {
               <div className="relative h-full p-3 sm:p-4 flex flex-col justify-between">
                 {/* Top row - Logo and India badge */}
                 <div className="flex items-start justify-between">
-                  <img src={paytapCardLogo} alt="PayTap" className="h-5 sm:h-6 md:h-7 object-contain" />
+                  <img src={paytapCardLogo} alt="Paytap" className="h-5 sm:h-6 md:h-7 object-contain" />
                   <div className="w-8 h-8 sm:w-10 sm:h-10 rounded-full border border-white/40 flex items-center justify-center">
                     <div className="text-[5px] sm:text-[6px] text-white/80 text-center leading-tight font-medium">
                       <div>For Use</div>

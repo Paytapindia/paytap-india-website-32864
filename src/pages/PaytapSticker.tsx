@@ -49,7 +49,7 @@ const PaytapSticker = () => {
     {
       icon: <Bell className="w-8 h-8" />,
       title: "Get Notification",
-      description: "Receive real-time alerts on the PayTap app for every transaction."
+      description: "Receive real-time alerts on the Paytap app for every transaction."
     }
   ];
 
@@ -62,7 +62,7 @@ const PaytapSticker = () => {
   ];
 
   const activationSteps = [
-    { step: "01", title: "Download PayTap App", description: "Available on iOS and Android app stores" },
+    { step: "01", title: "Download Paytap App", description: "Available on iOS and Android app stores" },
     { step: "02", title: "Register & Complete KYC", description: "Quick verification with Aadhaar or PAN" },
     { step: "03", title: "Link Your Sticker", description: "Scan the QR code on your NFC sticker" },
     { step: "04", title: "Add Funds", description: "Load money via UPI, Net Banking, or Card" },
@@ -73,7 +73,7 @@ const PaytapSticker = () => {
     {
       icon: <Lock className="w-8 h-8" />,
       title: "Card Control",
-      description: "Freeze or unfreeze your sticker instantly from the PayTap app anytime."
+      description: "Freeze or unfreeze your sticker instantly from the Paytap app anytime."
     },
     {
       icon: <Shield className="w-8 h-8" />,
@@ -116,10 +116,10 @@ const PaytapSticker = () => {
             {/* Left Content */}
             <div className="flex-1 text-center lg:text-left">
               <span className="inline-block px-4 py-2 bg-primary/10 text-primary rounded-full text-sm font-medium mb-6">
-                PayTap NFC Sticker
+                Paytap NFC Sticker
               </span>
               <h1 className="text-4xl sm:text-5xl lg:text-6xl font-bold text-foreground mb-6 leading-tight">
-                PayTap NFC Tag / Sticker
+                Paytap NFC Tag / Sticker
               </h1>
               <p className="text-xl text-muted-foreground mb-4 max-w-xl">
                 A compact, stick-anywhere NFC tag for everyday payments.
@@ -145,7 +145,7 @@ const PaytapSticker = () => {
                 <div className="absolute inset-0 bg-gradient-to-br from-primary/20 to-paytap-light/20 rounded-3xl blur-3xl" />
                 <img 
                   src={paytapTagSticker} 
-                  alt="PayTap NFC Sticker" 
+                  alt="Paytap NFC Sticker" 
                   className="relative max-w-[320px] sm:max-w-[400px] w-full drop-shadow-2xl"
                 />
               </div>
@@ -159,7 +159,7 @@ const PaytapSticker = () => {
         <div className="max-w-6xl mx-auto">
           <div className="text-center mb-16">
             <h2 className="text-3xl sm:text-4xl font-bold text-foreground mb-4">
-              How PayTap Sticker Works
+              How Paytap Sticker Works
             </h2>
             <p className="text-lg text-muted-foreground max-w-2xl mx-auto">
               Simple tap-to-pay technology that makes payments effortless
@@ -293,15 +293,15 @@ const PaytapSticker = () => {
             <CardContent className="p-8 sm:p-12">
               <div className="flex flex-col lg:flex-row items-center gap-8">
                 <div className="flex-shrink-0">
-                  <img 
+                <img 
                     src={paytapTagSticker} 
-                    alt="PayTap NFC Sticker" 
+                    alt="Paytap NFC Sticker" 
                     className="w-48 sm:w-56 drop-shadow-xl"
                   />
                 </div>
                 <div className="flex-1 text-center lg:text-left">
                   <h2 className="text-2xl sm:text-3xl font-bold text-foreground mb-4">
-                    Get Your PayTap NFC Sticker Today
+                    Get Your Paytap NFC Sticker Today
                   </h2>
                   <p className="text-muted-foreground mb-6">
                     Start making contactless payments across India with the most convenient payment solution.

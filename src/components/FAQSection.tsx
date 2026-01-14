@@ -38,7 +38,7 @@ const FAQSection = () => {
           <TabsContent value="general">
             <FAQCategory
               title="General"
-              description="Basic information about PayTap"
+              description="Basic information about Paytap"
               icon="📋"
               faqs={generalFAQs}
             />
@@ -47,7 +47,7 @@ const FAQSection = () => {
           <TabsContent value="getting-started">
             <FAQCategory
               title="Getting Started"
-              description="How to get and set up your PayTap tag"
+              description="How to get and set up your Paytap tag"
               icon="💳"
               faqs={gettingStartedFAQs}
             />
@@ -65,7 +65,7 @@ const FAQSection = () => {
           <TabsContent value="wallet">
             <FAQCategory
               title="Wallet & Payments"
-              description="Managing your PayTap wallet and payments"
+              description="Managing your Paytap wallet and payments"
               icon="🏦"
               faqs={walletFAQs}
             />
@@ -92,7 +92,7 @@ const FAQSection = () => {
           <TabsContent value="business">
             <FAQCategory
               title="Business & Fleet Use"
-              description="PayTap for businesses and fleet operators"
+              description="Paytap for businesses and fleet operators"
               icon="👩‍💼"
               faqs={businessFAQs}
             />
