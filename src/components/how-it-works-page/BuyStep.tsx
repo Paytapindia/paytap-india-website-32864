@@ -1,13 +1,36 @@
 import { motion, useInView } from 'framer-motion';
 import { useRef } from 'react';
-import { ShoppingBag, Wifi, CreditCard } from 'lucide-react';
-import { Link } from 'react-router-dom';
+import { ShoppingCart } from 'lucide-react';
+import { useNavigate } from 'react-router-dom';
 import ScrollSection from './ScrollSection';
-import paytapCardLogo from '@/assets/paytap-card-logo.png';
+import { Card, CardContent } from '@/components/ui/card';
+import { Button } from '@/components/ui/button';
+import paytapTagSticker from '@/assets/paytap-tag-sticker-v2.png';
+import paytapCard from '@/assets/paytap-card-product.png';
+
+const products = [
+  {
+    id: 1,
+    name: "PayTap NFC Tag / Sticker",
+    description: "A compact, stick-anywhere NFC tag for everyday payments. Tap to pay at fuel pumps, recharge FASTag tolls, metros, parking & more — fast and secure.",
+    price: "₹499",
+    image: paytapTagSticker,
+    buyLink: "/paytap-sticker",
+  },
+  {
+    id: 2,
+    name: "PayTap Prepaid Physical Card",
+    description: "RuPay-powered expense management solution for corporates and MSMEs. Perfect for employee expenses, corporate gifting, and vendor payments.",
+    price: "₹499",
+    image: paytapCard,
+    buyLink: "/paytap-card",
+  }
+];
 
 const BuyStep = () => {
   const ref = useRef(null);
   const isInView = useInView(ref, { once: true, margin: "-200px" });
+  const navigate = useNavigate();
 
   return (
     <ScrollSection className="min-h-screen flex items-center justify-center py-20 px-4 bg-background">
@@ -30,91 +53,54 @@ const BuyStep = () => {
           </p>
         </motion.div>
 
-        {/* Product cards */}
-        <div className="grid md:grid-cols-2 gap-8 max-w-4xl mx-auto">
-          {/* NFC Tag */}
-          <motion.div
-            initial={{ opacity: 0, y: 40 }}
-            animate={isInView ? { opacity: 1, y: 0 } : {}}
-            transition={{ duration: 0.8, delay: 0.3, type: "spring" }}
-            whileHover={{ y: -10 }}
-            className="group"
-          >
-            <div className="bg-card rounded-3xl p-8 border border-border/50 hover:border-primary/30 transition-all duration-300 relative overflow-hidden h-full">
-              <div className="absolute inset-0 bg-gradient-to-br from-primary/5 to-transparent opacity-0 group-hover:opacity-100 transition-opacity" />
-              
-              <div className="relative z-10">
-                {/* Tag icon */}
-                <div className="w-24 h-24 mx-auto mb-6 rounded-full bg-gradient-to-br from-primary to-primary/80 flex items-center justify-center shadow-lg relative">
-                  <motion.div
-                    animate={{ scale: [1, 1.4], opacity: [0.5, 0] }}
-                    transition={{ duration: 1.5, repeat: Infinity, ease: "easeOut" }}
-                    className="absolute inset-0 rounded-full border-2 border-primary"
-                  />
-                  <Wifi className="w-10 h-10 text-primary-foreground" />
-                </div>
-
-                <h3 className="text-xl font-semibold text-foreground mb-2">PayTap NFC Tag</h3>
-                <p className="text-muted-foreground text-sm mb-4">
-                  Compact, waterproof. Attach to any vehicle or device.
-                </p>
-                <div className="text-2xl font-bold text-primary mb-4">₹499</div>
-                
-                <Link 
-                  to="/checkout"
-                  className="inline-flex items-center gap-2 px-6 py-3 bg-primary text-primary-foreground rounded-full font-medium hover:opacity-90 transition-opacity"
-                >
-                  <ShoppingBag className="w-4 h-4" />
-                  Order Now
-                </Link>
-              </div>
-            </div>
-          </motion.div>
-
-          {/* Physical Card */}
-          <motion.div
-            initial={{ opacity: 0, y: 40 }}
-            animate={isInView ? { opacity: 1, y: 0 } : {}}
-            transition={{ duration: 0.8, delay: 0.4, type: "spring" }}
-            whileHover={{ y: -10 }}
-            className="group"
-          >
-            <div className="bg-card rounded-3xl p-8 border border-border/50 hover:border-primary/30 transition-all duration-300 relative overflow-hidden h-full">
-              <div className="absolute inset-0 bg-gradient-to-br from-primary/5 to-transparent opacity-0 group-hover:opacity-100 transition-opacity" />
-              
-              <div className="relative z-10">
-                {/* Card preview */}
-                <div 
-                  className="w-48 h-28 mx-auto mb-6 rounded-xl shadow-lg overflow-hidden relative"
-                  style={{ backgroundColor: '#021a42' }}
-                >
-                  <svg className="absolute inset-0 w-full h-full opacity-20" viewBox="0 0 200 120" preserveAspectRatio="none">
-                    <path d="M0,60 C50,80 100,40 200,60 L200,120 L0,120 Z" fill="rgba(246,36,91,0.3)" />
-                  </svg>
-                  <div className="relative z-10 h-full p-4 flex flex-col justify-between">
-                    <img src={paytapCardLogo} alt="PayTap" className="h-5" />
-                    <div className="text-white/60 text-[10px] tracking-widest font-mono">
-                      •••• 4242
+        {/* Product cards - matching ProductCarousel design */}
+        <div className="grid md:grid-cols-2 gap-6 max-w-5xl mx-auto">
+          {products.map((product, index) => (
+            <motion.div
+              key={product.id}
+              initial={{ opacity: 0, y: 40 }}
+              animate={isInView ? { opacity: 1, y: 0 } : {}}
+              transition={{ duration: 0.8, delay: 0.3 + index * 0.1, type: "spring" }}
+              whileHover={{ y: -8 }}
+              className="group"
+            >
+              <Card className="bg-card border-border overflow-hidden h-full hover:border-primary/30 transition-all duration-300">
+                <CardContent className="p-0 flex flex-col h-full">
+                  {/* Product Image */}
+                  <div className="relative bg-gradient-to-br from-secondary/50 to-secondary p-6 flex items-center justify-center h-[240px] sm:h-[280px]">
+                    <img
+                      src={product.image}
+                      alt={product.name}
+                      className="max-w-[200px] sm:max-w-[240px] max-h-[200px] sm:max-h-[240px] w-auto h-auto object-contain drop-shadow-xl group-hover:scale-105 transition-transform duration-300"
+                    />
+                  </div>
+                  
+                  {/* Product Details */}
+                  <div className="p-6 flex flex-col flex-grow min-h-[180px] text-left">
+                    <h3 className="text-xl sm:text-2xl font-semibold text-foreground mb-2">
+                      {product.name}
+                    </h3>
+                    <p className="text-muted-foreground text-sm sm:text-base mb-4 flex-grow">
+                      {product.description}
+                    </p>
+                    
+                    <div className="flex items-center justify-between mt-auto">
+                      <span className="text-2xl sm:text-3xl font-bold text-primary">
+                        {product.price}
+                      </span>
+                      <Button
+                        onClick={() => navigate(product.buyLink)}
+                        className="bg-paytap-light hover:bg-paytap-dark text-white px-6 py-3 text-sm sm:text-base font-semibold rounded-xl shadow-lg hover:shadow-xl hover:scale-[1.02] transition-all duration-300 group"
+                      >
+                        <ShoppingCart className="mr-2 w-4 h-4 sm:w-5 sm:h-5" />
+                        Order Now
+                      </Button>
                     </div>
                   </div>
-                </div>
-
-                <h3 className="text-xl font-semibold text-foreground mb-2">PayTap Prepaid Card</h3>
-                <p className="text-muted-foreground text-sm mb-4">
-                  Thin, matte finish. Works everywhere cards are accepted.
-                </p>
-                <div className="text-2xl font-bold text-primary mb-4">₹499</div>
-                
-                <Link 
-                  to="/checkout"
-                  className="inline-flex items-center gap-2 px-6 py-3 bg-primary text-primary-foreground rounded-full font-medium hover:opacity-90 transition-opacity"
-                >
-                  <CreditCard className="w-4 h-4" />
-                  Order Now
-                </Link>
-              </div>
-            </div>
-          </motion.div>
+                </CardContent>
+              </Card>
+            </motion.div>
+          ))}
         </div>
       </div>
     </ScrollSection>
