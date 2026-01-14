@@ -2,6 +2,7 @@ import { motion, useInView } from 'framer-motion';
 import { useRef } from 'react';
 import { Settings, Plus, Check, Car, Smartphone } from 'lucide-react';
 import ScrollSection from './ScrollSection';
+import installTagCar from '@/assets/install-tag-car.png';
 
 const ActivateInstallStep = () => {
   const ref = useRef(null);
@@ -122,46 +123,14 @@ const ActivateInstallStep = () => {
 
             {/* Car windshield illustration */}
             <div className="bg-muted/50 rounded-2xl p-4 mb-6">
-              <div className="relative bg-gradient-to-b from-sky-100 to-sky-200 dark:from-sky-900/30 dark:to-sky-800/30 rounded-xl h-48 sm:h-56 overflow-hidden">
-                {/* Dashboard line */}
-                <div className="absolute bottom-0 left-0 right-0 h-16 bg-foreground/10 rounded-t-lg">
-                  <div className="text-xs text-center pt-2 text-muted-foreground">Dashboard</div>
-                </div>
-
-                {/* Windshield */}
-                <div className="absolute top-4 left-4 right-4 bottom-20 border-2 border-foreground/20 rounded-lg bg-background/30 backdrop-blur-sm">
-                  <div className="text-xs text-center pt-2 text-muted-foreground">Windshield</div>
-                  
-                  {/* Tag placement options */}
-                  <motion.div
-                    initial={{ opacity: 0, scale: 0 }}
-                    animate={isInView ? { opacity: 1, scale: 1 } : {}}
-                    transition={{ delay: 0.8, duration: 0.5, type: "spring" }}
-                    className="absolute top-8 right-4 w-12 h-12 bg-primary rounded-lg flex items-center justify-center shadow-lg"
-                  >
-                    <span className="text-xs font-bold text-primary-foreground">TAG</span>
-                  </motion.div>
-
-                  <motion.div
-                    initial={{ opacity: 0, y: 20 }}
-                    animate={isInView ? { opacity: 1, y: 0 } : {}}
-                    transition={{ delay: 1, duration: 0.5 }}
-                    className="absolute top-8 left-4 text-xs text-foreground bg-background/80 px-2 py-1 rounded"
-                  >
-                    OR on dashboard ↓
-                  </motion.div>
-                </div>
-
-                {/* Tag on dashboard option */}
-                <motion.div
-                  initial={{ opacity: 0, scale: 0 }}
-                  animate={isInView ? { opacity: 1, scale: 1 } : {}}
-                  transition={{ delay: 1.2, duration: 0.5, type: "spring" }}
-                  className="absolute bottom-4 left-1/2 -translate-x-1/2 w-12 h-12 bg-primary/80 rounded-lg flex items-center justify-center shadow-lg border-2 border-dashed border-primary"
-                >
-                  <span className="text-xs font-bold text-primary-foreground">TAG</span>
-                </motion.div>
-              </div>
+              <motion.img
+                src={installTagCar}
+                alt="Install PayTap tag on windshield or dashboard"
+                initial={{ opacity: 0, scale: 0.95 }}
+                animate={isInView ? { opacity: 1, scale: 1 } : {}}
+                transition={{ delay: 0.5, duration: 0.6 }}
+                className="w-full h-auto rounded-xl"
+              />
             </div>
 
             {/* Installation tips */}
