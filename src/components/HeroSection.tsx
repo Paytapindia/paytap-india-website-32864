@@ -1,5 +1,5 @@
 import { Button } from "@/components/ui/button";
-import { ArrowRight, CreditCard, Smartphone, Wallet, Wifi, FileText } from "lucide-react";
+import { ArrowRight, CreditCard, Smartphone, Wallet, Wifi, FileText, PlayCircle } from "lucide-react";
 import { useTranslation } from "react-i18next";
 import { useNavigate } from "react-router-dom";
 import paytapCardLogo from "@/assets/paytap-card-logo.png";
@@ -195,6 +195,19 @@ const HeroSection = () => {
             </div>
             <div className="absolute bottom-24 sm:bottom-32 left-1/2 w-8 h-8 sm:w-10 sm:h-10 bg-paytap-dark rounded-lg shadow-md flex items-center justify-center">
               <Smartphone className="w-4 h-4 sm:w-5 sm:h-5 text-white" />
+            </div>
+
+            {/* How It Works Button */}
+            <div className="absolute -bottom-6 sm:-bottom-2 left-1/2 -translate-x-1/2 z-40">
+              <Button
+                variant="outline"
+                className="bg-white/90 backdrop-blur-sm hover:bg-white text-paytap-dark border-paytap-dark/20 px-5 py-2.5 sm:px-6 sm:py-3 rounded-full shadow-lg hover:shadow-xl transition-all duration-300 group"
+                onClick={() => navigate('/how-it-works')}
+              >
+                <PlayCircle className="mr-2 w-4 h-4 sm:w-5 sm:h-5 text-paytap-light" />
+                <span className="text-sm sm:text-base font-medium">How It Works</span>
+                <ArrowRight className="ml-2 w-3 h-3 sm:w-4 sm:h-4 group-hover:translate-x-1 transition-transform" />
+              </Button>
             </div>
           </div>
         </div>
