@@ -1,6 +1,6 @@
 import { motion, useInView } from 'framer-motion';
 import { useRef } from 'react';
-import { ShoppingCart } from 'lucide-react';
+import { ShoppingCart, Gift } from 'lucide-react';
 import { useNavigate } from 'react-router-dom';
 import ScrollSection from './ScrollSection';
 import { Card, CardContent } from '@/components/ui/card';
@@ -51,6 +51,17 @@ const BuyStep = () => {
           <p className="text-lg text-muted-foreground max-w-md mx-auto">
             Choose your payment tool — Tag or Card. Both at just ₹499.
           </p>
+          
+          {/* LAUNCH OFFER BANNER */}
+          <motion.div
+            initial={{ opacity: 0, scale: 0.95 }}
+            animate={isInView ? { opacity: 1, scale: 1 } : {}}
+            transition={{ duration: 0.6, delay: 0.2 }}
+            className="mt-6 inline-flex items-center gap-2 bg-gradient-to-r from-green-500 to-emerald-600 px-4 py-2 rounded-full text-white font-semibold shadow-lg"
+          >
+            <Gift className="w-5 h-5" />
+            <span>🎉 LAUNCH OFFER: Buy 1, Get 1 FREE!</span>
+          </motion.div>
         </motion.div>
 
         {/* Product cards - matching ProductCarousel design */}
@@ -68,6 +79,10 @@ const BuyStep = () => {
                 <CardContent className="p-0 flex flex-col h-full">
                   {/* Product Image */}
                   <div className="relative bg-gradient-to-br from-secondary/50 to-secondary p-6 flex items-center justify-center h-[240px] sm:h-[280px]">
+                    {/* Offer Badge */}
+                    <div className="absolute top-3 right-3 bg-gradient-to-r from-green-500 to-emerald-600 text-white text-xs font-bold px-2 py-1 rounded-full shadow-md z-10">
+                      Buy 1 Get 1 FREE
+                    </div>
                     <img
                       src={product.image}
                       alt={product.name}
