@@ -9,7 +9,7 @@ const HeroSection = () => {
   const navigate = useNavigate();
 
   const handleCreateAccount = () => {
-    navigate('/how-it-works');
+    window.open('https://dashboard.paytap.co.in/login', '_blank');
   };
   return (
     <section className="relative pt-32 md:pt-40 pb-24 md:pb-32 px-6 md:px-12 min-h-screen flex items-center bg-background">
