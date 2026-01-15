@@ -3,7 +3,7 @@ import { useState, useEffect } from "react";
 import { Menu, X } from "lucide-react";
 import { useTranslation } from "react-i18next";
 import LanguageSelector from "@/components/LanguageSelector";
-import LoginPopup from "@/components/LoginPopup";
+import { Button } from "@/components/ui/button";
 import paytapLogo from "@/assets/paytap-logo-navbar.png";
 
 import {
@@ -148,7 +148,12 @@ const Navbar = () => {
       
       <div className="flex items-center space-x-3 md:space-x-4">
         <LanguageSelector />
-        <LoginPopup />
+                <Button
+                  onClick={() => window.open("https://dashboard.paytap.co.in/login", "_blank")}
+                  className="bg-paytap-light hover:bg-paytap-dark text-white px-4 md:px-6 py-2 rounded-full shadow-lg hover:shadow-xl transition-all duration-300 transform hover:scale-105 text-sm md:text-base min-h-[40px] md:min-h-[44px]"
+                >
+                  {t('nav.login')}
+                </Button>
         
         {/* Mobile menu button */}
         <button 
@@ -235,11 +240,16 @@ const Navbar = () => {
               {t('nav.support')}
             </Link>
             <div className="mt-3">
-              <LoginPopup 
-                variant="outline" 
-                isMobile={true}
-                onClose={handleNavClick}
-              />
+              <Button
+                variant="outline"
+                onClick={() => {
+                  window.open("https://dashboard.paytap.co.in/login", "_blank");
+                  handleNavClick();
+                }}
+                className="w-full mt-3 border-2 border-paytap-dark text-paytap-dark hover:bg-paytap-dark hover:text-white py-3 rounded-full font-semibold transition-all duration-300 min-h-[48px]"
+              >
+                {t('nav.login')}
+              </Button>
             </div>
           </div>
         </div>
