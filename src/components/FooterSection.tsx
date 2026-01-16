@@ -128,7 +128,7 @@ const FooterSection = () => {
               <a href="#" className="w-12 h-12 bg-paytap-dark/50 hover:bg-paytap-light rounded-xl flex items-center justify-center transition-all duration-300 group">
                 <Youtube className="h-5 w-5 text-gray-300 group-hover:text-white" />
               </a>
-              <a href="#" className="w-12 h-12 bg-paytap-dark/50 hover:bg-paytap-light rounded-xl flex items-center justify-center transition-all duration-300 group">
+              <a href="https://www.linkedin.com/showcase/paytap-india/" target="_blank" rel="noopener noreferrer" className="w-12 h-12 bg-paytap-dark/50 hover:bg-paytap-light rounded-xl flex items-center justify-center transition-all duration-300 group">
                 <Linkedin className="h-5 w-5 text-gray-300 group-hover:text-white" />
               </a>
             </div>
