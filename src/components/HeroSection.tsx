@@ -22,7 +22,7 @@ const HeroSection = () => {
           <div className="text-center lg:text-left">
             {/* Large, bold headline */}
             <h1 className="text-4xl md:text-5xl lg:text-6xl font-semibold text-foreground mb-6 leading-[1.1] tracking-tight animate-fade-in text-balance">
-              <span className="text-primary">Smarter Payments</span> for Everyday India.
+              <span className="text-primary">Smarter Payments</span> for Everyday India
             </h1>
 
             {/* Clean subtitle */}
