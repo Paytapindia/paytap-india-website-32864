@@ -49,7 +49,7 @@ const BuyStep = () => {
             Order Your Paytap
           </h2>
           <p className="text-lg text-muted-foreground max-w-2xl mx-auto mb-4">
-            Choose your payment tool — Tag or Card — based on the number of vehicles or staff handling your cash. Manage all your assets from one simple dashboard.
+            Choose your payment tool — Tag or Card — based on the number of vehicles or staff handling your money. Manage all your assets from one simple dashboard.
           </p>
           <p className="text-base text-primary font-medium max-w-lg mx-auto">
             Welcome to the new revolution in contactless payments in India.
