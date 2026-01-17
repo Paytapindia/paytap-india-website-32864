@@ -137,6 +137,10 @@ const ActivateInstallStep = () => {
             <div className="space-y-3">
               <div className="flex items-start gap-3 p-3 bg-muted/50 rounded-xl">
                 <Check className="w-5 h-5 text-green-600 mt-0.5 flex-shrink-0" />
+                <span className="text-sm text-foreground">Manage multiple vehicles under one account</span>
+              </div>
+              <div className="flex items-start gap-3 p-3 bg-muted/50 rounded-xl">
+                <Check className="w-5 h-5 text-green-600 mt-0.5 flex-shrink-0" />
                 <span className="text-sm text-foreground">Place tag on a flat, clean surface</span>
               </div>
               <div className="flex items-start gap-3 p-3 bg-muted/50 rounded-xl">
