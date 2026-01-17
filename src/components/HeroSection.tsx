@@ -27,7 +27,7 @@ const HeroSection = () => {
 
             {/* Clean subtitle */}
             <p className="text-muted-foreground text-lg md:text-xl max-w-xl leading-relaxed mb-10 animate-fade-in mx-auto lg:mx-0" style={{ animationDelay: '0.2s' }}>
-              Create your Paytap account in minutes using your mobile number. Start managing payments, fleet expenses, and more—all in one place.
+              Create your Paytap account in minutes using your mobile number. Start managing expenses, payments, multiple fleets, and the people handling your money — all in one place.
             </p>
 
             {/* Primary CTAs - Center aligned and prominent */}
