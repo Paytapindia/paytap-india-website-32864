@@ -48,8 +48,11 @@ const BuyStep = () => {
           <h2 className="text-3xl sm:text-4xl md:text-5xl font-semibold text-foreground mb-4 tracking-tight">
             Order Your Paytap
           </h2>
-          <p className="text-lg text-muted-foreground max-w-md mx-auto">
-            Choose your payment tool — Tag or Card. Both at just ₹499.
+          <p className="text-lg text-muted-foreground max-w-2xl mx-auto mb-4">
+            Choose your payment tool — Tag or Card — based on the number of vehicles or staff handling your cash. Manage all your assets from one simple dashboard.
+          </p>
+          <p className="text-base text-primary font-medium max-w-lg mx-auto">
+            Welcome to the new revolution in contactless payments in India.
           </p>
           
           {/* LAUNCH OFFER BANNER */}
