@@ -1,10 +1,11 @@
 
 import { Button } from "@/components/ui/button";
 import { ArrowRight } from "lucide-react";
-import { useState, useEffect } from "react";
+import { useState, useEffect, useRef, memo } from "react";
 
-const StickyMobileCTA = () => {
+const StickyMobileCTA = memo(() => {
   const [isVisible, setIsVisible] = useState(false);
+  const ticking = useRef(false);
 
   const handleRedirect = () => {
     window.open('https://u.payu.in/PAYUMN/7IhlCW7USFZ7', '_blank');
@@ -12,12 +13,18 @@ const StickyMobileCTA = () => {
 
   useEffect(() => {
     const handleScroll = () => {
-      // Show CTA after scrolling 100vh
-      const shouldShow = window.scrollY > window.innerHeight;
-      setIsVisible(shouldShow);
+      if (!ticking.current) {
+        requestAnimationFrame(() => {
+          // Show CTA after scrolling 100vh
+          const shouldShow = window.scrollY > window.innerHeight;
+          setIsVisible(shouldShow);
+          ticking.current = false;
+        });
+        ticking.current = true;
+      }
     };
 
-    window.addEventListener('scroll', handleScroll);
+    window.addEventListener('scroll', handleScroll, { passive: true });
     return () => window.removeEventListener('scroll', handleScroll);
   }, []);
 
@@ -48,6 +55,8 @@ const StickyMobileCTA = () => {
       </div>
     </>
   );
-};
+});
+
+StickyMobileCTA.displayName = 'StickyMobileCTA';
 
 export default StickyMobileCTA;

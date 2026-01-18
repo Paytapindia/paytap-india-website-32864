@@ -1,5 +1,5 @@
 import { Link } from "react-router-dom";
-import { useState, useEffect } from "react";
+import { useState, useEffect, useRef, useCallback, memo } from "react";
 import { Menu, X } from "lucide-react";
 import { useTranslation } from "react-i18next";
 import LanguageSelector from "@/components/LanguageSelector";
@@ -15,22 +15,29 @@ import {
   NavigationMenuTrigger,
 } from "@/components/ui/navigation-menu";
 
-const Navbar = () => {
+const Navbar = memo(() => {
   const { t } = useTranslation();
   const [isMenuOpen, setIsMenuOpen] = useState(false);
   const [isScrolled, setIsScrolled] = useState(false);
+  const ticking = useRef(false);
 
   useEffect(() => {
     const handleScroll = () => {
-      setIsScrolled(window.scrollY > 20);
+      if (!ticking.current) {
+        requestAnimationFrame(() => {
+          setIsScrolled(window.scrollY > 20);
+          ticking.current = false;
+        });
+        ticking.current = true;
+      }
     };
-    window.addEventListener('scroll', handleScroll);
+    window.addEventListener('scroll', handleScroll, { passive: true });
     return () => window.removeEventListener('scroll', handleScroll);
   }, []);
 
-  const handleNavClick = () => {
+  const handleNavClick = useCallback(() => {
     setIsMenuOpen(false);
-  };
+  }, []);
 
   return (
     <header className={`w-full py-3 md:py-4 px-4 md:px-12 flex items-center justify-between fixed top-0 z-50 transition-all duration-300 bg-paytap-dark ${
@@ -44,6 +51,7 @@ const Navbar = () => {
             src={paytapLogo} 
             alt="Paytap Logo" 
             className="h-12 md:h-14 w-auto"
+            loading="eager"
           />
         </Link>
         
@@ -256,6 +264,8 @@ const Navbar = () => {
       )}
     </header>
   );
-};
+});
+
+Navbar.displayName = 'Navbar';
 
 export default Navbar;
