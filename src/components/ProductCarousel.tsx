@@ -19,6 +19,7 @@ const products = [
     name: "PayTap NFC Tag / Sticker",
     description: "A compact, stick-anywhere NFC tag for everyday payments. Tap to pay at fuel pumps, recharge FASTag tolls, metros, parking & more — fast and secure.",
     price: "₹499",
+    mrp: "₹999",
     image: paytapTagSticker,
     buyLink: "/paytap-sticker",
     isInternal: true
@@ -28,6 +29,7 @@ const products = [
     name: "PayTap Prepaid Physical Card",
     description: "RuPay-powered expense management solution for corporates and MSMEs",
     price: "₹499",
+    mrp: "₹999",
     image: paytapCard,
     buyLink: "/paytap-card",
     isInternal: true
@@ -79,9 +81,12 @@ const ProductCarousel = memo(() => {
                     </p>
                     
                     <div className="flex items-center justify-between mt-auto">
-                      <span className="text-xl sm:text-2xl md:text-3xl font-bold text-primary">
-                        {product.price}
-                      </span>
+                      <div className="flex flex-col">
+                        <span className="text-sm text-muted-foreground line-through">{product.mrp}</span>
+                        <span className="text-xl sm:text-2xl md:text-3xl font-bold text-green-600">
+                          {product.price}
+                        </span>
+                      </div>
                       <Button
                         onClick={() => handleOrderNow(product.buyLink, product.isInternal)}
                         className="bg-paytap-light hover:bg-paytap-dark text-white px-4 md:px-6 py-2.5 md:py-3 text-xs sm:text-sm md:text-base font-semibold rounded-xl shadow-lg hover:shadow-xl hover:scale-[1.02] transition-all duration-300 group"
