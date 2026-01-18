@@ -1,30 +1,56 @@
-import { useState, useEffect } from 'react';
+import { useState, useEffect, lazy, Suspense, useCallback, memo } from 'react';
 import { Helmet } from 'react-helmet-async';
 import Navbar from '@/components/Navbar';
 import FooterSection from '@/components/FooterSection';
 import ProgressIndicator from '@/components/how-it-works-page/ProgressIndicator';
-import BuyStep from '@/components/how-it-works-page/BuyStep';
-import ReceiveCodeStep from '@/components/how-it-works-page/ReceiveCodeStep';
-import SignUpStep from '@/components/how-it-works-page/SignUpStep';
-import AddMoneyStep from '@/components/how-it-works-page/AddMoneyStep';
-import ActivateInstallStep from '@/components/how-it-works-page/ActivateInstallStep';
-import TapPayStep from '@/components/how-it-works-page/TapPayStep';
-import ClosingStep from '@/components/how-it-works-page/ClosingStep';
+
+// Lazy load step components for better initial load
+const BuyStep = lazy(() => import('@/components/how-it-works-page/BuyStep'));
+const ReceiveCodeStep = lazy(() => import('@/components/how-it-works-page/ReceiveCodeStep'));
+const SignUpStep = lazy(() => import('@/components/how-it-works-page/SignUpStep'));
+const AddMoneyStep = lazy(() => import('@/components/how-it-works-page/AddMoneyStep'));
+const ActivateInstallStep = lazy(() => import('@/components/how-it-works-page/ActivateInstallStep'));
+const TapPayStep = lazy(() => import('@/components/how-it-works-page/TapPayStep'));
+const ClosingStep = lazy(() => import('@/components/how-it-works-page/ClosingStep'));
 
 const TOTAL_STEPS = 6;
+
+// Simple loading skeleton for step sections
+const StepSkeleton = memo(() => (
+  <div className="min-h-[60vh] md:min-h-screen flex items-center justify-center py-12 px-4">
+    <div className="max-w-5xl mx-auto w-full">
+      <div className="animate-pulse space-y-6">
+        <div className="h-6 w-20 bg-muted rounded-full mx-auto" />
+        <div className="h-10 w-64 bg-muted rounded-lg mx-auto" />
+        <div className="h-4 w-48 bg-muted rounded mx-auto" />
+      </div>
+    </div>
+  </div>
+));
+
+StepSkeleton.displayName = 'StepSkeleton';
 
 const HowItWorks = () => {
   const [currentStep, setCurrentStep] = useState(0);
 
+  // Throttled scroll handler for better performance
   useEffect(() => {
+    let ticking = false;
+    
     const handleScroll = () => {
-      const scrollHeight = document.documentElement.scrollHeight - window.innerHeight;
-      const scrollProgress = window.scrollY / scrollHeight;
-      const step = Math.min(Math.floor(scrollProgress * TOTAL_STEPS), TOTAL_STEPS - 1);
-      setCurrentStep(step);
+      if (!ticking) {
+        requestAnimationFrame(() => {
+          const scrollHeight = document.documentElement.scrollHeight - window.innerHeight;
+          const scrollProgress = window.scrollY / scrollHeight;
+          const step = Math.min(Math.floor(scrollProgress * TOTAL_STEPS), TOTAL_STEPS - 1);
+          setCurrentStep(step);
+          ticking = false;
+        });
+        ticking = true;
+      }
     };
 
-    window.addEventListener('scroll', handleScroll);
+    window.addEventListener('scroll', handleScroll, { passive: true });
     return () => window.removeEventListener('scroll', handleScroll);
   }, []);
 
@@ -49,13 +75,27 @@ const HowItWorks = () => {
             </h1>
           </section>
 
-          <BuyStep />
-          <ReceiveCodeStep />
-          <SignUpStep />
-          <AddMoneyStep />
-          <ActivateInstallStep />
-          <TapPayStep />
-          <ClosingStep />
+          <Suspense fallback={<StepSkeleton />}>
+            <BuyStep />
+          </Suspense>
+          <Suspense fallback={<StepSkeleton />}>
+            <ReceiveCodeStep />
+          </Suspense>
+          <Suspense fallback={<StepSkeleton />}>
+            <SignUpStep />
+          </Suspense>
+          <Suspense fallback={<StepSkeleton />}>
+            <AddMoneyStep />
+          </Suspense>
+          <Suspense fallback={<StepSkeleton />}>
+            <ActivateInstallStep />
+          </Suspense>
+          <Suspense fallback={<StepSkeleton />}>
+            <TapPayStep />
+          </Suspense>
+          <Suspense fallback={<StepSkeleton />}>
+            <ClosingStep />
+          </Suspense>
         </main>
 
         <ProgressIndicator currentStep={currentStep} totalSteps={TOTAL_STEPS} />

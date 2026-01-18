@@ -1,5 +1,5 @@
-import { motion, useInView } from 'framer-motion';
-import { useRef } from 'react';
+import { motion, useInView, useReducedMotion } from 'framer-motion';
+import { useRef, memo } from 'react';
 import { Coffee, ShoppingCart, Smartphone, ShoppingBag } from 'lucide-react';
 import { Button } from '@/components/ui/button';
 import { Link } from 'react-router-dom';
@@ -10,81 +10,80 @@ const scenes = [
   { icon: Smartphone, label: 'Quick scan' },
 ];
 
-const ClosingStep = () => {
+const ClosingStep = memo(() => {
   const ref = useRef(null);
-  const isInView = useInView(ref, { once: true, margin: "-100px" });
+  const isInView = useInView(ref, { once: true, amount: 0.3 });
+  const prefersReducedMotion = useReducedMotion();
+
+  const getDelay = (delay: number) => prefersReducedMotion ? 0 : delay;
 
   return (
     <section 
       ref={ref}
-      className="min-h-screen flex items-center justify-center py-20 px-4 bg-gradient-to-b from-background via-primary/5 to-background relative overflow-hidden"
+      className="min-h-[80vh] md:min-h-screen flex items-center justify-center py-12 md:py-20 px-4 bg-gradient-to-b from-background via-primary/5 to-background relative overflow-hidden"
     >
-      {/* Subtle background elements */}
-      <div className="absolute inset-0 overflow-hidden">
-        <div className="absolute top-1/4 left-1/4 w-96 h-96 bg-primary/5 rounded-full blur-3xl" />
-        <div className="absolute bottom-1/4 right-1/4 w-96 h-96 bg-primary/10 rounded-full blur-3xl" />
+      {/* Subtle background elements - simplified for mobile */}
+      <div className="absolute inset-0 overflow-hidden hidden sm:block">
+        <div className="absolute top-1/4 left-1/4 w-64 sm:w-96 h-64 sm:h-96 bg-primary/5 rounded-full blur-3xl" />
+        <div className="absolute bottom-1/4 right-1/4 w-64 sm:w-96 h-64 sm:h-96 bg-primary/10 rounded-full blur-3xl" />
       </div>
 
       <div className="max-w-4xl mx-auto text-center relative z-10">
         {/* Scene illustrations */}
         <motion.div 
-          className="flex justify-center gap-8 sm:gap-12 mb-16"
+          className="flex justify-center gap-6 sm:gap-12 mb-10 sm:mb-16"
           initial={{ opacity: 0 }}
           animate={isInView ? { opacity: 1 } : {}}
-          transition={{ duration: 0.8 }}
+          transition={{ duration: 0.6 }}
         >
           {scenes.map((scene, index) => (
             <motion.div
               key={scene.label}
-              initial={{ opacity: 0, y: 40 }}
+              initial={{ opacity: 0, y: 30 }}
               animate={isInView ? { opacity: 1, y: 0 } : {}}
               transition={{ 
-                duration: 0.6, 
-                delay: 0.2 + index * 0.15,
-                type: "spring"
+                duration: 0.5, 
+                delay: getDelay(0.15 + index * 0.1),
               }}
-              className="flex flex-col items-center gap-3"
+              className="flex flex-col items-center gap-2 sm:gap-3"
             >
-              <motion.div
-                whileHover={{ scale: 1.1 }}
-                className="w-16 h-16 sm:w-20 sm:h-20 bg-primary/10 rounded-2xl flex items-center justify-center"
-              >
-                <scene.icon className="w-8 h-8 sm:w-10 sm:h-10 text-primary" />
-              </motion.div>
-              <span className="text-xs sm:text-sm text-muted-foreground">{scene.label}</span>
+              <div className="w-14 h-14 sm:w-20 sm:h-20 bg-primary/10 rounded-xl sm:rounded-2xl flex items-center justify-center">
+                <scene.icon className="w-7 h-7 sm:w-10 sm:h-10 text-primary" />
+              </div>
+              <span className="text-[10px] sm:text-sm text-muted-foreground">{scene.label}</span>
             </motion.div>
           ))}
         </motion.div>
 
         {/* Main headline */}
         <motion.div
-          initial={{ opacity: 0, y: 30 }}
+          initial={{ opacity: 0, y: 25 }}
           animate={isInView ? { opacity: 1, y: 0 } : {}}
-          transition={{ duration: 0.8, delay: 0.5 }}
+          transition={{ duration: 0.6, delay: getDelay(0.4) }}
         >
-          <h2 className="text-3xl sm:text-4xl md:text-5xl lg:text-6xl font-semibold text-foreground mb-6 tracking-tight leading-tight">
+          <h2 className="text-2xl sm:text-3xl md:text-4xl lg:text-5xl xl:text-6xl font-semibold text-foreground mb-4 sm:mb-6 tracking-tight leading-tight">
             You're now part of India's
             <br />
             <span className="text-primary">contactless future.</span>
           </h2>
-          <p className="text-xl text-muted-foreground mb-12">
+          <p className="text-lg sm:text-xl text-muted-foreground mb-8 sm:mb-12">
             Simple. Secure. PayTap.
           </p>
         </motion.div>
 
-        {/* Single CTA - Now links to /checkout */}
+        {/* Single CTA */}
         <motion.div
-          initial={{ opacity: 0, y: 20 }}
+          initial={{ opacity: 0, y: 15 }}
           animate={isInView ? { opacity: 1, y: 0 } : {}}
-          transition={{ duration: 0.6, delay: 0.8 }}
+          transition={{ duration: 0.5, delay: getDelay(0.6) }}
         >
           <Button
             asChild
             size="lg"
-            className="h-14 px-10 text-lg rounded-full shadow-lg hover:shadow-xl transition-all duration-300 hover:scale-105"
+            className="h-12 sm:h-14 px-8 sm:px-10 text-base sm:text-lg rounded-full shadow-lg hover:shadow-xl transition-all duration-300 hover:scale-105"
           >
             <Link to="/checkout" className="inline-flex items-center gap-2">
-              <ShoppingBag className="w-5 h-5" />
+              <ShoppingBag className="w-4 h-4 sm:w-5 sm:h-5" />
               Order Your PayTap Now
             </Link>
           </Button>
@@ -92,6 +91,8 @@ const ClosingStep = () => {
       </div>
     </section>
   );
-};
+});
+
+ClosingStep.displayName = 'ClosingStep';
 
 export default ClosingStep;
