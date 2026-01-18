@@ -197,11 +197,11 @@ const Checkout = () => {
         <div className="container mx-auto px-4 max-w-md text-center">
           <Card className="p-8">
             <div className="flex justify-center mb-6">
-              <CheckCircle className="w-20 h-20 text-green-500" />
+              <CheckCircle className="w-20 h-20 text-primary" />
             </div>
             <h1 className="text-2xl font-bold text-gray-900 mb-4">Order Placed Successfully! 🎉</h1>
-            <div className="bg-green-50 border border-green-200 rounded-lg p-3 mb-4">
-              <p className="text-green-700 font-semibold">
+            <div className="bg-primary/10 border border-primary/20 rounded-lg p-3 mb-4">
+              <p className="text-primary font-semibold">
                 🎁 You're getting {totalItemsReceived} {productType === 'sticker' ? (totalItemsReceived > 1 ? 'tags' : 'tag') : (totalItemsReceived > 1 ? 'cards' : 'card')} at launch price!
               </p>
             </div>
@@ -249,7 +249,7 @@ const Checkout = () => {
             <Home className="w-4 h-4" />
             <span className="text-sm">Home</span>
           </Button>
-          <div className="flex items-center gap-1 text-green-600">
+          <div className="flex items-center gap-1 text-primary">
             <ShieldCheck className="w-4 h-4" />
             <span className="text-xs font-medium">Secure Checkout</span>
           </div>
@@ -289,7 +289,7 @@ const Checkout = () => {
                     </p>
                     <p className="text-xs text-center">
                       <span className="line-through text-gray-400">₹999</span>{" "}
-                      <span className="text-green-600 font-semibold">₹499</span>
+                      <span className="text-primary font-semibold">₹499</span>
                     </p>
                   </button>
                 ))}
@@ -311,7 +311,7 @@ const Checkout = () => {
                 >
                   <p className="text-sm text-gray-500">1 {productType === 'sticker' ? 'Tag' : 'Card'}</p>
                   <p className="text-sm line-through text-gray-400">MRP ₹999</p>
-                  <p className="text-xl font-bold text-green-600">₹499</p>
+                  <p className="text-xl font-bold text-primary">₹499</p>
                 </button>
                 <button
                   type="button"
@@ -324,7 +324,7 @@ const Checkout = () => {
                 >
                   <p className="text-sm text-gray-500">2 {productType === 'sticker' ? 'Tags' : 'Cards'}</p>
                   <p className="text-sm line-through text-gray-400">MRP ₹1998</p>
-                  <p className="text-xl font-bold text-green-600">₹998</p>
+                  <p className="text-xl font-bold text-primary">₹998</p>
                 </button>
               </div>
             </div>
@@ -337,18 +337,18 @@ const Checkout = () => {
                 <span>MRP ({quantity} {productType === 'sticker' ? 'tag' : 'card'}{quantity > 1 ? 's' : ''})</span>
                 <span className="line-through text-gray-400">₹{quantity * 999}</span>
               </div>
-              <div className="flex justify-between text-green-600 font-medium">
+              <div className="flex justify-between text-primary font-medium">
                 <span>Launch Discount (50% OFF)</span>
                 <span>-₹{quantity * 500}</span>
               </div>
               <div className="flex justify-between text-gray-600">
                 <span>Shipping</span>
-                <span className="text-green-600 font-medium">FREE</span>
+                <span className="text-primary font-medium">FREE</span>
               </div>
               <Separator />
               <div className="flex justify-between font-bold text-lg text-gray-900">
                 <span>Total ({quantity} {productType === 'sticker' ? 'tag' : 'card'}{quantity > 1 ? 's' : ''})</span>
-                <span className="text-green-600">₹{total}</span>
+                <span className="text-primary">₹{total}</span>
               </div>
             </div>
 
@@ -374,15 +374,15 @@ const Checkout = () => {
             {/* Trust Badges */}
             <div className="flex justify-center gap-4 text-xs text-gray-500">
               <div className="flex items-center gap-1">
-                <Truck className="w-4 h-4 text-green-600" />
+                <Truck className="w-4 h-4 text-primary" />
                 <span>Free Shipping</span>
               </div>
               <div className="flex items-center gap-1">
-                <ShieldCheck className="w-4 h-4 text-green-600" />
+                <ShieldCheck className="w-4 h-4 text-primary" />
                 <span>Secure Payment</span>
               </div>
               <div className="flex items-center gap-1">
-                <Package className="w-4 h-4 text-green-600" />
+                <Package className="w-4 h-4 text-primary" />
                 <span>Easy Setup</span>
               </div>
             </div>
