@@ -137,7 +137,7 @@ const PaytapCard = () => {
               <div className="flex flex-col sm:flex-row items-center gap-4 justify-center lg:justify-start">
                 <div className="flex items-center gap-2">
                   <span className="text-xl text-muted-foreground line-through">₹999</span>
-                  <span className="text-3xl font-bold text-green-600">₹499</span>
+                  <span className="text-3xl font-bold text-primary">₹499</span>
                 </div>
                 <Button 
                   onClick={handleBuyNow}
@@ -319,7 +319,7 @@ const PaytapCard = () => {
                   <div className="flex flex-col sm:flex-row items-center gap-4 justify-center lg:justify-start">
                     <div className="flex items-center gap-2">
                       <span className="text-2xl text-muted-foreground line-through">₹999</span>
-                      <span className="text-4xl font-bold text-green-600">₹499</span>
+                      <span className="text-4xl font-bold text-primary">₹499</span>
                     </div>
                     <Button 
                       onClick={handleBuyNow}
