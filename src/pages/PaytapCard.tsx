@@ -135,7 +135,10 @@ const PaytapCard = () => {
                 Streamline business payments with contactless prepaid cards accepted at 8L+ merchants across India.
               </p>
               <div className="flex flex-col sm:flex-row items-center gap-4 justify-center lg:justify-start">
-                <div className="text-3xl font-bold text-primary">₹499</div>
+                <div className="flex items-center gap-2">
+                  <span className="text-xl text-muted-foreground line-through">₹999</span>
+                  <span className="text-3xl font-bold text-green-600">₹499</span>
+                </div>
                 <Button 
                   onClick={handleBuyNow}
                   className="bg-paytap-light hover:bg-paytap-dark text-white px-8 py-6 text-lg font-semibold rounded-xl shadow-lg hover:shadow-xl transition-all"
@@ -314,7 +317,10 @@ const PaytapCard = () => {
                     Start managing business expenses smarter with India's most trusted prepaid solution.
                   </p>
                   <div className="flex flex-col sm:flex-row items-center gap-4 justify-center lg:justify-start">
-                    <div className="text-4xl font-bold text-primary">₹499</div>
+                    <div className="flex items-center gap-2">
+                      <span className="text-2xl text-muted-foreground line-through">₹999</span>
+                      <span className="text-4xl font-bold text-green-600">₹499</span>
+                    </div>
                     <Button 
                       onClick={handleBuyNow}
                       className="bg-paytap-light hover:bg-paytap-dark text-white px-8 py-6 text-lg font-semibold rounded-xl shadow-lg hover:shadow-xl transition-all"
