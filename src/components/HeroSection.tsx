@@ -207,12 +207,12 @@ const HeroSection = memo(() => {
             <div className="absolute -bottom-2 sm:-bottom-2 md:-bottom-2 left-1/2 -translate-x-1/2 z-40">
               <Button
                 variant="outline"
-                className="bg-white/90 backdrop-blur-sm hover:bg-white text-paytap-dark border-paytap-dark/20 px-4 py-2 sm:px-5 sm:py-2.5 md:px-6 md:py-3 rounded-full shadow-lg hover:shadow-xl transition-all duration-300 group"
+                className="bg-paytap-light md:bg-white/90 md:backdrop-blur-sm hover:bg-paytap-dark md:hover:bg-white text-white md:text-paytap-dark border-transparent md:border-paytap-dark/20 px-5 py-2.5 sm:px-5 sm:py-2.5 md:px-6 md:py-3 rounded-full shadow-xl md:shadow-lg hover:shadow-2xl md:hover:shadow-xl transition-all duration-300 group ring-2 ring-white/30 md:ring-0"
                 onClick={() => navigate('/how-it-works')}
               >
-                <PlayCircle className="mr-1.5 sm:mr-2 w-3.5 h-3.5 sm:w-4 sm:h-4 md:w-5 md:h-5 text-paytap-light" />
-                <span className="text-xs sm:text-sm md:text-base font-medium">How It Works</span>
-                <ArrowRight className="ml-1.5 sm:ml-2 w-3 h-3 sm:w-3.5 sm:h-3.5 md:w-4 md:h-4 group-hover:translate-x-1 transition-transform" />
+                <PlayCircle className="mr-1.5 sm:mr-2 w-4 h-4 sm:w-4 sm:h-4 md:w-5 md:h-5 text-white md:text-paytap-light" />
+                <span className="text-sm sm:text-sm md:text-base font-medium">How It Works</span>
+                <ArrowRight className="ml-1.5 sm:ml-2 w-3.5 h-3.5 sm:w-3.5 sm:h-3.5 md:w-4 md:h-4 group-hover:translate-x-1 transition-transform" />
               </Button>
             </div>
           </div>
