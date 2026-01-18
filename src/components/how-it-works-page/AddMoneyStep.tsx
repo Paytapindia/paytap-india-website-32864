@@ -12,10 +12,11 @@ const paymentMethods = [
 
 const AddMoneyStep = memo(() => {
   const ref = useRef(null);
-  const isInView = useInView(ref, { once: true, amount: 0.3 });
+  const isInView = useInView(ref, { once: true, amount: 0.1 });
   const prefersReducedMotion = useReducedMotion();
   const [balance, setBalance] = useState(0);
   const [showIcons, setShowIcons] = useState(false);
+  const isMobile = typeof window !== 'undefined' && window.innerWidth < 768;
 
   useEffect(() => {
     if (isInView) {
@@ -27,7 +28,7 @@ const AddMoneyStep = memo(() => {
       }
       
       // Faster animation for mobile
-      const duration = 1500;
+      const duration = isMobile ? 800 : 1500;
       const targetBalance = 5000;
       const startTime = Date.now();
       
@@ -42,10 +43,11 @@ const AddMoneyStep = memo(() => {
         }
       };
       
-      const timer = setTimeout(animate, 500);
+      const startDelay = isMobile ? 200 : 500;
+      const timer = setTimeout(animate, startDelay);
       return () => clearTimeout(timer);
     }
-  }, [isInView, prefersReducedMotion]);
+  }, [isInView, prefersReducedMotion, isMobile]);
 
   return (
     <ScrollSection className="min-h-[80vh] md:min-h-screen flex items-center justify-center py-12 md:py-20 px-4 bg-background">

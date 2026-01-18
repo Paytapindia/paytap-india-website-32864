@@ -5,16 +5,17 @@ import ScrollSection from './ScrollSection';
 
 const ReceiveCodeStep = memo(() => {
   const ref = useRef(null);
-  const isInView = useInView(ref, { once: true, amount: 0.3 });
+  const isInView = useInView(ref, { once: true, amount: 0.1 });
   const prefersReducedMotion = useReducedMotion();
   const [showMessage, setShowMessage] = useState(false);
   const [showCode, setShowCode] = useState(false);
+  const isMobile = typeof window !== 'undefined' && window.innerWidth < 768;
 
   useEffect(() => {
     if (isInView) {
-      // Faster timers for mobile - reduced from 500/1500 to 300/900
-      const delay1 = prefersReducedMotion ? 0 : 300;
-      const delay2 = prefersReducedMotion ? 0 : 900;
+      // Faster timers for mobile
+      const delay1 = prefersReducedMotion ? 0 : (isMobile ? 150 : 300);
+      const delay2 = prefersReducedMotion ? 0 : (isMobile ? 400 : 900);
       
       const timers = [
         setTimeout(() => setShowMessage(true), delay1),
@@ -22,7 +23,7 @@ const ReceiveCodeStep = memo(() => {
       ];
       return () => timers.forEach(clearTimeout);
     }
-  }, [isInView, prefersReducedMotion]);
+  }, [isInView, prefersReducedMotion, isMobile]);
 
   return (
     <ScrollSection className="min-h-[80vh] md:min-h-screen flex items-center justify-center py-12 md:py-20 px-4 bg-gradient-to-b from-background to-muted/20">

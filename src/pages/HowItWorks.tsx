@@ -1,12 +1,14 @@
-import { useState, useEffect, lazy, Suspense, useCallback, memo } from 'react';
+import { useState, useEffect, lazy, Suspense, memo } from 'react';
 import { Helmet } from 'react-helmet-async';
 import Navbar from '@/components/Navbar';
 import FooterSection from '@/components/FooterSection';
 import ProgressIndicator from '@/components/how-it-works-page/ProgressIndicator';
 
-// Lazy load step components for better initial load
-const BuyStep = lazy(() => import('@/components/how-it-works-page/BuyStep'));
-const ReceiveCodeStep = lazy(() => import('@/components/how-it-works-page/ReceiveCodeStep'));
+// Eager load first 2 steps for instant visibility
+import BuyStep from '@/components/how-it-works-page/BuyStep';
+import ReceiveCodeStep from '@/components/how-it-works-page/ReceiveCodeStep';
+
+// Lazy load remaining steps
 const SignUpStep = lazy(() => import('@/components/how-it-works-page/SignUpStep'));
 const AddMoneyStep = lazy(() => import('@/components/how-it-works-page/AddMoneyStep'));
 const ActivateInstallStep = lazy(() => import('@/components/how-it-works-page/ActivateInstallStep'));
@@ -75,12 +77,8 @@ const HowItWorks = () => {
             </h1>
           </section>
 
-          <Suspense fallback={<StepSkeleton />}>
-            <BuyStep />
-          </Suspense>
-          <Suspense fallback={<StepSkeleton />}>
-            <ReceiveCodeStep />
-          </Suspense>
+          <BuyStep />
+          <ReceiveCodeStep />
           <Suspense fallback={<StepSkeleton />}>
             <SignUpStep />
           </Suspense>

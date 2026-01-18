@@ -29,11 +29,15 @@ const products = [
 
 const BuyStep = memo(() => {
   const ref = useRef(null);
-  const isInView = useInView(ref, { once: true, amount: 0.2 });
+  const isInView = useInView(ref, { once: true, amount: 0.1 });
   const prefersReducedMotion = useReducedMotion();
   const navigate = useNavigate();
+  const isMobile = typeof window !== 'undefined' && window.innerWidth < 768;
 
-  const getDelay = (delay: number) => prefersReducedMotion ? 0 : delay;
+  const getDelay = (delay: number) => {
+    if (prefersReducedMotion) return 0;
+    return isMobile ? delay * 0.5 : delay;
+  };
 
   return (
     <ScrollSection className="min-h-[80vh] md:min-h-screen flex items-center justify-center pt-8 pb-12 md:pb-20 px-4 bg-background">

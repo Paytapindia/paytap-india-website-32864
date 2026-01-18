@@ -11,8 +11,14 @@ const useCases = [
 
 const TapPayStep = memo(() => {
   const ref = useRef(null);
-  const isInView = useInView(ref, { once: true, amount: 0.3 });
+  const isInView = useInView(ref, { once: true, amount: 0.1 });
   const prefersReducedMotion = useReducedMotion();
+  const isMobile = typeof window !== 'undefined' && window.innerWidth < 768;
+
+  const getDelay = (delay: number) => {
+    if (prefersReducedMotion) return 0;
+    return isMobile ? delay * 0.5 : delay;
+  };
 
   // Simplified animation for mobile - no infinite animations
   const tapAnimation = prefersReducedMotion 
@@ -120,7 +126,7 @@ const TapPayStep = memo(() => {
                   key={useCase.label}
                   initial={{ opacity: 0, y: 15 }}
                   animate={isInView ? { opacity: 1, y: 0 } : {}}
-                  transition={{ delay: 0.3 + index * 0.1, duration: 0.4 }}
+                  transition={{ delay: getDelay(0.3 + index * 0.1), duration: 0.4 }}
                   className="flex items-center gap-2 px-3 sm:px-4 py-2 bg-muted/50 rounded-full"
                 >
                   <useCase.icon className="w-4 h-4 text-primary" />
