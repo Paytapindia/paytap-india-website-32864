@@ -1,3 +1,4 @@
+import { memo } from "react";
 import { useNavigate } from "react-router-dom";
 import { ShoppingCart } from "lucide-react";
 import { Button } from "@/components/ui/button";
@@ -33,7 +34,7 @@ const products = [
   }
 ];
 
-const ProductCarousel = () => {
+const ProductCarousel = memo(() => {
   const navigate = useNavigate();
 
   const handleOrderNow = (buyLink: string, isInternal: boolean) => {
@@ -59,32 +60,33 @@ const ProductCarousel = () => {
               <Card className="bg-card border-border overflow-hidden h-full">
                 <CardContent className="p-0 flex flex-col h-full">
                   {/* Product Image */}
-                  <div className="relative bg-gradient-to-br from-secondary/50 to-secondary p-6 flex items-center justify-center h-[280px] sm:h-[320px]">
+                  <div className="relative bg-gradient-to-br from-secondary/50 to-secondary p-4 md:p-6 flex items-center justify-center h-[220px] sm:h-[280px] md:h-[320px]">
                     <img
                       src={product.image}
                       alt={product.name}
-                      className="max-w-[240px] sm:max-w-[280px] max-h-[240px] sm:max-h-[280px] w-auto h-auto object-contain drop-shadow-xl"
+                      className="max-w-[200px] sm:max-w-[240px] md:max-w-[280px] max-h-[180px] sm:max-h-[240px] md:max-h-[280px] w-auto h-auto object-contain drop-shadow-xl"
+                      loading="lazy"
                     />
                   </div>
                   
                   {/* Product Details */}
-                  <div className="p-6 flex flex-col flex-grow min-h-[200px]">
-                    <h3 className="text-xl sm:text-2xl font-semibold text-foreground mb-2">
+                  <div className="p-4 md:p-6 flex flex-col flex-grow min-h-[160px] sm:min-h-[200px]">
+                    <h3 className="text-lg sm:text-xl md:text-2xl font-semibold text-foreground mb-2">
                       {product.name}
                     </h3>
-                    <p className="text-muted-foreground text-sm sm:text-base mb-4 flex-grow">
+                    <p className="text-muted-foreground text-xs sm:text-sm md:text-base mb-3 md:mb-4 flex-grow">
                       {product.description}
                     </p>
                     
                     <div className="flex items-center justify-between mt-auto">
-                      <span className="text-2xl sm:text-3xl font-bold text-primary">
+                      <span className="text-xl sm:text-2xl md:text-3xl font-bold text-primary">
                         {product.price}
                       </span>
                       <Button
                         onClick={() => handleOrderNow(product.buyLink, product.isInternal)}
-                        className="bg-paytap-light hover:bg-paytap-dark text-white px-6 py-3 text-sm sm:text-base font-semibold rounded-xl shadow-lg hover:shadow-xl hover:scale-[1.02] transition-all duration-300 group"
+                        className="bg-paytap-light hover:bg-paytap-dark text-white px-4 md:px-6 py-2.5 md:py-3 text-xs sm:text-sm md:text-base font-semibold rounded-xl shadow-lg hover:shadow-xl hover:scale-[1.02] transition-all duration-300 group"
                       >
-                        <ShoppingCart className="mr-2 w-4 h-4 sm:w-5 sm:h-5" />
+                        <ShoppingCart className="mr-1.5 md:mr-2 w-3.5 h-3.5 sm:w-4 sm:h-4 md:w-5 md:h-5" />
                         Order Now
                       </Button>
                     </div>
@@ -101,11 +103,13 @@ const ProductCarousel = () => {
       </Carousel>
       
       {/* Mobile Swipe Hint */}
-      <p className="text-center text-muted-foreground text-sm mt-4 md:hidden">
+      <p className="text-center text-muted-foreground text-xs sm:text-sm mt-3 md:mt-4 md:hidden">
         ← Swipe to see more products →
       </p>
     </div>
   );
-};
+});
+
+ProductCarousel.displayName = 'ProductCarousel';
 
 export default ProductCarousel;
