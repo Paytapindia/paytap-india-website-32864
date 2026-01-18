@@ -122,7 +122,7 @@ const FooterSection = memo(() => {
             <h4 className="font-bold text-lg md:text-xl mb-4 md:mb-6 text-white">Stay Connected</h4>
             <p className="text-gray-300 mb-3 md:mb-4 text-sm md:text-base">Follow us for updates and tips</p>
             <div className="flex flex-wrap gap-2 md:gap-3 mb-4 md:mb-6">
-              <a href="#" className="w-10 h-10 md:w-12 md:h-12 bg-paytap-dark/50 hover:bg-paytap-light rounded-lg md:rounded-xl flex items-center justify-center transition-all duration-300 group">
+              <a href="https://x.com/paytapindia" target="_blank" rel="noopener noreferrer" className="w-10 h-10 md:w-12 md:h-12 bg-paytap-dark/50 hover:bg-paytap-light rounded-lg md:rounded-xl flex items-center justify-center transition-all duration-300 group">
                 <X className="h-4 w-4 md:h-5 md:w-5 text-gray-300 group-hover:text-white" />
               </a>
               <a href="#" className="w-10 h-10 md:w-12 md:h-12 bg-paytap-dark/50 hover:bg-paytap-light rounded-lg md:rounded-xl flex items-center justify-center transition-all duration-300 group">
