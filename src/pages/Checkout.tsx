@@ -187,8 +187,8 @@ const Checkout = () => {
     trigger("city");
   };
 
-  // Calculate total items with BOGO
-  const totalItemsReceived = quantity * 2;
+  // Calculate total items
+  const totalItemsReceived = quantity;
 
   // Success state UI
   if (orderPlaced) {
@@ -202,7 +202,7 @@ const Checkout = () => {
             <h1 className="text-2xl font-bold text-gray-900 mb-4">Order Placed Successfully! 🎉</h1>
             <div className="bg-green-50 border border-green-200 rounded-lg p-3 mb-4">
               <p className="text-green-700 font-semibold">
-                🎁 You're getting {totalItemsReceived} {productType === 'sticker' ? 'tags' : 'cards'}! ({quantity} paid + {quantity} FREE)
+                🎁 You're getting {totalItemsReceived} {productType === 'sticker' ? (totalItemsReceived > 1 ? 'tags' : 'tag') : (totalItemsReceived > 1 ? 'cards' : 'card')} at launch price!
               </p>
             </div>
             <p className="text-gray-600 mb-6">
@@ -255,16 +255,6 @@ const Checkout = () => {
           </div>
         </div>
 
-        {/* LAUNCH OFFER BANNER */}
-        <div className="bg-gradient-to-r from-green-500 to-emerald-600 p-4 rounded-xl mb-4 text-center shadow-lg">
-          <div className="flex items-center justify-center gap-2 mb-1">
-            <Gift className="w-5 h-5 text-white" />
-            <span className="text-white font-bold text-lg">🎉 LAUNCH OFFER: Buy 1, Get 1 FREE!</span>
-          </div>
-          <p className="text-white/90 text-sm">
-            Pay for 1 tag and receive 2 tags delivered to you!
-          </p>
-        </div>
 
         {/* ORDER SUMMARY CARD - HERO SECTION */}
         <Card className="shadow-lg border-0 overflow-hidden">
@@ -297,65 +287,59 @@ const Checkout = () => {
                     <p className="text-sm font-semibold text-center text-gray-900">
                       {type === 'sticker' ? 'NFC Sticker' : 'Prepaid Card'}
                     </p>
-                    <p className="text-xs text-gray-500 text-center">₹{PRODUCTS[type].price}</p>
+                    <p className="text-xs text-center">
+                      <span className="line-through text-gray-400">₹999</span>{" "}
+                      <span className="text-green-600 font-semibold">₹499</span>
+                    </p>
                   </button>
                 ))}
               </div>
             </div>
 
-            {/* Quantity Selector - Big and Bold with BOGO */}
+            {/* Quantity Selector */}
             <div className="space-y-3">
               <Label className="text-sm font-medium text-gray-700">Select Quantity</Label>
               <div className="grid grid-cols-2 gap-3">
                 <button
                   type="button"
                   onClick={() => setQuantity(1)}
-                  className={`p-4 rounded-xl border-2 transition-all relative ${
+                  className={`p-4 rounded-xl border-2 transition-all ${
                     quantity === 1 
                       ? "border-paytap-light bg-paytap-light/10 shadow-md" 
                       : "border-gray-200 hover:border-gray-300 bg-white"
                   }`}
                 >
-                  <div className="absolute -top-2 -right-2 bg-green-500 text-white text-xs font-bold px-2 py-0.5 rounded-full">
-                    +1 FREE
-                  </div>
-                  <p className="text-sm text-gray-500">Pay for 1</p>
-                  <p className="text-2xl font-bold text-gray-900">Get 2</p>
-                  <p className="text-lg font-semibold text-paytap-dark">₹499</p>
+                  <p className="text-sm text-gray-500">1 {productType === 'sticker' ? 'Tag' : 'Card'}</p>
+                  <p className="text-sm line-through text-gray-400">MRP ₹999</p>
+                  <p className="text-xl font-bold text-green-600">₹499</p>
                 </button>
                 <button
                   type="button"
                   onClick={() => setQuantity(2)}
-                  className={`p-4 rounded-xl border-2 transition-all relative ${
+                  className={`p-4 rounded-xl border-2 transition-all ${
                     quantity === 2 
                       ? "border-paytap-light bg-paytap-light/10 shadow-md" 
                       : "border-gray-200 hover:border-gray-300 bg-white"
                   }`}
                 >
-                  <div className="absolute -top-2 -right-2 bg-green-500 text-white text-xs font-bold px-2 py-0.5 rounded-full">
-                    +2 FREE
-                  </div>
-                  <p className="text-sm text-gray-500">Pay for 2</p>
-                  <p className="text-2xl font-bold text-gray-900">Get 4</p>
-                  <p className="text-lg font-semibold text-paytap-dark">₹998</p>
+                  <p className="text-sm text-gray-500">2 {productType === 'sticker' ? 'Tags' : 'Cards'}</p>
+                  <p className="text-sm line-through text-gray-400">MRP ₹1998</p>
+                  <p className="text-xl font-bold text-green-600">₹998</p>
                 </button>
               </div>
             </div>
 
             <Separator />
 
-            {/* Price Breakdown with BOGO */}
+            {/* Price Breakdown */}
             <div className="space-y-2 text-sm">
               <div className="flex justify-between text-gray-600">
-                <span>You Pay ({quantity} {productType === 'sticker' ? 'tag' : 'card'}{quantity > 1 ? 's' : ''})</span>
-                <span>₹{total}</span>
+                <span>MRP ({quantity} {productType === 'sticker' ? 'tag' : 'card'}{quantity > 1 ? 's' : ''})</span>
+                <span className="line-through text-gray-400">₹{quantity * 999}</span>
               </div>
               <div className="flex justify-between text-green-600 font-medium">
-                <span className="flex items-center gap-1">
-                  <Gift className="w-3 h-3" />
-                  FREE Bonus ({quantity} {productType === 'sticker' ? 'tag' : 'card'}{quantity > 1 ? 's' : ''})
-                </span>
-                <span className="line-through text-gray-400">₹{total}</span>
+                <span>Launch Discount (50% OFF)</span>
+                <span>-₹{quantity * 500}</span>
               </div>
               <div className="flex justify-between text-gray-600">
                 <span>Shipping</span>
@@ -363,12 +347,9 @@ const Checkout = () => {
               </div>
               <Separator />
               <div className="flex justify-between font-bold text-lg text-gray-900">
-                <span>Total ({quantity * 2} {productType === 'sticker' ? 'tags' : 'cards'})</span>
-                <span>₹{total}</span>
+                <span>Total ({quantity} {productType === 'sticker' ? 'tag' : 'card'}{quantity > 1 ? 's' : ''})</span>
+                <span className="text-green-600">₹{total}</span>
               </div>
-              <p className="text-center text-green-600 text-xs font-medium">
-                🎁 You save ₹{total} with this offer!
-              </p>
             </div>
 
             {/* BIG CTA BUTTON */}
@@ -385,7 +366,7 @@ const Checkout = () => {
               ) : (
                 <>
                   <CreditCard className="mr-2 h-5 w-5" />
-                  Pay ₹{total} & Get {quantity * 2} {productType === 'sticker' ? 'Tags' : 'Cards'}!
+                  Pay ₹{total} & Get {quantity} {productType === 'sticker' ? (quantity > 1 ? 'Tags' : 'Tag') : (quantity > 1 ? 'Cards' : 'Card')}
                 </>
               )}
             </Button>
