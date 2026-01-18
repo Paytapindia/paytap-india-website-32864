@@ -12,10 +12,14 @@ const scenes = [
 
 const ClosingStep = memo(() => {
   const ref = useRef(null);
-  const isInView = useInView(ref, { once: true, amount: 0.3 });
+  const isInView = useInView(ref, { once: true, amount: 0.1 });
   const prefersReducedMotion = useReducedMotion();
+  const isMobile = typeof window !== 'undefined' && window.innerWidth < 768;
 
-  const getDelay = (delay: number) => prefersReducedMotion ? 0 : delay;
+  const getDelay = (delay: number) => {
+    if (prefersReducedMotion) return 0;
+    return isMobile ? delay * 0.5 : delay;
+  };
 
   return (
     <section 

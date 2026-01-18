@@ -5,15 +5,16 @@ import ScrollSection from './ScrollSection';
 
 const SignUpStep = memo(() => {
   const ref = useRef(null);
-  const isInView = useInView(ref, { once: true, amount: 0.3 });
+  const isInView = useInView(ref, { once: true, amount: 0.1 });
   const prefersReducedMotion = useReducedMotion();
   const [step, setStep] = useState(0);
+  const isMobile = typeof window !== 'undefined' && window.innerWidth < 768;
 
   useEffect(() => {
     if (isInView) {
-      // Faster timers for mobile - reduced intervals
-      const baseDelay = prefersReducedMotion ? 0 : 300;
-      const interval = prefersReducedMotion ? 0 : 500;
+      // Faster timers for mobile
+      const baseDelay = prefersReducedMotion ? 0 : (isMobile ? 150 : 300);
+      const interval = prefersReducedMotion ? 0 : (isMobile ? 200 : 500);
       
       const timers = [
         setTimeout(() => setStep(1), baseDelay),
@@ -24,7 +25,7 @@ const SignUpStep = memo(() => {
       ];
       return () => timers.forEach(clearTimeout);
     }
-  }, [isInView, prefersReducedMotion]);
+  }, [isInView, prefersReducedMotion, isMobile]);
 
   return (
     <ScrollSection className="min-h-[80vh] md:min-h-screen flex items-center justify-center py-12 md:py-20 px-4 bg-background">
