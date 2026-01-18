@@ -66,7 +66,7 @@ const BuyStep = memo(() => {
             className="mt-4 sm:mt-6 inline-flex items-center gap-2 bg-gradient-to-r from-green-500 to-emerald-600 px-3 sm:px-4 py-1.5 sm:py-2 rounded-full text-white font-semibold shadow-lg text-sm sm:text-base"
           >
             <Gift className="w-4 h-4 sm:w-5 sm:h-5" />
-            <span>🎉 LAUNCH OFFER: Buy 1, Get 1 FREE!</span>
+            <span>🎉 LAUNCH OFFER: ₹499 <span className="line-through opacity-70">MRP ₹999</span></span>
           </motion.div>
         </motion.div>
 
@@ -86,7 +86,7 @@ const BuyStep = memo(() => {
                   <div className="relative bg-gradient-to-br from-secondary/50 to-secondary p-4 sm:p-6 flex items-center justify-center h-[200px] sm:h-[280px]">
                     {/* Offer Badge */}
                     <div className="absolute top-2 sm:top-3 right-2 sm:right-3 bg-gradient-to-r from-green-500 to-emerald-600 text-white text-[10px] sm:text-xs font-bold px-2 py-1 rounded-full shadow-md z-10">
-                      Buy 1 Get 1 FREE
+                      50% OFF
                     </div>
                     <img
                       src={product.image}
