@@ -62,8 +62,8 @@ const PaytapSticker = () => {
 
   const activationSteps = [
     { step: "01", title: "Download Paytap App", description: "Available on iOS and Android app stores" },
-    { step: "02", title: "Complete Business KYC", description: "Quick verification for fleet operators" },
-    { step: "03", title: "Link Your NFC Tags", description: "Deploy tags across your fleet" },
+    { step: "02", title: "Complete KYC", description: "Quick verification with ID documents" },
+    { step: "03", title: "Link Your NFC Tags", description: "Deploy tags across your vehicles or team" },
     { step: "04", title: "Set Spending Controls", description: "Configure limits, alerts & permissions" },
     { step: "05", title: "Monitor & Scale", description: "Real-time tracking, GST reports, AI insights" }
   ];
@@ -115,16 +115,16 @@ const PaytapSticker = () => {
             {/* Left Content */}
             <div className="flex-1 text-center lg:text-left">
               <span className="inline-block px-3 py-1.5 md:px-4 md:py-2 bg-primary/10 text-primary rounded-full text-xs md:text-sm font-medium mb-4">
-                Fleet Payment System
+                Payment Hardware
               </span>
               <h1 className="text-3xl sm:text-4xl lg:text-5xl font-bold text-foreground mb-4 md:mb-6 leading-tight">
-                Unlock Paytap for Business — <span className="text-primary">₹499</span>
+                Paytap NFC Tag — <span className="text-primary">₹499</span>
               </h1>
               <p className="text-xl md:text-2xl text-foreground font-semibold mb-2">
-                Fleet Payments. Controls. Intelligence.
+                Track spending, set limits, and stay in control.
               </p>
               <p className="text-lg md:text-xl text-muted-foreground mb-4">
-                One platform. Every vehicle.
+                Your hardware for tap-to-pay at fuel, tolls, and more.
               </p>
               <p className="text-base md:text-lg text-primary font-medium mb-6 max-w-xl italic">
                 "{hookLines[0]}"
@@ -134,7 +134,7 @@ const PaytapSticker = () => {
                   onClick={handleActivate}
                   className="bg-paytap-light hover:bg-paytap-dark text-white px-6 py-5 md:px-8 md:py-6 text-base md:text-lg font-semibold rounded-xl shadow-lg hover:shadow-xl transition-all"
                 >
-                  Activate Business Account
+                  Activate Now
                   <ArrowRight className="ml-2 w-4 h-4 md:w-5 md:h-5" />
                 </Button>
               </div>
@@ -177,17 +177,17 @@ const PaytapSticker = () => {
                 {/* Left - Pricing */}
                 <div className="text-center lg:text-left">
                   <h2 className="text-2xl sm:text-3xl lg:text-4xl font-bold text-foreground mb-2">
-                    🔓 ₹499 Business Activation
+                    🔓 ₹499 Platform Access
                   </h2>
                   <p className="text-lg sm:text-xl text-primary font-semibold mb-4">
-                    ₹4999 Value — Platform Access
+                    ₹4999 Value — Lifetime Access
                   </p>
                   <Button 
                     onClick={handleActivate}
                     size="lg"
                     className="bg-paytap-light hover:bg-paytap-dark text-white px-8 py-6 text-lg font-semibold rounded-xl shadow-lg hover:shadow-xl transition-all w-full sm:w-auto"
                   >
-                    Activate Business Account
+                    Activate Now
                     <ArrowRight className="ml-2 w-5 h-5" />
                   </Button>
                   <p className="text-sm text-muted-foreground mt-4">

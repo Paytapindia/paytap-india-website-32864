@@ -21,7 +21,7 @@ const products = [
   {
     id: 1,
     name: "Paytap NFC Tag",
-    description: "NFC payment tags for controlled, cashless spending at fuel pumps, tolls, and more.",
+    description: "Start with an NFC tag — stick anywhere and tap to pay at fuel pumps, tolls, metros, and parking.",
     price: "₹499",
     image: paytapTagSticker,
     buyLink: "/checkout?product=sticker",
@@ -29,7 +29,7 @@ const products = [
   {
     id: 2,
     name: "Paytap Prepaid Card",
-    description: "RuPay-powered expense management. Perfect for employee expenses, vendor payments, or personal control.",
+    description: "Start with a RuPay prepaid card — accepted at 8L+ merchants for team expenses and everyday control.",
     price: "₹499",
     image: paytapCard,
     buyLink: "/checkout?product=card",
@@ -62,10 +62,10 @@ const BuyStep = memo(() => {
             Step 01
           </div>
           <h2 className="text-2xl sm:text-3xl md:text-4xl lg:text-5xl font-semibold text-foreground mb-4 tracking-tight">
-            Activate Your Paytap Account
+            Choose Your Hardware
           </h2>
           <p className="text-sm sm:text-base text-primary font-medium max-w-lg mx-auto">
-            Built for anyone who needs to control how their money moves.
+            Pick your Paytap hardware to activate your account.
           </p>
           
           {/* FOUNDER ACCESS BANNER */}
