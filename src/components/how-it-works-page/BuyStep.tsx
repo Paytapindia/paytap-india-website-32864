@@ -9,8 +9,8 @@ import paytapTagSticker from '@/assets/paytap-tag-sticker-v2.png';
 import paytapCard from '@/assets/paytap-card-product.png';
 
 const pricingIncludes = [
-  { icon: Wifi, text: "Paytap NFC Tag", value: "₹1,499 Value" },
-  { icon: CreditCard, text: "1-Year Business Account", value: "₹3,500 Value" },
+  { icon: Wifi, text: "Paytap NFC Tag", value: "₹999 Value" },
+  { icon: CreditCard, text: "Lifetime Platform Access", value: "₹4,000 Value" },
   { icon: BarChart3, text: "Live Expense Dashboard" },
   { icon: Car, text: "Smart Controls" },
   { icon: FileText, text: "GST & Business Reports" },
