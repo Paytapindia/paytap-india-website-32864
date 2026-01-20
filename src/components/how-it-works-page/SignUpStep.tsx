@@ -1,6 +1,6 @@
 import { motion, useInView, useReducedMotion } from 'framer-motion';
 import { useRef, useState, useEffect, memo } from 'react';
-import { Check, Phone, User, FileText, Key } from 'lucide-react';
+import { Check, BarChart3, Car, Bell, Sliders, TrendingUp, AlertCircle } from 'lucide-react';
 import ScrollSection from './ScrollSection';
 
 const SignUpStep = memo(() => {
@@ -12,7 +12,6 @@ const SignUpStep = memo(() => {
 
   useEffect(() => {
     if (isInView) {
-      // Faster timers for mobile
       const baseDelay = prefersReducedMotion ? 0 : (isMobile ? 150 : 300);
       const interval = prefersReducedMotion ? 0 : (isMobile ? 200 : 500);
       
@@ -21,7 +20,6 @@ const SignUpStep = memo(() => {
         setTimeout(() => setStep(2), baseDelay + interval),
         setTimeout(() => setStep(3), baseDelay + interval * 2),
         setTimeout(() => setStep(4), baseDelay + interval * 3),
-        setTimeout(() => setStep(5), baseDelay + interval * 4),
       ];
       return () => timers.forEach(clearTimeout);
     }
@@ -30,106 +28,93 @@ const SignUpStep = memo(() => {
   return (
     <ScrollSection className="min-h-[80vh] md:min-h-screen flex items-center justify-center py-12 md:py-20 px-4 bg-background">
       <div ref={ref} className="max-w-5xl mx-auto grid md:grid-cols-2 gap-8 md:gap-12 items-center">
-        {/* Phone mockup */}
+        {/* Dashboard mockup */}
         <div className="relative mx-auto order-2 md:order-1">
-          <div className="w-56 sm:w-72 bg-foreground/5 rounded-[2.5rem] sm:rounded-[3rem] p-2 sm:p-3 border border-border/30 shadow-xl">
-            <div className="bg-background rounded-[2rem] sm:rounded-[2.5rem] p-4 sm:p-6 min-h-[420px] sm:min-h-[520px]">
-              {/* Notch */}
-              <div className="w-20 sm:w-24 h-5 sm:h-6 bg-foreground/10 rounded-full mx-auto mb-4 sm:mb-6" />
-              
-              {/* Form fields */}
-              <div className="space-y-3 sm:space-y-4">
-                {/* Activation Code field */}
-                <motion.div
-                  initial={{ opacity: 0, x: -15 }}
-                  animate={step >= 1 ? { opacity: 1, x: 0 } : {}}
-                  transition={{ duration: 0.4 }}
-                  className="relative"
-                >
-                  <div className="flex items-center gap-2 sm:gap-3 p-3 sm:p-4 bg-primary/10 rounded-xl border border-primary/30">
-                    <Key className="w-4 h-4 sm:w-5 sm:h-5 text-primary" />
-                    <span className="text-xs sm:text-sm text-foreground font-mono font-medium">PT-8X4K-2M9L</span>
-                  </div>
-                  {step >= 2 && (
-                    <motion.div
-                      initial={{ scale: 0 }}
-                      animate={{ scale: 1 }}
-                      className="absolute -right-1 sm:-right-2 -top-1 sm:-top-2 w-5 h-5 sm:w-6 sm:h-6 bg-green-500 rounded-full flex items-center justify-center"
-                    >
-                      <Check className="w-3 h-3 sm:w-4 sm:h-4 text-white" />
-                    </motion.div>
-                  )}
-                </motion.div>
-
-                {/* Phone field */}
-                <motion.div
-                  initial={{ opacity: 0, x: -15 }}
-                  animate={step >= 2 ? { opacity: 1, x: 0 } : {}}
-                  transition={{ duration: 0.4 }}
-                  className="relative"
-                >
-                  <div className="flex items-center gap-2 sm:gap-3 p-3 sm:p-4 bg-muted/50 rounded-xl border border-border/50">
-                    <Phone className="w-4 h-4 sm:w-5 sm:h-5 text-muted-foreground" />
-                    <span className="text-xs sm:text-sm text-foreground font-mono">+91 98765 43210</span>
-                  </div>
-                  {step >= 3 && (
-                    <motion.div
-                      initial={{ scale: 0 }}
-                      animate={{ scale: 1 }}
-                      className="absolute -right-1 sm:-right-2 -top-1 sm:-top-2 w-5 h-5 sm:w-6 sm:h-6 bg-green-500 rounded-full flex items-center justify-center"
-                    >
-                      <Check className="w-3 h-3 sm:w-4 sm:h-4 text-white" />
-                    </motion.div>
-                  )}
-                </motion.div>
-
-                {/* Name field */}
-                <motion.div
-                  initial={{ opacity: 0, x: -15 }}
-                  animate={step >= 3 ? { opacity: 1, x: 0 } : {}}
-                  transition={{ duration: 0.4 }}
-                  className="flex items-center gap-2 sm:gap-3 p-3 sm:p-4 bg-muted/50 rounded-xl border border-border/50"
-                >
-                  <User className="w-4 h-4 sm:w-5 sm:h-5 text-muted-foreground" />
-                  <span className="text-xs sm:text-sm text-foreground">Rahul Sharma</span>
-                </motion.div>
-
-                {/* PAN field */}
-                <motion.div
-                  initial={{ opacity: 0, x: -15 }}
-                  animate={step >= 4 ? { opacity: 1, x: 0 } : {}}
-                  transition={{ duration: 0.4 }}
-                  className="relative"
-                >
-                  <div className="flex items-center gap-2 sm:gap-3 p-3 sm:p-4 bg-muted/50 rounded-xl border border-border/50">
-                    <FileText className="w-4 h-4 sm:w-5 sm:h-5 text-muted-foreground" />
-                    <span className="text-xs sm:text-sm text-foreground font-mono">ABCDE1234F</span>
-                  </div>
-                  {step >= 5 && (
-                    <motion.div
-                      initial={{ scale: 0 }}
-                      animate={{ scale: 1 }}
-                      className="absolute -right-1 sm:-right-2 -top-1 sm:-top-2 w-5 h-5 sm:w-6 sm:h-6 bg-green-500 rounded-full flex items-center justify-center"
-                    >
-                      <Check className="w-3 h-3 sm:w-4 sm:h-4 text-white" />
-                    </motion.div>
-                  )}
-                </motion.div>
-
-                {/* Verified badge */}
-                {step >= 5 && (
-                  <motion.div
-                    initial={{ opacity: 0, scale: 0.9 }}
-                    animate={{ opacity: 1, scale: 1 }}
-                    className="mt-4 sm:mt-6 p-3 sm:p-4 bg-green-500/10 rounded-xl border border-green-500/30 text-center"
-                  >
-                    <div className="flex items-center justify-center gap-2 text-green-600">
-                      <Check className="w-4 h-4 sm:w-5 sm:h-5" />
-                      <span className="font-medium text-sm sm:text-base">Wallet Created</span>
-                    </div>
-                  </motion.div>
-                )}
+          <div className="w-full max-w-sm bg-foreground/5 rounded-2xl sm:rounded-3xl p-3 sm:p-4 border border-border/30 shadow-xl">
+            <div className="bg-background rounded-xl sm:rounded-2xl p-4 sm:p-6">
+              {/* Dashboard header */}
+              <div className="flex items-center justify-between mb-4 sm:mb-6">
+                <div>
+                  <div className="text-xs text-muted-foreground">Fleet Dashboard</div>
+                  <div className="text-lg sm:text-xl font-bold text-foreground">MyFleet AI</div>
+                </div>
+                <div className="w-8 h-8 bg-primary/10 rounded-full flex items-center justify-center">
+                  <BarChart3 className="w-4 h-4 text-primary" />
+                </div>
               </div>
+              
+              {/* Stats grid */}
+              <motion.div
+                initial={{ opacity: 0, y: 10 }}
+                animate={step >= 1 ? { opacity: 1, y: 0 } : {}}
+                transition={{ duration: 0.4 }}
+                className="grid grid-cols-2 gap-3 mb-4"
+              >
+                <div className="bg-muted/50 rounded-xl p-3">
+                  <div className="text-xs text-muted-foreground mb-1">Active Tags</div>
+                  <div className="text-xl font-bold text-foreground">12</div>
+                </div>
+                <div className="bg-muted/50 rounded-xl p-3">
+                  <div className="text-xs text-muted-foreground mb-1">This Month</div>
+                  <div className="text-xl font-bold text-primary">₹45,230</div>
+                </div>
+              </motion.div>
+
+              {/* Vehicle list */}
+              <motion.div
+                initial={{ opacity: 0, x: -15 }}
+                animate={step >= 2 ? { opacity: 1, x: 0 } : {}}
+                transition={{ duration: 0.4 }}
+                className="space-y-2 mb-4"
+              >
+                <div className="flex items-center gap-3 p-3 bg-muted/50 rounded-xl">
+                  <Car className="w-5 h-5 text-primary" />
+                  <div className="flex-1">
+                    <div className="text-sm text-foreground">KA-01-AB-1234</div>
+                    <div className="text-xs text-muted-foreground">Limit: ₹5,000/day</div>
+                  </div>
+                  <div className="w-2 h-2 bg-green-500 rounded-full" />
+                </div>
+                <div className="flex items-center gap-3 p-3 bg-muted/50 rounded-xl">
+                  <Car className="w-5 h-5 text-primary" />
+                  <div className="flex-1">
+                    <div className="text-sm text-foreground">KA-01-CD-5678</div>
+                    <div className="text-xs text-muted-foreground">Limit: ₹3,000/day</div>
+                  </div>
+                  <div className="w-2 h-2 bg-green-500 rounded-full" />
+                </div>
+              </motion.div>
+
+              {/* Control buttons */}
+              <motion.div
+                initial={{ opacity: 0, y: 10 }}
+                animate={step >= 3 ? { opacity: 1, y: 0 } : {}}
+                transition={{ duration: 0.4 }}
+                className="flex gap-2"
+              >
+                <div className="flex-1 flex items-center justify-center gap-2 p-2 bg-primary/10 rounded-lg text-primary">
+                  <Sliders className="w-4 h-4" />
+                  <span className="text-xs font-medium">Set Limits</span>
+                </div>
+                <div className="flex-1 flex items-center justify-center gap-2 p-2 bg-primary/10 rounded-lg text-primary">
+                  <Bell className="w-4 h-4" />
+                  <span className="text-xs font-medium">Alerts</span>
+                </div>
+              </motion.div>
+
+              {/* Real-time alert */}
+              {step >= 4 && (
+                <motion.div
+                  initial={{ opacity: 0, scale: 0.95 }}
+                  animate={{ opacity: 1, scale: 1 }}
+                  className="mt-4 p-3 bg-amber-500/10 rounded-xl border border-amber-500/30"
+                >
+                  <div className="flex items-center gap-2 text-amber-600">
+                    <AlertCircle className="w-4 h-4" />
+                    <span className="text-xs font-medium">Real-time: KA-01-AB-1234 — ₹850 at Shell Fuel</span>
+                  </div>
+                </motion.div>
+              )}
             </div>
           </div>
         </div>
@@ -145,11 +130,33 @@ const SignUpStep = memo(() => {
               Step 03
             </div>
             <h2 className="text-2xl sm:text-3xl md:text-4xl lg:text-5xl font-semibold text-foreground mb-4 tracking-tight">
-              Create Your Account
+              Control & Monitor in Real-Time
             </h2>
-            <p className="text-base sm:text-lg text-muted-foreground max-w-md mx-auto md:mx-0">
-              Enter your activation code and complete minimum-KYC in under 60 seconds.
+            <p className="text-base sm:text-lg text-muted-foreground max-w-md mx-auto md:mx-0 mb-6">
+              Set limits, track expenses, and manage vehicles using MyFleet AI controls and live reports.
             </p>
+
+            {/* Features */}
+            <div className="space-y-3">
+              <div className="flex items-center gap-3 text-left">
+                <div className="w-8 h-8 bg-primary/10 rounded-lg flex items-center justify-center flex-shrink-0">
+                  <Sliders className="w-4 h-4 text-primary" />
+                </div>
+                <span className="text-sm text-foreground">Set daily, weekly, or per-transaction limits</span>
+              </div>
+              <div className="flex items-center gap-3 text-left">
+                <div className="w-8 h-8 bg-primary/10 rounded-lg flex items-center justify-center flex-shrink-0">
+                  <Bell className="w-4 h-4 text-primary" />
+                </div>
+                <span className="text-sm text-foreground">Instant alerts for every transaction</span>
+              </div>
+              <div className="flex items-center gap-3 text-left">
+                <div className="w-8 h-8 bg-primary/10 rounded-lg flex items-center justify-center flex-shrink-0">
+                  <TrendingUp className="w-4 h-4 text-primary" />
+                </div>
+                <span className="text-sm text-foreground">AI-powered spending insights</span>
+              </div>
+            </div>
           </motion.div>
         </div>
       </div>
