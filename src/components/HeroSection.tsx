@@ -67,7 +67,7 @@ const HeroSection = memo(() => {
             
             {/* Micro Trust Line */}
             <div className="text-muted-foreground text-xs md:text-sm tracking-wide">
-              Used by growing fleet operators across India • No monthly fees • Founder pricing locked
+              Used by growing fleet operators across India • No monthly fees
             </div>
           </div>
 
