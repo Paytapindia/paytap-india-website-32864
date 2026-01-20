@@ -37,7 +37,7 @@ const HeroSection = memo(() => {
 
             {/* Enterprise subheadline */}
             <p className="text-muted-foreground text-base md:text-xl max-w-xl leading-relaxed mb-6 md:mb-8 mx-auto lg:mx-0">
-              PayTap is a smart payment control platform that lets you track spending, set limits, and manage tags, vehicles, or teams — all from one app.
+              Paytap is a smart payment control platform that lets you track spending, set limits, and manage tags, vehicles, or teams — all from one app.
             </p>
 
             {/* Value Strip - Feature highlights */}
@@ -60,7 +60,7 @@ const HeroSection = memo(() => {
                 onClick={handleActivateAccount}
               >
                 <Unlock className="mr-2 md:mr-3 w-4 h-4 md:w-5 md:h-5" />
-                Activate PayTap Account
+                Activate Paytap Account
                 <ArrowRight className="ml-2 md:ml-3 w-4 h-4 md:w-5 md:h-5 group-hover:translate-x-1 transition-transform" />
               </Button>
             </div>
