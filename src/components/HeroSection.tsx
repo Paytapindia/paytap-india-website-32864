@@ -201,7 +201,7 @@ const HeroSection = memo(() => {
             </div>
 
             {/* Dashboard Screen Mockup */}
-            <div className="absolute top-4 sm:top-2 md:top-6 left-0 sm:-left-2 md:-left-4 w-28 sm:w-36 md:w-52 z-10">
+            <div className="absolute -top-8 sm:-top-4 md:top-6 left-0 sm:-left-2 md:-left-4 w-28 sm:w-36 md:w-52 z-10">
               {/* Monitor frame */}
               <div className="bg-gray-800 rounded-t-lg p-1 border border-gray-700">
                 {/* Window controls */}
