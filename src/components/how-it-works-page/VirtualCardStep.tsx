@@ -66,7 +66,7 @@ const VirtualCardStep = () => {
               {/* Card content */}
               <div className="relative z-10 h-full p-5 flex flex-col justify-between">
                 <div className="flex justify-between items-start">
-                  <img src={paytapCardLogo} alt="PayTap" className="h-7 sm:h-8" />
+                  <img src={paytapCardLogo} alt="Paytap" className="h-7 sm:h-8" />
                   <div className="text-white/60 text-xs">VIRTUAL</div>
                 </div>
                 <div className="space-y-2">

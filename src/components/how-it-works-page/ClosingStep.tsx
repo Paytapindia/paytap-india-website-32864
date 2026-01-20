@@ -103,7 +103,7 @@ const ClosingStep = memo(() => {
           >
             <Link to="/checkout" className="inline-flex items-center gap-2">
               <Unlock className="w-4 h-4 sm:w-5 sm:h-5" />
-              Activate PayTap Account
+              Activate Paytap Account
             </Link>
           </Button>
           <p className="text-xs sm:text-sm text-muted-foreground mt-4">

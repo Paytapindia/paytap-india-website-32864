@@ -55,8 +55,8 @@ const KidsPay = () => {
   return (
     <>
       <Helmet>
-        <title>PayTap Kids Pay - Safe Prepaid Cards for Children | PayTap</title>
-        <meta name="description" content="PayTap Kids Pay offers secure prepaid payment cards and contactless tags for children. Parents stay in control with spending limits and real-time tracking." />
+        <title>Paytap Kids Pay - Safe Prepaid Cards for Children | Paytap</title>
+        <meta name="description" content="Paytap Kids Pay offers secure prepaid payment cards and contactless tags for children. Parents stay in control with spending limits and real-time tracking." />
       </Helmet>
 
       <Navbar />
@@ -75,7 +75,7 @@ const KidsPay = () => {
             </div>
             
             <h1 className="text-5xl md:text-7xl font-bold text-foreground mb-6 tracking-tight">
-              PayTap Kids Pay
+              Paytap Kids Pay
             </h1>
             
             <p className="text-2xl md:text-3xl text-muted-foreground mb-4">
@@ -103,10 +103,10 @@ const KidsPay = () => {
         <section className="py-24 px-6 bg-muted/30">
           <div className="max-w-4xl mx-auto text-center animate-fade-in">
             <h2 className="text-3xl md:text-5xl font-bold text-foreground mb-6">
-              What is PayTap Kids Pay?
+              What is Paytap Kids Pay?
             </h2>
             <p className="text-lg md:text-xl text-muted-foreground leading-relaxed max-w-3xl mx-auto">
-              PayTap Kids Pay allows parents to issue a <span className="text-foreground font-semibold">secure prepaid payment card or contactless tag</span> for children, even as young as <span className="text-primary font-semibold">5 years old</span>. It helps kids learn money handling while parents retain full control over spending.
+              Paytap Kids Pay allows parents to issue a <span className="text-foreground font-semibold">secure prepaid payment card or contactless tag</span> for children, even as young as <span className="text-primary font-semibold">5 years old</span>. It helps kids learn money handling while parents retain full control over spending.
             </p>
           </div>
         </section>
@@ -198,7 +198,7 @@ const KidsPay = () => {
               No smartphone needed
             </h2>
             <p className="text-lg md:text-xl text-muted-foreground leading-relaxed max-w-3xl mx-auto mb-8">
-              PayTap Kids Pay works independently and does not require a mobile phone, making it ideal for:
+              Paytap Kids Pay works independently and does not require a mobile phone, making it ideal for:
             </p>
             
             <div className="flex flex-wrap justify-center gap-4">
@@ -214,7 +214,7 @@ const KidsPay = () => {
             </div>
             
             <p className="text-muted-foreground mt-8 italic">
-              If a child understands how to handle cash, they can use PayTap.
+              If a child understands how to handle cash, they can use Paytap.
             </p>
           </div>
         </section>
@@ -257,7 +257,7 @@ const KidsPay = () => {
             </div>
             
             <h2 className="text-3xl md:text-5xl font-bold text-foreground mb-12">
-              Why parents choose PayTap Kids Pay
+              Why parents choose Paytap Kids Pay
             </h2>
 
             <div className="grid sm:grid-cols-2 md:grid-cols-3 gap-4">
@@ -285,11 +285,11 @@ const KidsPay = () => {
             </h2>
             
             <p className="text-lg text-muted-foreground mb-10 max-w-xl mx-auto">
-              PayTap Kids Pay builds responsible spending habits while giving parents complete visibility and control. Start your child's financial journey the safe way.
+              Paytap Kids Pay builds responsible spending habits while giving parents complete visibility and control. Start your child's financial journey the safe way.
             </p>
             
             <Button size="lg" className="text-lg px-10 py-6 rounded-full">
-              Get started with PayTap Kids Pay
+              Get started with Paytap Kids Pay
               <ArrowRight className="w-5 h-5 ml-2" />
             </Button>
           </div>
