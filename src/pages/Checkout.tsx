@@ -340,12 +340,12 @@ const Checkout = () => {
                 <div className="flex items-center gap-2 text-sm">
                   <Check className="w-4 h-4 text-primary flex-shrink-0" />
                   <span className="text-muted-foreground">Paytap {productType === 'sticker' ? 'NFC Tag' : 'Prepaid Card'} ({quantity > 1 ? `${quantity} units` : '1 unit'})</span>
-                  <span className="ml-auto text-xs text-muted-foreground">₹{1499 * quantity} value</span>
+                  <span className="ml-auto text-xs text-muted-foreground">₹{999 * quantity} value</span>
                 </div>
                 <div className="flex items-center gap-2 text-sm">
                   <Check className="w-4 h-4 text-primary flex-shrink-0" />
                   <span className="text-muted-foreground">Lifetime Platform Access</span>
-                  <span className="ml-auto text-xs text-muted-foreground">₹3,500 value</span>
+                  <span className="ml-auto text-xs text-muted-foreground">₹4,000 value</span>
                 </div>
                 <div className="flex items-center gap-2 text-sm">
                   <Check className="w-4 h-4 text-primary flex-shrink-0" />

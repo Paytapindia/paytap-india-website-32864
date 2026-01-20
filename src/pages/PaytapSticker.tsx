@@ -44,8 +44,8 @@ const PaytapSticker = () => {
   ];
 
   const pricingIncludes = [
-    { icon: <Wifi className="w-4 h-4 md:w-5 md:h-5" />, text: "Paytap NFC Tag", value: "₹1,499 Value" },
-    { icon: <CreditCard className="w-4 h-4 md:w-5 md:h-5" />, text: "1-Year Business Account", value: "₹3,500 Value" },
+    { icon: <Wifi className="w-4 h-4 md:w-5 md:h-5" />, text: "Paytap NFC Tag", value: "₹999 Value" },
+    { icon: <CreditCard className="w-4 h-4 md:w-5 md:h-5" />, text: "Lifetime Platform Access", value: "₹4,000 Value" },
     { icon: <BarChart3 className="w-4 h-4 md:w-5 md:h-5" />, text: "Live Expense Dashboard", value: "" },
     { icon: <Car className="w-4 h-4 md:w-5 md:h-5" />, text: "MyFleet AI Controls — Manage Vehicles, Limits & Usage", value: "" },
     { icon: <FileText className="w-4 h-4 md:w-5 md:h-5" />, text: "Business Reports for GST & Accounting", value: "" },
