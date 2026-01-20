@@ -20,8 +20,6 @@ import Checkout from "./pages/Checkout";
 import CheckoutSuccess from "./pages/CheckoutSuccess";
 import CheckoutCancel from "./pages/CheckoutCancel";
 import NotFound from "./pages/NotFound";
-import PaytapSticker from "./pages/PaytapSticker";
-import PaytapCard from "./pages/PaytapCard";
 import FAQ from "./pages/FAQ";
 import SafeVaults from "./pages/SafeVaults";
 import HowItWorks from "./pages/HowItWorks";
@@ -53,8 +51,6 @@ const App = () => (
               <Route path="/faq" element={<FAQ />} />
               <Route path="/safevaults" element={<SafeVaults />} />
               <Route path="/kids-pay" element={<KidsPay />} />
-              <Route path="/paytap-sticker" element={<PaytapSticker />} />
-              <Route path="/paytap-card" element={<PaytapCard />} />
               <Route path="/how-it-works" element={<HowItWorks />} />
               <Route path="/support" element={<Support />} />
               <Route path="/terms-and-conditions" element={<TermsAndConditions />} />

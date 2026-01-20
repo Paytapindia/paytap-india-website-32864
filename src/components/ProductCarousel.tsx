@@ -21,7 +21,7 @@ const products = [
     price: "₹499",
     mrp: "₹4999",
     image: paytapTagSticker,
-    buyLink: "/paytap-sticker",
+    buyLink: "/checkout?product=sticker",
     isInternal: true
   },
   {
@@ -31,7 +31,7 @@ const products = [
     price: "₹499",
     mrp: "₹4999",
     image: paytapCard,
-    buyLink: "/paytap-card",
+    buyLink: "/checkout?product=card",
     isInternal: true
   }
 ];
