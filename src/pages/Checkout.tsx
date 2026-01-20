@@ -288,7 +288,7 @@ const Checkout = () => {
                       {type === 'sticker' ? 'NFC Sticker' : 'Prepaid Card'}
                     </p>
                     <p className="text-xs text-center">
-                      <span className="line-through text-gray-400">₹999</span>{" "}
+                      <span className="line-through text-gray-400">₹4999</span>{" "}
                       <span className="text-primary font-semibold">₹499</span>
                     </p>
                   </button>
@@ -310,7 +310,7 @@ const Checkout = () => {
                   }`}
                 >
                   <p className="text-sm text-gray-500">1 {productType === 'sticker' ? 'Tag' : 'Card'}</p>
-                  <p className="text-sm line-through text-gray-400">MRP ₹999</p>
+                  <p className="text-sm line-through text-gray-400">MRP ₹4999</p>
                   <p className="text-xl font-bold text-primary">₹499</p>
                 </button>
                 <button
@@ -323,7 +323,7 @@ const Checkout = () => {
                   }`}
                 >
                   <p className="text-sm text-gray-500">2 {productType === 'sticker' ? 'Tags' : 'Cards'}</p>
-                  <p className="text-sm line-through text-gray-400">MRP ₹1998</p>
+                  <p className="text-sm line-through text-gray-400">MRP ₹9998</p>
                   <p className="text-xl font-bold text-primary">₹998</p>
                 </button>
               </div>
@@ -335,11 +335,11 @@ const Checkout = () => {
             <div className="space-y-2 text-sm">
               <div className="flex justify-between text-gray-600">
                 <span>MRP ({quantity} {productType === 'sticker' ? 'tag' : 'card'}{quantity > 1 ? 's' : ''})</span>
-                <span className="line-through text-gray-400">₹{quantity * 999}</span>
+                <span className="line-through text-gray-400">₹{quantity * 4999}</span>
               </div>
               <div className="flex justify-between text-primary font-medium">
-                <span>Launch Discount (50% OFF)</span>
-                <span>-₹{quantity * 500}</span>
+                <span>Platform Discount (90% OFF)</span>
+                <span>-₹{quantity * 4500}</span>
               </div>
               <div className="flex justify-between text-gray-600">
                 <span>Shipping</span>

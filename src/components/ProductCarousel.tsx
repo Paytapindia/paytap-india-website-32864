@@ -19,7 +19,7 @@ const products = [
     name: "PayTap NFC Tag / Sticker",
     description: "A compact, stick-anywhere NFC tag for everyday payments. Tap to pay at fuel pumps, recharge FASTag tolls, metros, parking & more — fast and secure.",
     price: "₹499",
-    mrp: "₹999",
+    mrp: "₹4999",
     image: paytapTagSticker,
     buyLink: "/paytap-sticker",
     isInternal: true
@@ -29,7 +29,7 @@ const products = [
     name: "PayTap Prepaid Physical Card",
     description: "RuPay-powered expense management solution for corporates and MSMEs",
     price: "₹499",
-    mrp: "₹999",
+    mrp: "₹4999",
     image: paytapCard,
     buyLink: "/paytap-card",
     isInternal: true
