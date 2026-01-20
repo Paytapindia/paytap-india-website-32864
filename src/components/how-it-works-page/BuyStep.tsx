@@ -1,6 +1,6 @@
 import { motion, useInView, useReducedMotion } from 'framer-motion';
 import { useRef, memo } from 'react';
-import { Unlock, Gift, CheckCircle, Wifi, BarChart3, Car, FileText, Headphones, CreditCard } from 'lucide-react';
+import { Unlock, Gift, CheckCircle, Wifi, BarChart3, Car, Headphones, CreditCard } from 'lucide-react';
 import { useNavigate } from 'react-router-dom';
 import ScrollSection from './ScrollSection';
 import { Card, CardContent } from '@/components/ui/card';
@@ -13,7 +13,6 @@ const pricingIncludes = [
   { icon: CreditCard, text: "Lifetime Platform Access", value: "₹4,000 Value" },
   { icon: BarChart3, text: "Live Expense Dashboard" },
   { icon: Car, text: "Smart Controls" },
-  { icon: FileText, text: "GST & Business Reports" },
   { icon: Headphones, text: "Priority Support" },
 ];
 

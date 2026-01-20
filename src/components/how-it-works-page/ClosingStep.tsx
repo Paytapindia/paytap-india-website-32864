@@ -1,11 +1,10 @@
 import { motion, useInView, useReducedMotion } from 'framer-motion';
 import { useRef, memo } from 'react';
-import { TrendingUp, FileText, BarChart3, Unlock } from 'lucide-react';
+import { TrendingUp, BarChart3, Unlock } from 'lucide-react';
 import { Button } from '@/components/ui/button';
 import { Link } from 'react-router-dom';
 
 const features = [
-  { icon: FileText, label: 'GST Reports' },
   { icon: BarChart3, label: 'Spending Trends' },
   { icon: TrendingUp, label: 'Spending Analytics' },
 ];
@@ -81,7 +80,7 @@ const ClosingStep = memo(() => {
             Scale with Intelligence
           </h2>
           <p className="text-lg sm:text-xl md:text-2xl font-semibold text-foreground mb-4 sm:mb-6">
-            Download GST-ready reports, monitor spending trends, and optimize as you grow.
+            Monitor spending trends, track expenses, and optimize as you grow.
           </p>
           <p className="text-base sm:text-lg text-muted-foreground mb-8 sm:mb-12 max-w-2xl mx-auto">
             You're now in control of how your money moves.
