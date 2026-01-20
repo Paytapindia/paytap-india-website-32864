@@ -200,8 +200,68 @@ const HeroSection = memo(() => {
               </div>
             </div>
 
+            {/* Dashboard Screen Mockup */}
+            <div className="absolute top-4 sm:top-2 md:top-6 left-0 sm:-left-2 md:-left-4 w-28 sm:w-36 md:w-52 z-10">
+              {/* Monitor frame */}
+              <div className="bg-gray-800 rounded-t-lg p-1 border border-gray-700">
+                {/* Window controls */}
+                <div className="flex items-center gap-1 mb-1">
+                  <div className="w-1.5 h-1.5 rounded-full bg-red-400" />
+                  <div className="w-1.5 h-1.5 rounded-full bg-yellow-400" />
+                  <div className="w-1.5 h-1.5 rounded-full bg-green-400" />
+                  <span className="text-[6px] md:text-[8px] text-gray-400 ml-1">PayTap Dashboard</span>
+                </div>
+                
+                {/* Dashboard content */}
+                <div className="bg-paytap-dark rounded p-1.5 md:p-2">
+                  {/* Mini stats row */}
+                  <div className="grid grid-cols-3 gap-1 mb-1.5">
+                    <div className="bg-white/10 rounded p-1 text-center">
+                      <div className="text-[5px] md:text-[7px] text-white/60">Balance</div>
+                      <div className="text-[7px] md:text-[10px] text-white font-bold">₹24.5K</div>
+                    </div>
+                    <div className="bg-white/10 rounded p-1 text-center">
+                      <div className="text-[5px] md:text-[7px] text-white/60">Tags</div>
+                      <div className="text-[7px] md:text-[10px] text-white font-bold">12</div>
+                    </div>
+                    <div className="bg-white/10 rounded p-1 text-center">
+                      <div className="text-[5px] md:text-[7px] text-white/60">Spent</div>
+                      <div className="text-[7px] md:text-[10px] text-white font-bold">₹8.2K</div>
+                    </div>
+                  </div>
+                  
+                  {/* Mini chart */}
+                  <div className="flex items-end gap-0.5 h-4 md:h-6 mb-1.5">
+                    <div className="flex-1 bg-primary/60 rounded-t" style={{height: '60%'}} />
+                    <div className="flex-1 bg-primary/80 rounded-t" style={{height: '80%'}} />
+                    <div className="flex-1 bg-primary rounded-t" style={{height: '100%'}} />
+                    <div className="flex-1 bg-primary/70 rounded-t" style={{height: '70%'}} />
+                    <div className="flex-1 bg-primary/50 rounded-t" style={{height: '50%'}} />
+                  </div>
+                  
+                  {/* Transaction list */}
+                  <div className="space-y-0.5">
+                    <div className="flex justify-between text-[5px] md:text-[7px] bg-white/5 rounded px-1 py-0.5">
+                      <span className="text-white/70">HP Fuel</span>
+                      <span className="text-white">-₹1,200</span>
+                    </div>
+                    <div className="flex justify-between text-[5px] md:text-[7px] bg-white/5 rounded px-1 py-0.5">
+                      <span className="text-white/70">FastTag Toll</span>
+                      <span className="text-white">-₹340</span>
+                    </div>
+                  </div>
+                </div>
+              </div>
+              
+              {/* Monitor stand */}
+              <div className="flex flex-col items-center">
+                <div className="w-4 md:w-6 h-2 md:h-3 bg-gray-700 rounded-b" />
+                <div className="w-8 md:w-12 h-1 bg-gray-600 rounded-full" />
+              </div>
+            </div>
+
             {/* Floating Icons */}
-            <div className="absolute top-8 sm:top-12 md:top-16 left-2 sm:left-6 md:left-16 w-8 h-8 sm:w-10 sm:h-10 md:w-12 md:h-12 bg-white rounded-lg md:rounded-xl shadow-md flex items-center justify-center">
+            <div className="absolute top-32 sm:top-36 md:top-44 left-6 sm:left-10 md:left-20 w-8 h-8 sm:w-10 sm:h-10 md:w-12 md:h-12 bg-white rounded-lg md:rounded-xl shadow-md flex items-center justify-center">
               <CreditCard className="w-4 h-4 sm:w-5 sm:h-5 md:w-6 md:h-6 text-paytap-dark" />
             </div>
             <div className="absolute bottom-28 sm:bottom-36 md:bottom-32 left-1/2 w-6 h-6 sm:w-8 sm:h-8 md:w-10 md:h-10 bg-paytap-dark rounded-md md:rounded-lg shadow-md flex items-center justify-center">
