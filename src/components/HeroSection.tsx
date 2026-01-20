@@ -32,12 +32,12 @@ const HeroSection = memo(() => {
           <div className="text-center lg:text-left">
             {/* Large, bold headline - Enterprise positioning */}
             <h1 className="text-3xl sm:text-4xl md:text-5xl lg:text-6xl font-semibold text-foreground mb-4 md:mb-6 leading-[1.1] tracking-tight text-balance">
-              Control Every Rupee Your Fleet Spends
+              Control How Your Money Moves
             </h1>
 
             {/* Enterprise subheadline */}
             <p className="text-muted-foreground text-base md:text-xl max-w-xl leading-relaxed mb-6 md:mb-8 mx-auto lg:mx-0">
-              PayTap is a business payment control system that turns every vehicle into a trackable, limit-controlled spending account — built for operators, not consumers.
+              PayTap is a smart payment control platform that lets you track spending, set limits, and manage tags, vehicles, or teams — all from one app.
             </p>
 
             {/* Value Strip - Feature highlights */}
@@ -60,7 +60,7 @@ const HeroSection = memo(() => {
                 onClick={handleActivateAccount}
               >
                 <Unlock className="mr-2 md:mr-3 w-4 h-4 md:w-5 md:h-5" />
-                Activate Business Account
+                Activate PayTap Account
                 <ArrowRight className="ml-2 md:ml-3 w-4 h-4 md:w-5 md:h-5 group-hover:translate-x-1 transition-transform" />
               </Button>
             </div>
