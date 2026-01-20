@@ -38,13 +38,13 @@ const PaytapSticker = () => {
   };
 
   const hookLines = [
-    "While others track expenses, PayTap operators control them.",
+    "While others track expenses, Paytap operators control them.",
     "Fleet payments are going digital — don't run yours on cash.",
     "The fastest-growing fleets don't use wallets. They use systems."
   ];
 
   const pricingIncludes = [
-    { icon: <Wifi className="w-4 h-4 md:w-5 md:h-5" />, text: "PayTap NFC Tag", value: "₹1,499 Value" },
+    { icon: <Wifi className="w-4 h-4 md:w-5 md:h-5" />, text: "Paytap NFC Tag", value: "₹1,499 Value" },
     { icon: <CreditCard className="w-4 h-4 md:w-5 md:h-5" />, text: "1-Year Business Account", value: "₹3,500 Value" },
     { icon: <BarChart3 className="w-4 h-4 md:w-5 md:h-5" />, text: "Live Expense Dashboard", value: "" },
     { icon: <Car className="w-4 h-4 md:w-5 md:h-5" />, text: "MyFleet AI Controls — Manage Vehicles, Limits & Usage", value: "" },
@@ -118,7 +118,7 @@ const PaytapSticker = () => {
                 Fleet Payment System
               </span>
               <h1 className="text-3xl sm:text-4xl lg:text-5xl font-bold text-foreground mb-4 md:mb-6 leading-tight">
-                Unlock PayTap for Business — <span className="text-primary">₹499</span>
+                Unlock Paytap for Business — <span className="text-primary">₹499</span>
               </h1>
               <p className="text-xl md:text-2xl text-foreground font-semibold mb-2">
                 Fleet Payments. Controls. Intelligence.
@@ -146,7 +146,7 @@ const PaytapSticker = () => {
                 <div className="absolute inset-0 bg-gradient-to-br from-primary/20 to-paytap-light/20 rounded-3xl blur-3xl" />
                 <img 
                   src={paytapTagSticker} 
-                  alt="PayTap NFC Tag for Fleet" 
+                    alt="Paytap NFC Tag for Fleet"
                   loading="lazy"
                   className="relative max-w-[240px] sm:max-w-[320px] lg:max-w-[400px] w-full drop-shadow-2xl"
                 />
@@ -352,7 +352,7 @@ const PaytapSticker = () => {
                 <div className="flex-shrink-0">
                   <img 
                     src={paytapTagSticker} 
-                    alt="PayTap NFC Tag for Fleet" 
+                    alt="Paytap NFC Tag for Fleet" 
                     loading="lazy"
                     className="w-32 sm:w-48 lg:w-56 drop-shadow-xl"
                   />

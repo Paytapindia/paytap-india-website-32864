@@ -40,13 +40,13 @@ type ExpressCheckoutFormData = z.infer<typeof expressCheckoutSchema>;
 
 const PRODUCTS = {
   sticker: {
-    name: "PayTap NFC Sticker",
+    name: "Paytap NFC Sticker",
     description: "Contactless payment sticker",
     price: 499,
     image: paytapCheckoutSticker
   },
   card: {
-    name: "PayTap Prepaid Card",
+    name: "Paytap Prepaid Card",
     description: "RuPay-powered prepaid card",
     price: 499,
     image: paytapCard
@@ -345,7 +345,7 @@ const Checkout = () => {
                 <div className="flex items-center gap-2 text-sm">
                   <Check className="w-4 h-4 text-primary flex-shrink-0" />
                   <span className="text-muted-foreground">Lifetime Platform Access</span>
-                  <span className="ml-auto text-xs text-muted-foreground">₹2,500 value</span>
+                  <span className="ml-auto text-xs text-muted-foreground">₹3,500 value</span>
                 </div>
                 <div className="flex items-center gap-2 text-sm">
                   <Check className="w-4 h-4 text-primary flex-shrink-0" />
