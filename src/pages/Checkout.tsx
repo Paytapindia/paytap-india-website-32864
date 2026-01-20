@@ -40,13 +40,13 @@ type ExpressCheckoutFormData = z.infer<typeof expressCheckoutSchema>;
 
 const PRODUCTS = {
   sticker: {
-    name: "Paytap NFC Sticker",
+    name: "Paytap NFC Tag Plan",
     description: "Contactless payment sticker",
     price: 499,
     image: paytapCheckoutSticker
   },
   card: {
-    name: "Paytap Prepaid Card",
+    name: "Prepaid Card Plan",
     description: "RuPay-powered prepaid card",
     price: 499,
     image: paytapCard
@@ -268,7 +268,7 @@ const Checkout = () => {
           <CardContent className="p-4 space-y-5">
             {/* Product Selection */}
             <div className="space-y-3">
-              <Label className="text-sm font-medium text-muted-foreground">Choose Your Hardware</Label>
+              <Label className="text-sm font-medium text-muted-foreground">Choose Plan</Label>
               <div className="grid grid-cols-2 gap-3">
                 {(Object.keys(PRODUCTS) as ProductType[]).map((type) => (
                   <button
@@ -287,7 +287,7 @@ const Checkout = () => {
                       className="w-14 h-14 object-contain mx-auto mb-2"
                     />
                     <p className="text-sm font-semibold text-center text-foreground">
-                      {type === 'sticker' ? 'NFC Sticker' : 'Prepaid Card'}
+                      {type === 'sticker' ? 'NFC Tag Plan' : 'Prepaid Card Plan'}
                     </p>
                     {productType === type && (
                       <div className="flex items-center justify-center gap-1 mt-1">
