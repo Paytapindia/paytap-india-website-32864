@@ -19,7 +19,7 @@ const pricingIncludes = [
 const products = [
   {
     id: 1,
-    name: "Paytap NFC Tag",
+    name: "Paytap NFC Tag Plan",
     description: "Start with an NFC tag — stick anywhere and tap to pay at fuel pumps, tolls, metros, and parking.",
     price: "₹499",
     image: paytapTagSticker,
@@ -27,7 +27,7 @@ const products = [
   },
   {
     id: 2,
-    name: "Paytap Prepaid Card",
+    name: "Prepaid Card Plan",
     description: "Start with a RuPay prepaid card — accepted at 8L+ merchants for team expenses and everyday control.",
     price: "₹499",
     image: paytapCard,
@@ -61,10 +61,10 @@ const BuyStep = memo(() => {
             Step 01
           </div>
           <h2 className="text-2xl sm:text-3xl md:text-4xl lg:text-5xl font-semibold text-foreground mb-4 tracking-tight">
-            Choose Your Hardware
+            Choose Plan
           </h2>
           <p className="text-sm sm:text-base text-primary font-medium max-w-lg mx-auto">
-            Pick your Paytap hardware to activate your account.
+            Select your Paytap plan to get started.
           </p>
           
           {/* FOUNDER ACCESS BANNER */}
