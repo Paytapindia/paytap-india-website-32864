@@ -53,7 +53,7 @@ const ChoosePaymentStep = () => {
                     <path d="M0,60 C50,80 100,40 200,60 L200,120 L0,120 Z" fill="rgba(246,36,91,0.3)" />
                   </svg>
                   <div className="relative z-10 h-full p-4 flex flex-col justify-between">
-                    <img src={paytapCardLogo} alt="PayTap" className="h-5" />
+                    <img src={paytapCardLogo} alt="Paytap" className="h-5" />
                     <div className="text-white/60 text-[10px] tracking-widest font-mono">
                       •••• 4242
                     </div>

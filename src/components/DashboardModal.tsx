@@ -23,7 +23,7 @@ const DashboardModal = ({ open, onOpenChange }: DashboardModalProps) => {
         <iframe
           src="https://dashboard.paytap.co.in/login"
           className="w-full h-full border-0"
-          title="PayTap Dashboard"
+          title="Paytap Dashboard"
           allow="clipboard-write; payment"
         />
       </DialogContent>

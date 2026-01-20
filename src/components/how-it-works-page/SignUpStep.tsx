@@ -41,7 +41,7 @@ const SignUpStep = memo(() => {
               {/* Dashboard header */}
               <div className="flex items-center justify-between mb-4 sm:mb-6">
                 <div>
-                  <div className="text-xs text-muted-foreground">PayTap Dashboard</div>
+                  <div className="text-xs text-muted-foreground">Paytap Dashboard</div>
                   <div className="text-lg sm:text-xl font-bold text-foreground">Smart Controls</div>
                 </div>
                 <div className="w-8 h-8 bg-primary/10 rounded-full flex items-center justify-center">

@@ -9,7 +9,7 @@ import paytapTagSticker from '@/assets/paytap-tag-sticker-v2.png';
 import paytapCard from '@/assets/paytap-card-product.png';
 
 const pricingIncludes = [
-  { icon: Wifi, text: "PayTap NFC Tag", value: "₹1,499 Value" },
+  { icon: Wifi, text: "Paytap NFC Tag", value: "₹1,499 Value" },
   { icon: CreditCard, text: "1-Year Business Account", value: "₹3,500 Value" },
   { icon: BarChart3, text: "Live Expense Dashboard" },
   { icon: Car, text: "Smart Controls" },
@@ -20,7 +20,7 @@ const pricingIncludes = [
 const products = [
   {
     id: 1,
-    name: "PayTap NFC Tag",
+    name: "Paytap NFC Tag",
     description: "NFC payment tags for controlled, cashless spending at fuel pumps, tolls, and more.",
     price: "₹499",
     image: paytapTagSticker,
@@ -28,7 +28,7 @@ const products = [
   },
   {
     id: 2,
-    name: "PayTap Prepaid Card",
+    name: "Paytap Prepaid Card",
     description: "RuPay-powered expense management. Perfect for employee expenses, vendor payments, or personal control.",
     price: "₹499",
     image: paytapCard,
@@ -62,10 +62,10 @@ const BuyStep = memo(() => {
             Step 01
           </div>
           <h2 className="text-2xl sm:text-3xl md:text-4xl lg:text-5xl font-semibold text-foreground mb-4 tracking-tight">
-            Activate Your PayTap Account
+            Activate Your Paytap Account
           </h2>
           <p className="text-base sm:text-lg text-muted-foreground max-w-2xl mx-auto mb-4">
-            Pay ₹499 to unlock PayTap's smart payment control platform. 
+            Pay ₹499 to unlock Paytap's smart payment control platform.
             This activates your dashboard, spending controls, and reporting.
           </p>
           <p className="text-sm sm:text-base text-primary font-medium max-w-lg mx-auto">

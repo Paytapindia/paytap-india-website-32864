@@ -54,7 +54,7 @@
     "bonus": ""
   },
   "footer": {
-    "company": "PayTap",
+    "company": "Paytap",
     "description": "India's most trusted contactless payment solution for modern businesses.",
     "quickLinks": "Quick Links",
     "links": {
@@ -74,11 +74,11 @@
     },
     "newsletter": {
       "title": "Stay Updated",
-      "description": "Get the latest updates on PayTap features and offers.",
+      "description": "Get the latest updates on Paytap features and offers.",
       "placeholder": "Enter your email",
       "subscribe": "Subscribe"
     },
-    "copyright": "© 2024 PayTap. All rights reserved.",
+    "copyright": "© 2024 Paytap. All rights reserved.",
     "status": "All systems operational"
   }
 }
