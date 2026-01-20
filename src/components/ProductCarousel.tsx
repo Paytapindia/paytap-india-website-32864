@@ -16,7 +16,7 @@ import paytapTagSticker from "@/assets/paytap-tag-sticker-v2.png";
 const products = [
   {
     id: 1,
-    name: "Paytap NFC Tag",
+    name: "Paytap NFC Tag Plan",
     description: "Start with an NFC tag — stick anywhere and tap to pay at fuel pumps, tolls, metros, and parking.",
     price: "₹499",
     mrp: "₹4999",
@@ -26,7 +26,7 @@ const products = [
   },
   {
     id: 2,
-    name: "Paytap Prepaid Card",
+    name: "Prepaid Card Plan",
     description: "Start with a RuPay prepaid card — accepted at 8L+ merchants for team expenses and everyday control.",
     price: "₹499",
     mrp: "₹4999",
