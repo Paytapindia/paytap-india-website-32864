@@ -36,17 +36,17 @@ const PaytapCard = () => {
     {
       icon: <Package className="w-8 h-8" />,
       title: "Receive Your Card",
-      description: "Get your Paytap prepaid card delivered to your office in 3-5 business days."
+      description: "Get your Paytap prepaid card delivered in 3-5 days."
     },
     {
       icon: <Smartphone className="w-8 h-8" />,
       title: "Activate via App",
-      description: "Download Paytap app and complete quick business KYC verification."
+      description: "Download Paytap app and complete quick KYC verification."
     },
     {
       icon: <Wallet className="w-8 h-8" />,
       title: "Load Funds",
-      description: "Add money via corporate account, UPI, or bank transfer."
+      description: "Add money via UPI, bank transfer, or linked account."
     },
     {
       icon: <CreditCard className="w-8 h-8" />,
@@ -56,31 +56,31 @@ const PaytapCard = () => {
   ];
 
   const useCases = [
-    { icon: <Users className="w-6 h-6" />, title: "Employee Expenses", description: "Streamline employee reimbursements" },
-    { icon: <Gift className="w-6 h-6" />, title: "Corporate Gifting", description: "Reward partners and employees" },
+    { icon: <Users className="w-6 h-6" />, title: "Team Expenses", description: "Manage spending for your team" },
+    { icon: <Gift className="w-6 h-6" />, title: "Gifting", description: "Reward anyone, anytime" },
     { icon: <Building2 className="w-6 h-6" />, title: "Vendor Payments", description: "Pay suppliers seamlessly" },
-    { icon: <Wallet className="w-6 h-6" />, title: "Petty Cash", description: "Digitize petty cash management" },
-    { icon: <Plane className="w-6 h-6" />, title: "Travel & Entertainment", description: "Manage T&E expenses easily" }
+    { icon: <Wallet className="w-6 h-6" />, title: "Everyday Spending", description: "Control daily expenses" },
+    { icon: <Plane className="w-6 h-6" />, title: "Travel", description: "Manage travel expenses easily" }
   ];
 
   const activationSteps = [
-    { step: "01", title: "Order Your Card", description: "Place order online with business details" },
-    { step: "02", title: "Receive via Courier", description: "Card delivered in 3-5 business days" },
+    { step: "01", title: "Order Your Card", description: "Place order online with your details" },
+    { step: "02", title: "Receive via Courier", description: "Card delivered in 3-5 days" },
     { step: "03", title: "Download Paytap App", description: "Available on iOS and Android app stores" },
-    { step: "04", title: "Complete Business KYC", description: "Quick verification with GST or business documents" },
+    { step: "04", title: "Complete KYC", description: "Quick verification with ID documents" },
     { step: "05", title: "Link Card & Load Funds", description: "Ready to pay at 8L+ acceptance points" }
   ];
 
   const securityFeatures = [
     {
       icon: <BarChart3 className="w-8 h-8" />,
-      title: "Corporate Dashboard",
-      description: "Manage multiple cards, view transactions, and generate reports from one dashboard."
+      title: "Dashboard",
+      description: "Manage cards, view transactions, and generate reports from one place."
     },
     {
       icon: <Lock className="w-8 h-8" />,
       title: "Spending Controls",
-      description: "Set daily, weekly, or monthly limits per card or per employee."
+      description: "Set daily, weekly, or monthly limits for each card."
     },
     {
       icon: <BarChart3 className="w-8 h-8" />,
@@ -90,7 +90,7 @@ const PaytapCard = () => {
     {
       icon: <Shield className="w-8 h-8" />,
       title: "Instant Card Lock",
-      description: "Freeze or unfreeze any card instantly from the admin dashboard."
+      description: "Freeze or unfreeze any card instantly from the app."
     },
     {
       icon: <Eye className="w-8 h-8" />,
@@ -126,13 +126,13 @@ const PaytapCard = () => {
                 Paytap Prepaid Card
               </span>
               <h1 className="text-4xl sm:text-5xl lg:text-6xl font-bold text-foreground mb-6 leading-tight">
-                Paytap Prepaid Physical Card
+                Paytap Prepaid Card
               </h1>
               <p className="text-xl text-muted-foreground mb-4 max-w-xl">
-                RuPay-powered expense management solution for corporates and MSMEs.
+                Track spending, set limits, and stay in control — all from one app.
               </p>
               <p className="text-lg text-muted-foreground mb-8 max-w-xl">
-                Streamline business payments with contactless prepaid cards accepted at 8L+ merchants across India.
+                RuPay-powered prepaid card accepted at 8L+ merchants across India.
               </p>
               <div className="flex flex-col sm:flex-row items-center gap-4 justify-center lg:justify-start">
                 <div className="flex items-center gap-2">
@@ -143,7 +143,7 @@ const PaytapCard = () => {
                   onClick={handleBuyNow}
                   className="bg-paytap-light hover:bg-paytap-dark text-white px-8 py-6 text-lg font-semibold rounded-xl shadow-lg hover:shadow-xl transition-all"
                 >
-                  Buy Now
+                  Activate Now
                   <ArrowRight className="ml-2 w-5 h-5" />
                 </Button>
               </div>
@@ -172,7 +172,7 @@ const PaytapCard = () => {
               How Paytap Card Works
             </h2>
             <p className="text-lg text-muted-foreground max-w-2xl mx-auto">
-              Simple onboarding for businesses of all sizes
+              Get started in just a few steps
             </p>
           </div>
           
@@ -197,10 +197,10 @@ const PaytapCard = () => {
         <div className="max-w-6xl mx-auto">
           <div className="text-center mb-16">
             <h2 className="text-3xl sm:text-4xl font-bold text-foreground mb-4">
-              Built for Business Needs
+              Use It Your Way
             </h2>
             <p className="text-lg text-muted-foreground max-w-2xl mx-auto">
-              Simplify expense management across your organization
+              A prepaid card that adapts to how you manage money
             </p>
           </div>
           
@@ -256,7 +256,7 @@ const PaytapCard = () => {
         <div className="max-w-6xl mx-auto">
           <div className="text-center mb-16">
             <h2 className="text-3xl sm:text-4xl font-bold text-foreground mb-4">
-              Enterprise-Grade Security & Control
+              Security & Control
             </h2>
             <p className="text-lg text-muted-foreground max-w-2xl mx-auto">
               Complete visibility and control over every transaction
@@ -311,10 +311,10 @@ const PaytapCard = () => {
                 </div>
                 <div className="flex-1 text-center lg:text-left">
                   <h2 className="text-2xl sm:text-3xl font-bold text-foreground mb-4">
-                    Get Your Paytap Prepaid Card Today
+                    Get Your Paytap Card Today
                   </h2>
                   <p className="text-muted-foreground mb-6">
-                    Start managing business expenses smarter with India's most trusted prepaid solution.
+                    Take control of your spending with India's trusted prepaid solution.
                   </p>
                   <div className="flex flex-col sm:flex-row items-center gap-4 justify-center lg:justify-start">
                     <div className="flex items-center gap-2">
@@ -325,7 +325,7 @@ const PaytapCard = () => {
                       onClick={handleBuyNow}
                       className="bg-paytap-light hover:bg-paytap-dark text-white px-8 py-6 text-lg font-semibold rounded-xl shadow-lg hover:shadow-xl transition-all"
                     >
-                      Buy Now
+                      Activate Now
                       <ArrowRight className="ml-2 w-5 h-5" />
                     </Button>
                   </div>
