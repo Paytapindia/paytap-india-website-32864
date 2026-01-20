@@ -213,20 +213,20 @@ const HeroSection = memo(() => {
                 </div>
                 
                 {/* Dashboard content */}
-                <div className="bg-paytap-dark rounded p-1.5 md:p-2">
+                <div className="bg-white rounded p-1.5 md:p-2">
                   {/* Mini stats row */}
                   <div className="grid grid-cols-3 gap-1 mb-1.5">
-                    <div className="bg-white/10 rounded p-1 text-center">
-                      <div className="text-[5px] md:text-[7px] text-white/60">Balance</div>
-                      <div className="text-[7px] md:text-[10px] text-white font-bold">₹24.5K</div>
+                    <div className="bg-secondary rounded p-1 text-center">
+                      <div className="text-[5px] md:text-[7px] text-muted-foreground">Balance</div>
+                      <div className="text-[7px] md:text-[10px] text-foreground font-bold">₹24.5K</div>
                     </div>
-                    <div className="bg-white/10 rounded p-1 text-center">
-                      <div className="text-[5px] md:text-[7px] text-white/60">Tags</div>
-                      <div className="text-[7px] md:text-[10px] text-white font-bold">12</div>
+                    <div className="bg-secondary rounded p-1 text-center">
+                      <div className="text-[5px] md:text-[7px] text-muted-foreground">Tags</div>
+                      <div className="text-[7px] md:text-[10px] text-foreground font-bold">12</div>
                     </div>
-                    <div className="bg-white/10 rounded p-1 text-center">
-                      <div className="text-[5px] md:text-[7px] text-white/60">Spent</div>
-                      <div className="text-[7px] md:text-[10px] text-white font-bold">₹8.2K</div>
+                    <div className="bg-secondary rounded p-1 text-center">
+                      <div className="text-[5px] md:text-[7px] text-muted-foreground">Spent</div>
+                      <div className="text-[7px] md:text-[10px] text-foreground font-bold">₹8.2K</div>
                     </div>
                   </div>
                   
@@ -241,13 +241,13 @@ const HeroSection = memo(() => {
                   
                   {/* Transaction list */}
                   <div className="space-y-0.5">
-                    <div className="flex justify-between text-[5px] md:text-[7px] bg-white/5 rounded px-1 py-0.5">
-                      <span className="text-white/70">HP Fuel</span>
-                      <span className="text-white">-₹1,200</span>
+                    <div className="flex justify-between text-[5px] md:text-[7px] bg-secondary rounded px-1 py-0.5">
+                      <span className="text-muted-foreground">HP Fuel</span>
+                      <span className="text-foreground">-₹1,200</span>
                     </div>
-                    <div className="flex justify-between text-[5px] md:text-[7px] bg-white/5 rounded px-1 py-0.5">
-                      <span className="text-white/70">FastTag Toll</span>
-                      <span className="text-white">-₹340</span>
+                    <div className="flex justify-between text-[5px] md:text-[7px] bg-secondary rounded px-1 py-0.5">
+                      <span className="text-muted-foreground">FastTag Toll</span>
+                      <span className="text-foreground">-₹340</span>
                     </div>
                   </div>
                 </div>
