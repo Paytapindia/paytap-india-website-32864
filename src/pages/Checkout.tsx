@@ -393,7 +393,7 @@ const Checkout = () => {
               ) : (
                 <>
                   <Unlock className="mr-2 h-5 w-5" />
-                  Activate Paytap Account — ₹{total}
+                  Confirm — ₹{total}
                 </>
               )}
             </Button>
