@@ -1,6 +1,6 @@
 import { memo } from "react";
 import { Button } from "@/components/ui/button";
-import { ArrowRight, CreditCard, Smartphone, Wallet, Wifi, FileText, PlayCircle } from "lucide-react";
+import { ArrowRight, CreditCard, Smartphone, Wallet, Wifi, FileText, PlayCircle, Unlock, LayoutDashboard, Bot, Receipt, Headphones } from "lucide-react";
 import { useTranslation } from "react-i18next";
 import { useNavigate } from "react-router-dom";
 import paytapCardLogo from "@/assets/paytap-card-logo.png";
@@ -9,9 +9,18 @@ const HeroSection = memo(() => {
   const { t } = useTranslation();
   const navigate = useNavigate();
 
-  const handleCreateAccount = () => {
+  const handleActivateAccount = () => {
     window.open('https://dashboard.paytap.co.in/login', '_blank');
   };
+
+  const valueStripItems = [
+    { icon: Wifi, label: "NFC PayTag" },
+    { icon: LayoutDashboard, label: "Live Expense Dashboard" },
+    { icon: Bot, label: "MyFleet AI Controls" },
+    { icon: Receipt, label: "GST-Ready Reports" },
+    { icon: Headphones, label: "Priority Business Support" },
+  ];
+
   return (
     <section className="relative pt-28 md:pt-40 pb-16 md:pb-32 px-6 md:px-12 min-h-screen flex items-center bg-background">
       {/* Subtle gradient background */}
@@ -21,48 +30,44 @@ const HeroSection = memo(() => {
         <div className="grid grid-cols-1 lg:grid-cols-2 gap-8 lg:gap-16 items-center">
           {/* Left side - Text content */}
           <div className="text-center lg:text-left">
-            {/* Large, bold headline */}
+            {/* Large, bold headline - Enterprise positioning */}
             <h1 className="text-3xl sm:text-4xl md:text-5xl lg:text-6xl font-semibold text-foreground mb-4 md:mb-6 leading-[1.1] tracking-tight text-balance">
-              <span className="text-primary">Smarter Payments</span> for Everyday India
+              Control Every Rupee Your Fleet Spends
             </h1>
 
-            {/* Clean subtitle */}
-            <p className="text-muted-foreground text-base md:text-xl max-w-xl leading-relaxed mb-6 md:mb-10 mx-auto lg:mx-0">
-              Create your Paytap account in minutes using your mobile number. Start managing expenses, payments, multiple fleets, and the people handling your money — all in one place.
+            {/* Enterprise subheadline */}
+            <p className="text-muted-foreground text-base md:text-xl max-w-xl leading-relaxed mb-6 md:mb-8 mx-auto lg:mx-0">
+              PayTap is a business payment control system that turns every vehicle into a trackable, limit-controlled spending account — built for operators, not consumers.
             </p>
 
-            {/* Primary CTAs - Center aligned and prominent */}
-            <div className="flex flex-col sm:flex-row gap-3 md:gap-4 justify-center lg:justify-start mb-6 md:mb-8">
+            {/* Value Strip - Feature highlights */}
+            <div className="flex flex-wrap gap-2 md:gap-3 justify-center lg:justify-start mb-6 md:mb-8">
+              {valueStripItems.map((item, index) => (
+                <div 
+                  key={index}
+                  className="flex items-center gap-1.5 bg-secondary/60 px-2.5 py-1.5 md:px-3 md:py-2 rounded-full text-xs md:text-sm text-foreground/80"
+                >
+                  <item.icon className="w-3 h-3 md:w-4 md:h-4 text-primary" />
+                  <span>{item.label}</span>
+                </div>
+              ))}
+            </div>
+
+            {/* Single Primary CTA - Enterprise activation */}
+            <div className="flex flex-col sm:flex-row gap-3 md:gap-4 justify-center lg:justify-start mb-4 md:mb-6">
               <Button 
-                className="bg-primary hover:bg-primary/90 text-primary-foreground px-6 md:px-8 py-5 md:py-6 text-base md:text-lg font-semibold rounded-2xl shadow-xl hover:shadow-2xl hover:scale-[1.02] transition-all duration-300 group min-h-[56px] md:min-h-[64px]"
-                onClick={handleCreateAccount}
+                className="bg-primary hover:bg-primary/90 text-primary-foreground px-8 md:px-10 py-5 md:py-6 text-base md:text-lg font-semibold rounded-2xl shadow-xl hover:shadow-2xl hover:scale-[1.02] transition-all duration-300 group min-h-[56px] md:min-h-[64px]"
+                onClick={handleActivateAccount}
               >
-                Create Account to Get Started
-                <ArrowRight className="ml-2 md:ml-3 w-4 h-4 md:w-5 md:h-5 group-hover:translate-x-1 transition-transform" />
-              </Button>
-              <Button 
-                className="bg-paytap-light hover:bg-paytap-dark text-white px-6 md:px-8 py-5 md:py-6 text-base md:text-lg font-semibold rounded-2xl shadow-xl hover:shadow-2xl hover:scale-[1.02] transition-all duration-300 group min-h-[56px] md:min-h-[64px]"
-                onClick={() => navigate('/paytap-sticker')}
-              >
-                Order Paytap Card/Tag Now
+                <Unlock className="mr-2 md:mr-3 w-4 h-4 md:w-5 md:h-5" />
+                Activate Business Account
                 <ArrowRight className="ml-2 md:ml-3 w-4 h-4 md:w-5 md:h-5 group-hover:translate-x-1 transition-transform" />
               </Button>
             </div>
             
-            <div>
-              <span className="text-muted-foreground text-sm">
-                {t('hero.setupTime')}
-              </span>
-            </div>
-
-            {/* Trust indicators */}
-            <div className="space-y-2 md:space-y-3 mt-4 md:mt-6">
-              <div className="text-muted-foreground text-xs md:text-sm tracking-wide">
-                PPI-licensed • RBI-compliant • Works at 8L+ terminals
-              </div>
-              <div className="text-muted-foreground/70 text-xs">
-                Built for businesses that operate beyond traditional bank accounts.
-              </div>
+            {/* Micro Trust Line */}
+            <div className="text-muted-foreground text-xs md:text-sm tracking-wide">
+              Used by growing fleet operators across India • No monthly fees • Founder pricing locked
             </div>
           </div>
 
