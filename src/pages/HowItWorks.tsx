@@ -56,10 +56,10 @@ const HowItWorks = () => {
   return (
     <>
       <Helmet>
-        <title>How It Works - PayTap | Activate Your Fleet Payment System</title>
+        <title>How It Works - PayTap | Smart Payment Control Platform</title>
         <meta 
           name="description" 
-          content="Activate your business account, deploy NFC tags across your fleet, and start controlling expenses in minutes. Enterprise-grade fleet payment infrastructure." 
+          content="Set up PayTap in minutes. Track spending, set limits, and manage tags, vehicles, or teams — all from one app." 
         />
       </Helmet>
       
@@ -70,10 +70,10 @@ const HowItWorks = () => {
           {/* Header Section */}
           <section className="pt-24 pb-4 text-center px-4">
             <h1 className="text-3xl md:text-4xl lg:text-5xl font-bold text-foreground">
-              Activate Your Fleet Payment System
+              Set Up PayTap in Minutes
             </h1>
             <p className="text-muted-foreground mt-3 text-base md:text-lg max-w-2xl mx-auto">
-              From activation to scale — in 4 simple steps
+              Track spending, set limits, and manage tags, vehicles, or teams — from one app
             </p>
           </section>
 

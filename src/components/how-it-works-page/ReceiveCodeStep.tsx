@@ -1,6 +1,6 @@
 import { motion, useInView, useReducedMotion } from 'framer-motion';
 import { useRef, useState, useEffect, memo } from 'react';
-import { Truck, Check, MapPin, Car, Wifi } from 'lucide-react';
+import { Truck, Check, MapPin, Tag, Wifi, Car, Users } from 'lucide-react';
 import ScrollSection from './ScrollSection';
 import paytapTagSticker from '@/assets/paytap-tag-sticker-v2.png';
 
@@ -11,6 +11,12 @@ const ReceiveCodeStep = memo(() => {
   const [showDelivery, setShowDelivery] = useState(false);
   const [showInstall, setShowInstall] = useState(false);
   const isMobile = typeof window !== 'undefined' && window.innerWidth < 768;
+
+  const tagUseCases = [
+    { icon: Car, label: "Vehicle" },
+    { icon: Users, label: "Team" },
+    { icon: Tag, label: "Personal" },
+  ];
 
   useEffect(() => {
     if (isInView) {
@@ -61,7 +67,7 @@ const ReceiveCodeStep = memo(() => {
               </div>
             </motion.div>
 
-            {/* Fleet installation visual */}
+            {/* Tag setup visual */}
             <motion.div
               initial={{ opacity: 0, y: 20 }}
               animate={showInstall ? { opacity: 1, y: 0 } : {}}
@@ -70,22 +76,22 @@ const ReceiveCodeStep = memo(() => {
             >
               <div className="flex items-center gap-4 mb-4">
                 <div className="w-12 h-12 bg-green-500/10 rounded-xl flex items-center justify-center">
-                  <Car className="w-6 h-6 text-green-600" />
+                  <Tag className="w-6 h-6 text-green-600" />
                 </div>
                 <div>
-                  <div className="text-sm font-medium text-foreground">Deploy Across Fleet</div>
-                  <div className="text-xs text-muted-foreground">Install tags in your vehicles</div>
+                  <div className="text-sm font-medium text-foreground">Set Up Your Tags</div>
+                  <div className="text-xs text-muted-foreground">Activate and assign your tags</div>
                 </div>
               </div>
               
-              {/* Vehicle grid */}
+              {/* Use case grid */}
               <div className="grid grid-cols-3 gap-2">
-                {[1, 2, 3].map((i) => (
-                  <div key={i} className="bg-muted/50 rounded-lg p-3 text-center">
-                    <Car className="w-6 h-6 text-muted-foreground mx-auto mb-1" />
+                {tagUseCases.map((useCase) => (
+                  <div key={useCase.label} className="bg-muted/50 rounded-lg p-3 text-center">
+                    <useCase.icon className="w-6 h-6 text-muted-foreground mx-auto mb-1" />
                     <div className="flex items-center justify-center gap-1">
                       <Wifi className="w-3 h-3 text-green-500" />
-                      <span className="text-[10px] text-green-600 font-medium">Active</span>
+                      <span className="text-[10px] text-green-600 font-medium">{useCase.label}</span>
                     </div>
                   </div>
                 ))}
@@ -105,21 +111,21 @@ const ReceiveCodeStep = memo(() => {
               Step 02
             </div>
             <h2 className="text-2xl sm:text-3xl md:text-4xl lg:text-5xl font-semibold text-foreground mb-4 tracking-tight">
-              Deploy PayTap NFC Tags
+              Receive & Set Up Your Tags
             </h2>
             <p className="text-base sm:text-lg text-muted-foreground max-w-md mx-auto md:mx-0 mb-6">
-              Install PayTap NFC tags in your vehicles to enable controlled, cashless business spending.
+              Receive your PayTap NFC tags and set them up wherever you need controlled spending — vehicles, teams, or personal use.
             </p>
             
             {/* Installation tips */}
             <div className="space-y-3">
               <div className="flex items-center gap-3 text-left">
                 <Check className="w-5 h-5 text-green-500 flex-shrink-0" />
-                <span className="text-sm text-foreground">Stick on dashboard or windshield</span>
+                <span className="text-sm text-foreground">Stick anywhere — vehicles, wallets, or equipment</span>
               </div>
               <div className="flex items-center gap-3 text-left">
                 <Check className="w-5 h-5 text-green-500 flex-shrink-0" />
-                <span className="text-sm text-foreground">Manage multiple vehicles from one account</span>
+                <span className="text-sm text-foreground">Manage multiple tags from one account</span>
               </div>
               <div className="flex items-center gap-3 text-left">
                 <Check className="w-5 h-5 text-green-500 flex-shrink-0" />
