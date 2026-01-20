@@ -12,7 +12,7 @@ const pricingIncludes = [
   { icon: Wifi, text: "PayTap NFC Tag", value: "₹999 Value" },
   { icon: CreditCard, text: "1-Year Business Account", value: "₹2,500 Value" },
   { icon: BarChart3, text: "Live Expense Dashboard" },
-  { icon: Car, text: "MyFleet AI Controls" },
+  { icon: Car, text: "Smart Controls" },
   { icon: FileText, text: "GST & Business Reports" },
   { icon: Headphones, text: "Priority Support" },
 ];
@@ -21,7 +21,7 @@ const products = [
   {
     id: 1,
     name: "PayTap NFC Tag",
-    description: "Deploy NFC tags across your fleet for controlled, cashless business spending at fuel pumps, tolls, and more.",
+    description: "NFC payment tags for controlled, cashless spending at fuel pumps, tolls, and more.",
     price: "₹499",
     image: paytapTagSticker,
     buyLink: "/paytap-sticker",
@@ -29,7 +29,7 @@ const products = [
   {
     id: 2,
     name: "PayTap Prepaid Card",
-    description: "RuPay-powered expense management for corporates and MSMEs. Perfect for employee expenses and vendor payments.",
+    description: "RuPay-powered expense management. Perfect for employee expenses, vendor payments, or personal control.",
     price: "₹499",
     image: paytapCard,
     buyLink: "/paytap-card",
@@ -62,14 +62,14 @@ const BuyStep = memo(() => {
             Step 01
           </div>
           <h2 className="text-2xl sm:text-3xl md:text-4xl lg:text-5xl font-semibold text-foreground mb-4 tracking-tight">
-            Activate Business Account
+            Activate Your PayTap Account
           </h2>
           <p className="text-base sm:text-lg text-muted-foreground max-w-2xl mx-auto mb-4">
-            Pay ₹499 to unlock PayTap's fleet payment and expense control system. 
-            This activates your dashboard, reporting, and business controls.
+            Pay ₹499 to unlock PayTap's smart payment control platform. 
+            This activates your dashboard, spending controls, and reporting.
           </p>
           <p className="text-sm sm:text-base text-primary font-medium max-w-lg mx-auto">
-            Built for businesses that operate beyond traditional bank accounts.
+            Built for anyone who needs to control how their money moves.
           </p>
           
           {/* FOUNDER ACCESS BANNER */}
@@ -80,7 +80,7 @@ const BuyStep = memo(() => {
             className="mt-4 sm:mt-6 inline-flex items-center gap-2 bg-gradient-to-r from-primary to-primary/80 px-3 sm:px-4 py-1.5 sm:py-2 rounded-full text-white font-semibold shadow-lg text-sm sm:text-base"
           >
             <Unlock className="w-4 h-4 sm:w-5 sm:h-5" />
-            <span>🔓 Founder Access: ₹499 <span className="opacity-70">(₹3,499 Enterprise Value)</span></span>
+            <span>🔓 Founder Access: ₹499 <span className="opacity-70">(₹3,499 Value)</span></span>
           </motion.div>
         </motion.div>
 

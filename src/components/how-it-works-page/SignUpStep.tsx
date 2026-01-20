@@ -1,7 +1,13 @@
 import { motion, useInView, useReducedMotion } from 'framer-motion';
 import { useRef, useState, useEffect, memo } from 'react';
-import { Check, BarChart3, Car, Bell, Sliders, TrendingUp, AlertCircle } from 'lucide-react';
+import { Check, BarChart3, Car, Bell, Sliders, TrendingUp, AlertCircle, Tag, Users } from 'lucide-react';
 import ScrollSection from './ScrollSection';
+
+const tagItems = [
+  { icon: Car, name: "Tag 1 — Vehicle", limit: "₹5,000/day" },
+  { icon: Users, name: "Tag 2 — Team Expense", limit: "₹3,000/day" },
+  { icon: Tag, name: "Tag 3 — Personal", limit: "₹2,000/day" },
+];
 
 const SignUpStep = memo(() => {
   const ref = useRef(null);
@@ -35,8 +41,8 @@ const SignUpStep = memo(() => {
               {/* Dashboard header */}
               <div className="flex items-center justify-between mb-4 sm:mb-6">
                 <div>
-                  <div className="text-xs text-muted-foreground">Fleet Dashboard</div>
-                  <div className="text-lg sm:text-xl font-bold text-foreground">MyFleet AI</div>
+                  <div className="text-xs text-muted-foreground">PayTap Dashboard</div>
+                  <div className="text-lg sm:text-xl font-bold text-foreground">Smart Controls</div>
                 </div>
                 <div className="w-8 h-8 bg-primary/10 rounded-full flex items-center justify-center">
                   <BarChart3 className="w-4 h-4 text-primary" />
@@ -60,29 +66,23 @@ const SignUpStep = memo(() => {
                 </div>
               </motion.div>
 
-              {/* Vehicle list */}
+              {/* Tag list */}
               <motion.div
                 initial={{ opacity: 0, x: -15 }}
                 animate={step >= 2 ? { opacity: 1, x: 0 } : {}}
                 transition={{ duration: 0.4 }}
                 className="space-y-2 mb-4"
               >
-                <div className="flex items-center gap-3 p-3 bg-muted/50 rounded-xl">
-                  <Car className="w-5 h-5 text-primary" />
-                  <div className="flex-1">
-                    <div className="text-sm text-foreground">KA-01-AB-1234</div>
-                    <div className="text-xs text-muted-foreground">Limit: ₹5,000/day</div>
+                {tagItems.slice(0, 2).map((item, index) => (
+                  <div key={index} className="flex items-center gap-3 p-3 bg-muted/50 rounded-xl">
+                    <item.icon className="w-5 h-5 text-primary" />
+                    <div className="flex-1">
+                      <div className="text-sm text-foreground">{item.name}</div>
+                      <div className="text-xs text-muted-foreground">Limit: {item.limit}</div>
+                    </div>
+                    <div className="w-2 h-2 bg-green-500 rounded-full" />
                   </div>
-                  <div className="w-2 h-2 bg-green-500 rounded-full" />
-                </div>
-                <div className="flex items-center gap-3 p-3 bg-muted/50 rounded-xl">
-                  <Car className="w-5 h-5 text-primary" />
-                  <div className="flex-1">
-                    <div className="text-sm text-foreground">KA-01-CD-5678</div>
-                    <div className="text-xs text-muted-foreground">Limit: ₹3,000/day</div>
-                  </div>
-                  <div className="w-2 h-2 bg-green-500 rounded-full" />
-                </div>
+                ))}
               </motion.div>
 
               {/* Control buttons */}
@@ -133,7 +133,7 @@ const SignUpStep = memo(() => {
               Control & Monitor in Real-Time
             </h2>
             <p className="text-base sm:text-lg text-muted-foreground max-w-md mx-auto md:mx-0 mb-6">
-              Set limits, track expenses, and manage vehicles using MyFleet AI controls and live reports.
+              Set limits, track expenses, and manage tags using smart controls and live reports.
             </p>
 
             {/* Features */}
