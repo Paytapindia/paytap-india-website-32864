@@ -44,8 +44,8 @@ const PaytapSticker = () => {
   ];
 
   const pricingIncludes = [
-    { icon: <Wifi className="w-4 h-4 md:w-5 md:h-5" />, text: "PayTap NFC Tag", value: "₹999 Value" },
-    { icon: <CreditCard className="w-4 h-4 md:w-5 md:h-5" />, text: "1-Year Business Account", value: "₹2,500 Value" },
+    { icon: <Wifi className="w-4 h-4 md:w-5 md:h-5" />, text: "PayTap NFC Tag", value: "₹1,499 Value" },
+    { icon: <CreditCard className="w-4 h-4 md:w-5 md:h-5" />, text: "1-Year Business Account", value: "₹3,500 Value" },
     { icon: <BarChart3 className="w-4 h-4 md:w-5 md:h-5" />, text: "Live Expense Dashboard", value: "" },
     { icon: <Car className="w-4 h-4 md:w-5 md:h-5" />, text: "MyFleet AI Controls — Manage Vehicles, Limits & Usage", value: "" },
     { icon: <FileText className="w-4 h-4 md:w-5 md:h-5" />, text: "Business Reports for GST & Accounting", value: "" },
@@ -165,7 +165,7 @@ const PaytapSticker = () => {
               <div className="flex flex-wrap gap-2 mb-6 justify-center lg:justify-start">
                 <span className="inline-flex items-center gap-1.5 px-3 py-1.5 bg-amber-500/10 text-amber-600 rounded-full text-xs sm:text-sm font-semibold border border-amber-500/20">
                   <Flame className="w-3.5 h-3.5" />
-                  Founder Offer — Limited Access
+                  Platform Access — Limited Offer
                 </span>
                 <span className="inline-flex items-center gap-1.5 px-3 py-1.5 bg-primary/10 text-primary rounded-full text-xs sm:text-sm font-semibold border border-primary/20">
                   <Rocket className="w-3.5 h-3.5" />
@@ -180,7 +180,7 @@ const PaytapSticker = () => {
                     🔓 ₹499 Business Activation
                   </h2>
                   <p className="text-lg sm:text-xl text-primary font-semibold mb-4">
-                    ₹3,499 Enterprise Value — Free for Founders
+                    ₹4999 Value — Platform Access
                   </p>
                   <Button 
                     onClick={handleActivate}
@@ -366,7 +366,7 @@ const PaytapSticker = () => {
                   </p>
                   <div className="flex flex-col sm:flex-row items-center gap-3 md:gap-4 justify-center md:justify-start">
                     <div className="flex items-center gap-2">
-                      <span className="text-xl md:text-2xl text-muted-foreground line-through">₹3,499</span>
+                      <span className="text-xl md:text-2xl text-muted-foreground line-through">₹4999</span>
                       <span className="text-3xl md:text-4xl font-bold text-primary">₹499</span>
                     </div>
                     <Button 

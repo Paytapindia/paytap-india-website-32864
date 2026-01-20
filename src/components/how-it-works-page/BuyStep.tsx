@@ -9,8 +9,8 @@ import paytapTagSticker from '@/assets/paytap-tag-sticker-v2.png';
 import paytapCard from '@/assets/paytap-card-product.png';
 
 const pricingIncludes = [
-  { icon: Wifi, text: "PayTap NFC Tag", value: "₹999 Value" },
-  { icon: CreditCard, text: "1-Year Business Account", value: "₹2,500 Value" },
+  { icon: Wifi, text: "PayTap NFC Tag", value: "₹1,499 Value" },
+  { icon: CreditCard, text: "1-Year Business Account", value: "₹3,500 Value" },
   { icon: BarChart3, text: "Live Expense Dashboard" },
   { icon: Car, text: "Smart Controls" },
   { icon: FileText, text: "GST & Business Reports" },
@@ -80,7 +80,7 @@ const BuyStep = memo(() => {
             className="mt-4 sm:mt-6 inline-flex items-center gap-2 bg-gradient-to-r from-primary to-primary/80 px-3 sm:px-4 py-1.5 sm:py-2 rounded-full text-white font-semibold shadow-lg text-sm sm:text-base"
           >
             <Unlock className="w-4 h-4 sm:w-5 sm:h-5" />
-            <span>🔓 Founder Access: ₹499 <span className="opacity-70">(₹3,499 Value)</span></span>
+            <span>Platform Access — ₹499 <span className="opacity-70">(₹4999 Value)</span></span>
           </motion.div>
         </motion.div>
 
