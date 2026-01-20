@@ -1,6 +1,6 @@
 import { memo } from "react";
 import { useNavigate } from "react-router-dom";
-import { ShoppingCart } from "lucide-react";
+
 import { Button } from "@/components/ui/button";
 import { Card, CardContent } from "@/components/ui/card";
 import {
@@ -91,8 +91,7 @@ const ProductCarousel = memo(() => {
                         onClick={() => handleOrderNow(product.buyLink, product.isInternal)}
                         className="bg-paytap-light hover:bg-paytap-dark text-white px-4 md:px-6 py-2.5 md:py-3 text-xs sm:text-sm md:text-base font-semibold rounded-xl shadow-lg hover:shadow-xl hover:scale-[1.02] transition-all duration-300 group"
                       >
-                        <ShoppingCart className="mr-1.5 md:mr-2 w-3.5 h-3.5 sm:w-4 sm:h-4 md:w-5 md:h-5" />
-                        Order Now
+                        Activate Now
                       </Button>
                     </div>
                   </div>
