@@ -353,10 +353,6 @@ const Checkout = () => {
                 </div>
                 <div className="flex items-center gap-2 text-sm">
                   <Check className="w-4 h-4 text-primary flex-shrink-0" />
-                  <span className="text-muted-foreground">GST-Ready Reports</span>
-                </div>
-                <div className="flex items-center gap-2 text-sm">
-                  <Check className="w-4 h-4 text-primary flex-shrink-0" />
                   <span className="text-muted-foreground">Free Shipping</span>
                 </div>
               </div>

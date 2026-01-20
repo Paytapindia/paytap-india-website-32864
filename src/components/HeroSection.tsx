@@ -1,6 +1,6 @@
 import { memo } from "react";
 import { Button } from "@/components/ui/button";
-import { ArrowRight, CreditCard, Smartphone, Wallet, Wifi, FileText, PlayCircle, Unlock, LayoutDashboard, Bot, Receipt, Headphones } from "lucide-react";
+import { ArrowRight, CreditCard, Smartphone, Wallet, Wifi, FileText, PlayCircle, Unlock, LayoutDashboard, Bot, Headphones } from "lucide-react";
 import { useTranslation } from "react-i18next";
 import { useNavigate } from "react-router-dom";
 import paytapCardLogo from "@/assets/paytap-card-logo.png";
@@ -17,7 +17,6 @@ const HeroSection = memo(() => {
     { icon: Wifi, label: "NFC PayTag" },
     { icon: LayoutDashboard, label: "Live Expense Dashboard" },
     { icon: Bot, label: "MyFleet AI Controls" },
-    { icon: Receipt, label: "GST-Ready Reports" },
     { icon: Headphones, label: "Priority Business Support" },
   ];
 
