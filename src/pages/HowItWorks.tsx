@@ -10,12 +10,9 @@ import ReceiveCodeStep from '@/components/how-it-works-page/ReceiveCodeStep';
 
 // Lazy load remaining steps
 const SignUpStep = lazy(() => import('@/components/how-it-works-page/SignUpStep'));
-const AddMoneyStep = lazy(() => import('@/components/how-it-works-page/AddMoneyStep'));
-const ActivateInstallStep = lazy(() => import('@/components/how-it-works-page/ActivateInstallStep'));
-const TapPayStep = lazy(() => import('@/components/how-it-works-page/TapPayStep'));
 const ClosingStep = lazy(() => import('@/components/how-it-works-page/ClosingStep'));
 
-const TOTAL_STEPS = 6;
+const TOTAL_STEPS = 4;
 
 // Simple loading skeleton for step sections
 const StepSkeleton = memo(() => (
@@ -59,10 +56,10 @@ const HowItWorks = () => {
   return (
     <>
       <Helmet>
-        <title>How It Works - PayTap | Set Up in Under a Minute</title>
+        <title>How It Works - PayTap | Activate Your Fleet Payment System</title>
         <meta 
           name="description" 
-          content="Order your PayTap, receive your activation code, and start paying in minutes. Simple setup from order to first tap." 
+          content="Activate your business account, deploy NFC tags across your fleet, and start controlling expenses in minutes. Enterprise-grade fleet payment infrastructure." 
         />
       </Helmet>
       
@@ -73,23 +70,17 @@ const HowItWorks = () => {
           {/* Header Section */}
           <section className="pt-24 pb-4 text-center px-4">
             <h1 className="text-3xl md:text-4xl lg:text-5xl font-bold text-foreground">
-              Let's Get You Onboarded
+              Activate Your Fleet Payment System
             </h1>
+            <p className="text-muted-foreground mt-3 text-base md:text-lg max-w-2xl mx-auto">
+              From activation to scale — in 4 simple steps
+            </p>
           </section>
 
           <BuyStep />
           <ReceiveCodeStep />
           <Suspense fallback={<StepSkeleton />}>
             <SignUpStep />
-          </Suspense>
-          <Suspense fallback={<StepSkeleton />}>
-            <AddMoneyStep />
-          </Suspense>
-          <Suspense fallback={<StepSkeleton />}>
-            <ActivateInstallStep />
-          </Suspense>
-          <Suspense fallback={<StepSkeleton />}>
-            <TapPayStep />
           </Suspense>
           <Suspense fallback={<StepSkeleton />}>
             <ClosingStep />
