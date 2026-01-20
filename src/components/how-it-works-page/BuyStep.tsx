@@ -64,10 +64,6 @@ const BuyStep = memo(() => {
           <h2 className="text-2xl sm:text-3xl md:text-4xl lg:text-5xl font-semibold text-foreground mb-4 tracking-tight">
             Activate Your Paytap Account
           </h2>
-          <p className="text-base sm:text-lg text-muted-foreground max-w-2xl mx-auto mb-4">
-            Pay ₹499 to unlock Paytap's smart payment control platform.
-            This activates your dashboard, spending controls, and reporting.
-          </p>
           <p className="text-sm sm:text-base text-primary font-medium max-w-lg mx-auto">
             Built for anyone who needs to control how their money moves.
           </p>
