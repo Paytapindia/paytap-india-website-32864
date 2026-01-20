@@ -10,10 +10,10 @@ const TrustSection = memo(() => {
         {/* Section Header */}
         <div className="text-center mb-8 sm:mb-16">
           <h2 className="text-xl sm:text-3xl md:text-5xl font-semibold text-foreground mb-2 sm:mb-4 tracking-tight">
-            Shop Paytap Products
+            Choose Your Paytap Plan
           </h2>
           <p className="text-muted-foreground text-sm sm:text-lg md:text-xl max-w-2xl mx-auto">
-            Choose the perfect payment solution for your needs.
+            Select the payment solution that fits your business.
           </p>
         </div>
 
