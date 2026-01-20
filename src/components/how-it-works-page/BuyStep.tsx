@@ -24,7 +24,7 @@ const products = [
     description: "NFC payment tags for controlled, cashless spending at fuel pumps, tolls, and more.",
     price: "₹499",
     image: paytapTagSticker,
-    buyLink: "/paytap-sticker",
+    buyLink: "/checkout?product=sticker",
   },
   {
     id: 2,
@@ -32,7 +32,7 @@ const products = [
     description: "RuPay-powered expense management. Perfect for employee expenses, vendor payments, or personal control.",
     price: "₹499",
     image: paytapCard,
-    buyLink: "/paytap-card",
+    buyLink: "/checkout?product=card",
   }
 ];
 
