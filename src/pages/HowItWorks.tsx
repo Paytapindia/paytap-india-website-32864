@@ -5,14 +5,15 @@ import FooterSection from '@/components/FooterSection';
 import ProgressIndicator from '@/components/how-it-works-page/ProgressIndicator';
 
 // Eager load first 2 steps for instant visibility
+import ActivateAccountStep from '@/components/how-it-works-page/ActivateAccountStep';
 import BuyStep from '@/components/how-it-works-page/BuyStep';
-import ReceiveCodeStep from '@/components/how-it-works-page/ReceiveCodeStep';
 
 // Lazy load remaining steps
+const ReceiveCodeStep = lazy(() => import('@/components/how-it-works-page/ReceiveCodeStep'));
 const SignUpStep = lazy(() => import('@/components/how-it-works-page/SignUpStep'));
 const ClosingStep = lazy(() => import('@/components/how-it-works-page/ClosingStep'));
 
-const TOTAL_STEPS = 4;
+const TOTAL_STEPS = 5;
 
 // Simple loading skeleton for step sections
 const StepSkeleton = memo(() => (
@@ -74,8 +75,11 @@ const HowItWorks = () => {
             </h1>
           </section>
 
+          <ActivateAccountStep />
           <BuyStep />
-          <ReceiveCodeStep />
+          <Suspense fallback={<StepSkeleton />}>
+            <ReceiveCodeStep />
+          </Suspense>
           <Suspense fallback={<StepSkeleton />}>
             <SignUpStep />
           </Suspense>

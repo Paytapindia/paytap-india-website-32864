@@ -111,7 +111,7 @@ const ReceiveCodeStep = memo(() => {
           duration: 0.6
         }}>
             <div className="inline-block px-3 py-1 bg-primary/10 text-primary rounded-full text-sm font-medium mb-4">
-              Step 02
+              Step 03
             </div>
             <h2 className="text-2xl sm:text-3xl md:text-4xl lg:text-5xl font-semibold text-foreground mb-4 tracking-tight">
               Receive & Set Up Your Tags

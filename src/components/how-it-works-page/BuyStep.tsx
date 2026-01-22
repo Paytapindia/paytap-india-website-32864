@@ -58,13 +58,13 @@ const BuyStep = memo(() => {
           className="mb-8 md:mb-12"
         >
           <div className="inline-block px-3 py-1 bg-primary/10 text-primary rounded-full text-sm font-medium mb-4">
-            Step 01
+            Step 02
           </div>
           <h2 className="text-2xl sm:text-3xl md:text-4xl lg:text-5xl font-semibold text-foreground mb-4 tracking-tight">
-            Choose Plan
+            Buy the Plan
           </h2>
           <p className="text-sm sm:text-base text-primary font-medium max-w-lg mx-auto">
-            Select your Paytap plan to get started.
+            Now that your account is ready, select the plan that fits your needs.
           </p>
           
           {/* FOUNDER ACCESS BANNER */}
