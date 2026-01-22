@@ -34,7 +34,7 @@ const ActivateAccountStep = memo(() => {
 
   const kycSteps = [
     { label: "Enter phone number", complete: step >= 1 },
-    { label: "Verify OTP", complete: step >= 2 },
+    { label: "Complete Min KYC Details", complete: step >= 2 },
     { label: "Account ready!", complete: step >= 3 },
   ];
 
