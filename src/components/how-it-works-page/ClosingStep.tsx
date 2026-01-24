@@ -40,7 +40,7 @@ const ClosingStep = memo(() => {
           className="mb-6"
         >
           <div className="inline-block px-3 py-1 bg-primary/10 text-primary rounded-full text-sm font-medium">
-            Step 05
+            Step 04
           </div>
         </motion.div>
 
