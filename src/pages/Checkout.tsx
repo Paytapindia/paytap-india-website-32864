@@ -1,4 +1,5 @@
 import { useState, useEffect } from "react";
+import { Helmet } from "react-helmet-async";
 import { useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
 import * as z from "zod";
@@ -275,7 +276,12 @@ const Checkout = () => {
   }
 
   return (
-    <div className="min-h-screen bg-muted py-6 md:py-8">
+    <>
+      <Helmet>
+        <meta name="robots" content="noindex, nofollow" />
+        <title>Checkout - Paytap</title>
+      </Helmet>
+      <div className="min-h-screen bg-muted py-6 md:py-8">
       <div className="container mx-auto px-4 max-w-lg">
         {/* Go Back Home Button */}
         <div className="flex justify-between items-center mb-4">
@@ -605,6 +611,7 @@ const Checkout = () => {
         </form>
       </div>
     </div>
+    </>
   );
 };
 
