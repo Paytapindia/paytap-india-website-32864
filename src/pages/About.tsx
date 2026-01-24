@@ -11,7 +11,7 @@ const About = () => {
       <div className="bg-white shadow-sm border-b sticky top-0 z-10">
         <div className="max-w-6xl mx-auto px-6 py-4 flex items-center justify-between">
           <div className="flex items-center space-x-3">
-            <Building2 className="h-6 w-6 text-blue-600" />
+            <Building2 className="h-6 w-6 text-[#f6245b]" />
             <div>
               <h1 className="text-xl font-bold text-gray-900">About PayTap</h1>
               <p className="text-sm text-gray-600">Reimagining Contactless Payments for India</p>
@@ -27,7 +27,7 @@ const About = () => {
       </div>
 
       {/* Hero Section */}
-      <div className="bg-gradient-to-br from-blue-600 to-blue-800 text-white py-16 px-6">
+      <div className="bg-gradient-to-br from-[#021a42] to-[#031d47] text-white py-16 px-6">
         <div className="max-w-6xl mx-auto text-center">
           <h2 className="text-4xl md:text-5xl font-bold mb-6">
             Reimagining Contactless Payments for India
@@ -72,7 +72,7 @@ const About = () => {
             <div className="grid md:grid-cols-3 gap-6 mb-8">
               <Card>
                 <CardHeader>
-                  <Zap className="h-8 w-8 text-blue-600 mb-2" />
+                  <Zap className="h-8 w-8 text-[#f6245b] mb-2" />
                   <CardTitle className="text-lg">Fuel & Transport</CardTitle>
                 </CardHeader>
                 <CardContent>
@@ -86,7 +86,7 @@ const About = () => {
 
               <Card>
                 <CardHeader>
-                  <MapPin className="h-8 w-8 text-blue-600 mb-2" />
+                  <MapPin className="h-8 w-8 text-[#f6245b] mb-2" />
                   <CardTitle className="text-lg">Parking & Services</CardTitle>
                 </CardHeader>
                 <CardContent>
@@ -100,7 +100,7 @@ const About = () => {
 
               <Card>
                 <CardHeader>
-                  <Coffee className="h-8 w-8 text-blue-600 mb-2" />
+                  <Coffee className="h-8 w-8 text-[#f6245b] mb-2" />
                   <CardTitle className="text-lg">Retail & More</CardTitle>
                 </CardHeader>
                 <CardContent>
@@ -113,8 +113,8 @@ const About = () => {
               </Card>
             </div>
 
-            <div className="bg-blue-50 rounded-lg p-6 text-center">
-              <p className="text-lg font-semibold text-blue-800">
+            <div className="bg-[#021a42]/5 rounded-lg p-6 text-center">
+              <p className="text-lg font-semibold text-[#021a42]">
                 With over 8 lakh+ RuPay POS terminals across India, PayTap is ready wherever you go.
               </p>
             </div>
@@ -142,7 +142,7 @@ const About = () => {
           <div className="grid md:grid-cols-3 gap-8">
             <Card>
               <CardHeader>
-                <Shield className="h-8 w-8 text-blue-600 mb-2" />
+                <Shield className="h-8 w-8 text-[#f6245b] mb-2" />
                 <CardTitle>RBI Compliant</CardTitle>
               </CardHeader>
               <CardContent>
@@ -155,7 +155,7 @@ const About = () => {
 
             <Card>
               <CardHeader>
-                <Target className="h-8 w-8 text-blue-600 mb-2" />
+                <Target className="h-8 w-8 text-[#f6245b] mb-2" />
                 <CardTitle>Universal Acceptance</CardTitle>
               </CardHeader>
               <CardContent>
@@ -168,7 +168,7 @@ const About = () => {
 
             <Card>
               <CardHeader>
-                <CreditCard className="h-8 w-8 text-blue-600 mb-2" />
+                <CreditCard className="h-8 w-8 text-[#f6245b] mb-2" />
                 <CardTitle>App-Free Experience</CardTitle>
               </CardHeader>
               <CardContent>
@@ -184,7 +184,7 @@ const About = () => {
         {/* Our Vision */}
         <section className="mb-16">
           <h3 className="text-3xl font-bold text-gray-900 mb-8 text-center">Our Vision</h3>
-          <div className="bg-gradient-to-r from-blue-50 to-indigo-50 rounded-lg p-8 text-center">
+          <div className="bg-[#021a42]/5 rounded-lg p-8 text-center">
             <p className="text-xl text-gray-800 font-medium">
               To enable universal tap-and-pay utility experiences across India, empowering individuals and 
               businesses to transact confidently — anytime, anywhere, without intermediaries.
@@ -221,13 +221,13 @@ const About = () => {
 
         {/* Contact CTA */}
         <section className="text-center">
-          <div className="bg-blue-50 rounded-lg p-8">
+          <div className="bg-[#021a42]/5 rounded-lg p-8">
             <h3 className="text-2xl font-bold text-gray-900 mb-4">Ready to Experience PayTap?</h3>
             <p className="text-gray-700 mb-6">
               Join thousands of satisfied customers who have already made the switch to contactless utility payments.
             </p>
             <Link to="/">
-              <Button size="lg" className="bg-blue-600 hover:bg-blue-700">
+              <Button size="lg" className="bg-[#f6245b] hover:bg-[#d91e4f]">
                 Get Your PayTap Today
               </Button>
             </Link>
