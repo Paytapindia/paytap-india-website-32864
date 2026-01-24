@@ -90,6 +90,11 @@ const FooterSection = memo(() => {
                 </Link>
               </li>
               <li>
+                <Link to="/newsroom" className="text-gray-300 hover:text-paytap-light transition-colors duration-300 flex items-center group text-sm md:text-base">
+                  <span className="group-hover:translate-x-1 transition-transform">Newsroom</span>
+                </Link>
+              </li>
+              <li>
                 <Link to="/support" className="text-gray-300 hover:text-paytap-light transition-colors duration-300 flex items-center group text-sm md:text-base">
                   <span className="group-hover:translate-x-1 transition-transform">{t('footer.links.contact')}</span>
                 </Link>
