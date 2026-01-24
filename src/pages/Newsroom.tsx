@@ -11,44 +11,51 @@ const pressArticles = [
     publication: "DailyHunt", 
     url: "http://m.dailyhunt.in/news/india/english/r+news+india-epaper-dhfacc36dfce9c4bb68db0e89d033c921b/contactless+payment+tags+get+their+moment+in+india-newsid-dhfacc36dfce9c4bb68db0e89d033c921b_c197b3e0f6ba11f0bd74e7fbabd93a25?sm=Y",
     headline: "Paytap Revolutionizes Fleet Payment Management",
-    date: "January 2026"
+    date: "January 24, 2026",
+    datePublished: "2026-01-24"
   },
   { 
     publication: "Republic News India", 
     url: "https://republicnewsindia.com/contactless-payment-tags-get-their-moment-in-india/",
     headline: "Contactless Payment Tags Get Their Moment in India",
-    date: "January 2026",
+    date: "January 24, 2026",
+    datePublished: "2026-01-24",
     featured: true
   },
   { 
     publication: "Flipboard", 
     url: "https://flipboard.com/@republicnewsind/-contactless-payment-tags-get-their-mome/a-d1YTu6MgT3GJGohBopI6Kg%3Aa%3A3544623556-8421436395%2Frepublicnewsindia.com",
     headline: "The Future of Contactless Payments in India",
-    date: "January 2026"
+    date: "January 24, 2026",
+    datePublished: "2026-01-24"
   },
   { 
     publication: "The Indian Bulletin", 
     url: "https://theindianbulletin.com/contactless-payment-tags-get-their-moment-in-india/",
     headline: "Innovative Payment Solution for Seamless Vehicle Transactions",
-    date: "January 2026"
+    date: "January 24, 2026",
+    datePublished: "2026-01-24"
   },
   { 
     publication: "RD Times", 
     url: "https://rdtimes.in/contactless-payment-tags-get-their-moment-in-india/",
     headline: "Smart Payment Tags Transform Business Operations",
-    date: "January 2026"
+    date: "January 24, 2026",
+    datePublished: "2026-01-24"
   },
   { 
     publication: "Indian Sentinel", 
     url: "https://indiansentinel.in/contactless-payment-tags-get-their-moment-in-india/",
     headline: "NFC Payment Tags Gain Traction in Indian Market",
-    date: "January 2026"
+    date: "January 24, 2026",
+    datePublished: "2026-01-24"
   },
   { 
     publication: "Abhyuday Times", 
     url: "https://abhyudaytimes.com/contactless-payment-tags-get-their-moment-in-india/",
     headline: "Paytap: The New Era of Contactless Fleet Payments",
-    date: "January 2026"
+    date: "January 24, 2026",
+    datePublished: "2026-01-24"
   },
 ];
 
@@ -56,34 +63,88 @@ const featuredArticle = pressArticles.find(a => a.featured) || pressArticles[0];
 const otherArticles = pressArticles.filter(a => a !== featuredArticle);
 
 const Newsroom = memo(() => {
+  // Enhanced structured data for SEO with precise timestamps for Google News
   const structuredData = {
     "@context": "https://schema.org",
-    "@type": "WebPage",
-    "name": "Paytap Newsroom",
-    "description": "Latest news, press coverage, and media resources about Paytap's innovative NFC payment tags for businesses in India.",
-    "url": "https://paytap.co.in/newsroom",
-    "breadcrumb": {
-      "@type": "BreadcrumbList",
-      "itemListElement": [
-        { "@type": "ListItem", "position": 1, "name": "Home", "item": "https://paytap.co.in" },
-        { "@type": "ListItem", "position": 2, "name": "Newsroom", "item": "https://paytap.co.in/newsroom" }
-      ]
-    },
-    "mainEntity": {
-      "@type": "ItemList",
-      "name": "Press Coverage",
-      "itemListElement": pressArticles.map((article, index) => ({
-        "@type": "NewsArticle",
-        "position": index + 1,
-        "headline": article.headline,
+    "@graph": [
+      {
+        "@type": "BreadcrumbList",
+        "itemListElement": [
+          {
+            "@type": "ListItem",
+            "position": 1,
+            "name": "Home",
+            "item": "https://paytap.co.in"
+          },
+          {
+            "@type": "ListItem",
+            "position": 2,
+            "name": "Newsroom",
+            "item": "https://paytap.co.in/newsroom"
+          }
+        ]
+      },
+      {
+        "@type": "WebPage",
+        "name": "Paytap Newsroom - Press Coverage & Media Resources",
+        "description": "Latest news, press coverage, and media resources about Paytap's innovative NFC payment tags for Indian businesses and fleet operators.",
+        "url": "https://paytap.co.in/newsroom",
+        "datePublished": "2026-01-24T10:00:00+05:30",
+        "dateModified": "2026-01-24T12:00:00+05:30",
         "publisher": {
           "@type": "Organization",
-          "name": article.publication
+          "name": "Paytap",
+          "logo": {
+            "@type": "ImageObject",
+            "url": "https://paytap.co.in/paytap-icon-2025.png",
+            "width": 512,
+            "height": 512
+          }
         },
-        "url": article.url,
-        "datePublished": "2026-01"
-      }))
-    }
+        "mainEntity": {
+          "@type": "ItemList",
+          "name": "Press Coverage",
+          "numberOfItems": pressArticles.length,
+          "itemListElement": pressArticles.map((article, index) => ({
+            "@type": "NewsArticle",
+            "position": index + 1,
+            "headline": article.headline,
+            "datePublished": `${article.datePublished}T10:00:00+05:30`,
+            "dateModified": `${article.datePublished}T10:00:00+05:30`,
+            "author": {
+              "@type": "Organization",
+              "name": article.publication
+            },
+            "publisher": {
+              "@type": "Organization",
+              "name": article.publication
+            },
+            "url": article.url,
+            "about": {
+              "@type": "Organization",
+              "name": "Paytap"
+            },
+            "mainEntityOfPage": article.url
+          }))
+        }
+      },
+      {
+        "@type": "NewsMediaOrganization",
+        "name": "Paytap Newsroom",
+        "url": "https://paytap.co.in/newsroom",
+        "logo": {
+          "@type": "ImageObject",
+          "url": "https://paytap.co.in/paytap-icon-2025.png",
+          "width": 512,
+          "height": 512
+        },
+        "sameAs": [
+          "https://www.linkedin.com/showcase/paytap-india/",
+          "https://x.com/paytapindia"
+        ],
+        "publishingPrinciples": "https://paytap.co.in/newsroom"
+      }
+    ]
   };
 
   return (
@@ -92,10 +153,18 @@ const Newsroom = memo(() => {
         <title>Newsroom | Paytap - Contactless Payment Tags India</title>
         <meta name="description" content="Latest news, press coverage, and media resources about Paytap's innovative NFC payment tags. Featured in Republic News, DailyHunt, Flipboard, and more." />
         <link rel="canonical" href="https://paytap.co.in/newsroom" />
-        <meta property="og:title" content="Paytap Newsroom - Press Coverage & Media Resources" />
-        <meta property="og:description" content="Latest news and media coverage about Paytap's NFC payment solutions for Indian businesses." />
-        <meta property="og:url" content="https://paytap.co.in/newsroom" />
+        <meta property="og:title" content="Paytap Newsroom - Press Coverage & Media" />
+        <meta property="og:description" content="Latest news and press coverage about Paytap's innovative NFC payment solutions for Indian businesses." />
         <meta property="og:type" content="website" />
+        <meta property="og:url" content="https://paytap.co.in/newsroom" />
+        <meta property="og:image" content="https://paytap.co.in/banner.png" />
+        <meta property="og:image:width" content="1200" />
+        <meta property="og:image:height" content="630" />
+        <meta property="og:image:alt" content="Paytap NFC Payment Tags - Contactless payments for Indian businesses" />
+        <meta name="twitter:card" content="summary_large_image" />
+        <meta name="twitter:title" content="Paytap Newsroom" />
+        <meta name="twitter:description" content="Latest news and press coverage about Paytap's NFC payment solutions." />
+        <meta name="twitter:image" content="https://paytap.co.in/banner.png" />
         <script type="application/ld+json">
           {JSON.stringify(structuredData)}
         </script>
