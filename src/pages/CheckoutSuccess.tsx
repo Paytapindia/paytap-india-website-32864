@@ -6,7 +6,26 @@ import { CheckCircle, Package, Clock, ArrowRight } from "lucide-react";
 
 const CheckoutSuccess = () => {
   const location = useLocation();
-  const [orderDetails, setOrderDetails] = useState<any>(null);
+  const [orderDetails, setOrderDetails] = useState<{
+    txnid?: string | null;
+    amount?: string | null;
+    productinfo?: string | null;
+    firstname?: string | null;
+    status?: string | null;
+    hash?: string | null;
+    payuMoneyId?: string | null;
+    orderData?: {
+      name?: string;
+      address?: string;
+      city?: string;
+      state?: string;
+      pincode?: string;
+      phone?: string;
+      email?: string;
+    } | null;
+    paymentId?: string | null;
+    orderId?: string | null;
+  } | null>(null);
   
   useEffect(() => {
     // Handle PayU response from URL params or session storage
@@ -25,13 +44,61 @@ const CheckoutSuccess = () => {
     const storedOrderData = sessionStorage.getItem('payuOrderData');
     const orderData = storedOrderData ? JSON.parse(storedOrderData) : null;
     
-    setOrderDetails({
+    const details = {
       ...payuData,
       orderData,
-      // Fallback to legacy Razorpay data if available
       paymentId: payuData.payuMoneyId || location.state?.paymentId,
       orderId: payuData.txnid || location.state?.orderId
-    });
+    };
+    
+    setOrderDetails(details);
+
+    // Fire Google Ads Purchase Conversion
+    if (typeof window !== 'undefined' && window.gtag && payuData.status === 'success') {
+      // Enhanced Conversions - send hashed user data first
+      if (orderData) {
+        window.gtag('set', 'user_data', {
+          'email': orderData.email,
+          'phone_number': orderData.phone,
+          'first_name': orderData.name?.split(' ')[0],
+          'last_name': orderData.name?.split(' ').slice(1).join(' '),
+          'address': {
+            'postal_code': orderData.pincode,
+            'country': 'IN'
+          }
+        });
+      }
+
+      // Fire conversion event
+      window.gtag('event', 'conversion', {
+        'send_to': 'AW-17870924773/purchase',
+        'value': parseFloat(payuData.amount || '499'),
+        'currency': 'INR',
+        'transaction_id': payuData.txnid
+      });
+
+      // Also fire standard purchase event for GA4
+      window.gtag('event', 'purchase', {
+        'transaction_id': payuData.txnid,
+        'value': parseFloat(payuData.amount || '499'),
+        'currency': 'INR',
+        'items': [{
+          'item_id': payuData.productinfo || 'paytap-tag',
+          'item_name': 'Paytap NFC Tag',
+          'price': parseFloat(payuData.amount || '499')
+        }]
+      });
+    }
+
+    // Fire Meta Pixel Purchase Event
+    if (typeof window !== 'undefined' && window.fbq && payuData.status === 'success') {
+      window.fbq('track', 'Purchase', {
+        value: parseFloat(payuData.amount || '499'),
+        currency: 'INR',
+        content_ids: [payuData.productinfo || 'paytap-tag'],
+        content_type: 'product'
+      });
+    }
   }, [location]);
 
   const { paymentId, orderId, orderData } = orderDetails || {};

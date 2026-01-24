@@ -28,6 +28,27 @@ const PayAtPump = memo(() => {
   }, [searchParams]);
 
   const handleActivate = () => {
+    // Track CTA click for funnel analysis
+    if (typeof window !== 'undefined' && window.gtag) {
+      window.gtag('event', 'begin_checkout', {
+        'value': 499,
+        'currency': 'INR',
+        'items': [{
+          'item_id': 'paytap-nfc-tag',
+          'item_name': 'Paytap NFC Fuel Payment Tag',
+          'price': 499
+        }]
+      });
+    }
+
+    if (typeof window !== 'undefined' && window.fbq) {
+      window.fbq('track', 'InitiateCheckout', {
+        value: 499,
+        currency: 'INR',
+        content_ids: ['paytap-nfc-tag']
+      });
+    }
+
     const checkoutUrl = utmParams 
       ? `/checkout?product=sticker&${utmParams}` 
       : "/checkout?product=sticker";
