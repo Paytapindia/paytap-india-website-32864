@@ -1,11 +1,17 @@
 import { Link } from "react-router-dom";
+import { Helmet } from "react-helmet-async";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
 import { XCircle, ArrowLeft, ShoppingCart } from "lucide-react";
 
 const CheckoutCancel = () => {
   return (
-    <div className="min-h-screen bg-gray-50 py-8">
+    <>
+      <Helmet>
+        <meta name="robots" content="noindex, nofollow" />
+        <title>Checkout Cancelled - Paytap</title>
+      </Helmet>
+      <div className="min-h-screen bg-gray-50 py-8">
       <div className="container mx-auto px-4 max-w-2xl">
         <div className="text-center mb-8">
           <div className="w-16 h-16 bg-red-100 rounded-full mx-auto flex items-center justify-center mb-4">
@@ -85,6 +91,7 @@ const CheckoutCancel = () => {
         </div>
       </div>
     </div>
+    </>
   );
 };
 

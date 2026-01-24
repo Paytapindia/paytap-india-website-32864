@@ -12,3 +12,11 @@ Allow: /
 
 User-agent: *
 Allow: /
+
+# Block transactional pages from crawling
+Disallow: /checkout
+Disallow: /checkout/success
+Disallow: /checkout/cancel
+
+# Sitemap location
+Sitemap: https://paytap.co.in/sitemap.xml

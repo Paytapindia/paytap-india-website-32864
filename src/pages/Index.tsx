@@ -1,5 +1,5 @@
-
 import { lazy, Suspense, memo } from "react";
+import { Helmet } from "react-helmet-async";
 import Navbar from "@/components/Navbar";
 import HeroSection from "@/components/HeroSection";
 import ComplianceBadgeBar from "@/components/ComplianceBadgeBar";
@@ -34,9 +34,12 @@ SectionSkeleton.displayName = 'SectionSkeleton';
 
 const Index = () => {
   const { isContactFormOpen, setContactFormOpen } = useModal();
-  
   return (
-    <div className="min-h-screen bg-background">
+    <>
+      <Helmet>
+        <link rel="canonical" href="https://paytap.co.in/" />
+      </Helmet>
+      <div className="min-h-screen bg-background">
       <Navbar />
       <HeroSection />
       <ComplianceBadgeBar />
@@ -66,6 +69,7 @@ const Index = () => {
         onOpenChange={setContactFormOpen}
       />
     </div>
+    </>
   );
 };
 

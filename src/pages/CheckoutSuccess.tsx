@@ -1,5 +1,6 @@
 import { useLocation, Link } from "react-router-dom";
 import { useEffect, useState } from "react";
+import { Helmet } from "react-helmet-async";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
 import { CheckCircle, Package, Clock, ArrowRight } from "lucide-react";
@@ -102,7 +103,12 @@ const CheckoutSuccess = () => {
   const { paymentId, orderId, orderData } = orderDetails || {};
 
   return (
-    <div className="min-h-screen bg-gray-50 py-8">
+    <>
+      <Helmet>
+        <meta name="robots" content="noindex, nofollow" />
+        <title>Order Confirmed - Paytap</title>
+      </Helmet>
+      <div className="min-h-screen bg-gray-50 py-8">
       <div className="container mx-auto px-4 max-w-2xl">
         <div className="text-center mb-8">
           <div className="w-16 h-16 bg-green-100 rounded-full mx-auto flex items-center justify-center mb-4">
@@ -199,6 +205,7 @@ const CheckoutSuccess = () => {
         </div>
       </div>
     </div>
+    </>
   );
 };
 
