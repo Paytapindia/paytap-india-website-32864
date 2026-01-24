@@ -25,6 +25,7 @@ import SafeVaults from "./pages/SafeVaults";
 import HowItWorks from "./pages/HowItWorks";
 import KidsPay from "./pages/KidsPay";
 import Newsroom from "./pages/Newsroom";
+import PayAtPump from "./pages/PayAtPump";
 
 const queryClient = new QueryClient({
   defaultOptions: {
@@ -54,6 +55,7 @@ const App = () => (
               <Route path="/kids-pay" element={<KidsPay />} />
               <Route path="/how-it-works" element={<HowItWorks />} />
               <Route path="/newsroom" element={<Newsroom />} />
+              <Route path="/pay-at-pump" element={<PayAtPump />} />
               <Route path="/support" element={<Support />} />
               <Route path="/terms-and-conditions" element={<TermsAndConditions />} />
               <Route path="/privacy-policy" element={<PrivacyPolicy />} />
