@@ -10,7 +10,7 @@ const HeroSection = memo(() => {
   const navigate = useNavigate();
 
   const handleActivateAccount = () => {
-    window.open('https://dashboard.paytap.co.in/login', '_blank');
+    navigate('/how-it-works');
   };
 
   const valueStripItems = [
