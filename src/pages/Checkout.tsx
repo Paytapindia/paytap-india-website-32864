@@ -108,6 +108,34 @@ const Checkout = () => {
     }
   }, [searchParams]);
 
+  // Track add_to_cart event for retargeting audiences
+  useEffect(() => {
+    const product = PRODUCTS[productType];
+    const itemPrice = product.price * quantity;
+
+    if (typeof window !== 'undefined' && window.gtag) {
+      window.gtag('event', 'add_to_cart', {
+        'value': itemPrice,
+        'currency': 'INR',
+        'items': [{
+          'item_id': productType,
+          'item_name': product.name,
+          'price': product.price,
+          'quantity': quantity
+        }]
+      });
+    }
+
+    if (typeof window !== 'undefined' && window.fbq) {
+      window.fbq('track', 'AddToCart', {
+        value: itemPrice,
+        currency: 'INR',
+        content_ids: [productType],
+        content_type: 'product'
+      });
+    }
+  }, [productType, quantity]);
+
   const product = PRODUCTS[productType];
   const total = product.price * quantity;
 
