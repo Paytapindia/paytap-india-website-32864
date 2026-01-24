@@ -53,33 +53,31 @@ const CheckoutSuccess = () => {
     
     setOrderDetails(details);
 
-    // Fire Google Ads Purchase Conversion
+    // Fire Google Ads Purchase Conversion with Enhanced Conversions
     if (typeof window !== 'undefined' && window.gtag && payuData.status === 'success') {
-      // Enhanced Conversions - send hashed user data first
-      if (orderData) {
-        window.gtag('set', 'user_data', {
+      const transactionId = payuData.txnid || `order_${Date.now()}`;
+      
+      // Conversion event with inline user_data for Enhanced Conversions (2026 cookieless attribution)
+      window.gtag('event', 'conversion', {
+        'send_to': 'AW-17870924773/REPLACE_WITH_LABEL',  // TODO: Replace with actual Conversion Label from Google Ads
+        'value': parseFloat(payuData.amount || '499'),
+        'currency': 'INR',
+        'transaction_id': transactionId,
+        'user_data': orderData ? {
           'email': orderData.email,
-          'phone_number': orderData.phone,
-          'first_name': orderData.name?.split(' ')[0],
-          'last_name': orderData.name?.split(' ').slice(1).join(' '),
+          'phone_number': orderData.phone ? `+91${orderData.phone.replace(/^(\+91|91)/, '')}` : undefined,
           'address': {
+            'first_name': orderData.name?.split(' ')[0],
+            'last_name': orderData.name?.split(' ').slice(1).join(' '),
             'postal_code': orderData.pincode,
             'country': 'IN'
           }
-        });
-      }
-
-      // Fire conversion event
-      window.gtag('event', 'conversion', {
-        'send_to': 'AW-17870924773/purchase',
-        'value': parseFloat(payuData.amount || '499'),
-        'currency': 'INR',
-        'transaction_id': payuData.txnid
+        } : undefined
       });
 
       // Also fire standard purchase event for GA4
       window.gtag('event', 'purchase', {
-        'transaction_id': payuData.txnid,
+        'transaction_id': transactionId,
         'value': parseFloat(payuData.amount || '499'),
         'currency': 'INR',
         'items': [{
