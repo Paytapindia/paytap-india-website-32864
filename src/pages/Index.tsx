@@ -13,6 +13,7 @@ import { useModal } from "@/contexts/ModalContext";
 const OurProductsSection = lazy(() => import("@/components/OurProductsSection"));
 const TestimonialsSection = lazy(() => import("@/components/TestimonialsSection"));
 const CTASection = lazy(() => import("@/components/CTASection"));
+const PressSection = lazy(() => import("@/components/PressSection"));
 const FooterSection = lazy(() => import("@/components/FooterSection"));
 
 // Skeleton loader for lazy-loaded sections
@@ -51,6 +52,9 @@ const Index = () => {
       </Suspense>
       <Suspense fallback={<SectionSkeleton />}>
         <CTASection />
+      </Suspense>
+      <Suspense fallback={<SectionSkeleton />}>
+        <PressSection />
       </Suspense>
       <Suspense fallback={<SectionSkeleton />}>
         <FooterSection />
