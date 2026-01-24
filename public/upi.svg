@@ -1,0 +1,9 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 120 80">
+  <rect fill="#fff" width="120" height="80" rx="6"/>
+  <g transform="translate(15, 20)">
+    <text x="0" y="30" font-family="Arial, sans-serif" font-size="32" font-weight="bold" fill="#5F259F">UPI</text>
+    <rect x="70" y="8" width="8" height="32" fill="#5F259F"/>
+    <polygon points="70,0 86,16 70,16" fill="#5F259F"/>
+    <polygon points="78,40 78,24 86,24" fill="#128807"/>
+  </g>
+</svg>
