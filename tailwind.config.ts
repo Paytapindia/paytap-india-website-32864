@@ -131,6 +131,10 @@ export default {
 				'count-up': {
 					'0%': { opacity: '0' },
 					'100%': { opacity: '1' }
+				},
+				'marquee': {
+					'0%': { transform: 'translateX(0%)' },
+					'100%': { transform: 'translateX(-50%)' }
 				}
 			},
 			animation: {
@@ -144,7 +148,8 @@ export default {
 				'card-flip': 'card-flip 1.5s ease-in-out',
 				'slide-up': 'slide-up 0.6s ease-out',
 				'slide-left': 'slide-left 0.6s ease-out',
-				'slide-right': 'slide-right 0.6s ease-out'
+				'slide-right': 'slide-right 0.6s ease-out',
+				'marquee': 'marquee 25s linear infinite'
 			},
 			spacing: {
 				'18': '4.5rem',
