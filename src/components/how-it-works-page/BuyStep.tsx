@@ -50,80 +50,29 @@ const BuyStep = memo(() => {
   return (
     <ScrollSection className="min-h-[80vh] md:min-h-screen flex items-center justify-center pt-8 pb-12 md:pb-20 px-4 bg-background">
       <div ref={ref} className="max-w-6xl mx-auto text-center">
-        {/* Text content */}
+        {/* Step badge and heading */}
         <motion.div
           initial={{ opacity: 0, y: 20 }}
           animate={isInView ? { opacity: 1, y: 0 } : {}}
           transition={{ duration: 0.6 }}
-          className="mb-8 md:mb-12"
+          className="mb-6 md:mb-8"
         >
-            <div className="inline-block px-3 py-1 bg-primary/10 text-primary rounded-full text-sm font-medium mb-4">
-              Step 01
-            </div>
-          <h2 className="text-2xl sm:text-3xl md:text-4xl lg:text-5xl font-semibold text-foreground mb-4 tracking-tight">
+          <div className="inline-block px-3 py-1 bg-primary/10 text-primary rounded-full text-sm font-medium mb-4">
+            Step 01
+          </div>
+          <h2 className="text-2xl sm:text-3xl md:text-4xl lg:text-5xl font-semibold text-foreground tracking-tight">
             Buy the Plan
           </h2>
-            <p className="text-sm sm:text-base text-primary font-medium max-w-lg mx-auto">
-              Start by selecting the plan that fits your needs.
-            </p>
-          
-          {/* FOUNDER ACCESS BANNER */}
-          <motion.div
-            initial={{ opacity: 0, scale: 0.95 }}
-            animate={isInView ? { opacity: 1, scale: 1 } : {}}
-            transition={{ duration: 0.5, delay: getDelay(0.2) }}
-            className="mt-4 sm:mt-6 inline-flex items-center gap-2 bg-gradient-to-r from-primary to-primary/80 px-3 sm:px-4 py-1.5 sm:py-2 rounded-full text-white font-semibold shadow-lg text-sm sm:text-base"
-          >
-            <Unlock className="w-4 h-4 sm:w-5 sm:h-5" />
-            <span>Platform Access — ₹499 <span className="opacity-70">(₹4999 Value)</span></span>
-          </motion.div>
-
-          {/* What's Included heading */}
-          <motion.div
-            initial={{ opacity: 0, y: 10 }}
-            animate={isInView ? { opacity: 1, y: 0 } : {}}
-            transition={{ duration: 0.5, delay: getDelay(0.15) }}
-            className="mt-6 sm:mt-8 mb-4"
-          >
-            <h3 className="text-base sm:text-lg font-semibold text-foreground">
-              What's Included
-            </h3>
-          </motion.div>
         </motion.div>
 
-        {/* Pricing includes grid */}
-        <motion.div
-          initial={{ opacity: 0, y: 20 }}
-          animate={isInView ? { opacity: 1, y: 0 } : {}}
-          transition={{ duration: 0.6, delay: getDelay(0.2) }}
-          className="grid grid-cols-2 md:grid-cols-3 gap-3 sm:gap-4 max-w-3xl mx-auto mb-8 md:mb-12"
-        >
-          {pricingIncludes.map((item, index) => (
-            <div 
-              key={index}
-              className="flex items-center gap-2 p-3 bg-card border border-border rounded-xl text-left"
-            >
-              <div className="w-8 h-8 bg-primary/10 rounded-lg flex items-center justify-center flex-shrink-0">
-                <item.icon className="w-4 h-4 text-primary" />
-              </div>
-              <div className="min-w-0">
-                <span className="text-xs sm:text-sm text-foreground block truncate">{item.text}</span>
-                {item.value && (
-                  <span className="text-[10px] sm:text-xs text-primary font-medium">{item.value}</span>
-                )}
-              </div>
-            </div>
-          ))}
-        </motion.div>
-
-        {/* Product cards */}
-        <div className="grid md:grid-cols-2 gap-4 sm:gap-6 max-w-5xl mx-auto">
+        {/* Product cards - MOVED UP */}
+        <div className="grid md:grid-cols-2 gap-4 sm:gap-6 max-w-5xl mx-auto mb-8 md:mb-12">
           {products.map((product, index) => (
             <motion.div
               key={product.id}
               initial={{ opacity: 0, y: 30 }}
               animate={isInView ? { opacity: 1, y: 0 } : {}}
-              transition={{ duration: 0.6, delay: getDelay(0.3 + index * 0.1) }}
+              transition={{ duration: 0.6, delay: getDelay(0.1 + index * 0.1) }}
               className="group"
             >
               <Card className="bg-card border-border overflow-hidden h-full hover:border-primary/30 transition-all duration-300">
@@ -169,6 +118,54 @@ const BuyStep = memo(() => {
             </motion.div>
           ))}
         </div>
+
+        {/* PLATFORM ACCESS BANNER */}
+        <motion.div
+          initial={{ opacity: 0, scale: 0.95 }}
+          animate={isInView ? { opacity: 1, scale: 1 } : {}}
+          transition={{ duration: 0.5, delay: getDelay(0.3) }}
+          className="inline-flex items-center gap-2 bg-gradient-to-r from-primary to-primary/80 px-3 sm:px-4 py-1.5 sm:py-2 rounded-full text-white font-semibold shadow-lg text-sm sm:text-base"
+        >
+          <Unlock className="w-4 h-4 sm:w-5 sm:h-5" />
+          <span>Platform Access — ₹499 <span className="opacity-70">(₹4999 Value)</span></span>
+        </motion.div>
+
+        {/* What's Included heading */}
+        <motion.div
+          initial={{ opacity: 0, y: 10 }}
+          animate={isInView ? { opacity: 1, y: 0 } : {}}
+          transition={{ duration: 0.5, delay: getDelay(0.35) }}
+          className="mt-6 sm:mt-8 mb-4"
+        >
+          <h3 className="text-base sm:text-lg font-semibold text-foreground">
+            What's Included
+          </h3>
+        </motion.div>
+
+        {/* Pricing includes grid */}
+        <motion.div
+          initial={{ opacity: 0, y: 20 }}
+          animate={isInView ? { opacity: 1, y: 0 } : {}}
+          transition={{ duration: 0.6, delay: getDelay(0.4) }}
+          className="grid grid-cols-2 md:grid-cols-3 gap-3 sm:gap-4 max-w-3xl mx-auto"
+        >
+          {pricingIncludes.map((item, index) => (
+            <div 
+              key={index}
+              className="flex items-center gap-2 p-3 bg-card border border-border rounded-xl text-left"
+            >
+              <div className="w-8 h-8 bg-primary/10 rounded-lg flex items-center justify-center flex-shrink-0">
+                <item.icon className="w-4 h-4 text-primary" />
+              </div>
+              <div className="min-w-0">
+                <span className="text-xs sm:text-sm text-foreground block truncate">{item.text}</span>
+                {item.value && (
+                  <span className="text-[10px] sm:text-xs text-primary font-medium">{item.value}</span>
+                )}
+              </div>
+            </div>
+          ))}
+        </motion.div>
       </div>
     </ScrollSection>
   );
