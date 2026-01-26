@@ -9,7 +9,7 @@ import paytapTagSticker from '@/assets/paytap-tag-sticker-v2.png';
 import paytapCard from '@/assets/paytap-card-product.png';
 
 const pricingIncludes = [
-  { icon: Wifi, text: "Paytap NFC Tag", value: "₹999 Value" },
+  { icon: Wifi, text: "1 Paytap NFC Tag", value: "₹999 Value" },
   { icon: CreditCard, text: "Lifetime Platform Access", value: "₹4,000 Value" },
   { icon: BarChart3, text: "Live Expense Dashboard" },
   { icon: Car, text: "Smart Controls" },
@@ -76,6 +76,18 @@ const BuyStep = memo(() => {
           >
             <Unlock className="w-4 h-4 sm:w-5 sm:h-5" />
             <span>Platform Access — ₹499 <span className="opacity-70">(₹4999 Value)</span></span>
+          </motion.div>
+
+          {/* What's Included heading */}
+          <motion.div
+            initial={{ opacity: 0, y: 10 }}
+            animate={isInView ? { opacity: 1, y: 0 } : {}}
+            transition={{ duration: 0.5, delay: getDelay(0.15) }}
+            className="mt-6 sm:mt-8 mb-4"
+          >
+            <h3 className="text-base sm:text-lg font-semibold text-foreground">
+              What's Included
+            </h3>
           </motion.div>
         </motion.div>
 
