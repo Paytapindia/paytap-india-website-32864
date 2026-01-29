@@ -13,7 +13,7 @@ const FAQ = () => {
           content="Find answers to common questions about Paytap payment tags, wallet management, security features, and more. Get help with your digital payment needs." 
         />
         <meta name="keywords" content="Paytap FAQ, payment tag questions, digital wallet help, UPI support, contactless payment guide" />
-        <link rel="canonical" href="/faq" />
+        <link rel="canonical" href="https://paytap.co.in/faq" />
       </Helmet>
       
       <div className="min-h-screen bg-white">

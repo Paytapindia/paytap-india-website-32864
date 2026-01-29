@@ -1,3 +1,4 @@
+import { Helmet } from "react-helmet-async";
 import { ArrowLeft } from "lucide-react";
 import { Link } from "react-router-dom";
 import { Button } from "@/components/ui/button";
@@ -10,7 +11,13 @@ import {
 
 const ShippingPolicy = () => {
   return (
-    <div className="min-h-screen bg-gray-50">
+    <>
+      <Helmet>
+        <title>Shipping Policy - PayTap | Delivery Information</title>
+        <meta name="description" content="PayTap shipping policy covers pan-India delivery, shipping timelines, delivery process, and replacement shipping for NFC payment tags." />
+        <link rel="canonical" href="https://paytap.co.in/shipping-policy" />
+      </Helmet>
+      <div className="min-h-screen bg-gray-50">
       {/* Header */}
       <div className="bg-white border-b">
         <div className="max-w-4xl mx-auto px-4 py-6">
@@ -218,6 +225,7 @@ const ShippingPolicy = () => {
         </div>
       </div>
     </div>
+    </>
   );
 };
 

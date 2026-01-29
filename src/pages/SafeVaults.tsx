@@ -76,6 +76,7 @@ const SafeVaults = () => {
       <Helmet>
         <title>PayTap SafeVaults - Save Smart, Spend Safe | Secure Digital Savings</title>
         <meta name="description" content="PayTap SafeVaults lets you save in gold and spend securely online using prepaid accounts—without exposing your primary bank card details." />
+        <link rel="canonical" href="https://paytap.co.in/safevaults" />
       </Helmet>
 
       <Navbar />

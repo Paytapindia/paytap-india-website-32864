@@ -1,4 +1,4 @@
-
+import { Helmet } from "react-helmet-async";
 import { ArrowLeft, Building2, CreditCard, Zap, Shield, Target, MapPin, Coffee } from "lucide-react";
 import { Link } from "react-router-dom";
 import { Button } from "@/components/ui/button";
@@ -6,7 +6,13 @@ import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 
 const About = () => {
   return (
-    <div className="min-h-screen bg-gray-50">
+    <>
+      <Helmet>
+        <title>About PayTap - Reimagining Contactless Payments for India</title>
+        <meta name="description" content="PayTap is building the future of utility payments. Fast, secure, and app-free contactless payments through NFC-powered tags for fuel, tolls, metro, and more." />
+        <link rel="canonical" href="https://paytap.co.in/about" />
+      </Helmet>
+      <div className="min-h-screen bg-gray-50">
       {/* Header */}
       <div className="bg-white shadow-sm border-b sticky top-0 z-10">
         <div className="max-w-6xl mx-auto px-6 py-4 flex items-center justify-between">
@@ -235,6 +241,7 @@ const About = () => {
         </section>
       </div>
     </div>
+    </>
   );
 };
 
