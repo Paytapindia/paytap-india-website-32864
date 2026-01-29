@@ -61,6 +61,7 @@ const HowItWorks = () => {
           name="description" 
           content="Set up PayTap in minutes. Track spending, set limits, and manage tags, vehicles, or teams — all from one app." 
         />
+        <link rel="canonical" href="https://paytap.co.in/how-it-works" />
       </Helmet>
       
       <div className="min-h-screen bg-background">

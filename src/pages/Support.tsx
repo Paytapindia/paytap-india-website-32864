@@ -1,4 +1,4 @@
-
+import { Helmet } from "react-helmet-async";
 import { Button } from "@/components/ui/button";
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
 import { Alert, AlertDescription } from "@/components/ui/alert";
@@ -31,8 +31,14 @@ const Support = () => {
   };
 
   return (
-    <div className="min-h-screen bg-gradient-to-br from-blue-50 to-white">
-      <Navbar />
+    <>
+      <Helmet>
+        <title>Support - PayTap Help Center | Get Quick Answers</title>
+        <meta name="description" content="Get quick answers and expert support for your PayTap experience. Contact us via email, phone, or WhatsApp for payment tag issues, account help, and more." />
+        <link rel="canonical" href="https://paytap.co.in/support" />
+      </Helmet>
+      <div className="min-h-screen bg-gradient-to-br from-blue-50 to-white">
+        <Navbar />
       
       <main className="pt-20 pb-16">
         <div className="max-w-6xl mx-auto px-4 md:px-6">
@@ -287,8 +293,9 @@ const Support = () => {
         </div>
       </main>
 
-      <FooterSection />
-    </div>
+        <FooterSection />
+      </div>
+    </>
   );
 };
 

@@ -1,4 +1,4 @@
-
+import { Helmet } from "react-helmet-async";
 import { ArrowLeft, Shield } from "lucide-react";
 import { Link } from "react-router-dom";
 import { Button } from "@/components/ui/button";
@@ -11,6 +11,12 @@ import {
 
 const TermsAndConditions = () => {
   return (
+    <>
+      <Helmet>
+        <title>Terms and Conditions - PayTap | User Agreement</title>
+        <meta name="description" content="Read PayTap's terms and conditions covering wallet usage, transaction limits, user obligations, and RBI compliance for contactless payments." />
+        <link rel="canonical" href="https://paytap.co.in/terms-and-conditions" />
+      </Helmet>
     <div className="min-h-screen bg-gray-50">
       {/* Header */}
       <div className="bg-white shadow-sm border-b sticky top-0 z-10">
@@ -306,6 +312,7 @@ const TermsAndConditions = () => {
         </div>
       </div>
     </div>
+    </>
   );
 };
 

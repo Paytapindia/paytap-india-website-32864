@@ -1,4 +1,4 @@
-
+import { Helmet } from "react-helmet-async";
 import { ArrowLeft, Shield } from "lucide-react";
 import { Link } from "react-router-dom";
 import { Button } from "@/components/ui/button";
@@ -11,6 +11,12 @@ import {
 
 const PrivacyPolicy = () => {
   return (
+    <>
+      <Helmet>
+        <title>Privacy Policy - PayTap | Data Protection & Security</title>
+        <meta name="description" content="Learn how PayTap protects your personal data. Our privacy policy covers data collection, security measures, user rights, and RBI compliance." />
+        <link rel="canonical" href="https://paytap.co.in/privacy-policy" />
+      </Helmet>
     <div className="min-h-screen bg-gray-50">
       {/* Header */}
       <div className="bg-white shadow-sm border-b sticky top-0 z-10">
@@ -289,6 +295,7 @@ const PrivacyPolicy = () => {
         </div>
       </div>
     </div>
+    </>
   );
 };
 

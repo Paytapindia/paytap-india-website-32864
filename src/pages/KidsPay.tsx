@@ -57,6 +57,7 @@ const KidsPay = () => {
       <Helmet>
         <title>Paytap Kids Pay - Safe Prepaid Cards for Children | Paytap</title>
         <meta name="description" content="Paytap Kids Pay offers secure prepaid payment cards and contactless tags for children. Parents stay in control with spending limits and real-time tracking." />
+        <link rel="canonical" href="https://paytap.co.in/kids-pay" />
       </Helmet>
 
       <Navbar />
