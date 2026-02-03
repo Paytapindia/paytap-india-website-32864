@@ -36,13 +36,16 @@ const About = () => {
       <div className="bg-gradient-to-br from-[#021a42] to-[#031d47] text-white py-16 px-6">
         <div className="max-w-6xl mx-auto text-center">
           <h2 className="text-4xl md:text-5xl font-bold mb-6">
-            Building India's Utility Payment Infrastructure
+            Reimagining Contactless Payments for India
           </h2>
           <p className="text-xl mb-8 max-w-4xl mx-auto opacity-90">
-            Paytap is building a unified infrastructure for India's utility and mobility sectors. While the market relies on fragmented, app-heavy solutions, we have engineered a lean, NFC-powered stack that integrates directly into the daily life-cycle of the Indian consumer.
+            PayTap is building the future of utility payments — one tap at a time. Whether you're fueling your car, 
+            paying tolls, parking, commuting by metro, or transacting at any everyday service point, PayTap gives you 
+            a fast, secure, and app-free experience through a simple NFC-powered tag.
           </p>
           <p className="text-lg max-w-3xl mx-auto opacity-80">
-            Our technology serves as the foundational interface for fuel, tolls, parking, and transit. By owning the infrastructure at the point of interaction, Paytap is creating a scalable ecosystem that empowers users with direct financial control while providing merchants with robust, secure, and instantaneous settlement rails.
+            Our mission is to make contactless payments accessible across India's most frequently used services — 
+            removing friction, eliminating intermediaries, and giving people direct control over their money.
           </p>
         </div>
       </div>
