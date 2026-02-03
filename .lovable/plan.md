@@ -1,170 +1,116 @@
 
-## Plan: Fix Google Search Console "Duplicate without user-selected canonical" Error
 
-### Problem Summary
-Google Search Console is reporting duplicate content issues because many pages lack canonical tags. Currently, only 4 out of 13+ pages have canonical tags, and one uses a relative URL instead of the full domain.
+## Plan: Add 11 New Press Coverage Articles
 
-### Root Cause Analysis
+### New Articles to Add
 
-```text
-Current State:
-+-------------------+----------------------------------+
-| Page              | Canonical Tag Status             |
-+-------------------+----------------------------------+
-| Index.tsx         | https://paytap.co.in/           |
-| PayAtPump.tsx     | https://paytap.co.in/pay-at-pump|
-| Newsroom.tsx      | https://paytap.co.in/newsroom   |
-| FAQ.tsx           | /faq (relative - needs fix)     |
-| About.tsx         | MISSING                          |
-| Support.tsx       | MISSING                          |
-| PrivacyPolicy.tsx | MISSING                          |
-| Terms.tsx         | MISSING                          |
-| ShippingPolicy    | MISSING                          |
-| Cancellation.tsx  | MISSING                          |
-| SafeVaults.tsx    | MISSING                          |
-| KidsPay.tsx       | MISSING                          |
-| HowItWorks.tsx    | MISSING                          |
-+-------------------+----------------------------------+
-```
+**Release Title:** "Beyond Personal Payments: Paytap Debuts India's First RuPay NFC Tag for Integrated Vehicle Enterprise Management"
+
+**Date:** February 3, 2026
+
+| # | Publication | URL |
+|---|-------------|-----|
+| 1 | DailyHunt | http://m.dailyhunt.in/news/india/english/r+news+india-epaper-dhfacc36dfce9c4bb68db0e89d033c921b/beyond+personal+payments+paytap+debuts+indias+first+rupay+nfc+tag+for+integrated+vehicleenterprise+management-newsid-dhfacc36dfce9c4bb68db0e89d033c921b_77c23bc000b311f1bfed1779c6fd9cb4?sm=Y |
+| 2 | Wow Entrepreneurs | https://wowentrepreneurs.com/beyond-personal-payments-paytap-debuts-indias-first-rupay-nfc-tag-for-integrated-vehicle-enterprise-management/ |
+| 3 | Business Reporter | https://businessreporter.in/beyond-personal-payments-paytap-debuts-indias-first-rupay-nfc-tag-for-integrated-vehicle-enterprise-management/ |
+| 4 | Entrepreneur Saga | https://entrepreneursaga.com/beyond-personal-payments-paytap-debuts-indias-first-rupay-nfc-tag-for-integrated-vehicle-enterprise-management/ |
+| 5 | Deccan Business | https://deccanbusiness.com/beyond-personal-payments-paytap-debuts-indias-first-rupay-nfc-tag-for-integrated-vehicle-enterprise-management/ |
+| 6 | 1 Money Mania | https://1moneymania.in/beyond-personal-payments-paytap-debuts-indias-first-rupay-nfc-tag-for-integrated-vehicle-enterprise-management/ |
+| 7 | RD Times Biz | https://biz.rdtimes.in/beyond-personal-payments-paytap-debuts-indias-first-rupay-nfc-tag-for-integrated-vehicle-enterprise-management/ |
+| 8 | Republic News India Business | https://business.republicnewsindia.com/beyond-personal-payments-paytap-debuts-indias-first-rupay-nfc-tag-for-integrated-vehicle-enterprise-management/ |
+| 9 | The Indian Bulletin Biz | https://biz.theindianbulletin.com/beyond-personal-payments-paytap-debuts-indias-first-rupay-nfc-tag-for-integrated-vehicle-enterprise-management/ |
+| 10 | NewsHead Business | https://business.newshead.in/beyond-personal-payments-paytap-debuts-indias-first-rupay-nfc-tag-for-integrated-vehicle-enterprise-management/ |
+| 11 | Indian Scoops Business | https://business.indianscoops.com/beyond-personal-payments-paytap-debuts-indias-first-rupay-nfc-tag-for-integrated-vehicle-enterprise-management/ |
 
 ---
 
-### Solution: Create a Reusable SEO Component
+### Files to Update
 
-Rather than manually adding canonical tags to each page, we'll create a centralized SEO component that:
-1. Automatically generates the canonical URL from the current route
-2. Always uses `https://paytap.co.in` (non-www) as the base domain
-3. Can be easily added to any page with minimal code
+#### 1. PressSection.tsx (Landing Page Marquee)
 
----
-
-### Implementation Steps
-
-#### Step 1: Create SEO Component
-
-**New file:** `src/components/SEO.tsx`
-
-This component will:
-- Accept optional `title` and `description` props
-- Automatically generate the canonical URL using the current route
-- Use the production domain `https://paytap.co.in` always
-- Integrate with react-helmet-async (already installed)
+Add new publications to the `pressArticles` array for the infinite scroll marquee. Selected key publications to keep the marquee readable:
 
 ```tsx
-import { Helmet } from "react-helmet-async";
-import { useLocation } from "react-router-dom";
+const pressArticles = [
+  // Existing 7 articles...
+  { publication: "Wow Entrepreneurs", url: "https://wowentrepreneurs.com/beyond-personal-payments..." },
+  { publication: "Business Reporter", url: "https://businessreporter.in/beyond-personal-payments..." },
+  { publication: "Entrepreneur Saga", url: "https://entrepreneursaga.com/beyond-personal-payments..." },
+  { publication: "Deccan Business", url: "https://deccanbusiness.com/beyond-personal-payments..." },
+  // ... more
+];
+```
 
-interface SEOProps {
-  title?: string;
-  description?: string;
-  noIndex?: boolean;
+Also update the **Featured Article Card** to highlight the new release as the featured story.
+
+---
+
+#### 2. Newsroom.tsx (Full Press Page)
+
+Add all 11 new articles to the `pressArticles` array with full metadata:
+
+```tsx
+{
+  publication: "Republic News India Business",
+  url: "https://business.republicnewsindia.com/beyond-personal-payments...",
+  headline: "Beyond Personal Payments: Paytap Debuts India's First RuPay NFC Tag for Integrated Vehicle Enterprise Management",
+  date: "February 3, 2026",
+  datePublished: "2026-02-03",
+  featured: true  // Mark as new featured article
 }
-
-const SEO = ({ title, description, noIndex }: SEOProps) => {
-  const { pathname } = useLocation();
-  const BASE_URL = "https://paytap.co.in";
-  const canonicalUrl = `${BASE_URL}${pathname === "/" ? "" : pathname}`;
-  
-  return (
-    <Helmet>
-      {title && <title>{title}</title>}
-      {description && <meta name="description" content={description} />}
-      <link rel="canonical" href={canonicalUrl} />
-      {noIndex && <meta name="robots" content="noindex, nofollow" />}
-    </Helmet>
-  );
-};
-
-export default SEO;
 ```
 
----
-
-#### Step 2: Add SEO Component to All Pages
-
-| Page | Title | Changes |
-|------|-------|---------|
-| About.tsx | Add About PayTap - Contact Payment Solutions | Add SEO component with Helmet |
-| Support.tsx | Support - PayTap Help Center | Add SEO component with Helmet |
-| PrivacyPolicy.tsx | Privacy Policy - PayTap | Add SEO component with Helmet |
-| TermsAndConditions.tsx | Terms and Conditions - PayTap | Add SEO component with Helmet |
-| ShippingPolicy.tsx | Shipping Policy - PayTap | Add SEO component with Helmet |
-| CancellationRefunds.tsx | Cancellation & Refunds - PayTap | Add SEO component with Helmet |
-| SafeVaults.tsx | Already has Helmet | Add canonical URL |
-| KidsPay.tsx | Already has Helmet | Add canonical URL |
-| HowItWorks.tsx | Already has Helmet | Add canonical URL |
-| FAQ.tsx | Already has Helmet | Fix relative to absolute URL |
+Update the featured article to the newest release so it displays prominently.
 
 ---
 
-#### Step 3: Update Existing Pages with Partial Helmet Setup
+#### 3. index.html (SEO Structured Data)
 
-For pages that already use Helmet (SafeVaults, KidsPay, HowItWorks, FAQ), we'll add the canonical tag inside their existing Helmet block.
+Add new NewsArticle schema entries in the `mentions` array for Google to discover:
 
-**Example for SafeVaults.tsx:**
-```tsx
-<Helmet>
-  <title>PayTap SafeVaults - Save Smart...</title>
-  <meta name="description" content="..." />
-  <link rel="canonical" href="https://paytap.co.in/safevaults" />
-</Helmet>
+```json
+{
+  "@type": "NewsArticle",
+  "headline": "Beyond Personal Payments: Paytap Debuts India's First RuPay NFC Tag for Integrated Vehicle Enterprise Management",
+  "datePublished": "2026-02-03T10:00:00+05:30",
+  "dateModified": "2026-02-03T10:00:00+05:30",
+  "publisher": {"@type": "Organization", "name": "Republic News India Business"},
+  "url": "https://business.republicnewsindia.com/beyond-personal-payments...",
+  "about": {"@type": "Organization", "name": "Paytap"},
+  "mainEntityOfPage": "https://business.republicnewsindia.com/beyond-personal-payments..."
+}
 ```
 
----
-
-### Verification Checklist
-
-After implementation, these pages will have proper canonical tags:
-
-- `/` → `https://paytap.co.in/`
-- `/about` → `https://paytap.co.in/about`
-- `/support` → `https://paytap.co.in/support`
-- `/privacy-policy` → `https://paytap.co.in/privacy-policy`
-- `/terms-and-conditions` → `https://paytap.co.in/terms-and-conditions`
-- `/shipping-policy` → `https://paytap.co.in/shipping-policy`
-- `/cancellation-refunds` → `https://paytap.co.in/cancellation-refunds`
-- `/safevaults` → `https://paytap.co.in/safevaults`
-- `/kids-pay` → `https://paytap.co.in/kids-pay`
-- `/how-it-works` → `https://paytap.co.in/how-it-works`
-- `/faq` → `https://paytap.co.in/faq`
-- `/newsroom` → `https://paytap.co.in/newsroom` (already correct)
-- `/pay-at-pump` → `https://paytap.co.in/pay-at-pump` (already correct)
+Update `dateModified` on the WebPage schema to `2026-02-03T12:00:00+05:30`.
 
 ---
 
-### Already Correct (No Changes Needed)
+### Visual Changes
 
-| Component | Status |
-|-----------|--------|
-| **Sitemap** | Uses `https://paytap.co.in` (non-www) |
-| **Navbar Links** | Uses relative paths via React Router |
-| **Footer Links** | Uses relative paths via React Router |
-| **Internal Links** | All use `<Link to="/path">` |
+**Landing Page (PressSection.tsx):**
+- Marquee will scroll through 18 publications (7 existing + 11 new)
+- Featured card updated to show "Beyond Personal Payments" article
+
+**Newsroom Page:**
+- New featured story: "Beyond Personal Payments: Paytap Debuts India's First RuPay NFC Tag"
+- Grid will display 17 additional articles (6 old "Also Featured In" + 11 new)
 
 ---
 
-### Files to Create/Modify
+### Summary of Changes
 
 | File | Action |
 |------|--------|
-| `src/components/SEO.tsx` | **CREATE** - New reusable SEO component |
-| `src/pages/About.tsx` | **MODIFY** - Add Helmet with canonical |
-| `src/pages/Support.tsx` | **MODIFY** - Add Helmet with canonical |
-| `src/pages/PrivacyPolicy.tsx` | **MODIFY** - Add Helmet with canonical |
-| `src/pages/TermsAndConditions.tsx` | **MODIFY** - Add Helmet with canonical |
-| `src/pages/ShippingPolicy.tsx` | **MODIFY** - Add Helmet with canonical |
-| `src/pages/CancellationRefunds.tsx` | **MODIFY** - Add Helmet with canonical |
-| `src/pages/SafeVaults.tsx` | **MODIFY** - Add canonical to existing Helmet |
-| `src/pages/KidsPay.tsx` | **MODIFY** - Add canonical to existing Helmet |
-| `src/pages/HowItWorks.tsx` | **MODIFY** - Add canonical to existing Helmet |
-| `src/pages/FAQ.tsx` | **MODIFY** - Fix relative URL to absolute |
+| `src/components/PressSection.tsx` | Add 11 new publications to marquee array + update featured article |
+| `src/pages/Newsroom.tsx` | Add 11 new articles with full metadata + change featured story |
+| `index.html` | Add 11 new NewsArticle schemas + update dateModified timestamp |
 
 ---
 
-### Expected Outcome
+### SEO Benefits
 
-After implementation:
-- All pages will have proper `<link rel="canonical" href="https://paytap.co.in/..." />` tags
-- Google will recognize the non-www version as the authoritative URL
-- "Duplicate without user-selected canonical" errors will resolve after Google re-indexes
-- Re-request indexing in Google Search Console after deployment to speed up resolution
+- Google will index the new press coverage via structured data
+- Fresh `dateModified` timestamp signals content updates to search engines
+- New publications expand brand authority signals (E-E-A-T)
+- All URLs use absolute paths for proper canonical handling
+
