@@ -18,10 +18,7 @@ const About = () => {
           <div className="max-w-6xl mx-auto px-6 py-4 flex items-center justify-between">
             <div className="flex items-center space-x-3">
               <Building2 className="h-6 w-6 text-[#f6245b]" />
-              <div>
-                <h1 className="text-xl font-bold text-gray-900">About Paytap</h1>
-                <p className="text-sm text-gray-600">Reimagining Financial Infrastructure for India's Mobility and Enterprise Economy</p>
-              </div>
+              <h1 className="text-xl font-bold text-gray-900">About Paytap</h1>
             </div>
             <Link to="/">
               <Button variant="outline" size="sm" className="flex items-center space-x-2">
