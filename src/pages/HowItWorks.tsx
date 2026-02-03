@@ -5,14 +5,16 @@ import FooterSection from '@/components/FooterSection';
 import ProgressIndicator from '@/components/how-it-works-page/ProgressIndicator';
 
 // Eager load first step for instant visibility
-import BuyStep from '@/components/how-it-works-page/BuyStep';
+import CreateAccountStep from '@/components/how-it-works-page/CreateAccountStep';
 
 // Lazy load remaining steps
-const ReceiveCodeStep = lazy(() => import('@/components/how-it-works-page/ReceiveCodeStep'));
-const SignUpStep = lazy(() => import('@/components/how-it-works-page/SignUpStep'));
-const ClosingStep = lazy(() => import('@/components/how-it-works-page/ClosingStep'));
+const ConfigureControlsStep = lazy(() => import('@/components/how-it-works-page/ConfigureControlsStep'));
+const DeployTagsStep = lazy(() => import('@/components/how-it-works-page/DeployTagsStep'));
+const MonitorStep = lazy(() => import('@/components/how-it-works-page/MonitorStep'));
+const ScaleStep = lazy(() => import('@/components/how-it-works-page/ScaleStep'));
+const PlatformAccessBanner = lazy(() => import('@/components/how-it-works-page/PlatformAccessBanner'));
 
-const TOTAL_STEPS = 4;
+const TOTAL_STEPS = 5;
 
 // Simple loading skeleton for step sections
 const StepSkeleton = memo(() => (
@@ -56,10 +58,10 @@ const HowItWorks = () => {
   return (
     <>
       <Helmet>
-        <title>How It Works - PayTap | Smart Payment Control Platform</title>
+        <title>How Paytap Works | From Account Setup to Payment Control</title>
         <meta 
           name="description" 
-          content="Set up PayTap in minutes. Track spending, set limits, and manage tags, vehicles, or teams — all from one app." 
+          content="Create your Paytap account, configure controls, deploy NFC tags, and scale with enterprise-grade payment intelligence. RBI-compliant platform for individuals, teams, and fleets." 
         />
         <link rel="canonical" href="https://paytap.co.in/how-it-works" />
       </Helmet>
@@ -70,20 +72,29 @@ const HowItWorks = () => {
         <main>
           {/* Header Section */}
           <section className="pt-24 pb-8 text-center px-4">
-            <h1 className="text-3xl md:text-4xl lg:text-5xl font-bold text-foreground">
-              Let's help you step by step
+            <h1 className="text-3xl md:text-4xl lg:text-5xl font-bold text-foreground mb-3">
+              How Paytap Works
             </h1>
+            <p className="text-lg md:text-xl text-muted-foreground max-w-2xl mx-auto">
+              From Account Setup to Enterprise-Grade Payment Control
+            </p>
           </section>
 
-          <BuyStep />
+          <CreateAccountStep />
           <Suspense fallback={<StepSkeleton />}>
-            <ReceiveCodeStep />
+            <ConfigureControlsStep />
           </Suspense>
           <Suspense fallback={<StepSkeleton />}>
-            <SignUpStep />
+            <DeployTagsStep />
           </Suspense>
           <Suspense fallback={<StepSkeleton />}>
-            <ClosingStep />
+            <MonitorStep />
+          </Suspense>
+          <Suspense fallback={<StepSkeleton />}>
+            <ScaleStep />
+          </Suspense>
+          <Suspense fallback={<StepSkeleton />}>
+            <PlatformAccessBanner />
           </Suspense>
         </main>
 
