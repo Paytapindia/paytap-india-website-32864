@@ -359,8 +359,8 @@ const Newsroom = memo(() => {
               </CarouselContent>
               
               {/* Navigation arrows */}
-              <CarouselPrevious className="left-2 md:-left-4 bg-white/20 hover:bg-white/30 border-0 text-white" />
-              <CarouselNext className="right-2 md:-right-4 bg-white/20 hover:bg-white/30 border-0 text-white" />
+              <CarouselPrevious className="left-4 md:-left-6 bg-paytap-navy hover:bg-paytap-navy/90 border-0 text-white shadow-lg" />
+              <CarouselNext className="right-4 md:-right-6 bg-paytap-navy hover:bg-paytap-navy/90 border-0 text-white shadow-lg" />
             </Carousel>
 
             {/* Dot indicators */}
