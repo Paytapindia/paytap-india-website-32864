@@ -418,59 +418,6 @@ const Newsroom = memo(() => {
           </div>
         </section>
 
-        {/* Media Kit Section */}
-        <section className="py-16 md:py-24 bg-muted/30">
-          <div className="max-w-7xl mx-auto px-6">
-            <div className="max-w-4xl mx-auto text-center">
-              <span className="inline-block px-4 py-1.5 bg-paytap-navy/5 text-paytap-navy text-xs font-semibold uppercase tracking-widest rounded-full mb-6">
-                For Journalists & Media
-              </span>
-              
-              <h2 className="text-3xl md:text-4xl font-bold text-foreground mb-4">
-                Media Resources
-              </h2>
-              
-              <p className="text-lg text-muted-foreground mb-10 max-w-2xl mx-auto">
-                Download official brand assets and press materials for your coverage of Paytap.
-              </p>
-
-              <div className="grid sm:grid-cols-3 gap-4 mb-12">
-                <button className="flex items-center justify-center gap-3 bg-card border border-border rounded-xl p-5 hover:border-paytap-light/50 hover:shadow-md transition-all group">
-                  <Download className="w-5 h-5 text-paytap-light" />
-                  <span className="font-medium text-foreground group-hover:text-paytap-light transition-colors">Logo Pack</span>
-                </button>
-                <button className="flex items-center justify-center gap-3 bg-card border border-border rounded-xl p-5 hover:border-paytap-light/50 hover:shadow-md transition-all group">
-                  <Download className="w-5 h-5 text-paytap-light" />
-                  <span className="font-medium text-foreground group-hover:text-paytap-light transition-colors">Press Kit PDF</span>
-                </button>
-                <button className="flex items-center justify-center gap-3 bg-card border border-border rounded-xl p-5 hover:border-paytap-light/50 hover:shadow-md transition-all group">
-                  <Download className="w-5 h-5 text-paytap-light" />
-                  <span className="font-medium text-foreground group-hover:text-paytap-light transition-colors">Company Facts</span>
-                </button>
-              </div>
-
-              {/* Press Contact */}
-              <div className="bg-paytap-navy rounded-2xl p-8 text-white">
-                <div className="flex items-center justify-center gap-3 mb-4">
-                  <Mail className="w-5 h-5 text-paytap-light" />
-                  <h3 className="text-xl font-semibold">Media Inquiries</h3>
-                </div>
-                <p className="text-white/70 mb-4">
-                  For press inquiries, interview requests, or additional information:
-                </p>
-                <a 
-                  href="mailto:press@paytap.co.in" 
-                  className="inline-block text-lg font-semibold text-paytap-light hover:underline"
-                >
-                  press@paytap.co.in
-                </a>
-                <p className="text-sm text-white/50 mt-3">
-                  We typically respond within 24 hours
-                </p>
-              </div>
-            </div>
-          </div>
-        </section>
 
         <FooterSection />
       </main>
