@@ -4,6 +4,7 @@ import { ExternalLink, ArrowRight } from "lucide-react";
 import { Button } from "@/components/ui/button";
 
 const pressArticles = [
+  // Original coverage - January 2026
   { publication: "DailyHunt", url: "https://profile.dailyhunt.in/drivetap-innovation-india-private-limited" },
   { publication: "Republic News India", url: "https://republicnewsindia.com/contactless-payment-tags-get-their-moment-in-india/" },
   { publication: "Flipboard", url: "https://flipboard.com/@republicnewsind/-contactless-payment-tags-get-their-mome/a-d1YTu6MgT3GJGohBopI6Kg%3Aa%3A3544623556-8421436395%2Frepublicnewsindia.com" },
@@ -11,6 +12,18 @@ const pressArticles = [
   { publication: "RD Times", url: "https://rdtimes.in/contactless-payment-tags-get-their-moment-in-india/" },
   { publication: "Indian Sentinel", url: "https://indiansentinel.in/contactless-payment-tags-get-their-moment-in-india/" },
   { publication: "Abhyuday Times", url: "https://abhyudaytimes.com/contactless-payment-tags-get-their-moment-in-india/" },
+  // New coverage - February 2026 - RuPay NFC Tag Launch
+  { publication: "DailyHunt", url: "http://m.dailyhunt.in/news/india/english/r+news+india-epaper-dhfacc36dfce9c4bb68db0e89d033c921b/beyond+personal+payments+paytap+debuts+indias+first+rupay+nfc+tag+for+integrated+vehicleenterprise+management-newsid-dhfacc36dfce9c4bb68db0e89d033c921b_77c23bc000b311f1bfed1779c6fd9cb4?sm=Y" },
+  { publication: "Wow Entrepreneurs", url: "https://wowentrepreneurs.com/beyond-personal-payments-paytap-debuts-indias-first-rupay-nfc-tag-for-integrated-vehicle-enterprise-management/" },
+  { publication: "Business Reporter", url: "https://businessreporter.in/beyond-personal-payments-paytap-debuts-indias-first-rupay-nfc-tag-for-integrated-vehicle-enterprise-management/" },
+  { publication: "Entrepreneur Saga", url: "https://entrepreneursaga.com/beyond-personal-payments-paytap-debuts-indias-first-rupay-nfc-tag-for-integrated-vehicle-enterprise-management/" },
+  { publication: "Deccan Business", url: "https://deccanbusiness.com/beyond-personal-payments-paytap-debuts-indias-first-rupay-nfc-tag-for-integrated-vehicle-enterprise-management/" },
+  { publication: "1 Money Mania", url: "https://1moneymania.in/beyond-personal-payments-paytap-debuts-indias-first-rupay-nfc-tag-for-integrated-vehicle-enterprise-management/" },
+  { publication: "RD Times Biz", url: "https://biz.rdtimes.in/beyond-personal-payments-paytap-debuts-indias-first-rupay-nfc-tag-for-integrated-vehicle-enterprise-management/" },
+  { publication: "Republic News India Business", url: "https://business.republicnewsindia.com/beyond-personal-payments-paytap-debuts-indias-first-rupay-nfc-tag-for-integrated-vehicle-enterprise-management/" },
+  { publication: "The Indian Bulletin Biz", url: "https://biz.theindianbulletin.com/beyond-personal-payments-paytap-debuts-indias-first-rupay-nfc-tag-for-integrated-vehicle-enterprise-management/" },
+  { publication: "NewsHead Business", url: "https://business.newshead.in/beyond-personal-payments-paytap-debuts-indias-first-rupay-nfc-tag-for-integrated-vehicle-enterprise-management/" },
+  { publication: "Indian Scoops Business", url: "https://business.indianscoops.com/beyond-personal-payments-paytap-debuts-indias-first-rupay-nfc-tag-for-integrated-vehicle-enterprise-management/" },
 ];
 
 const PressSection = memo(() => {
@@ -85,16 +98,16 @@ const PressSection = memo(() => {
               </p>
               
               <h3 className="text-2xl md:text-3xl lg:text-4xl font-bold text-white mb-5 leading-tight">
-                "Contactless Payment Tags Get Their Moment in India"
+                "Beyond Personal Payments: Paytap Debuts India's First RuPay NFC Tag"
               </h3>
               
               <p className="text-white/60 text-base md:text-lg max-w-2xl mx-auto mb-8 leading-relaxed">
-                Paytap's innovative NFC payment tags are transforming how Indian businesses manage everyday transactions—from fuel stations to parking lots.
+                Paytap launches India's first RuPay NFC tag for integrated vehicle enterprise management—transforming fleet payments, fuel transactions, and operational expenses.
               </p>
 
               <div className="flex flex-col sm:flex-row items-center justify-center gap-4">
                 <a
-                  href="https://republicnewsindia.com/contactless-payment-tags-get-their-moment-in-india/"
+                  href="https://business.republicnewsindia.com/beyond-personal-payments-paytap-debuts-indias-first-rupay-nfc-tag-for-integrated-vehicle-enterprise-management/"
                   target="_blank"
                   rel="noopener noreferrer"
                 >
