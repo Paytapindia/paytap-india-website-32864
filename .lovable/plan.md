@@ -1,116 +1,236 @@
 
 
-## Plan: Add 11 New Press Coverage Articles
+## Plan: Add Featured Articles Carousel with Two Story Cards
 
-### New Articles to Add
+### Problem
+Currently, only the "RuPay NFC Tag" article is displayed as the featured story. The original "Contactless Payment Tags" article has been pushed out of view. You want both featured stories visible via a sliding carousel.
 
-**Release Title:** "Beyond Personal Payments: Paytap Debuts India's First RuPay NFC Tag for Integrated Vehicle Enterprise Management"
-
-**Date:** February 3, 2026
-
-| # | Publication | URL |
-|---|-------------|-----|
-| 1 | DailyHunt | http://m.dailyhunt.in/news/india/english/r+news+india-epaper-dhfacc36dfce9c4bb68db0e89d033c921b/beyond+personal+payments+paytap+debuts+indias+first+rupay+nfc+tag+for+integrated+vehicleenterprise+management-newsid-dhfacc36dfce9c4bb68db0e89d033c921b_77c23bc000b311f1bfed1779c6fd9cb4?sm=Y |
-| 2 | Wow Entrepreneurs | https://wowentrepreneurs.com/beyond-personal-payments-paytap-debuts-indias-first-rupay-nfc-tag-for-integrated-vehicle-enterprise-management/ |
-| 3 | Business Reporter | https://businessreporter.in/beyond-personal-payments-paytap-debuts-indias-first-rupay-nfc-tag-for-integrated-vehicle-enterprise-management/ |
-| 4 | Entrepreneur Saga | https://entrepreneursaga.com/beyond-personal-payments-paytap-debuts-indias-first-rupay-nfc-tag-for-integrated-vehicle-enterprise-management/ |
-| 5 | Deccan Business | https://deccanbusiness.com/beyond-personal-payments-paytap-debuts-indias-first-rupay-nfc-tag-for-integrated-vehicle-enterprise-management/ |
-| 6 | 1 Money Mania | https://1moneymania.in/beyond-personal-payments-paytap-debuts-indias-first-rupay-nfc-tag-for-integrated-vehicle-enterprise-management/ |
-| 7 | RD Times Biz | https://biz.rdtimes.in/beyond-personal-payments-paytap-debuts-indias-first-rupay-nfc-tag-for-integrated-vehicle-enterprise-management/ |
-| 8 | Republic News India Business | https://business.republicnewsindia.com/beyond-personal-payments-paytap-debuts-indias-first-rupay-nfc-tag-for-integrated-vehicle-enterprise-management/ |
-| 9 | The Indian Bulletin Biz | https://biz.theindianbulletin.com/beyond-personal-payments-paytap-debuts-indias-first-rupay-nfc-tag-for-integrated-vehicle-enterprise-management/ |
-| 10 | NewsHead Business | https://business.newshead.in/beyond-personal-payments-paytap-debuts-indias-first-rupay-nfc-tag-for-integrated-vehicle-enterprise-management/ |
-| 11 | Indian Scoops Business | https://business.indianscoops.com/beyond-personal-payments-paytap-debuts-indias-first-rupay-nfc-tag-for-integrated-vehicle-enterprise-management/ |
+### Solution Overview
+Add an Embla Carousel slider with two featured article cards and navigation dots/arrows on:
+1. **Landing Page** (PressSection.tsx) - Featured Coverage section
+2. **Newsroom Page** (Newsroom.tsx) - Featured Story section
 
 ---
 
-### Files to Update
+### Featured Articles Data
 
-#### 1. PressSection.tsx (Landing Page Marquee)
+| Slide | Title | Date | Link |
+|-------|-------|------|------|
+| **1** | "Beyond Personal Payments: Paytap Debuts India's First RuPay NFC Tag" | February 3, 2026 | Republic News India Business |
+| **2** | "Contactless Payment Tags Get Their Moment in India" | January 24, 2026 | Republic News India |
 
-Add new publications to the `pressArticles` array for the infinite scroll marquee. Selected key publications to keep the marquee readable:
+---
+
+### Changes to PressSection.tsx (Landing Page)
+
+#### 1. Define Featured Articles Array
 
 ```tsx
-const pressArticles = [
-  // Existing 7 articles...
-  { publication: "Wow Entrepreneurs", url: "https://wowentrepreneurs.com/beyond-personal-payments..." },
-  { publication: "Business Reporter", url: "https://businessreporter.in/beyond-personal-payments..." },
-  { publication: "Entrepreneur Saga", url: "https://entrepreneursaga.com/beyond-personal-payments..." },
-  { publication: "Deccan Business", url: "https://deccanbusiness.com/beyond-personal-payments..." },
-  // ... more
+const featuredArticles = [
+  {
+    title: "Beyond Personal Payments: Paytap Debuts India's First RuPay NFC Tag",
+    description: "Paytap launches India's first RuPay NFC tag for integrated vehicle enterprise management—transforming fleet payments, fuel transactions, and operational expenses.",
+    publication: "Republic News India Business",
+    date: "February 3, 2026",
+    url: "https://business.republicnewsindia.com/beyond-personal-payments-paytap-debuts-indias-first-rupay-nfc-tag-for-integrated-vehicle-enterprise-management/"
+  },
+  {
+    title: "Contactless Payment Tags Get Their Moment in India",
+    description: "India's contactless payment revolution gains momentum as NFC tags transform how businesses handle fleet payments, toll transactions, and operational expenses.",
+    publication: "Republic News India",
+    date: "January 24, 2026",
+    url: "https://republicnewsindia.com/contactless-payment-tags-get-their-moment-in-india/"
+  }
 ];
 ```
 
-Also update the **Featured Article Card** to highlight the new release as the featured story.
-
----
-
-#### 2. Newsroom.tsx (Full Press Page)
-
-Add all 11 new articles to the `pressArticles` array with full metadata:
+#### 2. Replace Static Featured Card with Carousel
 
 ```tsx
-{
-  publication: "Republic News India Business",
-  url: "https://business.republicnewsindia.com/beyond-personal-payments...",
-  headline: "Beyond Personal Payments: Paytap Debuts India's First RuPay NFC Tag for Integrated Vehicle Enterprise Management",
-  date: "February 3, 2026",
-  datePublished: "2026-02-03",
-  featured: true  // Mark as new featured article
-}
+import { Carousel, CarouselContent, CarouselItem, CarouselPrevious, CarouselNext } from "@/components/ui/carousel";
+
+// Inside the component, replace the single featured card:
+<div className="max-w-4xl mx-auto px-6">
+  <Carousel opts={{ loop: true }} className="relative">
+    <CarouselContent>
+      {featuredArticles.map((article, index) => (
+        <CarouselItem key={index}>
+          <div className="bg-paytap-navy rounded-3xl p-8 md:p-12 text-center shadow-2xl shadow-paytap-navy/15 relative overflow-hidden">
+            {/* Background decorations */}
+            <div className="absolute top-0 right-0 w-64 h-64 bg-paytap-light/10 rounded-full blur-3xl -translate-y-1/2 translate-x-1/2" />
+            <div className="absolute bottom-0 left-0 w-48 h-48 bg-white/5 rounded-full blur-2xl translate-y-1/2 -translate-x-1/2" />
+
+            <div className="relative z-10">
+              <p className="text-white/50 text-sm uppercase tracking-widest mb-4">
+                Featured Coverage • {article.date}
+              </p>
+              
+              <h3 className="text-2xl md:text-3xl lg:text-4xl font-bold text-white mb-5 leading-tight">
+                "{article.title}"
+              </h3>
+              
+              <p className="text-white/60 text-base md:text-lg max-w-2xl mx-auto mb-8 leading-relaxed">
+                {article.description}
+              </p>
+
+              <div className="flex flex-col sm:flex-row items-center justify-center gap-4">
+                <a href={article.url} target="_blank" rel="noopener noreferrer">
+                  <Button size="lg" className="bg-paytap-light hover:bg-paytap-light/90 text-white rounded-xl px-8 gap-2 shadow-lg shadow-paytap-light/25">
+                    Read Coverage
+                    <ExternalLink className="w-4 h-4" />
+                  </Button>
+                </a>
+                
+                <Link to="/newsroom">
+                  <Button variant="ghost" size="lg" className="text-white/80 hover:text-white hover:bg-white/10 rounded-xl px-6 gap-2">
+                    View All Press
+                    <ArrowRight className="w-4 h-4" />
+                  </Button>
+                </Link>
+              </div>
+            </div>
+          </div>
+        </CarouselItem>
+      ))}
+    </CarouselContent>
+    
+    {/* Navigation arrows */}
+    <CarouselPrevious className="left-2 md:-left-4 bg-white/20 hover:bg-white/30 border-0 text-white" />
+    <CarouselNext className="right-2 md:-right-4 bg-white/20 hover:bg-white/30 border-0 text-white" />
+    
+    {/* Dot indicators */}
+    <div className="flex justify-center gap-2 mt-6">
+      {featuredArticles.map((_, index) => (
+        <button
+          key={index}
+          className="w-2 h-2 rounded-full bg-paytap-navy/30 data-[active=true]:bg-paytap-light transition-colors"
+          data-active={currentSlide === index}
+          onClick={() => api?.scrollTo(index)}
+        />
+      ))}
+    </div>
+  </Carousel>
+</div>
 ```
 
-Update the featured article to the newest release so it displays prominently.
+#### 3. Add State for Active Slide Indicator
 
----
+```tsx
+import { useState, useCallback, useEffect } from "react";
+import type { CarouselApi } from "@/components/ui/carousel";
 
-#### 3. index.html (SEO Structured Data)
+const PressSection = memo(() => {
+  const [api, setApi] = useState<CarouselApi>();
+  const [currentSlide, setCurrentSlide] = useState(0);
 
-Add new NewsArticle schema entries in the `mentions` array for Google to discover:
+  useEffect(() => {
+    if (!api) return;
+    
+    setCurrentSlide(api.selectedScrollSnap());
+    api.on("select", () => {
+      setCurrentSlide(api.selectedScrollSnap());
+    });
+  }, [api]);
 
-```json
-{
-  "@type": "NewsArticle",
-  "headline": "Beyond Personal Payments: Paytap Debuts India's First RuPay NFC Tag for Integrated Vehicle Enterprise Management",
-  "datePublished": "2026-02-03T10:00:00+05:30",
-  "dateModified": "2026-02-03T10:00:00+05:30",
-  "publisher": {"@type": "Organization", "name": "Republic News India Business"},
-  "url": "https://business.republicnewsindia.com/beyond-personal-payments...",
-  "about": {"@type": "Organization", "name": "Paytap"},
-  "mainEntityOfPage": "https://business.republicnewsindia.com/beyond-personal-payments..."
-}
+  // ... rest of component
+});
 ```
 
-Update `dateModified` on the WebPage schema to `2026-02-03T12:00:00+05:30`.
+---
+
+### Changes to Newsroom.tsx (Newsroom Page)
+
+Apply the same carousel pattern to the "Featured Story" section:
+
+#### 1. Define Two Featured Articles
+
+```tsx
+const featuredArticles = [
+  {
+    publication: "Republic News India Business",
+    url: "https://business.republicnewsindia.com/beyond-personal-payments-paytap-debuts-indias-first-rupay-nfc-tag-for-integrated-vehicle-enterprise-management/",
+    headline: "Beyond Personal Payments: Paytap Debuts India's First RuPay NFC Tag for Integrated Vehicle Enterprise Management",
+    description: "Paytap launches India's first RuPay NFC tag designed for integrated vehicle and enterprise management. From fleet operators to businesses, the contactless solution offers secure, app-free payment experiences backed by RBI-compliant technology.",
+    date: "February 3, 2026"
+  },
+  {
+    publication: "Republic News India",
+    url: "https://republicnewsindia.com/contactless-payment-tags-get-their-moment-in-india/",
+    headline: "Contactless Payment Tags Get Their Moment in India",
+    description: "India's contactless payment revolution gains momentum as NFC tags emerge as a game-changer for businesses. Paytap leads the charge with innovative payment solutions for fleet management and operational expenses.",
+    date: "January 24, 2026"
+  }
+];
+```
+
+#### 2. Replace Single Featured Card with Carousel
+
+Same carousel structure as PressSection, with matching dark navy card styling and navigation dots.
 
 ---
 
-### Visual Changes
+### Visual Result
 
-**Landing Page (PressSection.tsx):**
-- Marquee will scroll through 18 publications (7 existing + 11 new)
-- Featured card updated to show "Beyond Personal Payments" article
+```text
+Landing Page (PressSection):
+┌────────────────────────────────────────────────────────────────┐
+│                     ✦ In The Newsroom ✦                        │
+│                                                                │
+│  ←  Publication1 • Publication2 • Publication3 • ...  →       │  (marquee)
+│                                                                │
+│  ┌────────────────────────────────────────────────────────┐   │
+│  │ ◄                Featured Coverage                   ► │   │
+│  │                February 3, 2026                        │   │
+│  │                                                        │   │
+│  │  "Beyond Personal Payments: Paytap Debuts India's     │   │
+│  │   First RuPay NFC Tag"                                │   │
+│  │                                                        │   │
+│  │  [Read Coverage]  [View All Press]                    │   │
+│  │                                                        │   │
+│  │                    ● ○                                │   │  ← Dots (slide 1/2)
+│  └────────────────────────────────────────────────────────┘   │
+└────────────────────────────────────────────────────────────────┘
 
-**Newsroom Page:**
-- New featured story: "Beyond Personal Payments: Paytap Debuts India's First RuPay NFC Tag"
-- Grid will display 17 additional articles (6 old "Also Featured In" + 11 new)
+After sliding to second card:
+┌────────────────────────────────────────────────────────────────┐
+│  ┌────────────────────────────────────────────────────────┐   │
+│  │ ◄                Featured Coverage                   ► │   │
+│  │               January 24, 2026                         │   │
+│  │                                                        │   │
+│  │  "Contactless Payment Tags Get Their Moment in India" │   │
+│  │                                                        │   │
+│  │  [Read Coverage]  [View All Press]                    │   │
+│  │                                                        │   │
+│  │                    ○ ●                                │   │  ← Dots (slide 2/2)
+│  └────────────────────────────────────────────────────────┘   │
+└────────────────────────────────────────────────────────────────┘
+```
 
 ---
 
-### Summary of Changes
+### Files to Modify
 
-| File | Action |
-|------|--------|
-| `src/components/PressSection.tsx` | Add 11 new publications to marquee array + update featured article |
-| `src/pages/Newsroom.tsx` | Add 11 new articles with full metadata + change featured story |
-| `index.html` | Add 11 new NewsArticle schemas + update dateModified timestamp |
+| File | Changes |
+|------|---------|
+| `src/components/PressSection.tsx` | Add Embla Carousel with 2 featured article cards, navigation arrows, and dot indicators |
+| `src/pages/Newsroom.tsx` | Add same carousel pattern to Featured Story section with 2 cards |
 
 ---
 
-### SEO Benefits
+### Technical Details
 
-- Google will index the new press coverage via structured data
-- Fresh `dateModified` timestamp signals content updates to search engines
-- New publications expand brand authority signals (E-E-A-T)
-- All URLs use absolute paths for proper canonical handling
+**Carousel Configuration:**
+- `opts={{ loop: true }}` - Enables infinite looping
+- Auto-play can be added later with `embla-carousel-autoplay` plugin
+- Touch/swipe support built-in for mobile
+
+**Styling:**
+- Navigation arrows: Semi-transparent white, positioned at card edges
+- Dot indicators: Small circles below the card, active dot uses brand color (`paytap-light`)
+- Cards maintain existing dark navy gradient design
+
+**State Management:**
+- `CarouselApi` from Embla tracks current slide
+- `useEffect` listens for slide changes to update dot indicators
+- Dots are clickable to jump to specific slides
 
