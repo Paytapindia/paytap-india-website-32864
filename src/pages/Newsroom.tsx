@@ -1,9 +1,9 @@
-
-import { memo } from "react";
+import { memo, useState, useEffect } from "react";
 import { Link } from "react-router-dom";
 import { Helmet } from "react-helmet-async";
 import { ArrowLeft, ExternalLink, Download, Mail, Clock } from "lucide-react";
 import { Button } from "@/components/ui/button";
+import { Carousel, CarouselContent, CarouselItem, CarouselPrevious, CarouselNext, type CarouselApi } from "@/components/ui/carousel";
 import FooterSection from "@/components/FooterSection";
 
 const pressArticles = [
@@ -138,10 +138,39 @@ const pressArticles = [
   },
 ];
 
-const featuredArticle = pressArticles.find(a => a.featured) || pressArticles[0];
-const otherArticles = pressArticles.filter(a => a !== featuredArticle);
+// Featured articles for the carousel
+const featuredArticles = [
+  {
+    publication: "Republic News India Business",
+    url: "https://business.republicnewsindia.com/beyond-personal-payments-paytap-debuts-indias-first-rupay-nfc-tag-for-integrated-vehicle-enterprise-management/",
+    headline: "Beyond Personal Payments: Paytap Debuts India's First RuPay NFC Tag for Integrated Vehicle Enterprise Management",
+    description: "Paytap launches India's first RuPay NFC tag designed for integrated vehicle and enterprise management. From fleet operators to businesses, the contactless solution offers secure, app-free payment experiences backed by RBI-compliant technology.",
+    date: "February 3, 2026"
+  },
+  {
+    publication: "Republic News India",
+    url: "https://republicnewsindia.com/contactless-payment-tags-get-their-moment-in-india/",
+    headline: "Contactless Payment Tags Get Their Moment in India",
+    description: "India's contactless payment revolution gains momentum as NFC tags emerge as a game-changer for businesses. Paytap leads the charge with innovative payment solutions for fleet management and operational expenses.",
+    date: "January 24, 2026"
+  }
+];
+
+const otherArticles = pressArticles.filter(a => !a.featured);
 
 const Newsroom = memo(() => {
+  const [api, setApi] = useState<CarouselApi>();
+  const [currentSlide, setCurrentSlide] = useState(0);
+
+  useEffect(() => {
+    if (!api) return;
+    
+    setCurrentSlide(api.selectedScrollSnap());
+    api.on("select", () => {
+      setCurrentSlide(api.selectedScrollSnap());
+    });
+  }, [api]);
+
   // Enhanced structured data for SEO with precise timestamps for Google News
   const structuredData = {
     "@context": "https://schema.org",
@@ -283,39 +312,71 @@ const Newsroom = memo(() => {
           </div>
         </section>
 
-        {/* Featured Article */}
+        {/* Featured Article Carousel */}
         <section className="py-16 md:py-24 bg-muted/30">
           <div className="max-w-7xl mx-auto px-6">
             <span className="inline-block px-4 py-1.5 bg-paytap-light/10 text-paytap-light text-xs font-semibold uppercase tracking-widest rounded-full mb-8">
-              Featured Story
+              Featured Stories
             </span>
 
-            <div className="bg-paytap-navy rounded-3xl p-8 md:p-12 text-white shadow-2xl shadow-paytap-navy/20">
-              <div className="flex items-center gap-3 mb-6">
-                <span className="text-sm text-white/60">{featuredArticle.publication}</span>
-                <span className="w-1 h-1 bg-white/40 rounded-full" />
-                <span className="text-sm text-white/60">{featuredArticle.date}</span>
-              </div>
-              
-              <h2 className="text-2xl md:text-4xl font-bold mb-6 leading-tight">
-                "{featuredArticle.headline}"
-              </h2>
-              
-              <p className="text-lg text-white/70 max-w-3xl mb-8 leading-relaxed">
-                Paytap launches India's first RuPay NFC tag designed for integrated vehicle and enterprise management. 
-                From fleet operators to businesses, the contactless solution offers secure, app-free payment experiences 
-                backed by RBI-compliant technology—transforming operational expenses across fuel, tolls, and parking.
-              </p>
+            <Carousel opts={{ loop: true }} setApi={setApi} className="relative">
+              <CarouselContent>
+                {featuredArticles.map((article, index) => (
+                  <CarouselItem key={index}>
+                    <div className="bg-paytap-navy rounded-3xl p-8 md:p-12 text-white shadow-2xl shadow-paytap-navy/20 relative overflow-hidden">
+                      {/* Card background decoration */}
+                      <div className="absolute top-0 right-0 w-64 h-64 bg-paytap-light/10 rounded-full blur-3xl -translate-y-1/2 translate-x-1/2" />
+                      <div className="absolute bottom-0 left-0 w-48 h-48 bg-white/5 rounded-full blur-2xl translate-y-1/2 -translate-x-1/2" />
 
-              <a href={featuredArticle.url} target="_blank" rel="noopener noreferrer">
-                <Button 
-                  size="lg" 
-                  className="bg-paytap-light hover:bg-paytap-light/90 text-white rounded-xl px-8 gap-2"
-                >
-                  Read Full Article
-                  <ExternalLink className="w-4 h-4" />
-                </Button>
-              </a>
+                      <div className="relative z-10">
+                        <div className="flex items-center gap-3 mb-6">
+                          <span className="text-sm text-white/60">{article.publication}</span>
+                          <span className="w-1 h-1 bg-white/40 rounded-full" />
+                          <span className="text-sm text-white/60">{article.date}</span>
+                        </div>
+                        
+                        <h2 className="text-2xl md:text-4xl font-bold mb-6 leading-tight">
+                          "{article.headline}"
+                        </h2>
+                        
+                        <p className="text-lg text-white/70 max-w-3xl mb-8 leading-relaxed">
+                          {article.description}
+                        </p>
+
+                        <a href={article.url} target="_blank" rel="noopener noreferrer">
+                          <Button 
+                            size="lg" 
+                            className="bg-paytap-light hover:bg-paytap-light/90 text-white rounded-xl px-8 gap-2"
+                          >
+                            Read Full Article
+                            <ExternalLink className="w-4 h-4" />
+                          </Button>
+                        </a>
+                      </div>
+                    </div>
+                  </CarouselItem>
+                ))}
+              </CarouselContent>
+              
+              {/* Navigation arrows */}
+              <CarouselPrevious className="left-2 md:-left-4 bg-white/20 hover:bg-white/30 border-0 text-white" />
+              <CarouselNext className="right-2 md:-right-4 bg-white/20 hover:bg-white/30 border-0 text-white" />
+            </Carousel>
+
+            {/* Dot indicators */}
+            <div className="flex justify-center gap-2 mt-6">
+              {featuredArticles.map((_, index) => (
+                <button
+                  key={index}
+                  className={`w-2.5 h-2.5 rounded-full transition-colors ${
+                    currentSlide === index 
+                      ? "bg-paytap-light" 
+                      : "bg-paytap-navy/30 hover:bg-paytap-navy/50"
+                  }`}
+                  onClick={() => api?.scrollTo(index)}
+                  aria-label={`Go to slide ${index + 1}`}
+                />
+              ))}
             </div>
           </div>
         </section>
