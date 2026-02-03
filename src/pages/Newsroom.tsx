@@ -7,6 +7,86 @@ import { Button } from "@/components/ui/button";
 import FooterSection from "@/components/FooterSection";
 
 const pressArticles = [
+  // NEW - February 2026 - RuPay NFC Tag Launch (Featured)
+  { 
+    publication: "Republic News India Business", 
+    url: "https://business.republicnewsindia.com/beyond-personal-payments-paytap-debuts-indias-first-rupay-nfc-tag-for-integrated-vehicle-enterprise-management/",
+    headline: "Beyond Personal Payments: Paytap Debuts India's First RuPay NFC Tag for Integrated Vehicle Enterprise Management",
+    date: "February 3, 2026",
+    datePublished: "2026-02-03",
+    featured: true
+  },
+  { 
+    publication: "DailyHunt", 
+    url: "http://m.dailyhunt.in/news/india/english/r+news+india-epaper-dhfacc36dfce9c4bb68db0e89d033c921b/beyond+personal+payments+paytap+debuts+indias+first+rupay+nfc+tag+for+integrated+vehicleenterprise+management-newsid-dhfacc36dfce9c4bb68db0e89d033c921b_77c23bc000b311f1bfed1779c6fd9cb4?sm=Y",
+    headline: "Paytap Debuts India's First RuPay NFC Tag for Enterprise Management",
+    date: "February 3, 2026",
+    datePublished: "2026-02-03"
+  },
+  { 
+    publication: "Wow Entrepreneurs", 
+    url: "https://wowentrepreneurs.com/beyond-personal-payments-paytap-debuts-indias-first-rupay-nfc-tag-for-integrated-vehicle-enterprise-management/",
+    headline: "Paytap Launches RuPay NFC Tag for Vehicle Enterprise Management",
+    date: "February 3, 2026",
+    datePublished: "2026-02-03"
+  },
+  { 
+    publication: "Business Reporter", 
+    url: "https://businessreporter.in/beyond-personal-payments-paytap-debuts-indias-first-rupay-nfc-tag-for-integrated-vehicle-enterprise-management/",
+    headline: "India's First RuPay NFC Tag for Integrated Fleet Management",
+    date: "February 3, 2026",
+    datePublished: "2026-02-03"
+  },
+  { 
+    publication: "Entrepreneur Saga", 
+    url: "https://entrepreneursaga.com/beyond-personal-payments-paytap-debuts-indias-first-rupay-nfc-tag-for-integrated-vehicle-enterprise-management/",
+    headline: "Paytap's RuPay NFC Tag Transforms Enterprise Payments",
+    date: "February 3, 2026",
+    datePublished: "2026-02-03"
+  },
+  { 
+    publication: "Deccan Business", 
+    url: "https://deccanbusiness.com/beyond-personal-payments-paytap-debuts-indias-first-rupay-nfc-tag-for-integrated-vehicle-enterprise-management/",
+    headline: "Paytap Introduces RuPay NFC Tag for Vehicle Management",
+    date: "February 3, 2026",
+    datePublished: "2026-02-03"
+  },
+  { 
+    publication: "1 Money Mania", 
+    url: "https://1moneymania.in/beyond-personal-payments-paytap-debuts-indias-first-rupay-nfc-tag-for-integrated-vehicle-enterprise-management/",
+    headline: "RuPay NFC Tag Launch by Paytap for Enterprise Fleet",
+    date: "February 3, 2026",
+    datePublished: "2026-02-03"
+  },
+  { 
+    publication: "RD Times Biz", 
+    url: "https://biz.rdtimes.in/beyond-personal-payments-paytap-debuts-indias-first-rupay-nfc-tag-for-integrated-vehicle-enterprise-management/",
+    headline: "Paytap's NFC Payment Innovation for Indian Enterprises",
+    date: "February 3, 2026",
+    datePublished: "2026-02-03"
+  },
+  { 
+    publication: "The Indian Bulletin Biz", 
+    url: "https://biz.theindianbulletin.com/beyond-personal-payments-paytap-debuts-indias-first-rupay-nfc-tag-for-integrated-vehicle-enterprise-management/",
+    headline: "India's First RuPay NFC Tag for Integrated Vehicle Management",
+    date: "February 3, 2026",
+    datePublished: "2026-02-03"
+  },
+  { 
+    publication: "NewsHead Business", 
+    url: "https://business.newshead.in/beyond-personal-payments-paytap-debuts-indias-first-rupay-nfc-tag-for-integrated-vehicle-enterprise-management/",
+    headline: "Paytap Debuts RuPay NFC Tag for Enterprise Fleet",
+    date: "February 3, 2026",
+    datePublished: "2026-02-03"
+  },
+  { 
+    publication: "Indian Scoops Business", 
+    url: "https://business.indianscoops.com/beyond-personal-payments-paytap-debuts-indias-first-rupay-nfc-tag-for-integrated-vehicle-enterprise-management/",
+    headline: "Beyond Personal Payments: Paytap's Enterprise NFC Solution",
+    date: "February 3, 2026",
+    datePublished: "2026-02-03"
+  },
+  // Original coverage - January 2026
   { 
     publication: "DailyHunt", 
     url: "http://m.dailyhunt.in/news/india/english/r+news+india-epaper-dhfacc36dfce9c4bb68db0e89d033c921b/contactless+payment+tags+get+their+moment+in+india-newsid-dhfacc36dfce9c4bb68db0e89d033c921b_c197b3e0f6ba11f0bd74e7fbabd93a25?sm=Y",
@@ -19,8 +99,7 @@ const pressArticles = [
     url: "https://republicnewsindia.com/contactless-payment-tags-get-their-moment-in-india/",
     headline: "Contactless Payment Tags Get Their Moment in India",
     date: "January 24, 2026",
-    datePublished: "2026-01-24",
-    featured: true
+    datePublished: "2026-01-24"
   },
   { 
     publication: "Flipboard", 
@@ -90,7 +169,7 @@ const Newsroom = memo(() => {
         "description": "Latest news, press coverage, and media resources about Paytap's innovative NFC payment tags for Indian businesses and fleet operators.",
         "url": "https://paytap.co.in/newsroom",
         "datePublished": "2026-01-24T10:00:00+05:30",
-        "dateModified": "2026-01-24T12:00:00+05:30",
+        "dateModified": "2026-02-03T12:00:00+05:30",
         "publisher": {
           "@type": "Organization",
           "name": "Paytap",
@@ -223,9 +302,9 @@ const Newsroom = memo(() => {
               </h2>
               
               <p className="text-lg text-white/70 max-w-3xl mb-8 leading-relaxed">
-                Paytap's innovative NFC payment tags are transforming how Indian businesses manage everyday transactions. 
-                From fleet operators to retail stores, the contactless solution offers a secure, app-free payment experience 
-                backed by RBI-compliant technology.
+                Paytap launches India's first RuPay NFC tag designed for integrated vehicle and enterprise management. 
+                From fleet operators to businesses, the contactless solution offers secure, app-free payment experiences 
+                backed by RBI-compliant technology—transforming operational expenses across fuel, tolls, and parking.
               </p>
 
               <a href={featuredArticle.url} target="_blank" rel="noopener noreferrer">
