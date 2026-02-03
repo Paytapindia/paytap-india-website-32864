@@ -116,7 +116,7 @@ const PressSection = memo(() => {
         </div>
 
         {/* Featured Article Carousel */}
-        <div className="max-w-4xl mx-auto px-6">
+        <div className="max-w-4xl mx-auto px-6 md:px-12 lg:px-16">
           <Carousel opts={{ loop: true }} setApi={setApi} className="relative">
             <CarouselContent>
               {featuredArticles.map((article, index) => (
@@ -171,9 +171,9 @@ const PressSection = memo(() => {
               ))}
             </CarouselContent>
             
-            {/* Navigation arrows */}
-            <CarouselPrevious className="left-2 md:-left-4 bg-white/20 hover:bg-white/30 border-0 text-white" />
-            <CarouselNext className="right-2 md:-right-4 bg-white/20 hover:bg-white/30 border-0 text-white" />
+            {/* Navigation arrows - positioned outside the card with visible styling */}
+            <CarouselPrevious className="-left-4 md:-left-6 lg:-left-8 bg-paytap-navy hover:bg-paytap-navy/80 border-0 text-white shadow-lg" />
+            <CarouselNext className="-right-4 md:-right-6 lg:-right-8 bg-paytap-navy hover:bg-paytap-navy/80 border-0 text-white shadow-lg" />
           </Carousel>
 
           {/* Dot indicators */}
