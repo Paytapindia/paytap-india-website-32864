@@ -7,10 +7,13 @@ const MobileAppSection = memo(() => {
       <div className="max-w-4xl mx-auto">
         <div className="text-center mb-6 md:mb-8">
           <h3 className="text-lg md:text-2xl font-semibold text-foreground mb-1.5 md:mb-2">
-            Get the Paytap Mobile App
+            Mobile Control Center
           </h3>
-          <p className="text-muted-foreground text-xs md:text-base">
-            Manage your payments on the go
+          <p className="text-muted-foreground text-xs md:text-base mb-2">
+            Manage your financial operations from anywhere
+          </p>
+          <p className="text-muted-foreground text-xs md:text-sm max-w-lg mx-auto">
+            Monitor balances, approve transactions, receive alerts, and manage tags or cards directly from the Paytap mobile app.
           </p>
         </div>
         

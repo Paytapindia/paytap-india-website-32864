@@ -7,29 +7,29 @@ import { Link } from "react-router-dom";
 const products = [
   {
     id: 1,
-    name: "Myfleet AI",
-    description: "Automated expense control for fleets. Zero manual reconciliation.",
+    name: "MyFleet AI",
+    description: "Automated spend control and reconciliation for fleets",
     icon: Truck,
     link: "https://www.myfleetai.in",
   },
   {
     id: 2,
     name: "ExpensePro",
-    description: "Real-time spend visibility. Instant reimbursements.",
+    description: "Real-time expense tracking and reimbursement workflows",
     icon: Receipt,
     link: "https://www.expensepro.in",
   },
   {
     id: 3,
-    name: "Paytap SafeVaultz",
-    description: "Save in gold and spend securely online—protect your primary bank card details.",
+    name: "SafeVaultz",
+    description: "Tokenized online spending with protected bank exposure",
     icon: Shield,
     link: "/safevaults",
   },
   {
     id: 4,
-    name: "Paytap Kids Pay",
-    description: "Controlled spending for children. Parents stay in charge.",
+    name: "Kids Pay",
+    description: "Controlled prepaid access for families and dependents",
     icon: Users,
     link: "/kids-pay",
   },
@@ -44,7 +44,7 @@ const OurProductsSection = memo(() => {
         {/* Section header */}
         <div className="text-center mb-10 md:mb-20">
           <h2 className="text-2xl md:text-5xl font-semibold text-foreground mb-3 md:mb-4 tracking-tight">
-            {t('ourProducts.title')}
+            Our Platform Ecosystem
           </h2>
           <p className="text-muted-foreground text-sm md:text-xl max-w-2xl mx-auto">
             {t('ourProducts.subtitle')}

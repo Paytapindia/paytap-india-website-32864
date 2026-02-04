@@ -5,27 +5,27 @@ import { Star, Quote } from "lucide-react";
 const testimonials = [
   {
     id: 1,
-    quote: "PayTap has revolutionized my daily commute! No more fumbling for cash at toll booths. Just tap and go - it's that simple!",
-    author: "Rahul Mehta",
-    role: "Daily Commuter",
-    rating: 5,
-    avatar: "👨‍💼"
-  },
-  {
-    id: 2,
-    quote: "As a fleet owner, PayTap saves me hours of reconciliation. Real-time tracking and no cash handling makes my business so much easier.",
+    quote: "Paytap has transformed how we manage fleet expenses. Real-time controls and zero cash handling have improved both efficiency and compliance.",
     author: "Priya Sharma",
-    role: "Fleet Owner",
+    role: "Fleet Operator",
     rating: 5,
     avatar: "👩‍💼"
   },
   {
-    id: 3,
-    quote: "The convenience is unmatched! From fuel stations to parking lots, one tap handles all my vehicle payments. Highly recommended!",
+    id: 2,
+    quote: "From tolls to fuel, our operations now run on one financial system instead of multiple wallets and vendors.",
     author: "Amit Singh",
-    role: "Delivery Partner",
+    role: "Logistics Partner",
     rating: 5,
     avatar: "🚚"
+  },
+  {
+    id: 3,
+    quote: "The platform scales with us — started with 5 vehicles, now managing 200+ with the same dashboard. Enterprise-ready from day one.",
+    author: "Rajesh Kumar",
+    role: "Transport Company Owner",
+    rating: 5,
+    avatar: "👨‍💼"
   }
 ];
 
@@ -42,7 +42,7 @@ const TestimonialsSection = memo(() => {
         <div className="text-center mb-8 sm:mb-16">
           <div className="inline-flex items-center gap-2 bg-paytap-gray text-paytap-dark px-3 sm:px-4 py-2 rounded-full text-xs sm:text-sm font-medium mb-4 sm:mb-6">
             <Star className="w-3 h-3 sm:w-4 sm:h-4 fill-current" />
-            <span>Loved by 50K+ fleet owners</span>
+            <span>Trusted by Operators Across India</span>
           </div>
           
           <h2 className="text-2xl sm:text-4xl md:text-5xl font-bold text-gray-900 mb-3 sm:mb-6">
