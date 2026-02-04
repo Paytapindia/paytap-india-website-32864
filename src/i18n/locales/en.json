@@ -20,9 +20,9 @@
     "setupTime": "Activate in 1 minute",
     "rupayPartner": "RuPay Network Partner",
     "stats": {
-      "terminals": "Acceptance Points",
-      "fleetOwners": "Fleet Operators",
-      "successRate": "Uptime"
+      "terminals": "RuPay Acceptance Points",
+      "fleetOwners": "Fleet & Business Operators",
+      "successRate": "Platform Uptime"
     }
   },
   "ourProducts": {

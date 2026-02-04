@@ -14,10 +14,10 @@ const HeroSection = memo(() => {
   };
 
   const valueStripItems = [
-    { icon: Wifi, label: "NFC PayTag" },
-    { icon: LayoutDashboard, label: "Live Expense Dashboard" },
-    { icon: Bot, label: "MyFleet AI Controls" },
-    { icon: Headphones, label: "Priority Business Support" },
+    { icon: Wifi, label: "NFC Access Layer", desc: "Turn vehicles, wallets, and assets into secure payment endpoints" },
+    { icon: LayoutDashboard, label: "Live Transaction Dashboard", desc: "Track spend by vehicle, user, category, or location in real time" },
+    { icon: Bot, label: "MyFleet AI Controls", desc: "Automated limits, alerts, and operational intelligence" },
+    { icon: Headphones, label: "Enterprise Support", desc: "Onboarding, compliance assistance, and priority response" },
   ];
 
   return (
@@ -30,14 +30,24 @@ const HeroSection = memo(() => {
           {/* Left side - Text content */}
           <div className="text-center lg:text-left">
             {/* Large, bold headline - Enterprise positioning */}
-            <h1 className="text-3xl sm:text-4xl md:text-5xl lg:text-6xl font-semibold text-foreground mb-4 md:mb-6 leading-[1.1] tracking-tight text-balance">
-              Control How Your Money Moves
+            <h1 className="text-3xl sm:text-4xl md:text-5xl lg:text-6xl font-semibold text-foreground mb-3 md:mb-4 leading-[1.1] tracking-tight text-balance">
+              Control How Money Moves Across Your Operations
             </h1>
 
-            {/* Enterprise subheadline */}
-            <p className="text-muted-foreground text-base md:text-xl max-w-xl leading-relaxed mb-6 md:mb-8 mx-auto lg:mx-0">
-              Paytap is a smart payment control platform that lets you track spending, set limits, and manage tags, vehicles, or teams — all from one app.
+            {/* Platform subheadline */}
+            <p className="text-primary font-medium text-sm md:text-base mb-3 md:mb-4">
+              India's fintech infrastructure platform for mobility, fleets, and enterprise payments
             </p>
+
+            {/* Enterprise description */}
+            <div className="text-muted-foreground text-sm md:text-lg max-w-xl leading-relaxed mb-6 md:mb-8 mx-auto lg:mx-0 space-y-3">
+              <p>
+                Paytap is a payment control and transaction management platform that helps businesses and individuals govern how money flows across vehicles, teams, and everyday operations.
+              </p>
+              <p>
+                Enable RBI-compliant prepaid instruments, contactless NFC payments, and real-time visibility — all from a single, secure platform.
+              </p>
+            </div>
 
             {/* Value Strip - Feature highlights */}
             <div className="flex flex-wrap gap-2 md:gap-3 justify-center lg:justify-start mb-6 md:mb-8">
@@ -45,6 +55,7 @@ const HeroSection = memo(() => {
                 <div 
                   key={index}
                   className="flex items-center gap-1.5 bg-secondary/60 px-2.5 py-1.5 md:px-3 md:py-2 rounded-full text-xs md:text-sm text-foreground/80"
+                  title={item.desc}
                 >
                   <item.icon className="w-3 h-3 md:w-4 md:h-4 text-primary" />
                   <span>{item.label}</span>
@@ -59,14 +70,14 @@ const HeroSection = memo(() => {
                 onClick={handleActivateAccount}
               >
                 <Unlock className="mr-2 md:mr-3 w-4 h-4 md:w-5 md:h-5" />
-                Activate Paytap Account
+                Activate Paytap Platform
                 <ArrowRight className="ml-2 md:ml-3 w-4 h-4 md:w-5 md:h-5 group-hover:translate-x-1 transition-transform" />
               </Button>
             </div>
             
             {/* Micro Trust Line */}
             <div className="text-muted-foreground text-xs md:text-sm tracking-wide">
-              Used by growing fleet operators across India • No monthly fees
+              Used by fleet operators and enterprises across India • No monthly fees • Built for scale
             </div>
           </div>
 

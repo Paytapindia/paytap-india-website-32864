@@ -16,9 +16,10 @@ import paytapTagSticker from "@/assets/paytap-tag-sticker-v2.png";
 const products = [
   {
     id: 1,
-    name: "Paytap NFC Tag Plan",
-    description: "Start with an NFC tag — stick anywhere and tap to pay at fuel pumps, tolls, metros, and parking.",
+    name: "NFC Tag Deployment",
+    description: "Best for vehicles, fleets, and physical assets. Contactless NFC access with RuPay network acceptance, platform dashboard & controls, and nationwide deployment.",
     price: "₹499",
+    priceLabel: "Platform Access",
     mrp: "₹4999",
     image: paytapTagSticker,
     buyLink: "/checkout?product=sticker",
@@ -26,9 +27,10 @@ const products = [
   },
   {
     id: 2,
-    name: "Prepaid Card Plan",
-    description: "Start with a RuPay prepaid card — accepted at 8L+ merchants for team expenses and everyday control.",
+    name: "RuPay Prepaid Card Deployment",
+    description: "Best for teams, expenses, and distributed operations. 8L+ merchant acceptance with spend governance & reporting, live dashboard access, and enterprise-grade controls.",
     price: "₹499",
+    priceLabel: "Platform Access",
     mrp: "₹4999",
     image: paytapCard,
     buyLink: "/checkout?product=card",
@@ -82,16 +84,19 @@ const ProductCarousel = memo(() => {
                     
                     <div className="flex items-center justify-between mt-auto">
                       <div className="flex flex-col">
-                        <span className="text-sm text-muted-foreground line-through">{product.mrp}</span>
-                        <span className="text-xl sm:text-2xl md:text-3xl font-bold text-green-600">
-                          {product.price}
-                        </span>
+                        <span className="text-xs text-muted-foreground font-medium">{product.priceLabel}</span>
+                        <div className="flex items-baseline gap-2">
+                          <span className="text-xl sm:text-2xl md:text-3xl font-bold text-green-600">
+                            {product.price}
+                          </span>
+                          <span className="text-sm text-muted-foreground line-through">{product.mrp}</span>
+                        </div>
                       </div>
                       <Button
                         onClick={() => handleOrderNow(product.buyLink, product.isInternal)}
                         className="bg-paytap-light hover:bg-paytap-dark text-white px-4 md:px-6 py-2.5 md:py-3 text-xs sm:text-sm md:text-base font-semibold rounded-xl shadow-lg hover:shadow-xl hover:scale-[1.02] transition-all duration-300 group"
                       >
-                        Activate Now
+                        Activate Platform
                       </Button>
                     </div>
                   </div>

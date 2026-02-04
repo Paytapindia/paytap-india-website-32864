@@ -1,5 +1,5 @@
 import { memo } from "react";
-import { Shield, Lock, CreditCard, WifiOff, BarChart3, Users } from "lucide-react";
+import { Shield, Lock, WifiOff, BarChart3, Users } from "lucide-react";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import ProductCarousel from "@/components/ProductCarousel";
 
@@ -10,10 +10,10 @@ const TrustSection = memo(() => {
         {/* Section Header */}
         <div className="text-center mb-8 sm:mb-16">
           <h2 className="text-xl sm:text-3xl md:text-5xl font-semibold text-foreground mb-2 sm:mb-4 tracking-tight">
-            Choose Plan
+            Choose Your Deployment Model
           </h2>
           <p className="text-muted-foreground text-sm sm:text-lg md:text-xl max-w-2xl mx-auto">
-            Select your Paytap plan to get started.
+            Start small. Scale to enterprise.
           </p>
         </div>
 
@@ -26,21 +26,17 @@ const TrustSection = memo(() => {
         <div>
           <div className="text-center mb-8 sm:mb-16">
             <h2 className="text-xl sm:text-3xl md:text-5xl font-semibold text-foreground mb-2 sm:mb-4 tracking-tight">
-              Designed for Businesses Beyond Traditional Banking
+              Why Businesses Choose Paytap
             </h2>
-            <p className="text-muted-foreground text-sm sm:text-lg md:text-xl max-w-2xl mx-auto">
-              Secure, compliant, and built for scale.
-            </p>
           </div>
           
           <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4 md:gap-6">
             {[
-              { icon: WifiOff, title: "Offline-First Architecture", desc: "Tap and pay instantly, even offline. Works without mobile data." },
-              { icon: CreditCard, title: "8L+ Acceptance Points", desc: "Use it at fuel pumps, tolls, metros, parking & more across India." },
-              { icon: Shield, title: "Enterprise-Grade Security", desc: "RBI-Compliant • NPCI-Enabled • RuPay Network Powered • PCI-DSS Secured • VAPT Audited" },
-              { icon: BarChart3, title: "Real-Time Visibility", desc: "Load, spend, and manage everything from one dashboard." },
-              { icon: Users, title: "Individuals to Enterprise", desc: "One solution for personal vehicles, families, and logistics teams." },
-              { icon: Lock, title: "Zero Bank Exposure", desc: "Tokenized wallet keeps your banking info private and secure." },
+              { icon: WifiOff, title: "Offline-First Architecture", desc: "Reliable in real-world environments — works even in low-connectivity zones." },
+              { icon: Shield, title: "Enterprise-Grade Security", desc: "RBI-compliant • PCI-DSS secure • NPCI-powered • VAPT audited" },
+              { icon: BarChart3, title: "Unified Financial Visibility", desc: "One dashboard for vehicles, teams, and operations." },
+              { icon: Users, title: "From Individual to Enterprise", desc: "Scales from personal use to multi-location fleet and enterprise deployments." },
+              { icon: Lock, title: "Zero Bank Exposure", desc: "Tokenized prepaid layer keeps primary banking credentials protected." },
             ].map((feature, index) => (
               <Card key={index} className="bg-paytap-dark border-paytap-dark/80 hover:border-paytap-light/30 transition-colors">
                 <CardHeader className="p-4 md:p-6">
