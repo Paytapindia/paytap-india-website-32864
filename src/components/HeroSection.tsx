@@ -40,12 +40,9 @@ const HeroSection = memo(() => {
             </p>
 
             {/* Enterprise description */}
-            <div className="text-muted-foreground text-sm md:text-lg max-w-xl leading-relaxed mb-6 md:mb-8 mx-auto lg:mx-0 space-y-3">
+            <div className="text-muted-foreground text-sm md:text-lg max-w-xl leading-relaxed mb-6 md:mb-8 mx-auto lg:mx-0">
               <p>
                 Paytap is a payment control and transaction management platform that helps businesses and individuals govern how money flows across vehicles, teams, and everyday operations.
-              </p>
-              <p>
-                Enable RBI-compliant prepaid instruments, contactless NFC payments, and real-time visibility — all from a single, secure platform.
               </p>
             </div>
 
