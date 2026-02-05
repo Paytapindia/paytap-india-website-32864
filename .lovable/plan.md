@@ -1,241 +1,165 @@
 
 
-## Plan: Transform Landing Page to Enterprise Fintech Platform Positioning
+## Plan: Restructure Footer to Enterprise Fintech Platform Positioning
 
 ### Overview
-Complete restructure of the landing page to position Paytap as **India's fintech infrastructure platform for mobility, fleets, and enterprise payments** — shifting from a D2C product to an enterprise-grade financial control layer.
+Complete overhaul of the footer to align with the new platform-first positioning, removing "order/stick/setup" language and adding enterprise-grade, procurement-friendly content with clear regulatory signals.
 
 ---
 
-### Files to Modify
+### Current Footer Structure (4 columns)
+1. Company Info (logo, description, contact, address)
+2. "Get Paytap" (order button, D2C messaging)
+3. Quick Links (mixed legal/product links)
+4. Stay Connected (social + newsletter)
 
-| File | Changes |
-|------|---------|
-| `src/components/HeroSection.tsx` | New headline, subhead, description, value strip, CTA, trust line |
-| `src/components/TrustSection.tsx` | New section title, updated feature cards |
-| `src/components/ProductCarousel.tsx` | New product titles/descriptions (deployment model framing) |
-| `src/components/OurProductsSection.tsx` | Rename to "Our Platform Ecosystem", update descriptions |
-| `src/components/TestimonialsSection.tsx` | Update testimonials to enterprise-focused quotes |
-| `src/components/CTASection.tsx` | New enterprise CTA messaging |
-| `src/components/MobileAppSection.tsx` | New "Mobile Control Center" positioning |
-| `src/i18n/locales/en.json` | Update translations for stats labels |
+### New Footer Structure (4 columns)
+1. **Company Info** (logo, platform tagline, contact, full corporate details + PPI partner)
+2. **Platform** (product/enterprise links)
+3. **Resources** (support/legal links)
+4. **Stay Connected** (social + newsletter)
 
 ---
 
 ### Detailed Changes
 
-#### 1. HeroSection.tsx (lines 16-70)
+#### Column 1: Company Info
 
-**Current Headline:**
+**Current Description:**
 ```
-"Control How Your Money Moves"
-```
-
-**New Headline:**
-```
-"Control How Money Moves Across Your Operations"
+"India's most trusted contactless payment solution for modern businesses."
 ```
 
-**New Subheadline (add above description):**
+**New Description:**
 ```
-"India's fintech infrastructure platform for mobility, fleets, and enterprise payments"
-```
-
-**New Description (2 paragraphs):**
-```
-Paragraph 1: "Paytap is a payment control and transaction management platform that 
-helps businesses and individuals govern how money flows across vehicles, teams, 
-and everyday operations."
-
-Paragraph 2: "Enable RBI-compliant prepaid instruments, contactless NFC payments, 
-and real-time visibility — all from a single, secure platform."
+"A fintech infrastructure platform for payment control and mobility-led enterprise transactions."
 ```
 
-**New Value Strip Items:**
-| Current | New |
-|---------|-----|
-| NFC PayTag | NFC Access Layer |
-| Live Expense Dashboard | Live Transaction Dashboard |
-| MyFleet AI Controls | MyFleet AI Controls |
-| Priority Business Support | Enterprise Support |
+**Current Contact:**
+- Bengaluru, India
+- +91 9900010964
+- support@paytap.co.in
 
-**New Value Strip Descriptions (as tooltips or subtitle text):**
-- NFC Access Layer: "Turn vehicles, wallets, and assets into secure payment endpoints"
-- Live Transaction Dashboard: "Track spend by vehicle, user, category, or location in real time"
-- MyFleet AI Controls: "Automated limits, alerts, and operational intelligence"
-- Enterprise Support: "Onboarding, compliance assistance, and priority response"
+**New Contact (updated label):**
+- "Head Office — Bengaluru, India"
+- +91 9900010964
+- support@paytap.co.in
 
-**New CTA Button:**
-- Current: "Activate Paytap Account"
-- New: "Activate Paytap Platform"
+**Current Corporate Details:**
+```
+Paytap is a product of
+Drivetap Innovation India Private Limited
+No 1 Level 15 UB City Concorde Tower 1
+Vittal Mallya Road Rajbhavan
+Bengaluru 560001
+GSTIN: 29AALCD4626M1Z3
+```
 
-**New Trust Line:**
-- Current: "Used by growing fleet operators across India • No monthly fees"
-- New: "Used by fleet operators and enterprises across India • No monthly fees • Built for scale"
+**New Corporate Details:**
+```
+Paytap is a product of:
+DriveTap Innovation India Pvt. Ltd.
+Level 15, Concorde Towers
+1 Vittal Mallya Road, UB City
+Bengaluru – 560001
+Karnataka, India
 
-**Stats Section Labels:**
-- "Acceptance Points" → "RuPay Acceptance Points"
-- "Fleet Operators" → "Fleet & Business Operators"
-- "Uptime" → "Platform Uptime"
+GSTIN: 29AALCD4626M1Z3
+PPI Partner: Transcorp International Ltd. (RBI-authorized)
+```
 
 ---
 
-#### 2. TrustSection.tsx (lines 12-57)
+#### Column 2: Platform (replaces "Get Paytap")
 
-**Section 1 - Product Selection**
-**Current Title:** "Choose Plan"
-**New Title:** "Choose Your Deployment Model"
-**Current Subtitle:** "Select your Paytap plan to get started."
-**New Subtitle:** "Start small. Scale to enterprise."
+**Current:**
+- "Get Paytap" header
+- "Order Your Paytap" button
+- D2C messaging box ("Stick it once...", "Setup in 5 minutes")
 
-**Section 2 - Features Header**
-**Current Title:** "Designed for Businesses Beyond Traditional Banking"
-**New Title:** "Why Businesses Choose Paytap"
-**Current Subtitle:** "Secure, compliant, and built for scale."
-**New Subtitle:** (remove subtitle)
+**New:**
+- **Header:** "Platform"
+- **Links:**
+  - About Paytap → `/about`
+  - How It Works → `/how-it-works`
+  - Pricing → `/checkout`
+  - Compliance & Security → `/about` (scroll to compliance section)
+  - Partner with Us → `/support`
 
-**Updated Feature Cards (6 cards):**
-
-| Current | New |
-|---------|-----|
-| "Offline-First Architecture" | "Offline-First Architecture" |
-| "Tap and pay instantly, even offline. Works without mobile data." | "Reliable in real-world environments — works even in low-connectivity zones." |
-| "8L+ Acceptance Points" | "Enterprise-Grade Security" (swap with security) |
-| "Use it at fuel pumps, tolls, metros, parking & more across India." | "RBI-compliant • PCI-DSS secure • NPCI-powered • VAPT audited" |
-| "Enterprise-Grade Security" | "Unified Financial Visibility" |
-| (old desc) | "One dashboard for vehicles, teams, and operations." |
-| "Real-Time Visibility" | "From Individual to Enterprise" |
-| (old desc) | "Scales from personal use to multi-location fleet and enterprise deployments." |
-| "Individuals to Enterprise" | "Zero Bank Exposure" |
-| (old desc) | "Tokenized prepaid layer keeps primary banking credentials protected." |
-| "Zero Bank Exposure" | (combine or remove duplicate) |
-
-**Final 5 Feature Cards:**
-1. **Offline-First Architecture** — "Reliable in real-world environments — works even in low-connectivity zones."
-2. **Enterprise-Grade Security** — "RBI-compliant • PCI-DSS secure • NPCI-powered • VAPT audited"
-3. **Unified Financial Visibility** — "One dashboard for vehicles, teams, and operations."
-4. **From Individual to Enterprise** — "Scales from personal use to multi-location fleet and enterprise deployments."
-5. **Zero Bank Exposure** — "Tokenized prepaid layer keeps primary banking credentials protected."
+Remove the D2C order button and messaging box entirely.
 
 ---
 
-#### 3. ProductCarousel.tsx (lines 16-37)
+#### Column 3: Resources (replaces mixed Quick Links)
 
-**Product 1 - NFC Tag**
-- Current Name: "Paytap NFC Tag Plan"
-- New Name: "NFC Tag Deployment"
-- Current Desc: "Start with an NFC tag — stick anywhere and tap to pay at fuel pumps, tolls, metros, and parking."
-- New Desc: "Best for vehicles, fleets, and physical assets. Contactless NFC access with RuPay network acceptance, platform dashboard & controls, and nationwide deployment."
+**Current Header:** "Quick Links"
 
-**Product 2 - Prepaid Card**
-- Current Name: "Prepaid Card Plan"
-- New Name: "RuPay Prepaid Card Deployment"
-- Current Desc: "Start with a RuPay prepaid card — accepted at 8L+ merchants for team expenses and everyday control."
-- New Desc: "Best for teams, expenses, and distributed operations. 8L+ merchant acceptance with spend governance & reporting, live dashboard access, and enterprise-grade controls."
+**New Header:** "Resources"
 
-**Button Text:**
-- Current: "Activate Now"
-- New: "Activate Platform"
+**New Links:**
+- Newsroom → `/newsroom`
+- Documentation → `/support` (or external docs if available)
+- Support → `/support`
+- Terms of Service → `/terms-and-conditions`
+- Privacy Policy → `/privacy-policy`
+- Refund & Cancellation → `/cancellation-refunds`
 
-**Price Label:**
-- Add text above price: "Platform Access — ₹499"
+Remove Shipping Policy link (less enterprise-relevant).
 
 ---
 
-#### 4. OurProductsSection.tsx
+#### Column 4: Stay Connected
 
-**Section Header:**
-- Current Title: "Our Solutions"
-- New Title: "Our Platform Ecosystem"
-- Current Subtitle: "Explore our ecosystem of payment solutions"
-- New Subtitle: (keep as is)
+**Current Subtitle:**
+```
+"Follow us for updates and tips"
+```
 
-**Product Descriptions:**
-| Product | Current | New |
-|---------|---------|-----|
-| Myfleet AI | "Automated expense control for fleets. Zero manual reconciliation." | "Automated spend control and reconciliation for fleets" |
-| ExpensePro | "Real-time spend visibility. Instant reimbursements." | "Real-time expense tracking and reimbursement workflows" |
-| SafeVaultz | "Save in gold and spend securely online—protect your primary bank card details." | "Tokenized online spending with protected bank exposure" |
-| Kids Pay | "Controlled spending for children. Parents stay in charge." | "Controlled prepaid access for families and dependents" |
+**New Subtitle:**
+```
+"Follow Paytap for platform updates and fintech insights"
+```
+
+Keep social icons and newsletter as-is.
 
 ---
 
-#### 5. TestimonialsSection.tsx (lines 5-30)
+#### Footer Bottom Bar
 
-**Section Header:**
-- Current Badge: "Loved by 50K+ fleet owners"
-- New Badge: "Trusted by Operators Across India"
+**Current:**
+```
+Copyright © 2025 Paytap. All rights reserved.
+Made with ❤️ in India | All systems operational
+```
 
-**Updated Testimonials:**
+**New:**
+```
+© 2025 Paytap — DriveTap Innovation India Pvt. Ltd. All rights reserved.
+Built in India for regulated, scalable financial infrastructure.
+```
 
-| # | Current Quote | New Quote |
-|---|---------------|-----------|
-| 1 | "PayTap has revolutionized my daily commute!..." | "Paytap has transformed how we manage fleet expenses. Real-time controls and zero cash handling have improved both efficiency and compliance." |
-| 1 | Rahul Mehta, Daily Commuter | Priya Sharma, Fleet Operator |
-| 2 | "As a fleet owner, PayTap saves me..." | "From tolls to fuel, our operations now run on one financial system instead of multiple wallets and vendors." |
-| 2 | Priya Sharma, Fleet Owner | Amit Singh, Logistics Partner |
-| 3 | Remove or keep as alternate | (optional 3rd testimonial) |
-
----
-
-#### 6. CTASection.tsx
-
-**Current Title:** "Start Issuing Prepaid Cards Today"
-**New Title:** "Start Building on Paytap"
-
-**Current Description:** "Trusted by 50,000+ fleet operators and enterprises across India."
-**New Description:** "A financial control layer for India's mobility and enterprise economy"
-
-**Current Button:** "Get Started in Minutes"
-**New Button:** "Activate Paytap Platform"
-
-**Current Features:**
-- "Free delivery"
-- "24/7 support"
-
-**New Features:**
-- "Free delivery"
-- "Priority onboarding"
-- "Built for compliance and scale"
+Keep the "All systems operational" status indicator.
 
 ---
 
-#### 7. MobileAppSection.tsx
+### File to Modify
 
-**Current Title:** "Get the Paytap Mobile App"
-**New Title:** "Mobile Control Center"
-
-**Current Subtitle:** "Manage your payments on the go"
-**New Subtitle:** "Manage your financial operations from anywhere"
-
-**New Description (add):**
-"Monitor balances, approve transactions, receive alerts, and manage tags or cards directly from the Paytap mobile app."
+| File | Changes |
+|------|---------|
+| `src/components/FooterSection.tsx` | Complete restructure of all 4 columns + bottom bar |
 
 ---
 
-#### 8. Translation Updates (en.json)
+### Translation Updates
 
-Update stats labels:
+Update `en.json` footer section:
 ```json
 {
-  "hero": {
-    "stats": {
-      "terminals": "RuPay Acceptance Points",
-      "fleetOwners": "Fleet & Business Operators",
-      "successRate": "Platform Uptime"
-    }
+  "footer": {
+    "description": "A fintech infrastructure platform for payment control and mobility-led enterprise transactions."
   }
 }
 ```
-
----
-
-### New Icons Needed
-
-Add to HeroSection imports:
-- `Layers` (for NFC Access Layer)
-- `LineChart` or keep `LayoutDashboard` (for Transaction Dashboard)
-- `Headset` (for Enterprise Support)
 
 ---
 
@@ -243,30 +167,14 @@ Add to HeroSection imports:
 
 | Before | After |
 |--------|-------|
-| "Control How Your Money Moves" | "Control How Money Moves Across Your Operations" |
-| Smart payment control platform | Fintech infrastructure platform |
-| NFC PayTag | NFC Access Layer |
-| Live Expense Dashboard | Live Transaction Dashboard |
-| Choose Plan | Choose Your Deployment Model |
-| Designed for Businesses Beyond Traditional Banking | Why Businesses Choose Paytap |
-| Paytap NFC Tag Plan | NFC Tag Deployment |
-| Prepaid Card Plan | RuPay Prepaid Card Deployment |
-| Activate Now | Activate Platform |
-| Our Solutions | Our Platform Ecosystem |
-| Start Issuing Prepaid Cards Today | Start Building on Paytap |
-| Get the Paytap Mobile App | Mobile Control Center |
-| D2C product vibe | Enterprise fintech infrastructure |
-
----
-
-### Implementation Order
-
-1. `HeroSection.tsx` — Core messaging and value proposition
-2. `TrustSection.tsx` — Feature cards and section titles
-3. `ProductCarousel.tsx` — Deployment model framing
-4. `OurProductsSection.tsx` — Ecosystem positioning
-5. `TestimonialsSection.tsx` — Enterprise testimonials
-6. `CTASection.tsx` — Final CTA messaging
-7. `MobileAppSection.tsx` — Mobile control center
-8. `en.json` — Translation updates for stats
+| "Get Paytap" column | "Platform" links column |
+| "Order Your Paytap" button | Removed (no D2C CTA) |
+| "Stick it once..." messaging | Removed |
+| "Quick Links" | "Resources" |
+| "Follow us for updates and tips" | "Follow Paytap for platform updates and fintech insights" |
+| "Made with love in India" | "Built in India for regulated, scalable financial infrastructure" |
+| Missing PPI partner | Added "PPI Partner: Transcorp International Ltd. (RBI-authorized)" |
+| "Shipping Policy" link | Removed |
+| "Compliance & Security" | Added |
+| "Partner with Us" | Added |
 
