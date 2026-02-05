@@ -1,26 +1,16 @@
 {
   "nav": {
     "orderPaymentTag": "Order Payment Tag",
-    "platform": "Platform",
-    "platformOverview": "Platform Overview",
-    "prepaidInfrastructure": "Prepaid Infrastructure",
-    "nfcAccessLayer": "NFC Access Layer",
-    "dashboardControls": "Dashboard & Controls",
-    "solutions": "Solutions",
-    "forFleets": "For Fleets",
-    "forEnterprises": "For Enterprises",
+    "ourProducts": "Our Solution",
     "howItWorks": "How It Works",
-    "compliance": "Compliance",
-    "resources": "Resources",
+    "whyPaytap": "Choose Plan",
     "myfleetAi": "Myfleet AI",
     "expensePro": "ExpensePro",
     "paytapSafeVaultz": "Paytap SafeVaultz",
     "paytapKidsPay": "Paytap Kids Pay",
     "faq": "FAQ",
-    "newsroom": "Newsroom",
-    "documentation": "Documentation",
     "support": "Support",
-    "platformLogin": "Platform Login"
+    "login": "Login"
   },
   "hero": {
     "badge": "RBI & NPCI Compliant",

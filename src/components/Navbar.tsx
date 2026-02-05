@@ -1,6 +1,6 @@
 import { Link } from "react-router-dom";
 import { useState, useEffect, useRef, useCallback, memo } from "react";
-import { Menu, X, ChevronDown } from "lucide-react";
+import { Menu, X } from "lucide-react";
 import { useTranslation } from "react-i18next";
 import LanguageSelector from "@/components/LanguageSelector";
 import { Button } from "@/components/ui/button";
@@ -19,7 +19,6 @@ const Navbar = memo(() => {
   const { t } = useTranslation();
   const [isMenuOpen, setIsMenuOpen] = useState(false);
   const [isScrolled, setIsScrolled] = useState(false);
-  const [expandedMobileSection, setExpandedMobileSection] = useState<string | null>(null);
   const ticking = useRef(false);
 
   useEffect(() => {
@@ -38,11 +37,6 @@ const Navbar = memo(() => {
 
   const handleNavClick = useCallback(() => {
     setIsMenuOpen(false);
-    setExpandedMobileSection(null);
-  }, []);
-
-  const toggleMobileSection = useCallback((section: string) => {
-    setExpandedMobileSection(prev => prev === section ? null : section);
   }, []);
 
   return (
@@ -61,119 +55,17 @@ const Navbar = memo(() => {
           />
         </Link>
         
-        {/* Desktop navigation - enterprise fintech positioning */}
-        <nav className="hidden lg:flex items-center space-x-1">
+        {/* Desktop navigation - simplified */}
+        <nav className="hidden md:flex items-center space-x-6 lg:space-x-8">
           <NavigationMenu>
             <NavigationMenuList>
-              {/* Platform Dropdown */}
               <NavigationMenuItem>
                 <NavigationMenuTrigger className="text-sm font-medium text-white/80 hover:text-white transition-colors bg-transparent h-auto p-0 hover:bg-transparent data-[state=open]:bg-transparent data-[state=open]:text-white">
-                  {t('nav.platform')}
+                  {t('nav.ourProducts')}
                 </NavigationMenuTrigger>
                 <NavigationMenuContent>
-                  <ul className="grid w-[280px] gap-1 p-3 bg-white">
+                  <ul className="grid w-[240px] gap-1 p-3 bg-white">
                     <li>
-                      <NavigationMenuLink asChild>
-                        <Link
-                          to="/about"
-                          className="block select-none space-y-1 rounded-md p-3 leading-none no-underline outline-none transition-colors hover:bg-accent hover:text-accent-foreground focus:bg-accent focus:text-accent-foreground"
-                        >
-                          <div className="text-sm font-medium leading-none">
-                            {t('nav.platformOverview')}
-                          </div>
-                          <p className="line-clamp-2 text-sm leading-snug text-muted-foreground">
-                            Architecture & capabilities
-                          </p>
-                        </Link>
-                      </NavigationMenuLink>
-                    </li>
-                    <li>
-                      <NavigationMenuLink asChild>
-                        <Link
-                          to="/about#platform"
-                          className="block select-none space-y-1 rounded-md p-3 leading-none no-underline outline-none transition-colors hover:bg-accent hover:text-accent-foreground focus:bg-accent focus:text-accent-foreground"
-                        >
-                          <div className="text-sm font-medium leading-none">
-                            {t('nav.prepaidInfrastructure')}
-                          </div>
-                          <p className="line-clamp-2 text-sm leading-snug text-muted-foreground">
-                            PPI & transaction rails
-                          </p>
-                        </Link>
-                      </NavigationMenuLink>
-                    </li>
-                    <li>
-                      <NavigationMenuLink asChild>
-                        <Link
-                          to="/how-it-works"
-                          className="block select-none space-y-1 rounded-md p-3 leading-none no-underline outline-none transition-colors hover:bg-accent hover:text-accent-foreground focus:bg-accent focus:text-accent-foreground"
-                        >
-                          <div className="text-sm font-medium leading-none">
-                            {t('nav.nfcAccessLayer')}
-                          </div>
-                          <p className="line-clamp-2 text-sm leading-snug text-muted-foreground">
-                            Contactless deployment
-                          </p>
-                        </Link>
-                      </NavigationMenuLink>
-                    </li>
-                    <li>
-                      <NavigationMenuLink asChild>
-                        <Link
-                          to="/how-it-works"
-                          className="block select-none space-y-1 rounded-md p-3 leading-none no-underline outline-none transition-colors hover:bg-accent hover:text-accent-foreground focus:bg-accent focus:text-accent-foreground"
-                        >
-                          <div className="text-sm font-medium leading-none">
-                            {t('nav.dashboardControls')}
-                          </div>
-                          <p className="line-clamp-2 text-sm leading-snug text-muted-foreground">
-                            Spend governance
-                          </p>
-                        </Link>
-                      </NavigationMenuLink>
-                    </li>
-                  </ul>
-                </NavigationMenuContent>
-              </NavigationMenuItem>
-
-              {/* Solutions Dropdown */}
-              <NavigationMenuItem>
-                <NavigationMenuTrigger className="text-sm font-medium text-white/80 hover:text-white transition-colors bg-transparent h-auto p-0 hover:bg-transparent data-[state=open]:bg-transparent data-[state=open]:text-white ml-6">
-                  {t('nav.solutions')}
-                </NavigationMenuTrigger>
-                <NavigationMenuContent>
-                  <ul className="grid w-[280px] gap-1 p-3 bg-white">
-                    <li>
-                      <NavigationMenuLink asChild>
-                        <Link
-                          to="/how-it-works"
-                          className="block select-none space-y-1 rounded-md p-3 leading-none no-underline outline-none transition-colors hover:bg-accent hover:text-accent-foreground focus:bg-accent focus:text-accent-foreground"
-                        >
-                          <div className="text-sm font-medium leading-none">
-                            {t('nav.forFleets')}
-                          </div>
-                          <p className="line-clamp-2 text-sm leading-snug text-muted-foreground">
-                            Vehicle & fleet operators
-                          </p>
-                        </Link>
-                      </NavigationMenuLink>
-                    </li>
-                    <li>
-                      <NavigationMenuLink asChild>
-                        <Link
-                          to="/how-it-works"
-                          className="block select-none space-y-1 rounded-md p-3 leading-none no-underline outline-none transition-colors hover:bg-accent hover:text-accent-foreground focus:bg-accent focus:text-accent-foreground"
-                        >
-                          <div className="text-sm font-medium leading-none">
-                            {t('nav.forEnterprises')}
-                          </div>
-                          <p className="line-clamp-2 text-sm leading-snug text-muted-foreground">
-                            Teams & expense control
-                          </p>
-                        </Link>
-                      </NavigationMenuLink>
-                    </li>
-                    <li className="border-t border-gray-100 mt-2 pt-2">
                       <NavigationMenuLink asChild>
                         <a
                           href="https://www.myfleetai.in"
@@ -185,7 +77,7 @@ const Navbar = memo(() => {
                             {t('nav.myfleetAi')}
                           </div>
                           <p className="line-clamp-2 text-sm leading-snug text-muted-foreground">
-                            AI fleet management
+                            AI-powered fleet management
                           </p>
                         </a>
                       </NavigationMenuLink>
@@ -202,7 +94,7 @@ const Navbar = memo(() => {
                             {t('nav.expensePro')}
                           </div>
                           <p className="line-clamp-2 text-sm leading-snug text-muted-foreground">
-                            Expense workflows
+                            Smart expense management
                           </p>
                         </a>
                       </NavigationMenuLink>
@@ -217,7 +109,7 @@ const Navbar = memo(() => {
                             {t('nav.paytapSafeVaultz')}
                           </div>
                           <p className="line-clamp-2 text-sm leading-snug text-muted-foreground">
-                            Tokenized online spend
+                            Secure digital vault
                           </p>
                         </Link>
                       </NavigationMenuLink>
@@ -232,78 +124,7 @@ const Navbar = memo(() => {
                             {t('nav.paytapKidsPay')}
                           </div>
                           <p className="line-clamp-2 text-sm leading-snug text-muted-foreground">
-                            Family prepaid
-                          </p>
-                        </Link>
-                      </NavigationMenuLink>
-                    </li>
-                  </ul>
-                </NavigationMenuContent>
-              </NavigationMenuItem>
-
-              {/* Resources Dropdown */}
-              <NavigationMenuItem>
-                <NavigationMenuTrigger className="text-sm font-medium text-white/80 hover:text-white transition-colors bg-transparent h-auto p-0 hover:bg-transparent data-[state=open]:bg-transparent data-[state=open]:text-white ml-6">
-                  {t('nav.resources')}
-                </NavigationMenuTrigger>
-                <NavigationMenuContent>
-                  <ul className="grid w-[240px] gap-1 p-3 bg-white">
-                    <li>
-                      <NavigationMenuLink asChild>
-                        <Link
-                          to="/faq"
-                          className="block select-none space-y-1 rounded-md p-3 leading-none no-underline outline-none transition-colors hover:bg-accent hover:text-accent-foreground focus:bg-accent focus:text-accent-foreground"
-                        >
-                          <div className="text-sm font-medium leading-none">
-                            {t('nav.faq')}
-                          </div>
-                          <p className="line-clamp-2 text-sm leading-snug text-muted-foreground">
-                            Common questions
-                          </p>
-                        </Link>
-                      </NavigationMenuLink>
-                    </li>
-                    <li>
-                      <NavigationMenuLink asChild>
-                        <Link
-                          to="/newsroom"
-                          className="block select-none space-y-1 rounded-md p-3 leading-none no-underline outline-none transition-colors hover:bg-accent hover:text-accent-foreground focus:bg-accent focus:text-accent-foreground"
-                        >
-                          <div className="text-sm font-medium leading-none">
-                            {t('nav.newsroom')}
-                          </div>
-                          <p className="line-clamp-2 text-sm leading-snug text-muted-foreground">
-                            Press & updates
-                          </p>
-                        </Link>
-                      </NavigationMenuLink>
-                    </li>
-                    <li>
-                      <NavigationMenuLink asChild>
-                        <Link
-                          to="/support"
-                          className="block select-none space-y-1 rounded-md p-3 leading-none no-underline outline-none transition-colors hover:bg-accent hover:text-accent-foreground focus:bg-accent focus:text-accent-foreground"
-                        >
-                          <div className="text-sm font-medium leading-none">
-                            {t('nav.support')}
-                          </div>
-                          <p className="line-clamp-2 text-sm leading-snug text-muted-foreground">
-                            Help center
-                          </p>
-                        </Link>
-                      </NavigationMenuLink>
-                    </li>
-                    <li>
-                      <NavigationMenuLink asChild>
-                        <Link
-                          to="/support"
-                          className="block select-none space-y-1 rounded-md p-3 leading-none no-underline outline-none transition-colors hover:bg-accent hover:text-accent-foreground focus:bg-accent focus:text-accent-foreground"
-                        >
-                          <div className="text-sm font-medium leading-none">
-                            {t('nav.documentation')}
-                          </div>
-                          <p className="line-clamp-2 text-sm leading-snug text-muted-foreground">
-                            Technical docs
+                            Safe payments for kids
                           </p>
                         </Link>
                       </NavigationMenuLink>
@@ -314,13 +135,20 @@ const Navbar = memo(() => {
             </NavigationMenuList>
           </NavigationMenu>
           
-          {/* Direct Links */}
-          <Link to="/how-it-works" className="text-sm font-medium text-white/80 hover:text-white transition-colors relative group ml-6">
+          <Link to="/how-it-works" className="text-sm font-medium text-white/80 hover:text-white transition-colors relative group">
             {t('nav.howItWorks')}
             <span className="absolute -bottom-1 left-0 w-0 h-0.5 bg-white transition-all group-hover:w-full"></span>
           </Link>
-          <Link to="/about#compliance" className="text-sm font-medium text-white/80 hover:text-white transition-colors relative group ml-6">
-            {t('nav.compliance')}
+          <a href="/#trust" className="text-sm font-medium text-white/80 hover:text-white transition-colors relative group">
+            {t('nav.whyPaytap')}
+            <span className="absolute -bottom-1 left-0 w-0 h-0.5 bg-white transition-all group-hover:w-full"></span>
+          </a>
+          <Link to="/faq" className="text-sm font-medium text-white/80 hover:text-white transition-colors relative group">
+            {t('nav.faq')}
+            <span className="absolute -bottom-1 left-0 w-0 h-0.5 bg-white transition-all group-hover:w-full"></span>
+          </Link>
+          <Link to="/support" className="text-sm font-medium text-white/80 hover:text-white transition-colors relative group">
+            {t('nav.support')}
             <span className="absolute -bottom-1 left-0 w-0 h-0.5 bg-white transition-all group-hover:w-full"></span>
           </Link>
         </nav>
@@ -328,17 +156,16 @@ const Navbar = memo(() => {
       
       <div className="flex items-center space-x-3 md:space-x-4">
         <LanguageSelector />
-        <Button
-          variant="outline"
-          onClick={() => window.open("https://dashboard.paytap.co.in/login", "_blank")}
-          className="hidden md:inline-flex border border-white/30 text-white hover:bg-white/10 px-4 md:px-5 py-2 rounded-md text-sm font-medium transition-colors duration-200 min-h-[40px]"
-        >
-          {t('nav.platformLogin')}
-        </Button>
+                <Button
+                  onClick={() => window.open("https://dashboard.paytap.co.in/login", "_blank")}
+                  className="bg-paytap-light hover:bg-paytap-dark text-white px-4 md:px-6 py-2 rounded-full shadow-lg hover:shadow-xl transition-all duration-300 transform hover:scale-105 text-sm md:text-base min-h-[40px] md:min-h-[44px]"
+                >
+                  {t('nav.login')}
+                </Button>
         
         {/* Mobile menu button */}
         <button 
-          className="lg:hidden p-2 rounded-lg hover:bg-white/10 transition-colors min-h-[44px] min-w-[44px] flex items-center justify-center" 
+          className="md:hidden p-2 rounded-lg hover:bg-white/10 transition-colors min-h-[44px] min-w-[44px] flex items-center justify-center" 
           onClick={() => setIsMenuOpen(!isMenuOpen)}
           aria-label="Toggle menu"
         >
@@ -346,123 +173,14 @@ const Navbar = memo(() => {
         </button>
       </div>
 
-      {/* Mobile menu - enterprise structure */}
+      {/* Mobile menu - optimized for touch */}
       {isMenuOpen && (
-        <div className="lg:hidden absolute top-full left-0 right-0 bg-white/95 backdrop-blur-lg shadow-xl border-t border-gray-100 animate-fade-in max-h-[80vh] overflow-y-auto">
+        <div className="md:hidden absolute top-full left-0 right-0 bg-white/95 backdrop-blur-lg shadow-xl border-t border-gray-100 animate-fade-in">
           <div className="p-4 space-y-2">
             <div className="flex items-center justify-between py-2 px-2 border-b border-gray-100">
               <span className="text-sm font-medium text-gray-500">Language</span>
               <LanguageSelector />
             </div>
-            
-            {/* Platform Section */}
-            <div className="border-b border-gray-100">
-              <button 
-                onClick={() => toggleMobileSection('platform')}
-                className="w-full flex items-center justify-between py-3 px-2 text-base font-medium text-gray-700"
-              >
-                {t('nav.platform')}
-                <ChevronDown className={`w-4 h-4 transition-transform ${expandedMobileSection === 'platform' ? 'rotate-180' : ''}`} />
-              </button>
-              {expandedMobileSection === 'platform' && (
-                <div className="pb-2 space-y-1">
-                  <Link 
-                    to="/about" 
-                    className="block text-sm text-gray-600 hover:text-paytap-dark py-2 px-4 ml-2"
-                    onClick={handleNavClick}
-                  >
-                    {t('nav.platformOverview')}
-                  </Link>
-                  <Link 
-                    to="/about#platform" 
-                    className="block text-sm text-gray-600 hover:text-paytap-dark py-2 px-4 ml-2"
-                    onClick={handleNavClick}
-                  >
-                    {t('nav.prepaidInfrastructure')}
-                  </Link>
-                  <Link 
-                    to="/how-it-works" 
-                    className="block text-sm text-gray-600 hover:text-paytap-dark py-2 px-4 ml-2"
-                    onClick={handleNavClick}
-                  >
-                    {t('nav.nfcAccessLayer')}
-                  </Link>
-                  <Link 
-                    to="/how-it-works" 
-                    className="block text-sm text-gray-600 hover:text-paytap-dark py-2 px-4 ml-2"
-                    onClick={handleNavClick}
-                  >
-                    {t('nav.dashboardControls')}
-                  </Link>
-                </div>
-              )}
-            </div>
-
-            {/* Solutions Section */}
-            <div className="border-b border-gray-100">
-              <button 
-                onClick={() => toggleMobileSection('solutions')}
-                className="w-full flex items-center justify-between py-3 px-2 text-base font-medium text-gray-700"
-              >
-                {t('nav.solutions')}
-                <ChevronDown className={`w-4 h-4 transition-transform ${expandedMobileSection === 'solutions' ? 'rotate-180' : ''}`} />
-              </button>
-              {expandedMobileSection === 'solutions' && (
-                <div className="pb-2 space-y-1">
-                  <Link 
-                    to="/how-it-works" 
-                    className="block text-sm text-gray-600 hover:text-paytap-dark py-2 px-4 ml-2"
-                    onClick={handleNavClick}
-                  >
-                    {t('nav.forFleets')}
-                  </Link>
-                  <Link 
-                    to="/how-it-works" 
-                    className="block text-sm text-gray-600 hover:text-paytap-dark py-2 px-4 ml-2"
-                    onClick={handleNavClick}
-                  >
-                    {t('nav.forEnterprises')}
-                  </Link>
-                  <div className="border-t border-gray-100 mt-2 pt-2 mx-4">
-                    <span className="text-xs text-gray-400 uppercase tracking-wide">Ecosystem</span>
-                  </div>
-                  <a 
-                    href="https://www.myfleetai.in" 
-                    target="_blank"
-                    rel="noopener noreferrer"
-                    className="block text-sm text-gray-600 hover:text-paytap-dark py-2 px-4 ml-2"
-                    onClick={handleNavClick}
-                  >
-                    {t('nav.myfleetAi')}
-                  </a>
-                  <a 
-                    href="https://www.expensepro.in" 
-                    target="_blank"
-                    rel="noopener noreferrer"
-                    className="block text-sm text-gray-600 hover:text-paytap-dark py-2 px-4 ml-2"
-                    onClick={handleNavClick}
-                  >
-                    {t('nav.expensePro')}
-                  </a>
-                  <Link 
-                    to="/safevaults" 
-                    className="block text-sm text-gray-600 hover:text-paytap-dark py-2 px-4 ml-2"
-                    onClick={handleNavClick}
-                  >
-                    {t('nav.paytapSafeVaultz')}
-                  </Link>
-                  <Link 
-                    to="/kids-pay" 
-                    className="block text-sm text-gray-600 hover:text-paytap-dark py-2 px-4 ml-2"
-                    onClick={handleNavClick}
-                  >
-                    {t('nav.paytapKidsPay')}
-                  </Link>
-                </div>
-              )}
-            </div>
-
-            {/* How It Works - Direct Link */}
             <Link 
               to="/how-it-works" 
               className="block text-base font-medium text-gray-700 hover:text-paytap-dark py-3 px-2 border-b border-gray-100 transition-colors min-h-[48px] flex items-center"
@@ -470,60 +188,65 @@ const Navbar = memo(() => {
             >
               {t('nav.howItWorks')}
             </Link>
-
-            {/* Compliance - Direct Link */}
-            <Link 
-              to="/about#compliance" 
+            <a 
+              href="/#trust" 
               className="block text-base font-medium text-gray-700 hover:text-paytap-dark py-3 px-2 border-b border-gray-100 transition-colors min-h-[48px] flex items-center"
               onClick={handleNavClick}
             >
-              {t('nav.compliance')}
-            </Link>
-
-            {/* Resources Section */}
+              {t('nav.whyPaytap')}
+            </a>
+            
             <div className="border-b border-gray-100">
-              <button 
-                onClick={() => toggleMobileSection('resources')}
-                className="w-full flex items-center justify-between py-3 px-2 text-base font-medium text-gray-700"
+              <div className="py-2 px-2 text-xs font-semibold text-gray-500 uppercase tracking-wide">
+                {t('nav.ourProducts')}
+              </div>
+              <a 
+                href="https://www.myfleetai.in" 
+                target="_blank"
+                rel="noopener noreferrer"
+                className="block text-base font-medium text-gray-700 hover:text-paytap-dark py-3 px-4 ml-2 border-b border-gray-100 transition-colors min-h-[48px] flex items-center"
+                onClick={handleNavClick}
               >
-                {t('nav.resources')}
-                <ChevronDown className={`w-4 h-4 transition-transform ${expandedMobileSection === 'resources' ? 'rotate-180' : ''}`} />
-              </button>
-              {expandedMobileSection === 'resources' && (
-                <div className="pb-2 space-y-1">
-                  <Link 
-                    to="/faq" 
-                    className="block text-sm text-gray-600 hover:text-paytap-dark py-2 px-4 ml-2"
-                    onClick={handleNavClick}
-                  >
-                    {t('nav.faq')}
-                  </Link>
-                  <Link 
-                    to="/newsroom" 
-                    className="block text-sm text-gray-600 hover:text-paytap-dark py-2 px-4 ml-2"
-                    onClick={handleNavClick}
-                  >
-                    {t('nav.newsroom')}
-                  </Link>
-                  <Link 
-                    to="/support" 
-                    className="block text-sm text-gray-600 hover:text-paytap-dark py-2 px-4 ml-2"
-                    onClick={handleNavClick}
-                  >
-                    {t('nav.support')}
-                  </Link>
-                  <Link 
-                    to="/support" 
-                    className="block text-sm text-gray-600 hover:text-paytap-dark py-2 px-4 ml-2"
-                    onClick={handleNavClick}
-                  >
-                    {t('nav.documentation')}
-                  </Link>
-                </div>
-              )}
+                {t('nav.myfleetAi')}
+              </a>
+              <a 
+                href="https://www.expensepro.in" 
+                target="_blank"
+                rel="noopener noreferrer"
+                className="block text-base font-medium text-gray-700 hover:text-paytap-dark py-3 px-4 ml-2 border-b border-gray-100 transition-colors min-h-[48px] flex items-center"
+                onClick={handleNavClick}
+              >
+                {t('nav.expensePro')}
+              </a>
+              <Link 
+                to="/safevaults" 
+                className="block text-base font-medium text-gray-700 hover:text-paytap-dark py-3 px-4 ml-2 border-b border-gray-100 transition-colors min-h-[48px] flex items-center"
+                onClick={handleNavClick}
+              >
+                {t('nav.paytapSafeVaultz')}
+              </Link>
+              <Link 
+                to="/kids-pay" 
+                className="block text-base font-medium text-gray-700 hover:text-paytap-dark py-3 px-4 ml-2 transition-colors min-h-[48px] flex items-center"
+                onClick={handleNavClick}
+              >
+                {t('nav.paytapKidsPay')}
+              </Link>
             </div>
-
-            {/* Platform Login Button */}
+            <Link 
+              to="/faq" 
+              className="block text-base font-medium text-gray-700 hover:text-paytap-dark py-3 px-2 border-b border-gray-100 transition-colors min-h-[48px] flex items-center"
+              onClick={handleNavClick}
+            >
+              {t('nav.faq')}
+            </Link>
+            <Link 
+              to="/support" 
+              className="block text-base font-medium text-gray-700 hover:text-paytap-dark py-3 px-2 border-b border-gray-100 transition-colors min-h-[48px] flex items-center"
+              onClick={handleNavClick}
+            >
+              {t('nav.support')}
+            </Link>
             <div className="mt-3">
               <Button
                 variant="outline"
@@ -531,11 +254,10 @@ const Navbar = memo(() => {
                   window.open("https://dashboard.paytap.co.in/login", "_blank");
                   handleNavClick();
                 }}
-                className="w-full mt-3 border border-paytap-dark text-paytap-dark hover:bg-paytap-dark hover:text-white py-3 rounded-md font-medium transition-colors duration-200 min-h-[48px]"
+                className="w-full mt-3 border-2 border-paytap-dark text-paytap-dark hover:bg-paytap-dark hover:text-white py-3 rounded-full font-semibold transition-all duration-300 min-h-[48px]"
               >
-                {t('nav.platformLogin')}
+                {t('nav.login')}
               </Button>
-              <p className="text-xs text-gray-400 text-center mt-2">For existing customers & partners</p>
             </div>
           </div>
         </div>

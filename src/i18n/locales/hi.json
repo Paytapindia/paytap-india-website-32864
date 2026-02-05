@@ -1,26 +1,16 @@
 {
   "nav": {
     "orderPaymentTag": "पेमेंट टैग ऑर्डर करें",
-    "platform": "प्लेटफॉर्म",
-    "platformOverview": "प्लेटफॉर्म अवलोकन",
-    "prepaidInfrastructure": "प्रीपेड इंफ्रास्ट्रक्चर",
-    "nfcAccessLayer": "NFC एक्सेस लेयर",
-    "dashboardControls": "डैशबोर्ड और नियंत्रण",
-    "solutions": "समाधान",
-    "forFleets": "फ्लीट के लिए",
-    "forEnterprises": "उद्यमों के लिए",
+    "ourProducts": "हमारा समाधान",
     "howItWorks": "कैसे काम करता है",
-    "compliance": "अनुपालन",
-    "resources": "संसाधन",
+    "whyPaytap": "प्लान चुनें",
     "myfleetAi": "माईफ्लीट AI",
     "expensePro": "एक्सपेंसप्रो",
     "paytapSafeVaultz": "पेटैप सेफवॉल्ट्ज़",
     "paytapKidsPay": "पेटैप किड्स पे",
     "faq": "सामान्य प्रश्न",
-    "newsroom": "न्यूज़रूम",
-    "documentation": "दस्तावेज़ीकरण",
     "support": "सहायता",
-    "platformLogin": "प्लेटफॉर्म लॉगिन"
+    "login": "लॉगिन"
   },
   "hero": {
     "badge": "RBI और NPCI अनुपालित",
