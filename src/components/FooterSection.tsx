@@ -1,17 +1,13 @@
 
 import { memo } from "react";
 import { Link, useNavigate } from "react-router-dom";
-import { Facebook, Instagram, Linkedin, Youtube, X, Mail, Phone, MapPin } from "lucide-react";
+import { Facebook, Instagram, Linkedin, Youtube, X, Mail, Phone, MapPin, Building2 } from "lucide-react";
 import { useTranslation } from "react-i18next";
 import paytapFooterLogo from "@/assets/paytap-footer-logo.png";
 
 const FooterSection = memo(() => {
   const navigate = useNavigate();
   const { t } = useTranslation();
-  
-  const handleRedirect = () => {
-    navigate('/checkout');
-  };
   
   return (
     <footer className="bg-paytap-navy text-white py-12 md:py-16 px-6 md:px-12 relative overflow-hidden">
@@ -36,7 +32,11 @@ const FooterSection = memo(() => {
             <p className="text-gray-300 text-base md:text-lg leading-relaxed mb-4 md:mb-6">
               {t('footer.description')}
             </p>
-            <div className="flex items-center gap-2 text-gray-400 mb-2">
+            <div className="flex items-center gap-2 text-gray-400 mb-1">
+              <Building2 className="w-4 h-4 flex-shrink-0" />
+              <span className="text-sm font-medium">Head Office</span>
+            </div>
+            <div className="flex items-center gap-2 text-gray-400 mb-2 ml-6">
               <MapPin className="w-4 h-4 flex-shrink-0" />
               <span className="text-sm">Bengaluru, India</span>
             </div>
@@ -49,46 +49,53 @@ const FooterSection = memo(() => {
               <span className="text-sm">support@paytap.co.in</span>
             </div>
             <div className="text-xs text-gray-500 leading-relaxed hidden md:block">
-              <p className="mb-2">Paytap is a product of</p>
-              <p className="font-medium text-gray-400 mb-1">Drivetap Innovation India Private Limited</p>
-              <p className="mb-1">No 1 Level 15 UB City Concorde Tower 1</p>
-              <p className="mb-1">Vittal Mallya Road Rajbhavan</p>
-              <p className="mb-1">Bengaluru 560001</p>
-              <p>GSTIN: 29AALCD4626M1Z3</p>
+              <p className="mb-2">Paytap is a product of:</p>
+              <p className="font-medium text-gray-400 mb-1">DriveTap Innovation India Pvt. Ltd.</p>
+              <p className="mb-1">Level 15, Concorde Towers</p>
+              <p className="mb-1">1 Vittal Mallya Road, UB City</p>
+              <p className="mb-1">Bengaluru – 560001</p>
+              <p className="mb-2">Karnataka, India</p>
+              <p className="mb-1">GSTIN: 29AALCD4626M1Z3</p>
+              <p className="text-gray-400">PPI Partner: Transcorp International Ltd. (RBI-authorized)</p>
             </div>
           </div>
           
-          {/* Get Paytap */}
+          {/* Platform */}
           <div>
-            <h4 className="font-bold text-lg md:text-xl mb-4 md:mb-6 text-white">Get Paytap</h4>
-            <div className="space-y-3 md:space-y-4">
-              <button 
-                className="w-full bg-paytap-light hover:bg-paytap-dark text-white py-3 md:py-4 px-4 md:px-6 rounded-xl font-semibold transition-all duration-300 md:transform md:hover:scale-105 shadow-lg hover:shadow-xl text-sm md:text-base"
-                onClick={handleRedirect}
-              >
-                Order Your Paytap
-              </button>
-              <div className="bg-paytap-dark/50 p-3 md:p-4 rounded-xl border border-paytap-dark">
-                <p className="text-gray-300 text-xs md:text-sm leading-relaxed">
-                  ✨ Stick it once, use it everywhere
-                  <br />
-                  🚀 Setup in 5 minutes
-                  <br />
-                  🔒 Bank-grade security
-                </p>
-              </div>
-            </div>
-          </div>
-          
-          {/* Links */}
-          <div>
-            <h4 className="font-bold text-lg md:text-xl mb-4 md:mb-6 text-white">{t('footer.quickLinks')}</h4>
+            <h4 className="font-bold text-lg md:text-xl mb-4 md:mb-6 text-white">Platform</h4>
             <ul className="space-y-2 md:space-y-3">
               <li>
                 <Link to="/about" className="text-gray-300 hover:text-paytap-light transition-colors duration-300 flex items-center group text-sm md:text-base">
-                  <span className="group-hover:translate-x-1 transition-transform">{t('footer.links.about')}</span>
+                  <span className="group-hover:translate-x-1 transition-transform">About Paytap</span>
                 </Link>
               </li>
+              <li>
+                <Link to="/how-it-works" className="text-gray-300 hover:text-paytap-light transition-colors duration-300 flex items-center group text-sm md:text-base">
+                  <span className="group-hover:translate-x-1 transition-transform">How It Works</span>
+                </Link>
+              </li>
+              <li>
+                <Link to="/checkout" className="text-gray-300 hover:text-paytap-light transition-colors duration-300 flex items-center group text-sm md:text-base">
+                  <span className="group-hover:translate-x-1 transition-transform">Pricing</span>
+                </Link>
+              </li>
+              <li>
+                <Link to="/about#compliance" className="text-gray-300 hover:text-paytap-light transition-colors duration-300 flex items-center group text-sm md:text-base">
+                  <span className="group-hover:translate-x-1 transition-transform">Compliance & Security</span>
+                </Link>
+              </li>
+              <li>
+                <Link to="/support" className="text-gray-300 hover:text-paytap-light transition-colors duration-300 flex items-center group text-sm md:text-base">
+                  <span className="group-hover:translate-x-1 transition-transform">Partner with Us</span>
+                </Link>
+              </li>
+            </ul>
+          </div>
+          
+          {/* Resources */}
+          <div>
+            <h4 className="font-bold text-lg md:text-xl mb-4 md:mb-6 text-white">Resources</h4>
+            <ul className="space-y-2 md:space-y-3">
               <li>
                 <Link to="/newsroom" className="text-gray-300 hover:text-paytap-light transition-colors duration-300 flex items-center group text-sm md:text-base">
                   <span className="group-hover:translate-x-1 transition-transform">Newsroom</span>
@@ -96,27 +103,27 @@ const FooterSection = memo(() => {
               </li>
               <li>
                 <Link to="/support" className="text-gray-300 hover:text-paytap-light transition-colors duration-300 flex items-center group text-sm md:text-base">
-                  <span className="group-hover:translate-x-1 transition-transform">{t('footer.links.contact')}</span>
+                  <span className="group-hover:translate-x-1 transition-transform">Documentation</span>
+                </Link>
+              </li>
+              <li>
+                <Link to="/support" className="text-gray-300 hover:text-paytap-light transition-colors duration-300 flex items-center group text-sm md:text-base">
+                  <span className="group-hover:translate-x-1 transition-transform">Support</span>
                 </Link>
               </li>
               <li>
                 <Link to="/terms-and-conditions" className="text-gray-300 hover:text-paytap-light transition-colors duration-300 flex items-center group text-sm md:text-base">
-                  <span className="group-hover:translate-x-1 transition-transform">{t('footer.legalLinks.terms')}</span>
+                  <span className="group-hover:translate-x-1 transition-transform">Terms of Service</span>
                 </Link>
               </li>
               <li>
                 <Link to="/privacy-policy" className="text-gray-300 hover:text-paytap-light transition-colors duration-300 flex items-center group text-sm md:text-base">
-                  <span className="group-hover:translate-x-1 transition-transform">{t('footer.legalLinks.privacy')}</span>
-                </Link>
-              </li>
-              <li>
-                <Link to="/shipping-policy" className="text-gray-300 hover:text-paytap-light transition-colors duration-300 flex items-center group text-sm md:text-base">
-                  <span className="group-hover:translate-x-1 transition-transform">{t('footer.legalLinks.shipping')}</span>
+                  <span className="group-hover:translate-x-1 transition-transform">Privacy Policy</span>
                 </Link>
               </li>
               <li>
                 <Link to="/cancellation-refunds" className="text-gray-300 hover:text-paytap-light transition-colors duration-300 flex items-center group text-sm md:text-base">
-                  <span className="group-hover:translate-x-1 transition-transform">{t('footer.legalLinks.cancellation')}</span>
+                  <span className="group-hover:translate-x-1 transition-transform">Refund & Cancellation</span>
                 </Link>
               </li>
             </ul>
@@ -125,7 +132,7 @@ const FooterSection = memo(() => {
           {/* Social & Newsletter */}
           <div>
             <h4 className="font-bold text-lg md:text-xl mb-4 md:mb-6 text-white">Stay Connected</h4>
-            <p className="text-gray-300 mb-3 md:mb-4 text-sm md:text-base">Follow us for updates and tips</p>
+            <p className="text-gray-300 mb-3 md:mb-4 text-sm md:text-base">Follow Paytap for platform updates and fintech insights</p>
             <div className="flex flex-wrap gap-2 md:gap-3 mb-4 md:mb-6">
               <a href="https://x.com/paytapindia" target="_blank" rel="noopener noreferrer" className="w-10 h-10 md:w-12 md:h-12 bg-paytap-dark/50 hover:bg-paytap-light rounded-lg md:rounded-xl flex items-center justify-center transition-all duration-300 group">
                 <X className="h-4 w-4 md:h-5 md:w-5 text-gray-300 group-hover:text-white" />
@@ -163,10 +170,10 @@ const FooterSection = memo(() => {
         
         <div className="border-t border-paytap-dark pt-6 md:pt-8 flex flex-col md:flex-row justify-between items-center gap-4">
           <p className="text-gray-400 text-xs md:text-sm text-center md:text-left">
-            Copyright © {new Date().getFullYear()} Paytap. All rights reserved.
+            © {new Date().getFullYear()} Paytap — DriveTap Innovation India Pvt. Ltd. All rights reserved.
           </p>
           <div className="flex items-center gap-4 md:gap-6 text-xs md:text-sm text-gray-400">
-            <span>Made with ❤️ in India</span>
+            <span>Built in India for regulated, scalable financial infrastructure.</span>
             <div className="flex items-center gap-2">
               <div className="w-2 h-2 bg-green-500 rounded-full"></div>
               <span>All systems operational</span>
