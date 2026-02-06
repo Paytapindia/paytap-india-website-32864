@@ -336,6 +336,14 @@ const Navbar = memo(() => {
                 </Button>
         
         {/* Mobile menu button */}
+        {/* Mobile Login Button - next to hamburger */}
+        <Button
+          onClick={() => window.open("https://dashboard.paytap.co.in/login", "_blank")}
+          className="lg:hidden bg-paytap-light hover:bg-paytap-light/90 text-white px-3 py-1.5 rounded-md text-xs font-medium transition-colors duration-200 min-h-[36px]"
+        >
+          Login
+        </Button>
+        
         <button 
           className="lg:hidden p-2 rounded-lg hover:bg-white/10 transition-colors min-h-[44px] min-w-[44px] flex items-center justify-center" 
           onClick={() => setIsMenuOpen(!isMenuOpen)}
