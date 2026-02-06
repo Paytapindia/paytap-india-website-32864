@@ -20,9 +20,9 @@ const ScrollSection = memo(({ children, className = '', delay = 0 }: ScrollSecti
     return <section className={className}>{children}</section>;
   }
 
-  const yOffset = isMobile ? 20 : 40;
-  const duration = isMobile ? 0.35 : 0.6;
-  const adjustedDelay = isMobile ? delay * 0.5 : delay;
+  const yOffset = isMobile ? 15 : 25;
+  const duration = isMobile ? 0.25 : 0.4;
+  const adjustedDelay = isMobile ? delay * 0.3 : delay * 0.6;
 
   return (
     <motion.section
