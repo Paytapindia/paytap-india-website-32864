@@ -328,13 +328,12 @@ const Navbar = memo(() => {
       
       <div className="flex items-center space-x-3 md:space-x-4">
         <LanguageSelector />
-        <Button
-          variant="outline"
-          onClick={() => window.open("https://dashboard.paytap.co.in/login", "_blank")}
-          className="hidden md:inline-flex border border-white/30 text-white hover:bg-white/10 px-4 md:px-5 py-2 rounded-md text-sm font-medium transition-colors duration-200 min-h-[40px]"
-        >
-          {t('nav.platformLogin')}
-        </Button>
+                <Button
+                  onClick={() => window.open("https://dashboard.paytap.co.in/login", "_blank")}
+                  className="hidden md:inline-flex bg-paytap-light hover:bg-paytap-light/90 text-white px-4 md:px-5 py-2 rounded-md text-sm font-medium transition-colors duration-200 min-h-[40px]"
+                >
+                  {t('nav.platformLogin')}
+                </Button>
         
         {/* Mobile menu button */}
         <button 
@@ -526,12 +525,11 @@ const Navbar = memo(() => {
             {/* Platform Login Button */}
             <div className="mt-3">
               <Button
-                variant="outline"
                 onClick={() => {
                   window.open("https://dashboard.paytap.co.in/login", "_blank");
                   handleNavClick();
                 }}
-                className="w-full mt-3 border border-paytap-dark text-paytap-dark hover:bg-paytap-dark hover:text-white py-3 rounded-md font-medium transition-colors duration-200 min-h-[48px]"
+                className="w-full mt-3 bg-paytap-light hover:bg-paytap-light/90 text-white py-3 rounded-md font-medium transition-colors duration-200 min-h-[48px]"
               >
                 {t('nav.platformLogin')}
               </Button>
