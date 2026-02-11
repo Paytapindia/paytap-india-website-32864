@@ -80,6 +80,9 @@ const HowItWorks = () => {
             </p>
           </section>
 
+          <Suspense fallback={<StepSkeleton />}>
+            <PlatformAccessBanner />
+          </Suspense>
           <CreateAccountStep />
           <Suspense fallback={<StepSkeleton />}>
             <ConfigureControlsStep />
@@ -92,9 +95,6 @@ const HowItWorks = () => {
           </Suspense>
           <Suspense fallback={<StepSkeleton />}>
             <ScaleStep />
-          </Suspense>
-          <Suspense fallback={<StepSkeleton />}>
-            <PlatformAccessBanner />
           </Suspense>
         </main>
 
