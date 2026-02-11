@@ -315,14 +315,16 @@ const Navbar = memo(() => {
           </NavigationMenu>
           
           {/* Direct Links */}
-          <Link to="/how-it-works" className="text-sm font-medium text-white/80 hover:text-white transition-colors relative group ml-8">
-            {t('nav.howItWorks')}
-            <span className="absolute -bottom-1 left-0 w-0 h-0.5 bg-white transition-all group-hover:w-full"></span>
-          </Link>
-          <Link to="/about#compliance" className="text-sm font-medium text-white/80 hover:text-white transition-colors relative group ml-8">
-            {t('nav.compliance')}
-            <span className="absolute -bottom-1 left-0 w-0 h-0.5 bg-white transition-all group-hover:w-full"></span>
-          </Link>
+          <div className="flex items-center gap-6 ml-10">
+            <Link to="/how-it-works" className="text-sm font-medium text-white/80 hover:text-white transition-colors relative group">
+              {t('nav.howItWorks')}
+              <span className="absolute -bottom-1 left-0 w-0 h-0.5 bg-white transition-all group-hover:w-full"></span>
+            </Link>
+            <Link to="/about#compliance" className="text-sm font-medium text-white/80 hover:text-white transition-colors relative group">
+              {t('nav.compliance')}
+              <span className="absolute -bottom-1 left-0 w-0 h-0.5 bg-white transition-all group-hover:w-full"></span>
+            </Link>
+          </div>
         </nav>
       </div>
       
