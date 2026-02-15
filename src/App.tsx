@@ -21,9 +21,9 @@ import CheckoutSuccess from "./pages/CheckoutSuccess";
 import CheckoutCancel from "./pages/CheckoutCancel";
 import NotFound from "./pages/NotFound";
 import FAQ from "./pages/FAQ";
-import SafeVaults from "./pages/SafeVaults";
+
 import HowItWorks from "./pages/HowItWorks";
-import KidsPay from "./pages/KidsPay";
+
 import Newsroom from "./pages/Newsroom";
 import PayAtPump from "./pages/PayAtPump";
 
@@ -51,8 +51,6 @@ const App = () => (
               <Route path="/" element={<Index />} />
               <Route path="/about" element={<About />} />
               <Route path="/faq" element={<FAQ />} />
-              <Route path="/safevaults" element={<SafeVaults />} />
-              <Route path="/kids-pay" element={<KidsPay />} />
               <Route path="/how-it-works" element={<HowItWorks />} />
               <Route path="/newsroom" element={<Newsroom />} />
               <Route path="/pay-at-pump" element={<PayAtPump />} />
