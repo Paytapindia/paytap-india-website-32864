@@ -1,6 +1,6 @@
 
 import { memo } from "react";
-import { ArrowUpRight, Truck, Receipt, Shield, Users } from "lucide-react";
+import { ArrowUpRight, Truck, Receipt } from "lucide-react";
 import { useTranslation } from "react-i18next";
 import { Link } from "react-router-dom";
 
@@ -18,20 +18,6 @@ const products = [
     description: "Real-time expense tracking and reimbursement workflows",
     icon: Receipt,
     link: "https://www.expensepro.in",
-  },
-  {
-    id: 3,
-    name: "SafeVaultz",
-    description: "Tokenized online spending with protected bank exposure",
-    icon: Shield,
-    link: "/safevaults",
-  },
-  {
-    id: 4,
-    name: "Kids Pay",
-    description: "Controlled prepaid access for families and dependents",
-    icon: Users,
-    link: "/kids-pay",
   },
 ];
 
