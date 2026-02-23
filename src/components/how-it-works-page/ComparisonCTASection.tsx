@@ -2,7 +2,7 @@ import { motion, useInView } from 'framer-motion';
 import { useRef } from 'react';
 import { Link } from 'react-router-dom';
 import { X, Check } from 'lucide-react';
-import { useModal } from '@/contexts/ModalContext';
+
 import ScrollSection from './ScrollSection';
 
 const comparisons = [
@@ -15,7 +15,7 @@ const comparisons = [
 const ComparisonCTASection = () => {
   const ref = useRef(null);
   const isInView = useInView(ref, { once: true, amount: 0.2 });
-  const { openContactForm } = useModal();
+  
 
   return (
     <ScrollSection className="py-16 md:py-24 px-4 bg-muted/50">
@@ -59,20 +59,12 @@ const ComparisonCTASection = () => {
             Take Control of Your Vehicle Payments Today
           </h2>
 
-          <div className="flex flex-col sm:flex-row items-center justify-center gap-4">
-            <Link
-              to="/checkout"
-              className="px-8 py-3.5 bg-accent text-accent-foreground rounded-full font-bold text-lg hover:opacity-90 transition-opacity"
-            >
-              Start Free
-            </Link>
-            <button
-              onClick={openContactForm}
-              className="px-8 py-3.5 bg-card border-2 border-primary text-primary rounded-full font-bold text-lg hover:bg-primary hover:text-primary-foreground transition-colors"
-            >
-              Book Demo
-            </button>
-          </div>
+          <Link
+            to="/checkout"
+            className="px-8 py-3.5 bg-accent text-accent-foreground rounded-full font-bold text-lg hover:opacity-90 transition-opacity"
+          >
+            Get Access
+          </Link>
         </div>
       </div>
     </ScrollSection>
