@@ -18,7 +18,7 @@ const tools = [
   },
   {
     id: 'card',
-    label: 'Virtual Prepaid Card',
+    label: 'Only Prepaid Card',
     icon: CreditCard,
     image: paytapCard,
     description: 'Pay online for FASTag recharge, Insurance, Servicing, Vehicle purchases',
@@ -37,7 +37,7 @@ const PaymentToolsSection = () => {
     <ScrollSection className="py-16 md:py-24 px-4 bg-muted/50">
       <div ref={ref} className="max-w-5xl mx-auto text-center">
         <h2 className="text-2xl sm:text-3xl md:text-4xl font-bold text-foreground mb-10">
-          PayTap Gives You Two Powerful Tools
+          Choose Your Options
         </h2>
 
         {/* Toggle */}
