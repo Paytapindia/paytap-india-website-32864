@@ -26,6 +26,7 @@ import HowItWorks from "./pages/HowItWorks";
 
 import Newsroom from "./pages/Newsroom";
 import PayAtPump from "./pages/PayAtPump";
+import CorporateRegistration from "./pages/CorporateRegistration";
 
 const queryClient = new QueryClient({
   defaultOptions: {
@@ -54,6 +55,7 @@ const App = () => (
               <Route path="/how-it-works" element={<HowItWorks />} />
               <Route path="/newsroom" element={<Newsroom />} />
               <Route path="/pay-at-pump" element={<PayAtPump />} />
+              <Route path="/corporate-registration" element={<CorporateRegistration />} />
               <Route path="/support" element={<Support />} />
               <Route path="/terms-and-conditions" element={<TermsAndConditions />} />
               <Route path="/privacy-policy" element={<PrivacyPolicy />} />

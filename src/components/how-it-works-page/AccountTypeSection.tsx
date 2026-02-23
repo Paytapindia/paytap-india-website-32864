@@ -1,10 +1,12 @@
 import { motion, useInView } from 'framer-motion';
 import { useRef } from 'react';
 import { User, Building } from 'lucide-react';
+import { useNavigate } from 'react-router-dom';
 import ScrollSection from './ScrollSection';
 
 const AccountTypeSection = () => {
   const ref = useRef(null);
+  const navigate = useNavigate();
   const isInView = useInView(ref, { once: true, amount: 0.2 });
 
   return (
@@ -20,7 +22,8 @@ const AccountTypeSection = () => {
             initial={{ opacity: 0, x: -20 }}
             animate={isInView ? { opacity: 1, x: 0 } : {}}
             transition={{ duration: 0.5 }}
-            className="p-6 rounded-2xl bg-card border-2 border-primary/20 hover:border-primary/50 transition-colors shadow-sm"
+            onClick={() => window.open('https://dashboard.paytap.co.in/login', '_blank')}
+            className="p-6 rounded-2xl bg-card border-2 border-primary/20 hover:border-primary/50 transition-colors shadow-sm cursor-pointer"
           >
             <User className="w-10 h-10 text-primary mx-auto mb-4" />
             <h3 className="text-xl font-bold text-foreground mb-3">Individual Account</h3>
@@ -36,7 +39,8 @@ const AccountTypeSection = () => {
             initial={{ opacity: 0, x: 20 }}
             animate={isInView ? { opacity: 1, x: 0 } : {}}
             transition={{ duration: 0.5, delay: 0.1 }}
-            className="p-6 rounded-2xl bg-primary text-primary-foreground border-2 border-primary shadow-sm"
+            onClick={() => navigate('/corporate-registration')}
+            className="p-6 rounded-2xl bg-primary text-primary-foreground border-2 border-primary shadow-sm cursor-pointer"
           >
             <Building className="w-10 h-10 mx-auto mb-4" />
             <h3 className="text-xl font-bold mb-3">Business / Corporate Account</h3>
