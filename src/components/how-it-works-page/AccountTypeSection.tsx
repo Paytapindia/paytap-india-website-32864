@@ -1,0 +1,59 @@
+import { motion, useInView } from 'framer-motion';
+import { useRef } from 'react';
+import { User, Building } from 'lucide-react';
+import ScrollSection from './ScrollSection';
+
+const AccountTypeSection = () => {
+  const ref = useRef(null);
+  const isInView = useInView(ref, { once: true, amount: 0.2 });
+
+  return (
+    <ScrollSection className="py-16 md:py-24 px-4 bg-background">
+      <div ref={ref} className="max-w-4xl mx-auto text-center">
+        <h2 className="text-2xl sm:text-3xl md:text-4xl font-bold text-foreground mb-10">
+          Choose Your Account Type
+        </h2>
+
+        <div className="grid md:grid-cols-2 gap-6 max-w-3xl mx-auto mb-8">
+          {/* Individual */}
+          <motion.div
+            initial={{ opacity: 0, x: -20 }}
+            animate={isInView ? { opacity: 1, x: 0 } : {}}
+            transition={{ duration: 0.5 }}
+            className="p-6 rounded-2xl bg-card border-2 border-primary/20 hover:border-primary/50 transition-colors shadow-sm"
+          >
+            <User className="w-10 h-10 text-primary mx-auto mb-4" />
+            <h3 className="text-xl font-bold text-foreground mb-3">Individual Account</h3>
+            <ul className="text-muted-foreground text-sm space-y-2 text-left">
+              <li>→ Instant dashboard access</li>
+              <li>→ Start immediately</li>
+              <li>→ Perfect for personal vehicles</li>
+            </ul>
+          </motion.div>
+
+          {/* Business */}
+          <motion.div
+            initial={{ opacity: 0, x: 20 }}
+            animate={isInView ? { opacity: 1, x: 0 } : {}}
+            transition={{ duration: 0.5, delay: 0.1 }}
+            className="p-6 rounded-2xl bg-primary text-primary-foreground border-2 border-primary shadow-sm"
+          >
+            <Building className="w-10 h-10 mx-auto mb-4" />
+            <h3 className="text-xl font-bold mb-3">Business / Corporate Account</h3>
+            <ul className="text-primary-foreground/80 text-sm space-y-2 text-left">
+              <li>→ Dedicated onboarding</li>
+              <li>→ Multi-vehicle controls</li>
+              <li>→ Team management features</li>
+            </ul>
+          </motion.div>
+        </div>
+
+        <p className="text-muted-foreground font-medium">
+          No paperwork. No waiting. No bank visits.
+        </p>
+      </div>
+    </ScrollSection>
+  );
+};
+
+export default AccountTypeSection;

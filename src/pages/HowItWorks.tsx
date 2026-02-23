@@ -1,43 +1,26 @@
-import { useState, useEffect, lazy, Suspense, memo } from 'react';
+import { useState, useEffect } from 'react';
 import { Helmet } from 'react-helmet-async';
 import Navbar from '@/components/Navbar';
 import FooterSection from '@/components/FooterSection';
 import ProgressIndicator from '@/components/how-it-works-page/ProgressIndicator';
+import HeroHookSection from '@/components/how-it-works-page/HeroHookSection';
+import ProblemHookSection from '@/components/how-it-works-page/ProblemHookSection';
+import AudienceSection from '@/components/how-it-works-page/AudienceSection';
+import AccountTypeSection from '@/components/how-it-works-page/AccountTypeSection';
+import PaymentToolsSection from '@/components/how-it-works-page/PaymentToolsSection';
+import SetupStepsSection from '@/components/how-it-works-page/SetupStepsSection';
+import ScaleSection from '@/components/how-it-works-page/ScaleSection';
+import OutcomeSection from '@/components/how-it-works-page/OutcomeSection';
+import MyFleetBonusSection from '@/components/how-it-works-page/MyFleetBonusSection';
+import ComparisonCTASection from '@/components/how-it-works-page/ComparisonCTASection';
 
-// Eager load first step for instant visibility
-import CreateAccountStep from '@/components/how-it-works-page/CreateAccountStep';
-
-// Lazy load remaining steps
-const ConfigureControlsStep = lazy(() => import('@/components/how-it-works-page/ConfigureControlsStep'));
-const DeployTagsStep = lazy(() => import('@/components/how-it-works-page/DeployTagsStep'));
-const MonitorStep = lazy(() => import('@/components/how-it-works-page/MonitorStep'));
-const ScaleStep = lazy(() => import('@/components/how-it-works-page/ScaleStep'));
-const PlatformAccessBanner = lazy(() => import('@/components/how-it-works-page/PlatformAccessBanner'));
-
-const TOTAL_STEPS = 5;
-
-// Simple loading skeleton for step sections
-const StepSkeleton = memo(() => (
-  <div className="min-h-[60vh] md:min-h-screen flex items-center justify-center py-12 px-4">
-    <div className="max-w-5xl mx-auto w-full">
-      <div className="animate-pulse space-y-6">
-        <div className="h-6 w-20 bg-muted rounded-full mx-auto" />
-        <div className="h-10 w-64 bg-muted rounded-lg mx-auto" />
-        <div className="h-4 w-48 bg-muted rounded mx-auto" />
-      </div>
-    </div>
-  </div>
-));
-
-StepSkeleton.displayName = 'StepSkeleton';
+const TOTAL_STEPS = 10;
 
 const HowItWorks = () => {
   const [currentStep, setCurrentStep] = useState(0);
 
-  // Throttled scroll handler for better performance
   useEffect(() => {
     let ticking = false;
-    
     const handleScroll = () => {
       if (!ticking) {
         requestAnimationFrame(() => {
@@ -50,7 +33,6 @@ const HowItWorks = () => {
         ticking = true;
       }
     };
-
     window.addEventListener('scroll', handleScroll, { passive: true });
     return () => window.removeEventListener('scroll', handleScroll);
   }, []);
@@ -58,48 +40,29 @@ const HowItWorks = () => {
   return (
     <>
       <Helmet>
-        <title>How Paytap Works | From Account Setup to Payment Control</title>
-        <meta 
-          name="description" 
-          content="Create your Paytap account, configure controls, deploy NFC tags, and scale with enterprise-grade payment intelligence. RBI-compliant platform for individuals, teams, and fleets." 
+        <title>How PayTap Works | Vehicle Payment Control System</title>
+        <meta
+          name="description"
+          content="Stop giving drivers cash. PayTap gives vehicle owners complete payment control with NFC tags, prepaid cards, spending limits, and real-time tracking."
         />
         <link rel="canonical" href="https://paytap.co.in/how-it-works" />
       </Helmet>
-      
+
       <div className="min-h-screen bg-background">
         <Navbar />
-        
         <main>
-          {/* Header Section */}
-          <section className="pt-24 pb-8 text-center px-4">
-            <h1 className="text-3xl md:text-4xl lg:text-5xl font-bold text-foreground mb-3">
-              How Paytap Works
-            </h1>
-            <p className="text-lg md:text-xl text-muted-foreground max-w-2xl mx-auto">
-              From Account Setup to Enterprise-Grade Payment Control
-            </p>
-          </section>
-
-          <Suspense fallback={<StepSkeleton />}>
-            <PlatformAccessBanner />
-          </Suspense>
-          <CreateAccountStep />
-          <Suspense fallback={<StepSkeleton />}>
-            <ConfigureControlsStep />
-          </Suspense>
-          <Suspense fallback={<StepSkeleton />}>
-            <DeployTagsStep />
-          </Suspense>
-          <Suspense fallback={<StepSkeleton />}>
-            <MonitorStep />
-          </Suspense>
-          <Suspense fallback={<StepSkeleton />}>
-            <ScaleStep />
-          </Suspense>
+          <HeroHookSection />
+          <ProblemHookSection />
+          <AudienceSection />
+          <AccountTypeSection />
+          <PaymentToolsSection />
+          <SetupStepsSection />
+          <ScaleSection />
+          <OutcomeSection />
+          <MyFleetBonusSection />
+          <ComparisonCTASection />
         </main>
-
         <ProgressIndicator currentStep={currentStep} totalSteps={TOTAL_STEPS} />
-        
         <FooterSection />
       </div>
     </>
