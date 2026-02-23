@@ -22,7 +22,7 @@ const AccountTypeSection = () => {
             initial={{ opacity: 0, x: -20 }}
             animate={isInView ? { opacity: 1, x: 0 } : {}}
             transition={{ duration: 0.5 }}
-            onClick={() => window.open('https://dashboard.paytap.co.in/login', '_blank')}
+            onClick={() => navigate('/checkout')}
             className="p-6 rounded-2xl bg-card border-2 border-primary/20 hover:border-primary/50 transition-colors shadow-sm cursor-pointer"
           >
             <User className="w-10 h-10 text-primary mx-auto mb-4" />
