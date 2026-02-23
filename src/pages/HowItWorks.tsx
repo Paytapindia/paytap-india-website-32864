@@ -52,9 +52,9 @@ const HowItWorks = () => {
         <Navbar />
         <main>
           <HeroHookSection />
+          <AccountTypeSection />
           <ProblemHookSection />
           <AudienceSection />
-          <AccountTypeSection />
           <PaymentToolsSection />
           <SetupStepsSection />
           <ScaleSection />
