@@ -14,6 +14,36 @@ export type Database = {
   }
   public: {
     Tables: {
+      corporate_registrations: {
+        Row: {
+          company_name: string
+          contact_mobile: string
+          created_at: string
+          email: string
+          gst_no: string | null
+          id: string
+          name: string
+        }
+        Insert: {
+          company_name: string
+          contact_mobile: string
+          created_at?: string
+          email: string
+          gst_no?: string | null
+          id?: string
+          name: string
+        }
+        Update: {
+          company_name?: string
+          contact_mobile?: string
+          created_at?: string
+          email?: string
+          gst_no?: string | null
+          id?: string
+          name?: string
+        }
+        Relationships: []
+      }
       leads: {
         Row: {
           created_at: string
