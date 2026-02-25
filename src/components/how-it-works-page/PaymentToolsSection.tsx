@@ -21,7 +21,7 @@ const tools = [
     label: 'Only Prepaid Card',
     icon: CreditCard,
     image: paytapCard,
-    description: 'Pay online for FASTag recharge, Insurance, Servicing, Vehicle purchases',
+    description: 'Stop Reimbursements. Start Real-Time Control with prepaid cards.',
     checkoutParam: 'card',
   },
 ];
