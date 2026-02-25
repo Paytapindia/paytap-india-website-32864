@@ -1,11 +1,14 @@
 
 
-## Update Mobile Control Center - Android App Link
+## Remove "Choose Your Deployment Model" Section
 
-**File: `src/components/MobileAppSection.tsx`**
+The `TrustSection` component renders the "Choose Your Deployment Model" section. It's imported and used in `src/pages/Index.tsx` on line 47.
 
 ### Changes:
-1. **Google Play button**: Remove the "Coming Soon" badge, remove `opacity-80 cursor-not-allowed`, and wrap it in an anchor tag linking to `https://play.google.com/store/apps/details?id=com.paytap.app&pcampaignid=web_share` (opens in new tab).
 
-2. **iOS App Store button**: Keep as-is with "Coming Soon" badge and disabled styling.
+**File: `src/pages/Index.tsx`**
+- Remove the `TrustSection` import (line 7)
+- Remove `<TrustSection />` usage (line 47)
+
+This cleanly removes the section from the home page. The `TrustSection.tsx` file itself can remain in the codebase in case it's needed later.
 
