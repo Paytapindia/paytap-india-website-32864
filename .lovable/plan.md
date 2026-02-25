@@ -1,19 +1,20 @@
 
 
-## Update PayU Payment Links
+## Update How It Works Hero Text
 
-### Changes
+### Change
 
-**File: `src/pages/Checkout.tsx`** (lines 21-26)
+**File: `src/components/how-it-works-page/HeroHookSection.tsx`**
 
-Update the `PAYU_PAYMENT_LINKS` object with the new payment links for the updated pricing:
+Update the hero section copy:
 
-| Key | Old Link | New Link | Amount |
-|-----|----------|----------|--------|
-| sticker_1 | `7IhlCW7USFZ7` (₹499) | `prS7p8roOCn5` (₹999) |
-| sticker_2 | `LJGyX3AmLLHv` (₹998) | `RrgpdqmXfsEN` (₹1,998) |
-| card_1 | `7IhlCW7USFZ7` (₹499) | `prS7p8roOCn5` (₹999) |
-| card_2 | `LJGyX3AmLLHv` (₹998) | `RrgpdqmXfsEN` (₹1,998) |
+**Headline** (line 15-17):
+- From: "Stop Giving Drivers Cash. Start Controlling Vehicle Money."
+- To: "Take Control of Every Rupee Your Vehicles Spend."
 
-This is a straightforward link swap -- no logic changes needed.
+**Subtitle** (line 24-26):
+- From: "India's smartest vehicle payment system for owners who want visibility, limits, and control — not chaos."
+- To: "India's most powerful payment system built for fleet owners—not drivers"
+
+This is a simple text swap with no logic or structural changes.
 
