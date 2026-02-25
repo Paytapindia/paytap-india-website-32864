@@ -350,7 +350,7 @@ const Checkout = () => {
 
               {/* Quantity Selector */}
               <div className="space-y-3">
-                <Label className="text-sm font-medium text-muted-foreground">How many do you need?</Label>
+                <Label className="text-sm font-medium text-muted-foreground">Choose Platform Plan</Label>
                 <div className="grid grid-cols-2 gap-3">
                   <button
                     type="button"
@@ -362,7 +362,7 @@ const Checkout = () => {
                     }`}
                   >
                     <p className="text-sm font-semibold text-foreground">Starter</p>
-                    <p className="text-xs text-muted-foreground">1 {productType === 'sticker' ? 'Tag' : 'Card'}</p>
+                    
                     <p className="text-xl font-bold text-primary">₹999</p>
                   </button>
                   <button
@@ -375,7 +375,7 @@ const Checkout = () => {
                     }`}
                   >
                     <p className="text-sm font-semibold text-foreground">Growth</p>
-                    <p className="text-xs text-muted-foreground">2 {productType === 'sticker' ? 'Tags' : 'Cards'}</p>
+                    
                     <p className="text-xl font-bold text-primary">₹1,998</p>
                   </button>
                 </div>
