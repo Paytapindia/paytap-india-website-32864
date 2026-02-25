@@ -19,7 +19,7 @@ const AudienceSection = () => {
     <ScrollSection className="py-16 md:py-24 px-4 bg-muted/50">
       <div ref={ref} className="max-w-4xl mx-auto text-center">
         <h2 className="text-2xl sm:text-3xl md:text-4xl font-bold text-foreground mb-3">
-          Built for Anyone Managing Vehicles
+          Built for Anyone Managing Vehicles & Teams
         </h2>
         <p className="text-muted-foreground mb-10 text-lg">PayTap is designed for:</p>
 
@@ -39,7 +39,7 @@ const AudienceSection = () => {
         </div>
 
         <p className="text-lg font-semibold text-accent">
-          If money moves through vehicles, PayTap manages it.
+          If money moves through vehicles or teams, PayTap manages it.
         </p>
       </div>
     </ScrollSection>

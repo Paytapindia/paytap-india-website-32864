@@ -6,7 +6,7 @@ import ScrollSection from './ScrollSection';
 const scaleSteps = [
   { icon: ShoppingCart, text: 'Order additional PayTap tags' },
   { icon: Monitor, text: 'Activate in dashboard' },
-  { icon: CarFront, text: 'Assign to vehicle' },
+  { icon: CarFront, text: 'Assign to vehicle or team' },
 ];
 
 const ScaleSection = () => {
@@ -17,7 +17,7 @@ const ScaleSection = () => {
     <ScrollSection className="py-16 md:py-24 px-4 bg-muted/50">
       <div ref={ref} className="max-w-3xl mx-auto text-center">
         <h2 className="text-2xl sm:text-3xl md:text-4xl font-bold text-foreground mb-10">
-          Managing multiple vehicles?
+          Managing multiple vehicles or teams?
         </h2>
 
         <div className="flex flex-col md:flex-row items-center justify-center gap-4 md:gap-8 mb-10">
@@ -41,7 +41,7 @@ const ScaleSection = () => {
         </div>
 
         <p className="text-lg font-semibold text-accent">
-          Add vehicles in seconds. Not days.
+          Add vehicles & teams in seconds. Not days.
         </p>
       </div>
     </ScrollSection>

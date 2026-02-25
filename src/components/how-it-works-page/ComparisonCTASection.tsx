@@ -56,7 +56,7 @@ const ComparisonCTASection = () => {
             Drivers Spend. Owners Stay in Control.
           </p>
           <h2 className="text-2xl sm:text-3xl md:text-4xl font-bold text-foreground mb-8">
-            Take Control of Your Vehicle Payments Today
+            Take Control of Your Vehicle & Team Payments Today
           </h2>
 
           <Link

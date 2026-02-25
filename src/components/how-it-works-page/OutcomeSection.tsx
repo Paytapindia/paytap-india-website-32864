@@ -4,12 +4,12 @@ import { CheckCircle2 } from 'lucide-react';
 import ScrollSection from './ScrollSection';
 
 const outcomes = [
-  'Centralized vehicle expense management',
+  'Centralized vehicle & team expense management',
   'Real-time transaction visibility',
   'Driver spending limits',
   'Fraud protection',
   'Digital records for accounting',
-  'Multi-vehicle wallet system',
+  'Multi-vehicle & team wallet system',
 ];
 
 const OutcomeSection = () => {
