@@ -12,21 +12,21 @@ const HeroHookSection = () => {
           initial={{ opacity: 0, y: 30 }}
           animate={{ opacity: 1, y: 0 }}
           transition={{ duration: 0.7 }}
-          className="text-3xl sm:text-4xl md:text-5xl lg:text-6xl font-bold text-primary-foreground mb-5 leading-tight tracking-tight"
-        >
-          Take Control of Every Rupee Your Vehicles & Teams Spend.
+          className="text-3xl sm:text-4xl md:text-5xl lg:text-6xl font-bold text-primary-foreground mb-5 leading-tight tracking-tight">
+          Take Control of Every Rupee 
+Your Vehicles & Teams Spend.
         </motion.h1>
         <motion.p
           initial={{ opacity: 0, y: 20 }}
           animate={{ opacity: 1, y: 0 }}
           transition={{ duration: 0.7, delay: 0.2 }}
-          className="text-lg md:text-xl text-primary-foreground/80 max-w-2xl mx-auto"
-        >
+          className="text-lg md:text-xl text-primary-foreground/80 max-w-2xl mx-auto">
+
           India's most powerful payment system built for fleet owners—not drivers
         </motion.p>
       </div>
-    </ScrollSection>
-  );
+    </ScrollSection>);
+
 };
 
 export default HeroHookSection;
