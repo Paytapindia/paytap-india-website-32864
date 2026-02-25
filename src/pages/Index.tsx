@@ -4,7 +4,7 @@ import Navbar from "@/components/Navbar";
 import HeroSection from "@/components/HeroSection";
 import ComplianceBadgeBar from "@/components/ComplianceBadgeBar";
 import MobileAppSection from "@/components/MobileAppSection";
-import TrustSection from "@/components/TrustSection";
+
 import ContactFormModal from "@/components/ContactFormModal";
 import StickyMobileCTA from "@/components/StickyMobileCTA";
 import { useModal } from "@/contexts/ModalContext";
@@ -44,7 +44,7 @@ const Index = () => {
       <HeroSection />
       <ComplianceBadgeBar />
       <MobileAppSection />
-      <TrustSection />
+      
       
       {/* Lazy-loaded sections for better mobile performance */}
       <Suspense fallback={<SectionSkeleton />}>
