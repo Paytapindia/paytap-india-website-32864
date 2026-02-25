@@ -19,10 +19,10 @@ import paytapCard from "@/assets/paytap-card-product.png";
 
 // PayU payment links based on product and quantity
 const PAYU_PAYMENT_LINKS = {
-  sticker_1: "https://u.payu.in/PAYUMN/7IhlCW7USFZ7",  // ₹499
-  sticker_2: "https://u.payu.in/PAYUMN/LJGyX3AmLLHv",  // ₹998
-  card_1: "https://u.payu.in/PAYUMN/7IhlCW7USFZ7",     // ₹499
-  card_2: "https://u.payu.in/PAYUMN/LJGyX3AmLLHv"      // ₹998
+  sticker_1: "https://u.payu.in/PAYUMN/prS7p8roOCn5",  // ₹999
+  sticker_2: "https://u.payu.in/PAYUMN/RrgpdqmXfsEN",  // ₹1,998
+  card_1: "https://u.payu.in/PAYUMN/prS7p8roOCn5",     // ₹999
+  card_2: "https://u.payu.in/PAYUMN/RrgpdqmXfsEN"      // ₹1,998
 };
 
 // Required schema for checkout - shipping is mandatory for physical products
