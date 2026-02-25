@@ -1,45 +1,31 @@
 
 
-## Fix: Checkout Page Crash on Invalid Product Type
+## Update Checkout Pricing
 
-### Problem
-The checkout page at `/checkout?product=tag` crashes with "Cannot read properties of undefined (reading 'price')" because:
-- The `PRODUCTS` object only defines two keys: `"sticker"` and `"card"`
-- The URL parameter `?product=tag` passes `"tag"` as the product type
-- `PRODUCTS["tag"]` returns `undefined`, causing the crash when accessing `.price`
-
-This happens because the "How It Works" page navigates to `/checkout?product=tag`, but the Checkout page doesn't recognize `"tag"` as a valid product key.
-
-### Solution
-
-Two changes are needed:
-
-1. **Add `"tag"` as a valid product key in the `PRODUCTS` object** in `src/pages/Checkout.tsx` — map it to the same NFC Tag product (currently called `"sticker"`). This is the simplest fix since "tag" is the user-facing name for the sticker product.
-
-2. **Add a fallback** so that any unrecognized product parameter defaults to `"sticker"` instead of crashing. This prevents future breakage if other URLs pass unexpected values.
-
-### Technical Details
+### Changes
 
 **File: `src/pages/Checkout.tsx`**
 
-- Update the `PRODUCTS` object to include a `"tag"` key that mirrors `"sticker"`:
-  ```ts
-  tag: {
-    name: "Paytap NFC Tag Plan",
-    description: "Contactless payment sticker",
-    price: 499,
-    image: paytapCheckoutSticker
-  }
-  ```
-- Update `PAYU_PAYMENT_LINKS` to include `tag_1` and `tag_2` entries
-- Add validation so that if the `product` URL param isn't a valid key in `PRODUCTS`, it falls back to `"sticker"`
-- Update `ProductType` accordingly
+1. **Product prices**: Change from ₹499 to ₹999 per unit for both sticker and card plans (lines 45, 51)
 
-Alternatively (and more cleanly): normalize `"tag"` to `"sticker"` at the point where the URL param is read, so the rest of the code stays unchanged. This avoids duplicating product data.
+2. **Quantity selector display**: Update the price labels shown on the quantity buttons:
+   - 1 Tag/Card: ₹499 → ₹999 (line 365)
+   - 2 Tags/Cards: ₹998 → ₹1,998 (line 377)
 
-### Approach chosen: Normalize the URL param
+3. **"What's Included" section**:
+   - Tag/Card value display: already shows `₹{999 * quantity} value` — this stays correct as-is
+   - Lifetime Platform Access: change from `₹4,000 value` to `₹10,000 value` (line 402)
 
-- At line 60 and line 104, where `searchParams.get("product")` is read, add a mapping so `"tag"` is treated as `"sticker"`
-- Add a guard so any unrecognized product type defaults to `"sticker"` instead of crashing
+4. **PayU payment links**: The existing links point to ₹499/₹998 amounts. These will need new PayU links for ₹999/₹1,998. For now, the links will remain as placeholders — you'll need to generate new PayU payment links for the updated amounts.
 
-This is a minimal, safe fix that prevents the crash without duplicating product definitions.
+5. **Edge function (`supabase/functions/create-payment/index.ts`)**: Update the server-side price map from `sticker: 499, card: 499` to `sticker: 999, card: 999` so the backend amount calculation matches.
+
+### Summary of price changes
+
+| Item | Before | After |
+|------|--------|-------|
+| Unit price (sticker/card) | ₹499 | ₹999 |
+| 2-unit price | ₹998 | ₹1,998 |
+| Tag hardware value shown | ₹999/unit | ₹999/unit (no change) |
+| Lifetime Platform Access value | ₹4,000 | ₹10,000 |
+
