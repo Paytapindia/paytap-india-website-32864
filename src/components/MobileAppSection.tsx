@@ -33,18 +33,15 @@ const MobileAppSection = memo(() => {
           </div>
 
           {/* Google Play Store */}
-          <div className="relative group">
-            <div className="flex items-center gap-2 md:gap-3 bg-paytap-dark text-white px-4 md:px-6 py-3 md:py-4 rounded-xl shadow-lg opacity-80 cursor-not-allowed min-w-[160px] md:min-w-[200px]">
+          <a href="https://play.google.com/store/apps/details?id=com.paytap.app&pcampaignid=web_share" target="_blank" rel="noopener noreferrer" className="relative group">
+            <div className="flex items-center gap-2 md:gap-3 bg-paytap-dark text-white px-4 md:px-6 py-3 md:py-4 rounded-xl shadow-lg hover:shadow-xl transition-shadow min-w-[160px] md:min-w-[200px]">
               <Smartphone className="w-6 h-6 md:w-8 md:h-8" />
               <div className="text-left">
                 <p className="text-[10px] md:text-xs text-white/70">Get it on</p>
                 <p className="text-sm md:text-lg font-semibold">Google Play</p>
               </div>
             </div>
-            <span className="absolute -top-2 -right-2 bg-primary text-primary-foreground text-[10px] md:text-xs font-bold px-2 md:px-3 py-0.5 md:py-1 rounded-full shadow-md">
-              Coming Soon
-            </span>
-          </div>
+          </a>
         </div>
       </div>
     </section>
