@@ -57,7 +57,9 @@ type ProductType = keyof typeof PRODUCTS;
 
 const Checkout = () => {
   const [searchParams] = useSearchParams();
-  const initialProduct = (searchParams.get("product") as ProductType) || "sticker";
+  const rawProduct = searchParams.get("product") || "sticker";
+  const normalizedProduct = rawProduct === "tag" ? "sticker" : rawProduct;
+  const initialProduct: ProductType = (normalizedProduct in PRODUCTS) ? normalizedProduct as ProductType : "sticker";
   
   const [isLoading, setIsLoading] = useState(false);
   const [orderPlaced, setOrderPlaced] = useState(false);
@@ -101,9 +103,10 @@ const Checkout = () => {
 
   // Update product from URL params
   useEffect(() => {
-    const product = searchParams.get("product") as ProductType;
-    if (product && PRODUCTS[product]) {
-      setProductType(product);
+    const raw = searchParams.get("product") || "";
+    const normalized = raw === "tag" ? "sticker" : raw;
+    if (normalized && normalized in PRODUCTS) {
+      setProductType(normalized as ProductType);
     }
   }, [searchParams]);
 
