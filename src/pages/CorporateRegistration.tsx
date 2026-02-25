@@ -15,7 +15,7 @@ const formSchema = z.object({
   name: z.string().trim().min(1, 'Name is required').max(100),
   company_name: z.string().trim().min(1, 'Company name is required').max(200),
   contact_mobile: z.string().regex(/^\d{10}$/, 'Enter a valid 10-digit mobile number'),
-  gst_no: z.string().regex(/^[0-9A-Z]{15}$/, 'Enter a valid 15-character GST number').or(z.literal('')).optional(),
+  gst_no: z.string().trim().min(1, 'GST or PAN details are required').max(200),
   email: z.string().trim().email('Enter a valid email').max(255),
 });
 
@@ -90,8 +90,8 @@ const CorporateRegistration = () => {
                   )} />
                   <FormField control={form.control} name="gst_no" render={({ field }) => (
                     <FormItem>
-                      <FormLabel>GST No</FormLabel>
-                      <FormControl><Input placeholder="15-character GST number (optional)" {...field} /></FormControl>
+                      <FormLabel>GST or PAN Details</FormLabel>
+                      <FormControl><Input placeholder="Enter GST or PAN number" {...field} /></FormControl>
                       <FormMessage />
                     </FormItem>
                   )} />
