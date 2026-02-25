@@ -361,7 +361,8 @@ const Checkout = () => {
                         : "border-border hover:border-muted-foreground bg-card"
                     }`}
                   >
-                    <p className="text-sm text-muted-foreground">1 {productType === 'sticker' ? 'Tag' : 'Card'}</p>
+                    <p className="text-sm font-semibold text-foreground">Starter</p>
+                    <p className="text-xs text-muted-foreground">1 {productType === 'sticker' ? 'Tag' : 'Card'}</p>
                     <p className="text-xl font-bold text-primary">₹999</p>
                   </button>
                   <button
@@ -373,10 +374,19 @@ const Checkout = () => {
                         : "border-border hover:border-muted-foreground bg-card"
                     }`}
                   >
-                    <p className="text-sm text-muted-foreground">2 {productType === 'sticker' ? 'Tags' : 'Cards'}</p>
+                    <p className="text-sm font-semibold text-foreground">Growth</p>
+                    <p className="text-xs text-muted-foreground">2 {productType === 'sticker' ? 'Tags' : 'Cards'}</p>
                     <p className="text-xl font-bold text-primary">₹1,998</p>
                   </button>
                 </div>
+                <button
+                  type="button"
+                  onClick={() => navigate('/corporate-registration')}
+                  className="w-full p-3 rounded-xl border-2 border-dashed border-muted-foreground/30 hover:border-primary/50 hover:bg-primary/5 transition-all text-center"
+                >
+                  <p className="text-sm font-medium text-foreground">For Business Account →</p>
+                  <p className="text-xs text-muted-foreground">Corporate & Fleet solutions</p>
+                </button>
               </div>
 
               <Separator />
