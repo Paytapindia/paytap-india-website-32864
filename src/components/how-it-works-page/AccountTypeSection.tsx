@@ -53,7 +53,7 @@ const AccountTypeSection = () => {
         </div>
 
         <p className="text-muted-foreground font-medium">
-          No paperwork. No waiting. No bank visits.
+          Whether you manage 1 or 25+ Vehicle or team, PayTap gets you started instantly - no paperwork, no waiting, no banking friction
         </p>
       </div>
     </ScrollSection>
