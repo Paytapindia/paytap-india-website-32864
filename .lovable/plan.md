@@ -1,31 +1,19 @@
 
 
-## Update Checkout Pricing
+## Update PayU Payment Links
 
 ### Changes
 
-**File: `src/pages/Checkout.tsx`**
+**File: `src/pages/Checkout.tsx`** (lines 21-26)
 
-1. **Product prices**: Change from ₹499 to ₹999 per unit for both sticker and card plans (lines 45, 51)
+Update the `PAYU_PAYMENT_LINKS` object with the new payment links for the updated pricing:
 
-2. **Quantity selector display**: Update the price labels shown on the quantity buttons:
-   - 1 Tag/Card: ₹499 → ₹999 (line 365)
-   - 2 Tags/Cards: ₹998 → ₹1,998 (line 377)
+| Key | Old Link | New Link | Amount |
+|-----|----------|----------|--------|
+| sticker_1 | `7IhlCW7USFZ7` (₹499) | `prS7p8roOCn5` (₹999) |
+| sticker_2 | `LJGyX3AmLLHv` (₹998) | `RrgpdqmXfsEN` (₹1,998) |
+| card_1 | `7IhlCW7USFZ7` (₹499) | `prS7p8roOCn5` (₹999) |
+| card_2 | `LJGyX3AmLLHv` (₹998) | `RrgpdqmXfsEN` (₹1,998) |
 
-3. **"What's Included" section**:
-   - Tag/Card value display: already shows `₹{999 * quantity} value` — this stays correct as-is
-   - Lifetime Platform Access: change from `₹4,000 value` to `₹10,000 value` (line 402)
-
-4. **PayU payment links**: The existing links point to ₹499/₹998 amounts. These will need new PayU links for ₹999/₹1,998. For now, the links will remain as placeholders — you'll need to generate new PayU payment links for the updated amounts.
-
-5. **Edge function (`supabase/functions/create-payment/index.ts`)**: Update the server-side price map from `sticker: 499, card: 499` to `sticker: 999, card: 999` so the backend amount calculation matches.
-
-### Summary of price changes
-
-| Item | Before | After |
-|------|--------|-------|
-| Unit price (sticker/card) | ₹499 | ₹999 |
-| 2-unit price | ₹998 | ₹1,998 |
-| Tag hardware value shown | ₹999/unit | ₹999/unit (no change) |
-| Lifetime Platform Access value | ₹4,000 | ₹10,000 |
+This is a straightforward link swap -- no logic changes needed.
 
