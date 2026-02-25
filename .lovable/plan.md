@@ -1,20 +1,13 @@
 
 
-## Update How It Works Hero Text
+## Update Account Type Section Tagline
 
-### Change
+**File: `src/components/how-it-works-page/AccountTypeSection.tsx`**
 
-**File: `src/components/how-it-works-page/HeroHookSection.tsx`**
+Update the bottom tagline text (line 58):
 
-Update the hero section copy:
+- **From:** "No paperwork. No waiting. No bank visits."
+- **To:** "Whether you manage 1 or 25+ Vehicle or team, PayTap gets you started instantly - no paperwork, no waiting, no banking friction"
 
-**Headline** (line 15-17):
-- From: "Stop Giving Drivers Cash. Start Controlling Vehicle Money."
-- To: "Take Control of Every Rupee Your Vehicles Spend."
-
-**Subtitle** (line 24-26):
-- From: "India's smartest vehicle payment system for owners who want visibility, limits, and control — not chaos."
-- To: "India's most powerful payment system built for fleet owners—not drivers"
-
-This is a simple text swap with no logic or structural changes.
+Single line text change, no structural or logic modifications.
 
