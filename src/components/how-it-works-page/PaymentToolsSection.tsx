@@ -18,7 +18,7 @@ const tools = [
   },
   {
     id: 'card',
-    label: 'Only Prepaid Card',
+    label: 'Prepaid Card',
     icon: CreditCard,
     image: paytapCard,
     description: 'Stop Reimbursements. Start Real-Time Control with prepaid cards.',
