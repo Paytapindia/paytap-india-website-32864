@@ -1,57 +1,45 @@
 
 
-# Account Type Click Actions + Corporate Registration Page
+## Fix: Checkout Page Crash on Invalid Product Type
 
-## Changes
+### Problem
+The checkout page at `/checkout?product=tag` crashes with "Cannot read properties of undefined (reading 'price')" because:
+- The `PRODUCTS` object only defines two keys: `"sticker"` and `"card"`
+- The URL parameter `?product=tag` passes `"tag"` as the product type
+- `PRODUCTS["tag"]` returns `undefined`, causing the crash when accessing `.price`
 
-### 1. Update AccountTypeSection.tsx
-- Make the **Individual Account** card clickable -- opens `https://dashboard.paytap.co.in/login` in a new tab (`window.open` or `<a>` with `target="_blank"`)
-- Make the **Business/Corporate Account** card clickable -- navigates to a new `/corporate-registration` route using React Router
-- Add cursor-pointer styling to both cards
+This happens because the "How It Works" page navigates to `/checkout?product=tag`, but the Checkout page doesn't recognize `"tag"` as a valid product key.
 
-### 2. Create New Page: CorporateRegistration.tsx
-A new page at `/corporate-registration` with:
-- A clean form containing these fields:
-  - Name (required, text)
-  - Company Name (required, text)
-  - Contact Mobile No (required, tel, validated for 10-digit Indian number)
-  - GST No (optional, text, validated for 15-char GST format)
-  - Email ID (required, email)
-- A "Create Corporate Account" submit button
-- On submission, store the data in a new `corporate_registrations` database table
-- After successful submission, show a success screen with the message: "Our Business support team will contact you shortly to complete your Corporate Prepaid Account KYC"
-- Include Navbar and Footer for consistent layout
+### Solution
 
-### 3. Create Database Table
-A new `corporate_registrations` table with columns:
-- `id` (uuid, primary key)
-- `name` (text, not null)
-- `company_name` (text, not null)
-- `contact_mobile` (text, not null)
-- `gst_no` (text, nullable)
-- `email` (text, not null)
-- `created_at` (timestamptz, default now())
-- RLS: Enable RLS, allow anonymous inserts (public-facing form), no select/update/delete for anon
+Two changes are needed:
 
-### 4. Add Route in App.tsx
-- Import and add `<Route path="/corporate-registration" element={<CorporateRegistration />} />`
+1. **Add `"tag"` as a valid product key in the `PRODUCTS` object** in `src/pages/Checkout.tsx` — map it to the same NFC Tag product (currently called `"sticker"`). This is the simplest fix since "tag" is the user-facing name for the sticker product.
 
-## Technical Details
+2. **Add a fallback** so that any unrecognized product parameter defaults to `"sticker"` instead of crashing. This prevents future breakage if other URLs pass unexpected values.
 
-**Files to create:**
-- `src/pages/CorporateRegistration.tsx` -- Form page with zod validation, Supabase insert, success state
+### Technical Details
 
-**Files to modify:**
-- `src/components/how-it-works-page/AccountTypeSection.tsx` -- Wrap cards with click handlers/links
-- `src/App.tsx` -- Add new route
+**File: `src/pages/Checkout.tsx`**
 
-**Database migration:**
-- Create `corporate_registrations` table with RLS policy for anonymous inserts
+- Update the `PRODUCTS` object to include a `"tag"` key that mirrors `"sticker"`:
+  ```ts
+  tag: {
+    name: "Paytap NFC Tag Plan",
+    description: "Contactless payment sticker",
+    price: 499,
+    image: paytapCheckoutSticker
+  }
+  ```
+- Update `PAYU_PAYMENT_LINKS` to include `tag_1` and `tag_2` entries
+- Add validation so that if the `product` URL param isn't a valid key in `PRODUCTS`, it falls back to `"sticker"`
+- Update `ProductType` accordingly
 
-**Validation (using zod):**
-- Name: required, max 100 chars
-- Company Name: required, max 200 chars
-- Mobile: required, 10-digit pattern
-- GST: optional, 15-char alphanumeric pattern
-- Email: required, valid email format
+Alternatively (and more cleanly): normalize `"tag"` to `"sticker"` at the point where the URL param is read, so the rest of the code stays unchanged. This avoids duplicating product data.
 
+### Approach chosen: Normalize the URL param
+
+- At line 60 and line 104, where `searchParams.get("product")` is read, add a mapping so `"tag"` is treated as `"sticker"`
+- Add a guard so any unrecognized product type defaults to `"sticker"` instead of crashing
+
+This is a minimal, safe fix that prevents the crash without duplicating product definitions.
