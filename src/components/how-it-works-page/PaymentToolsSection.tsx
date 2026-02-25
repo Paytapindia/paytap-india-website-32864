@@ -13,7 +13,7 @@ const tools = [
     label: 'NFC Payment Tag',
     icon: Nfc,
     image: paytapTag,
-    description: 'Tap-to-pay for fuel, tolls, repairs, driver expenses',
+    description: 'Tap-to-pay for fuel, fastag recharge, repairs, driver expenses',
     checkoutParam: 'tag',
   },
   {
