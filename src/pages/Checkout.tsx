@@ -42,13 +42,13 @@ const PRODUCTS = {
   sticker: {
     name: "Paytap NFC Tag Plan",
     description: "Contactless payment sticker",
-    price: 499,
+    price: 999,
     image: paytapCheckoutSticker
   },
   card: {
     name: "Prepaid Card Plan",
     description: "RuPay-powered prepaid card",
-    price: 499,
+    price: 999,
     image: paytapCard
   }
 };
@@ -362,7 +362,7 @@ const Checkout = () => {
                     }`}
                   >
                     <p className="text-sm text-muted-foreground">1 {productType === 'sticker' ? 'Tag' : 'Card'}</p>
-                    <p className="text-xl font-bold text-primary">₹499</p>
+                    <p className="text-xl font-bold text-primary">₹999</p>
                   </button>
                   <button
                     type="button"
@@ -374,7 +374,7 @@ const Checkout = () => {
                     }`}
                   >
                     <p className="text-sm text-muted-foreground">2 {productType === 'sticker' ? 'Tags' : 'Cards'}</p>
-                    <p className="text-xl font-bold text-primary">₹998</p>
+                    <p className="text-xl font-bold text-primary">₹1,998</p>
                   </button>
                 </div>
               </div>
@@ -399,7 +399,7 @@ const Checkout = () => {
                   <div className="flex items-center gap-2 text-sm">
                     <Check className="w-4 h-4 text-primary flex-shrink-0" />
                     <span className="text-muted-foreground">Lifetime Platform Access</span>
-                    <span className="ml-auto text-xs text-muted-foreground">₹4,000 value</span>
+                    <span className="ml-auto text-xs text-muted-foreground">₹10,000 value</span>
                   </div>
                   <div className="flex items-center gap-2 text-sm">
                     <Check className="w-4 h-4 text-primary flex-shrink-0" />

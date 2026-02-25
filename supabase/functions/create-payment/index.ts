@@ -66,8 +66,8 @@ serve(async (req) => {
 
     // Calculate amount server-side (prevent manipulation)
     const PRODUCT_PRICES: Record<string, number> = {
-      sticker: 499,
-      card: 499
+      sticker: 999,
+      card: 999
     };
 
     // Sanity test mode: use hardcoded values
