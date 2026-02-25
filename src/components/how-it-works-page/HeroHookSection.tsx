@@ -14,7 +14,7 @@ const HeroHookSection = () => {
           transition={{ duration: 0.7 }}
           className="text-3xl sm:text-4xl md:text-5xl lg:text-6xl font-bold text-primary-foreground mb-5 leading-tight tracking-tight"
         >
-          Take Control of Every Rupee Your Vehicles Spend.
+          Take Control of Every Rupee Your Vehicles & Teams Spend.
         </motion.h1>
         <motion.p
           initial={{ opacity: 0, y: 20 }}

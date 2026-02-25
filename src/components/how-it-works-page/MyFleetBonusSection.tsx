@@ -4,7 +4,7 @@ import { MapPin, BarChart3, Wrench, TrendingUp } from 'lucide-react';
 import ScrollSection from './ScrollSection';
 
 const features = [
-  { icon: MapPin, title: 'Vehicle Tracking' },
+  { icon: MapPin, title: 'Vehicle & Team Tracking' },
   { icon: BarChart3, title: 'Cost Analytics' },
   { icon: Wrench, title: 'Maintenance Alerts' },
   { icon: TrendingUp, title: 'Performance Insights' },

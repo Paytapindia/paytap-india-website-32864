@@ -30,7 +30,7 @@ const AccountTypeSection = () => {
             <ul className="text-muted-foreground text-sm space-y-2 text-left">
               <li>→ Instant dashboard access</li>
               <li>→ Start immediately</li>
-              <li>→ Perfect for personal vehicles</li>
+              <li>→ Perfect for personal vehicles & teams</li>
             </ul>
           </motion.div>
 
@@ -46,7 +46,7 @@ const AccountTypeSection = () => {
             <h3 className="text-xl font-bold mb-3">Business / Corporate Account</h3>
             <ul className="text-primary-foreground/80 text-sm space-y-2 text-left">
               <li>→ Dedicated onboarding</li>
-              <li>→ Multi-vehicle controls</li>
+              <li>→ Multi-vehicle & team controls</li>
               <li>→ Team management features</li>
             </ul>
           </motion.div>

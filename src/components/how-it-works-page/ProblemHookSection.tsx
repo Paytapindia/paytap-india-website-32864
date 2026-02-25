@@ -19,9 +19,9 @@ const ProblemHookSection = () => {
     <ScrollSection className="py-16 md:py-24 px-4 bg-background">
       <div ref={ref} className="max-w-4xl mx-auto text-center">
         <h2 className="text-2xl sm:text-3xl md:text-4xl font-bold text-foreground mb-3">
-          Vehicle Expenses Are Leaking Money Every Day
+          Vehicle & Team Expenses Are Leaking Money Every Day
         </h2>
-        <p className="text-muted-foreground mb-10 text-lg">Most vehicle owners face this:</p>
+        <p className="text-muted-foreground mb-10 text-lg">Most vehicle & team owners face this:</p>
 
         <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-5 gap-4 md:gap-6 mb-10">
           {problems.map((p, i) => (
