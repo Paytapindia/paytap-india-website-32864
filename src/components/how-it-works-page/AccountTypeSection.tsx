@@ -11,7 +11,7 @@ const AccountTypeSection = () => {
   const isInView = useInView(ref, { once: true, amount: 0.2 });
 
   return (
-    <ScrollSection className="py-16 md:py-24 px-4 bg-background">
+    <ScrollSection className="pt-16 md:pt-24 pb-6 md:pb-8 px-4 bg-background">
       <div ref={ref} className="max-w-4xl mx-auto text-center">
         <h2 className="text-2xl sm:text-3xl md:text-4xl font-bold text-foreground mb-10">
           Choose Your Account Type
