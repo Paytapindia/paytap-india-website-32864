@@ -39,7 +39,7 @@ const AccountTypeSection = () => {
             initial={{ opacity: 0, x: 20 }}
             animate={isInView ? { opacity: 1, x: 0 } : {}}
             transition={{ duration: 0.5, delay: 0.1 }}
-            onClick={() => navigate('/corporate-registration')}
+            onClick={() => navigate('/checkout')}
             className="p-6 rounded-2xl bg-primary text-primary-foreground border-2 border-primary shadow-sm cursor-pointer"
           >
             <Building className="w-10 h-10 mx-auto mb-4" />
