@@ -73,7 +73,7 @@ const Checkout = () => {
   const [selectedState, setSelectedState] = useState("");
   const [productType, setProductType] = useState<ProductType>(initialProduct);
   const [accountType, setAccountType] = useState<AccountType>('personal');
-  const [timeLeft, setTimeLeft] = useState(120);
+  const [timeLeft, setTimeLeft] = useState(300);
   const [showConfirmation, setShowConfirmation] = useState(false);
   const [confirmTimeLeft, setConfirmTimeLeft] = useState(15);
   const [orderTxnId, setOrderTxnId] = useState("");
@@ -338,7 +338,7 @@ const Checkout = () => {
                   <CreditCard className="w-5 h-5" />
                   <h1 className="text-xl font-bold">Activate Your Paytap Account</h1>
                 </div>
-                <div className={`flex items-center gap-1.5 px-2.5 py-1 rounded-full ${timeLeft <= 30 ? 'bg-red-500/20 text-red-300 animate-pulse' : 'bg-white/10'}`}>
+                <div className={`flex items-center gap-1.5 px-2.5 py-1 rounded-full bg-accent/20 text-accent${timeLeft <= 30 ? ' animate-pulse' : ''}`}>
                   <Timer className="w-4 h-4" />
                   <span className="text-sm font-mono font-bold">{formatTime(timeLeft)}</span>
                 </div>
@@ -489,6 +489,11 @@ const Checkout = () => {
                       <div className="flex items-center gap-2 text-sm opacity-50">
                         <X className="w-4 h-4 text-muted-foreground flex-shrink-0" />
                         <span className="text-muted-foreground">No access to ExpensePro</span>
+                      </div>
+                      <div className="flex items-center gap-2 text-sm">
+                        <Check className="w-4 h-4 text-primary flex-shrink-0" />
+                        <span className="text-muted-foreground">Need more Payment Tags 30% Discount</span>
+                        <span className="ml-auto text-xs text-muted-foreground">₹699 each</span>
                       </div>
                       <p className="text-xs text-muted-foreground pt-1">To add more vehicles or tags → Contact Support</p>
                     </>
