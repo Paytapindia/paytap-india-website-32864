@@ -448,12 +448,13 @@ const Checkout = () => {
                   {accountType === 'business' && (
                     <div className="flex items-center gap-2 text-sm">
                       <Check className="w-4 h-4 text-primary flex-shrink-0" />
-                      <span className="text-muted-foreground">Additional {productType === 'sticker' ? 'tags' : 'cards'} — ₹499 each</span>
+                      <span className="text-muted-foreground">Need more Payment Tags (Flat Offer)</span>
+                      <span className="ml-auto text-xs text-muted-foreground">₹499 each</span>
                     </div>
                   )}
                   <div className="flex items-center gap-2 text-sm">
                     <Check className="w-4 h-4 text-primary flex-shrink-0" />
-                    <span className="text-muted-foreground">Lifetime Platform Access</span>
+                    <span className="text-muted-foreground">PayTap Lifetime Access</span>
                     <span className="ml-auto text-xs text-muted-foreground">₹10,000 value</span>
                   </div>
                   <div className="flex items-center gap-2 text-sm">
@@ -465,10 +466,12 @@ const Checkout = () => {
                       <div className="flex items-center gap-2 text-sm">
                         <Check className="w-4 h-4 text-primary flex-shrink-0" />
                         <span className="text-muted-foreground">MyFleet AI Access</span>
+                        <span className="ml-auto text-xs text-muted-foreground">₹10,000 value</span>
                       </div>
                       <div className="flex items-center gap-2 text-sm">
                         <Check className="w-4 h-4 text-primary flex-shrink-0" />
                         <span className="text-muted-foreground">ExpensePro Access</span>
+                        <span className="ml-auto text-xs text-muted-foreground">₹10,000 value</span>
                       </div>
                     </>
                   )}
@@ -489,6 +492,16 @@ const Checkout = () => {
                       <p className="text-xs text-muted-foreground pt-1">To add more vehicles or tags → Contact Support</p>
                     </>
                   )}
+
+                  {/* Total Value vs You Pay */}
+                  <div className="mt-4 pt-3 border-t border-dashed border-primary/30 flex items-center justify-between">
+                    <span className="text-sm font-medium text-muted-foreground">
+                      Total Value: <span className="line-through">₹{accountType === 'business' ? '31,998' : '10,999'}</span>
+                    </span>
+                    <span className="text-base font-bold text-primary">
+                      You Pay: ₹{accountType === 'business' ? '1,998' : '999'}
+                    </span>
+                  </div>
                 </div>
               </div>
 
