@@ -73,14 +73,18 @@ export type Database = {
       }
       orders: {
         Row: {
+          account_type: string | null
           address: string | null
           amount: number
           city: string | null
+          company_name: string | null
           created_at: string
           details_pending: boolean | null
           email: string | null
+          gst: string | null
           id: string
           name: string | null
+          pan: string | null
           payment_status: string
           payu_response: Json | null
           phone: string | null
@@ -92,14 +96,18 @@ export type Database = {
           updated_at: string
         }
         Insert: {
+          account_type?: string | null
           address?: string | null
           amount: number
           city?: string | null
+          company_name?: string | null
           created_at?: string
           details_pending?: boolean | null
           email?: string | null
+          gst?: string | null
           id?: string
           name?: string | null
+          pan?: string | null
           payment_status?: string
           payu_response?: Json | null
           phone?: string | null
@@ -111,14 +119,18 @@ export type Database = {
           updated_at?: string
         }
         Update: {
+          account_type?: string | null
           address?: string | null
           amount?: number
           city?: string | null
+          company_name?: string | null
           created_at?: string
           details_pending?: boolean | null
           email?: string | null
+          gst?: string | null
           id?: string
           name?: string | null
+          pan?: string | null
           payment_status?: string
           payu_response?: Json | null
           phone?: string | null
