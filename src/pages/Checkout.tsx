@@ -355,32 +355,6 @@ const Checkout = () => {
                     <User className="w-8 h-8 text-primary mb-2" />
                     <p className="text-sm font-bold text-foreground">Personal Account</p>
                     <p className="text-2xl font-bold text-primary mt-1">₹999</p>
-                    <ul className="mt-3 space-y-1.5 text-xs text-muted-foreground">
-                      <li className="flex items-start gap-1.5">
-                        <Check className="w-3 h-3 text-primary mt-0.5 flex-shrink-0" />
-                        <span>1 {productType === 'sticker' ? 'Tag' : 'Card'}</span>
-                      </li>
-                      <li className="flex items-start gap-1.5">
-                        <Check className="w-3 h-3 text-primary mt-0.5 flex-shrink-0" />
-                        <span>Lifetime Platform</span>
-                      </li>
-                      <li className="flex items-start gap-1.5">
-                        <Check className="w-3 h-3 text-primary mt-0.5 flex-shrink-0" />
-                        <span>Smart Dashboard</span>
-                      </li>
-                      <li className="flex items-start gap-1.5">
-                        <Check className="w-3 h-3 text-primary mt-0.5 flex-shrink-0" />
-                        <span>Free Shipping</span>
-                      </li>
-                      <li className="flex items-start gap-1.5 opacity-50">
-                        <X className="w-3 h-3 text-muted-foreground mt-0.5 flex-shrink-0" />
-                        <span>No MyFleet AI X</span>
-                      </li>
-                      <li className="flex items-start gap-1.5 opacity-50">
-                        <X className="w-3 h-3 text-muted-foreground mt-0.5 flex-shrink-0" />
-                        <span>No ExpensePro</span>
-                      </li>
-                    </ul>
                     {accountType === 'personal' && (
                       <div className="absolute top-2 right-2">
                         <div className="w-5 h-5 rounded-full bg-primary flex items-center justify-center">
@@ -406,32 +380,6 @@ const Checkout = () => {
                     <Building className="w-8 h-8 text-primary mb-2" />
                     <p className="text-sm font-bold text-foreground">Business Account</p>
                     <p className="text-2xl font-bold text-primary mt-1">₹1,998</p>
-                    <ul className="mt-3 space-y-1.5 text-xs text-muted-foreground">
-                      <li className="flex items-start gap-1.5">
-                        <Check className="w-3 h-3 text-primary mt-0.5 flex-shrink-0" />
-                        <span>2 {productType === 'sticker' ? 'Tags' : 'Cards'} + ₹499/extra</span>
-                      </li>
-                      <li className="flex items-start gap-1.5">
-                        <Check className="w-3 h-3 text-primary mt-0.5 flex-shrink-0" />
-                        <span>Lifetime Platform</span>
-                      </li>
-                      <li className="flex items-start gap-1.5">
-                        <Check className="w-3 h-3 text-primary mt-0.5 flex-shrink-0" />
-                        <span>Smart Dashboard</span>
-                      </li>
-                      <li className="flex items-start gap-1.5">
-                        <Check className="w-3 h-3 text-primary mt-0.5 flex-shrink-0" />
-                        <span>MyFleet AI X Access</span>
-                      </li>
-                      <li className="flex items-start gap-1.5">
-                        <Check className="w-3 h-3 text-primary mt-0.5 flex-shrink-0" />
-                        <span>ExpensePro Access</span>
-                      </li>
-                      <li className="flex items-start gap-1.5">
-                        <Check className="w-3 h-3 text-primary mt-0.5 flex-shrink-0" />
-                        <span>Free Shipping</span>
-                      </li>
-                    </ul>
                     {accountType === 'business' && (
                       <div className="absolute top-8 right-2">
                         <div className="w-5 h-5 rounded-full bg-primary flex items-center justify-center">
@@ -516,7 +464,7 @@ const Checkout = () => {
                     <>
                       <div className="flex items-center gap-2 text-sm">
                         <Check className="w-4 h-4 text-primary flex-shrink-0" />
-                        <span className="text-muted-foreground">MyFleet AI X Access</span>
+                        <span className="text-muted-foreground">MyFleet AI Access</span>
                       </div>
                       <div className="flex items-center gap-2 text-sm">
                         <Check className="w-4 h-4 text-primary flex-shrink-0" />
@@ -532,7 +480,7 @@ const Checkout = () => {
                     <>
                       <div className="flex items-center gap-2 text-sm opacity-50">
                         <X className="w-4 h-4 text-muted-foreground flex-shrink-0" />
-                        <span className="text-muted-foreground">No access to MyFleet AI X</span>
+                        <span className="text-muted-foreground">No access to MyFleet AI</span>
                       </div>
                       <div className="flex items-center gap-2 text-sm opacity-50">
                         <X className="w-4 h-4 text-muted-foreground flex-shrink-0" />
