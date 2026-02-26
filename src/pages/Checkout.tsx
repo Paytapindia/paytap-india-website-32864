@@ -13,7 +13,8 @@ import { Badge } from "@/components/ui/badge";
 import { useToast } from "@/hooks/use-toast";
 import { getStates, getCitiesByState } from "@/data/indianStatesAndCities";
 import { useNavigate, useSearchParams } from "react-router-dom";
-import { Loader2, ShieldCheck, Truck, CreditCard, Home, Package, CheckCircle, MapPin, Check, Lock, User, Building, X } from "lucide-react";
+import { Loader2, ShieldCheck, Truck, CreditCard, Home, Package, CheckCircle, MapPin, Check, Lock, User, Building, X, Timer } from "lucide-react";
+import { Dialog, DialogContent, DialogHeader, DialogTitle, DialogDescription } from "@/components/ui/dialog";
 import { supabase } from "@/integrations/supabase/client";
 import paytapCheckoutSticker from "@/assets/paytap-checkout-sticker.png";
 import paytapCard from "@/assets/paytap-card-product.png";
@@ -72,6 +73,10 @@ const Checkout = () => {
   const [selectedState, setSelectedState] = useState("");
   const [productType, setProductType] = useState<ProductType>(initialProduct);
   const [accountType, setAccountType] = useState<AccountType>('personal');
+  const [timeLeft, setTimeLeft] = useState(120);
+  const [showConfirmation, setShowConfirmation] = useState(false);
+  const [confirmTimeLeft, setConfirmTimeLeft] = useState(15);
+  const [orderTxnId, setOrderTxnId] = useState("");
   const { toast } = useToast();
   const navigate = useNavigate();
 
@@ -160,6 +165,39 @@ const Checkout = () => {
     }
   }, []);
 
+  // 120-second checkout urgency timer
+  useEffect(() => {
+    if (showConfirmation) return; // pause main timer if confirmation is showing
+    const interval = setInterval(() => {
+      setTimeLeft((prev) => {
+        if (prev <= 1) {
+          clearInterval(interval);
+          navigate("/");
+          return 0;
+        }
+        return prev - 1;
+      });
+    }, 1000);
+    return () => clearInterval(interval);
+  }, [navigate, showConfirmation]);
+
+  // 15-second auto-redirect on confirmation popup
+  useEffect(() => {
+    if (!showConfirmation) return;
+    setConfirmTimeLeft(15);
+    const interval = setInterval(() => {
+      setConfirmTimeLeft((prev) => {
+        if (prev <= 1) {
+          clearInterval(interval);
+          navigate("/");
+          return 0;
+        }
+        return prev - 1;
+      });
+    }, 1000);
+    return () => clearInterval(interval);
+  }, [showConfirmation, navigate]);
+
   const product = PRODUCTS[productType];
   const total = product.price * quantity;
 
@@ -222,16 +260,11 @@ const Checkout = () => {
         throw new Error('Failed to save order');
       }
 
-      setOrderPlaced(true);
-      
-      toast({
-        title: "Order Placed Successfully! 🎉",
-        description: "Your order will be shipped within 3-5 business days.",
-      });
+      setOrderTxnId(txnid);
+      setShowConfirmation(true);
 
-      setTimeout(() => {
-        window.open(getPaymentLink(), '_blank');
-      }, 1000);
+      // Open payment gateway
+      window.open(getPaymentLink(), '_blank');
 
     } catch (error) {
       toast({
@@ -256,51 +289,21 @@ const Checkout = () => {
     trigger("city");
   };
 
-  const totalItemsReceived = quantity;
+  const formatTime = (seconds: number) => {
+    const m = Math.floor(seconds / 60);
+    const s = seconds % 60;
+    return `${m}:${s.toString().padStart(2, '0')}`;
+  };
 
-  // Success state UI
-  if (orderPlaced) {
-    return (
-      <div className="min-h-screen bg-muted py-8 flex items-center justify-center">
-        <div className="container mx-auto px-4 max-w-md text-center">
-          <Card className="p-8">
-            <div className="flex justify-center mb-6">
-              <CheckCircle className="w-20 h-20 text-primary" />
-            </div>
-            <h1 className="text-2xl font-bold text-foreground mb-4">Your Paytap Account is Activated! 🎉</h1>
-            <div className="bg-primary/10 border border-primary/20 rounded-lg p-3 mb-4">
-              <p className="text-primary font-semibold">
-                Platform access unlocked with {totalItemsReceived} {productType === 'sticker' ? (totalItemsReceived > 1 ? 'NFC tags' : 'NFC tag') : (totalItemsReceived > 1 ? 'prepaid cards' : 'prepaid card')}
-              </p>
-            </div>
-            <p className="text-muted-foreground mb-6">
-              Your hardware will be shipped within 3-5 business days. Thank you for joining Paytap.
-            </p>
-            <p className="text-sm text-muted-foreground mb-6">
-              A payment window has been opened. Please complete your payment there.
-            </p>
-            <div className="space-y-3">
-              <Button 
-                onClick={() => window.open(getPaymentLink(), '_blank')}
-                className="w-full bg-paytap-light hover:bg-paytap-dark"
-              >
-                <CreditCard className="mr-2 h-4 w-4" />
-                Complete Payment (₹{total})
-              </Button>
-              <Button 
-                variant="outline" 
-                onClick={() => navigate("/")}
-                className="w-full"
-              >
-                <Home className="mr-2 h-4 w-4" />
-                Go Back Home
-              </Button>
-            </div>
-          </Card>
-        </div>
-      </div>
-    );
-  }
+  const handleConfirmPayment = async () => {
+    await supabase.from('orders').update({ payment_status: 'confirmed' } as any).eq('txnid', orderTxnId);
+    navigate("/");
+  };
+
+  const handleDeclinePayment = async () => {
+    await supabase.from('orders').update({ payment_status: 'cancelled' } as any).eq('txnid', orderTxnId);
+    navigate("/");
+  };
 
   return (
     <>
@@ -330,9 +333,15 @@ const Checkout = () => {
           {/* ORDER SUMMARY CARD - HERO SECTION */}
           <Card className="shadow-lg border-0 overflow-hidden">
             <div className="bg-paytap-dark p-4 text-white">
-              <div className="flex items-center gap-2 mb-1">
-                <CreditCard className="w-5 h-5" />
-                <h1 className="text-xl font-bold">Activate Your Paytap Account</h1>
+              <div className="flex items-center justify-between mb-1">
+                <div className="flex items-center gap-2">
+                  <CreditCard className="w-5 h-5" />
+                  <h1 className="text-xl font-bold">Activate Your Paytap Account</h1>
+                </div>
+                <div className={`flex items-center gap-1.5 px-2.5 py-1 rounded-full ${timeLeft <= 30 ? 'bg-red-500/20 text-red-300 animate-pulse' : 'bg-white/10'}`}>
+                  <Timer className="w-4 h-4" />
+                  <span className="text-sm font-mono font-bold">{formatTime(timeLeft)}</span>
+                </div>
               </div>
               <p className="text-white/80 text-sm">One-time platform access fee — includes hardware</p>
             </div>
@@ -747,6 +756,40 @@ const Checkout = () => {
         </form>
       </div>
     </div>
+
+      {/* Payment Confirmation Dialog */}
+      <Dialog open={showConfirmation} onOpenChange={() => {}}>
+        <DialogContent className="sm:max-w-md [&>button]:hidden">
+          <DialogHeader className="text-center">
+            <div className="flex justify-center mb-4">
+              <Package className="w-16 h-16 text-primary" />
+            </div>
+            <DialogTitle className="text-xl">Looks like you have placed an order to get access</DialogTitle>
+            <DialogDescription className="text-muted-foreground mt-2">
+              Did you complete the payment successfully?
+            </DialogDescription>
+          </DialogHeader>
+          <div className="space-y-3 mt-4">
+            <Button 
+              onClick={handleConfirmPayment}
+              className="w-full h-12 bg-paytap-dark hover:bg-[#031d4a] text-base font-semibold"
+            >
+              <CheckCircle className="mr-2 h-5 w-5" />
+              Yes, Payment Successful
+            </Button>
+            <Button 
+              variant="outline"
+              onClick={handleDeclinePayment}
+              className="w-full h-12 text-base"
+            >
+              No, Will Try After Sometime
+            </Button>
+          </div>
+          <p className="text-center text-xs text-muted-foreground mt-3">
+            Redirecting to home in <span className="font-bold text-accent">{confirmTimeLeft}s</span>...
+          </p>
+        </DialogContent>
+      </Dialog>
     </>
   );
 };
