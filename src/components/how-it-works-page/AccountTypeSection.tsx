@@ -1,7 +1,8 @@
 import { motion, useInView } from 'framer-motion';
 import { useRef } from 'react';
-import { User, Building } from 'lucide-react';
+import { User, Building, ArrowRight } from 'lucide-react';
 import { useNavigate } from 'react-router-dom';
+import { Button } from '@/components/ui/button';
 import ScrollSection from './ScrollSection';
 
 const AccountTypeSection = () => {
@@ -55,6 +56,22 @@ const AccountTypeSection = () => {
         <p className="text-muted-foreground font-medium">
           Whether you manage 1 or 25+ Vehicle or team, PayTap gets you started instantly - no paperwork, no waiting, no banking friction
         </p>
+
+        <motion.div
+          initial={{ opacity: 0, y: 10 }}
+          animate={isInView ? { opacity: 1, y: 0 } : {}}
+          transition={{ duration: 0.5, delay: 0.3 }}
+          className="mt-6"
+        >
+          <Button
+            variant="outline"
+            onClick={() => navigate('/security')}
+            className="group rounded-full px-6"
+          >
+            Worried about security? Click here
+            <ArrowRight className="ml-2 w-4 h-4 group-hover:translate-x-1 transition-transform" />
+          </Button>
+        </motion.div>
       </div>
     </ScrollSection>
   );
