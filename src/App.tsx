@@ -23,6 +23,7 @@ import NotFound from "./pages/NotFound";
 import FAQ from "./pages/FAQ";
 
 import HowItWorks from "./pages/HowItWorks";
+import Security from "./pages/Security";
 
 import Newsroom from "./pages/Newsroom";
 import PayAtPump from "./pages/PayAtPump";
@@ -55,6 +56,7 @@ const App = () => (
               <Route path="/how-it-works" element={<HowItWorks />} />
               <Route path="/newsroom" element={<Newsroom />} />
               <Route path="/pay-at-pump" element={<PayAtPump />} />
+              <Route path="/security" element={<Security />} />
               
               <Route path="/support" element={<Support />} />
               <Route path="/terms-and-conditions" element={<TermsAndConditions />} />
