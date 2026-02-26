@@ -457,10 +457,6 @@ const Checkout = () => {
                     <span className="text-muted-foreground">PayTap Lifetime Access</span>
                     <span className="ml-auto text-xs text-muted-foreground">₹10,000 value</span>
                   </div>
-                  <div className="flex items-center gap-2 text-sm">
-                    <Check className="w-4 h-4 text-primary flex-shrink-0" />
-                    <span className="text-muted-foreground">Smart Controls Dashboard</span>
-                  </div>
                   {accountType === 'business' && (
                     <>
                       <div className="flex items-center gap-2 text-sm">
@@ -496,7 +492,7 @@ const Checkout = () => {
                   {/* Total Value vs You Pay */}
                   <div className="mt-4 pt-3 border-t border-dashed border-primary/30 flex items-center justify-between">
                     <span className="text-sm font-medium text-muted-foreground">
-                      Total Value: <span className="line-through">₹{accountType === 'business' ? '31,998' : '10,999'}</span>
+                      Total Value: <span className="line-through text-accent">₹{accountType === 'business' ? '31,998' : '10,999'}</span>
                     </span>
                     <span className="text-base font-bold text-primary">
                       You Pay: ₹{accountType === 'business' ? '1,998' : '999'}
