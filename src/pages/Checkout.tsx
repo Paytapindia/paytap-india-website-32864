@@ -201,21 +201,45 @@ const Checkout = () => {
   const product = PRODUCTS[productType];
   const total = product.price * quantity;
 
+  const panRegex = /^[A-Z]{5}[0-9]{4}[A-Z]{1}$/i;
+  const gstRegex = /^[0-9]{2}[A-Z]{5}[0-9]{4}[A-Z]{1}[1-9A-Z]{1}Z[0-9A-Z]{1}$/i;
+
+  const [fieldErrors, setFieldErrors] = useState<Record<string, string>>({});
+
   const onSubmit = async (data: CheckoutFormData) => {
-    // Validate conditional fields
-    if (accountType === 'personal' && (!data.pan || data.pan.trim().length === 0)) {
-      toast({ title: "PAN Number Required", description: "Please enter your PAN number for personal account.", variant: "destructive" });
-      return;
+    const newFieldErrors: Record<string, string> = {};
+
+    if (accountType === 'personal') {
+      if (!data.pan || data.pan.trim().length === 0) {
+        newFieldErrors.pan = "PAN number is required";
+      } else if (!panRegex.test(data.pan.trim())) {
+        newFieldErrors.pan = "Invalid PAN format (e.g. ABCDE1234F)";
+      }
     }
+
     if (accountType === 'business') {
-      if (!data.gst || data.gst.trim().length === 0) {
-        toast({ title: "GST Number Required", description: "Please enter your GST number for business account.", variant: "destructive" });
-        return;
-      }
       if (!data.companyName || data.companyName.trim().length === 0) {
-        toast({ title: "Company Name Required", description: "Please enter your registered company name.", variant: "destructive" });
-        return;
+        newFieldErrors.companyName = "Company name is required";
       }
+      const hasGst = data.gst && data.gst.trim().length > 0;
+      const hasPan = data.pan && data.pan.trim().length > 0;
+      if (!hasGst && !hasPan) {
+        newFieldErrors.gst = "Either GST or PAN number is required";
+        newFieldErrors.pan = "Either GST or PAN number is required";
+      } else {
+        if (hasGst && !gstRegex.test(data.gst!.trim())) {
+          newFieldErrors.gst = "Invalid GST format (e.g. 22AAAAA0000A1Z5)";
+        }
+        if (hasPan && !panRegex.test(data.pan!.trim())) {
+          newFieldErrors.pan = "Invalid PAN format (e.g. ABCDE1234F)";
+        }
+      }
+    }
+
+    setFieldErrors(newFieldErrors);
+    if (Object.keys(newFieldErrors).length > 0) {
+      toast({ title: "Validation Error", description: Object.values(newFieldErrors)[0], variant: "destructive" });
+      return;
     }
 
     // Fire purchase_intent event before processing
@@ -251,7 +275,7 @@ const Checkout = () => {
         payment_status: 'pending',
         details_pending: false,
         account_type: accountType,
-        pan: accountType === 'personal' ? (data.pan?.trim() || null) : null,
+        pan: data.pan?.trim() || null,
         gst: accountType === 'business' ? (data.gst?.trim() || null) : null,
         company_name: accountType === 'business' ? (data.companyName?.trim() || null) : null,
       } as any);
@@ -600,8 +624,9 @@ const Checkout = () => {
                         {...register("pan")}
                         placeholder="e.g. ABCDE1234F"
                         maxLength={10}
-                        className="mt-1 uppercase"
+                        className={`mt-1 uppercase ${fieldErrors.pan ? "border-destructive" : ""}`}
                       />
+                      {fieldErrors.pan && <p className="text-destructive text-xs mt-1">{fieldErrors.pan}</p>}
                     </div>
                   ) : (
                     <>
@@ -611,18 +636,31 @@ const Checkout = () => {
                           id="companyName"
                           {...register("companyName")}
                           placeholder="Your company name"
-                          className="mt-1"
+                          className={`mt-1 ${fieldErrors.companyName ? "border-destructive" : ""}`}
                         />
+                        {fieldErrors.companyName && <p className="text-destructive text-xs mt-1">{fieldErrors.companyName}</p>}
                       </div>
                       <div>
-                        <Label htmlFor="gst" className="text-xs text-muted-foreground">GST Number *</Label>
+                        <Label htmlFor="gst" className="text-xs text-muted-foreground">GST Number (or provide PAN below) *</Label>
                         <Input
                           id="gst"
                           {...register("gst")}
                           placeholder="e.g. 22AAAAA0000A1Z5"
                           maxLength={15}
-                          className="mt-1 uppercase"
+                          className={`mt-1 uppercase ${fieldErrors.gst ? "border-destructive" : ""}`}
                         />
+                        {fieldErrors.gst && <p className="text-destructive text-xs mt-1">{fieldErrors.gst}</p>}
+                      </div>
+                      <div>
+                        <Label htmlFor="pan" className="text-xs text-muted-foreground">PAN Number (if no GST)</Label>
+                        <Input
+                          id="pan"
+                          {...register("pan")}
+                          placeholder="e.g. ABCDE1234F"
+                          maxLength={10}
+                          className={`mt-1 uppercase ${fieldErrors.pan ? "border-destructive" : ""}`}
+                        />
+                        {fieldErrors.pan && <p className="text-destructive text-xs mt-1">{fieldErrors.pan}</p>}
                       </div>
                     </>
                   )}
