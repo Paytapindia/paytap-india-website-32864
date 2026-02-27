@@ -1,87 +1,39 @@
 
 
-## Security and System Page + "Worried about security?" Button
+## Make PAN / GST Mandatory in Checkout Form
 
 ### Overview
-Create a premium, Apple-style "Security & System" page at `/security` and add a navigation button below the Account Type section on the How It Works page.
+Update the checkout form so that:
+- **Personal Account**: PAN number is mandatory (with format validation)
+- **Business Account**: Either GST number OR PAN number is mandatory (at least one must be filled), plus Company Name remains mandatory
 
----
+### Changes to `src/pages/Checkout.tsx`
 
-### 1. Add Button to AccountTypeSection
+**1. Update Zod schema (lines 33-44)**
+- Add PAN format validation: regex `/^[A-Z]{5}[0-9]{4}[A-Z]{1}$/i` (10-char alphanumeric Indian PAN format)
+- Add GST format validation: regex `/^[0-9]{2}[A-Z]{5}[0-9]{4}[A-Z]{1}[1-9A-Z]{1}Z[0-9A-Z]{1}$/i` (15-char GST format)
+- Keep pan, gst, companyName as optional at schema level (conditional logic handled via `superRefine`)
+- Add `superRefine` to enforce:
+  - If personal: PAN is required and must match format
+  - If business: companyName is required; at least one of GST or PAN must be provided with valid format
 
-**File: `src/components/how-it-works-page/AccountTypeSection.tsx`**
+Note: Since `accountType` is React state (not part of the form), the `superRefine` won't have direct access. Instead, keep the manual validation in `onSubmit` but enhance it with format checks and inline error display.
 
-Below the existing paragraph text ("Whether you manage 1 or 25+..."), add a button:
-- Text: "Worried about security? Click here"
-- Uses `navigate('/security')` on click
-- Styled with outline variant, includes a right arrow icon
-- Animated fade-in on scroll
+**2. Enhanced onSubmit validation (lines 204-219)**
+- Personal: Validate PAN is filled AND matches format `/^[A-Z]{5}[0-9]{4}[A-Z]{1}$/i`
+- Business: Validate companyName is filled; validate that at least one of GST or PAN is provided with correct format
 
----
+**3. Add PAN field to Business account section (after line 626)**
+- Add an optional PAN input field below the GST field for business accounts
+- Label: "PAN Number (if no GST)"
+- This gives business users the option to provide PAN instead of GST
 
-### 2. Create the Security Page
+**4. Add inline error styling**
+- Show red border on PAN/GST fields when validation fails (similar to other required fields)
+- Add error message text below the fields
 
-**New file: `src/pages/Security.tsx`**
-
-A full premium page with deep navy (#021a42) background and PayTap pink (#f6245b) accents. Six sections:
-
-**Section 1 -- Hero**
-- Deep navy background
-- Large headline: "Security Built for Vehicles. Control Built for Owners."
-- Subtext about bank-grade infrastructure, physical tap-only, full owner control
-- CTA: "See How It Works" (scrolls down)
-- Subtle animated NFC wave glow effect using framer-motion
-
-**Section 2 -- Core Security Block (4 Cards Grid)**
-- 4 minimal rounded cards with icons and one-line descriptions
-- Physical Tap Only / Registered POS Required / Instant Owner Alerts / On/Off Control
-- Cards fade-in on scroll using framer-motion + useInView
-- White cards on dark background
-
-**Section 3 -- Snake Flow Security Diagram (Main Highlight)**
-- Title: "How Paytap Protects Every Vehicle"
-- Vertical flow with a connecting pink (#f6245b) animated line
-- 6 step cards connected by the line, each with bullet points
-- Steps: Business Onboards -> Secure Account Created -> Dashboard Activated -> Tag Installed -> Controlled Spending -> Real-Time Protection
-- Final bubble: "No Cash. No Blind Spending. Full Control."
-- The connecting line animates as user scrolls (using framer-motion scroll progress)
-- On mobile, becomes a simple vertical stack
-
-**Section 4 -- "What If" Objection Accordion**
-- Uses existing Radix Accordion component
-- 3 questions: tag tapped while parked, tag stolen, remote hack
-- Clean minimal expand/collapse with clear answers
-- Dark background, white text
-
-**Section 5 -- Trust Section**
-- Subtle section with RuPay/NPCI trust line
-- Uses existing RBIIcon and NPCIIcon components
-- Text: "Paytap operates on RuPay payment infrastructure governed by NPCI"
-
-**Section 6 -- Closing CTA**
-- Large centered text: "Your Fleet. Your Rules. Your Money."
-- Subtext about being safer than cash
-- CTA button: "Activate Your Fleet" linking to /checkout
-
----
-
-### 3. Add Route
-
-**File: `src/App.tsx`**
-
-- Import the new Security page
-- Add route: `<Route path="/security" element={<Security />} />`
-
----
-
-### Technical Details
-
-- Uses framer-motion for scroll-triggered animations (fade-in, slide-up, line drawing)
-- Snake line uses `useScroll` + `useTransform` from framer-motion to animate a vertical line's `scaleY` based on scroll progress
-- Accordion from existing `@radix-ui/react-accordion` (already installed)
-- Existing icon components (RBIIcon, NPCIIcon) reused in trust section
-- Navbar and FooterSection components reused for consistent layout
-- Fully responsive -- snake becomes vertical stack on mobile
-- Brand colors: bg-[#021a42] for dark sections, text-[#f6245b] for accent lines/highlights
-- Helmet for SEO metadata
-
+### Technical Notes
+- PAN format: 5 letters + 4 digits + 1 letter (e.g., ABCDE1234F)
+- GST format: 2 digits + 5 letters + 4 digits + 1 letter + 1 alphanumeric + Z + 1 alphanumeric (e.g., 22AAAAA0000A1Z5)
+- The form uses `react-hook-form` with `zodResolver`, but conditional validation based on `accountType` state is handled in `onSubmit`
+- Toast notifications will show specific error messages for missing/invalid fields
