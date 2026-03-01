@@ -17,7 +17,7 @@ const products = [
     name: "ExpensePro",
     description: "Real-time expense tracking and reimbursement workflows",
     icon: Receipt,
-    link: "https://www.expensepro.in",
+    link: "https://expensepro.in/",
   },
 ];
 
