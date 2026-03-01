@@ -1,87 +1,50 @@
 
 
-## Premium Hero Section Redesign -- Apple x Stripe x Brex Level
+## Hero Section: Mobile Optimization + Expense Dashboard Widget
 
-### Overview
-Complete rewrite of `src/components/HeroSection.tsx` to deliver a premium fintech infrastructure hero with white background, luxurious spacing, floating visual composition with subtle animations, and an NFC hover ripple micro-interaction.
+### What Changes
 
-### Layout Structure
+1. **Mobile layout optimization** -- fix spacing, sizing, and alignment of the visual stack so nothing overlaps or gets cut off on small screens
+2. **Replace the generic "Statement" widget** with a proper **Expense Dashboard** showing categorized spending (Fuel, Toll, Service) with visual bars
+3. **Better mobile visual stack arrangement** -- on mobile, reduce the visual stack height and reposition elements to avoid overlap
+
+### File: `src/components/HeroSection.tsx`
+
+#### 1. Mobile Content Fixes
+- Tighten padding: `pt-24` on mobile (currently `pt-28` wastes space above fold)
+- Reduce visual stack container height on mobile from `h-[340px]` to `h-[300px]` for tighter layout
+- Reduce `mb` spacing between content and visual stack on mobile
+
+#### 2. Replace "Mini Statement" with Expense Dashboard
+Remove the bottom-right "Statement" placeholder widget (lines 253-267) and replace with a proper expense breakdown card:
 
 ```text
-+---------------------------------------------------------------+
-|                      WHITE BACKGROUND                         |
-|                                                               |
-|   LEFT COLUMN                    RIGHT COLUMN                 |
-|   +--------------------------+   +-------------------------+  |
-|   |                          |   |   Floating Composition  |  |
-|   |  HEADLINE (tight track)  |   |                         |  |
-|   |  Control How Money Moves |   |   [Dashboard UI]        |  |
-|   |  Across Your Operations  |   |       [PayTap Card]     |  |
-|   |                          |   |   [Balance Widget]      |  |
-|   |  SUBTITLE (longer copy)  |   |      [NFC Icon]         |  |
-|   |                          |   |                         |  |
-|   |  [Pills Row]             |   |   Slow float animation  |  |
-|   |                          |   |   Mouse parallax shift  |  |
-|   |  [Activate Paytap ->]    |   +-------------------------+  |
-|   |                          |                                |
-|   |  Trust line (small)      |                                |
-|   +--------------------------+                                |
-|                                                               |
-|            [Stats: 8L+  |  50K+  |  99.9%]                   |
-+---------------------------------------------------------------+
++---------------------------+
+|  Expense Breakdown        |
+|                           |
+|  Fuel     ████████  62%   |
+|  Toll     █████     28%   |
+|  Service  ██        10%   |
+|                           |
+|  Total: ₹18,240           |
++---------------------------+
 ```
 
-### Changes
+- White card, thin border, soft shadow (matching other widgets)
+- 3 rows: Fuel, Toll, Service -- each with a colored progress bar and percentage
+- Fuel bar uses primary color, Toll uses accent, Service uses muted
+- Small "Total" line at the bottom
 
-**File: `src/components/HeroSection.tsx`** -- Full rewrite
+#### 3. Mobile Visual Stack Repositioning
+- **Dashboard mini UI** (top-left): Keep but reduce width to `w-28` on mobile, position `top-0 left-0`
+- **PayTap Card** (center): Reduce to `w-52` on mobile, keep centered
+- **Balance Widget** (top-right): Reduce to `w-24` on mobile, position `top-0 right-0`
+- **Expense Dashboard** (new, bottom-right): `w-28` on mobile, position `bottom-4 right-0`
+- **NFC Icon** (bottom-left): Keep at `bottom-4 left-2`, size `w-10 h-10` on mobile
+- Remove float animations on mobile to prevent layout jank (keep static positions)
 
-#### Left Column (Content)
-1. **Headline**: Keep exact text "Control How Money Moves Across Your Operations". Style: `text-[#021a42]`, tight tracking (`tracking-[-0.03em]`), large sizes (`text-4xl` to `text-6xl`), `font-semibold`, left-aligned on desktop
-2. **Subtitle**: Replace current short subtitle with the full paragraph provided. Style: `text-[#021a42]/60`, `text-base md:text-lg`, generous `leading-[1.7]`, `max-w-xl`
-3. **Feature Pills**: 4 pills with outlined icons (stroke only, no fill):
-   - Wifi icon -- "NFC Payment Layer"
-   - LayoutDashboard icon -- "Live Transaction Dashboard"  
-   - Users icon -- "Fleet + Team Controls"
-   - Shield icon -- "Enterprise-grade Security"
-   - Style: `border border-[#021a42]/15`, `rounded-[12px]`, `px-4 py-2.5`, white bg, hover border transitions to `#f6245b/40`. Tactile feel with subtle shadow on hover
-4. **CTA Button**: "Activate Paytap Platform" with ArrowRight icon
-   - `bg-[#021a42]`, white text, hover `bg-[#f6245b]`
-   - `rounded-[14px]`, generous padding (`px-8 py-4 md:px-10 md:py-5`)
-   - Extremely subtle shadow (`shadow-[0_2px_8px_rgba(2,26,66,0.12)]`)
-   - No Unlock icon (cleaner), just text + arrow
-5. **Trust Line**: "Used by operators, businesses, and enterprises across India." -- small, muted, left-aligned
+#### 4. Feature Pills Mobile Fix
+- On mobile, reduce pill padding to `px-3 py-2` and text to `text-xs` so they wrap cleanly in 2 rows instead of overflowing
 
-#### Right Column (Visual Stack)
-1. **Mouse parallax**: Track mouse position with `onMouseMove` on the section, apply subtle `transform: translate()` (2-3px max) to visual elements based on cursor offset from center
-2. **Floating animation**: Use CSS keyframes (`float-slow`) with different durations per element (5s, 7s, 6s) for organic movement
-3. **Elements** (same visual pieces, refined):
-   - PayTap Card (center, slight rotation, keeps existing design)
-   - Dashboard mini UI (top-left, white bg, very subtle border)
-   - Balance widget (top-right, white card)
-   - NFC icon (bottom-left, `#021a42` circle with white Wifi icon)
-4. **NFC Ripple micro-interaction**: When cursor is near the NFC icon (within ~150px), emit CSS ripple rings from the icon. 2-3 concentric circles that expand and fade out. Use `onMouseMove` distance calculation to trigger/untrigger a state boolean
-
-#### Visual Refinements
-- Remove the gradient background overlay -- pure white (`bg-white`)
-- Remove the "How It Works" button from the visual stack (it clutters)
-- Soften all shadows to `shadow-[0_4px_24px_rgba(0,0,0,0.06)]` level
-- Dashboard mockup: keep white bg, remove gray-800 monitor frame -- use a clean white card with thin border instead
-- Remove stats section from hero (or keep but make more minimal with thin separator above)
-
-#### Color Rules (Strict)
-- Primary text: `#021a42`
-- Muted text: `#021a42` at 50-60% opacity
-- Accent `#f6245b`: only on pill hover borders, CTA hover bg, and NFC ripple rings
-- Background: pure `#ffffff`
-- No gradients, no colored backgrounds, no heavy shadows
-
-### Technical Notes
-- Keep `memo()` wrapper for performance
-- Mouse parallax uses `useRef` + `onMouseMove` with `requestAnimationFrame` for smoothness
-- NFC ripple uses CSS `@keyframes` (added to tailwind config) with conditional class toggle
-- Add new keyframe `float-slow` to `tailwind.config.ts` for the gentle floating motion
-- Keep `useNavigate` for CTA click to `/checkout`
-- Keep `useTranslation` for stats labels
-- Mobile: visual stack stacks below content, parallax disabled, floating animation kept but gentler
-- Remove unused imports (PlayCircle, Unlock, Bot, Headphones, etc.)
+### No other files changed. No new dependencies.
 
