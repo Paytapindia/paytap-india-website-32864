@@ -8,7 +8,7 @@ const StickyMobileCTA = memo(() => {
   const navigate = useNavigate();
 
   const handleActivate = () => {
-    navigate('/how-it-works');
+    navigate('/checkout');
   };
 
   useEffect(() => {
