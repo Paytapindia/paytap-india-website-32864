@@ -298,7 +298,7 @@ const ChaosSimulation = () => {
               initial={{ opacity: 0, y: 10 }}
               animate={{ opacity: 1, y: 0 }}
               transition={{ duration: 0.5 }}
-              className="absolute bottom-8 left-1/2 -translate-x-1/2 z-20 flex items-center gap-3 md:gap-4"
+              className="absolute bottom-8 inset-x-0 z-20 flex items-center justify-center gap-3 md:gap-4"
             >
               <button
                 onClick={() => goTo('prev')}
