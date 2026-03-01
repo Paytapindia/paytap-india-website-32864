@@ -1,77 +1,87 @@
 
 
-## Redesign Security + How It Works Sections (Cinematic Style)
+## Premium Hero Section Redesign -- Apple x Stripe x Brex Level
 
-### What Changes
-Redesign the "Built Like a Bank. Designed for Vehicles." security section and the "How It Works" flow section to match the immersive, cinematic quality of the Chaos Simulation -- using staged reveal animations, larger visuals, and more dramatic presentation instead of simple icon grids.
+### Overview
+Complete rewrite of `src/components/HeroSection.tsx` to deliver a premium fintech infrastructure hero with white background, luxurious spacing, floating visual composition with subtle animations, and an NFC hover ripple micro-interaction.
 
-### Security Section -- "Built Like a Bank"
-**Current**: Simple 3-column grid of small icon+text cards.
-**New**: A full-screen cinematic section with a staged reveal. Each security feature appears one at a time as a large, prominent card with a glowing icon, bold text, and a subtle pulse animation. The section uses a staggered vertical layout on scroll-into-view.
-
-- Each of the 5 security items gets its own animated row/card with:
-  - Large icon (48px) with a soft glow ring behind it
-  - Bold feature text with a subtle description line
-  - Glassmorphic card with `#f6245b` border accent on hover
-- After all 5 items reveal, the tagline "Your vehicle isn't just moving. It's transacting." fades in with emphasis styling
-- Background: subtle radial gradient pulse (similar to chaos section's red glow)
-
-### How It Works Flow -- "6 Steps"
-**Current**: Flat horizontal icon row (desktop) / vertical list (mobile) with a scroll-linked line.
-**New**: A cinematic step-by-step journey with numbered nodes connected by an animated path line.
-
-- Each step gets a larger presentation:
-  - Numbered circle (1-6) with gradient fill matching the chaos nav dots style
-  - Icon inside a glowing container
-  - Label below with fade-up animation
-- Desktop: Horizontal timeline with an animated connector line that draws as user scrolls (keep existing scroll-linked logic but make nodes bigger and more dramatic)
-- Mobile: Vertical timeline with a drawing line on the left side connecting each step
-- The closing tagline "One connected ecosystem. Zero manual work." appears with a typewriter-style or word-by-word reveal
-
-### Technical Details
-
-**File: `src/pages/HowItWorks.tsx`**
-
-1. **Security section (lines 476-506)**: Replace the simple grid with staggered animated cards
-   - Each security item rendered as a full-width glassmorphic row with icon glow
-   - Use `useInView` per item or staggered `custom={i}` delays with larger visual weight
-   - Add a background radial gradient similar to the chaos section
-
-2. **How It Works flow section (lines 508-563)**: Enhance the step nodes
-   - Larger node circles (96px desktop, 56px mobile) with gradient backgrounds
-   - Keep the `scrollYProgress` line animation but make the line thicker and more visible
-   - Add step numbers inside the circles alongside icons
-   - Mobile: switch from simple flex row to a vertical timeline with a left-side connector line
-
-3. No new dependencies -- uses existing framer-motion, lucide-react, and Tailwind classes
-
-### Visual Reference
+### Layout Structure
 
 ```text
-SECURITY SECTION:
-+--------------------------------------------------+
-|                                                  |
-|   Built Like a Bank. Designed for Vehicles.      |
-|                                                  |
-|   [glow] Shield  -- No random tap payments       |
-|   [glow] Card    -- Person-to-Merchant only      |
-|   [glow] Lock    -- Powered by RuPay network     |
-|   [glow] Toggle  -- Turn tag ON/OFF anytime      |
-|   [glow] Print   -- PIN required above 5,000     |
-|                                                  |
-|   "Your vehicle isn't just moving.               |
-|    It's transacting."                            |
-|                                                  |
-+--------------------------------------------------+
-
-HOW IT WORKS FLOW:
-+--------------------------------------------------+
-|              How It Works                        |
-|                                                  |
-|  (1)-----(2)-----(3)-----(4)-----(5)-----(6)     |
-|  Create  Assign  Load   Set    Vehicle  You      |
-|  Account Vehicles Balance Limits Pays    Relax   |
-|                                                  |
-|  "One connected ecosystem. Zero manual work."    |
-+--------------------------------------------------+
++---------------------------------------------------------------+
+|                      WHITE BACKGROUND                         |
+|                                                               |
+|   LEFT COLUMN                    RIGHT COLUMN                 |
+|   +--------------------------+   +-------------------------+  |
+|   |                          |   |   Floating Composition  |  |
+|   |  HEADLINE (tight track)  |   |                         |  |
+|   |  Control How Money Moves |   |   [Dashboard UI]        |  |
+|   |  Across Your Operations  |   |       [PayTap Card]     |  |
+|   |                          |   |   [Balance Widget]      |  |
+|   |  SUBTITLE (longer copy)  |   |      [NFC Icon]         |  |
+|   |                          |   |                         |  |
+|   |  [Pills Row]             |   |   Slow float animation  |  |
+|   |                          |   |   Mouse parallax shift  |  |
+|   |  [Activate Paytap ->]    |   +-------------------------+  |
+|   |                          |                                |
+|   |  Trust line (small)      |                                |
+|   +--------------------------+                                |
+|                                                               |
+|            [Stats: 8L+  |  50K+  |  99.9%]                   |
++---------------------------------------------------------------+
 ```
+
+### Changes
+
+**File: `src/components/HeroSection.tsx`** -- Full rewrite
+
+#### Left Column (Content)
+1. **Headline**: Keep exact text "Control How Money Moves Across Your Operations". Style: `text-[#021a42]`, tight tracking (`tracking-[-0.03em]`), large sizes (`text-4xl` to `text-6xl`), `font-semibold`, left-aligned on desktop
+2. **Subtitle**: Replace current short subtitle with the full paragraph provided. Style: `text-[#021a42]/60`, `text-base md:text-lg`, generous `leading-[1.7]`, `max-w-xl`
+3. **Feature Pills**: 4 pills with outlined icons (stroke only, no fill):
+   - Wifi icon -- "NFC Payment Layer"
+   - LayoutDashboard icon -- "Live Transaction Dashboard"  
+   - Users icon -- "Fleet + Team Controls"
+   - Shield icon -- "Enterprise-grade Security"
+   - Style: `border border-[#021a42]/15`, `rounded-[12px]`, `px-4 py-2.5`, white bg, hover border transitions to `#f6245b/40`. Tactile feel with subtle shadow on hover
+4. **CTA Button**: "Activate Paytap Platform" with ArrowRight icon
+   - `bg-[#021a42]`, white text, hover `bg-[#f6245b]`
+   - `rounded-[14px]`, generous padding (`px-8 py-4 md:px-10 md:py-5`)
+   - Extremely subtle shadow (`shadow-[0_2px_8px_rgba(2,26,66,0.12)]`)
+   - No Unlock icon (cleaner), just text + arrow
+5. **Trust Line**: "Used by operators, businesses, and enterprises across India." -- small, muted, left-aligned
+
+#### Right Column (Visual Stack)
+1. **Mouse parallax**: Track mouse position with `onMouseMove` on the section, apply subtle `transform: translate()` (2-3px max) to visual elements based on cursor offset from center
+2. **Floating animation**: Use CSS keyframes (`float-slow`) with different durations per element (5s, 7s, 6s) for organic movement
+3. **Elements** (same visual pieces, refined):
+   - PayTap Card (center, slight rotation, keeps existing design)
+   - Dashboard mini UI (top-left, white bg, very subtle border)
+   - Balance widget (top-right, white card)
+   - NFC icon (bottom-left, `#021a42` circle with white Wifi icon)
+4. **NFC Ripple micro-interaction**: When cursor is near the NFC icon (within ~150px), emit CSS ripple rings from the icon. 2-3 concentric circles that expand and fade out. Use `onMouseMove` distance calculation to trigger/untrigger a state boolean
+
+#### Visual Refinements
+- Remove the gradient background overlay -- pure white (`bg-white`)
+- Remove the "How It Works" button from the visual stack (it clutters)
+- Soften all shadows to `shadow-[0_4px_24px_rgba(0,0,0,0.06)]` level
+- Dashboard mockup: keep white bg, remove gray-800 monitor frame -- use a clean white card with thin border instead
+- Remove stats section from hero (or keep but make more minimal with thin separator above)
+
+#### Color Rules (Strict)
+- Primary text: `#021a42`
+- Muted text: `#021a42` at 50-60% opacity
+- Accent `#f6245b`: only on pill hover borders, CTA hover bg, and NFC ripple rings
+- Background: pure `#ffffff`
+- No gradients, no colored backgrounds, no heavy shadows
+
+### Technical Notes
+- Keep `memo()` wrapper for performance
+- Mouse parallax uses `useRef` + `onMouseMove` with `requestAnimationFrame` for smoothness
+- NFC ripple uses CSS `@keyframes` (added to tailwind config) with conditional class toggle
+- Add new keyframe `float-slow` to `tailwind.config.ts` for the gentle floating motion
+- Keep `useNavigate` for CTA click to `/checkout`
+- Keep `useTranslation` for stats labels
+- Mobile: visual stack stacks below content, parallax disabled, floating animation kept but gentler
+- Remove unused imports (PlayCircle, Unlock, Bot, Headphones, etc.)
+
