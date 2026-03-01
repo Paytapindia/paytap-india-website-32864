@@ -3,7 +3,7 @@ import { Helmet } from 'react-helmet-async';
 import { motion, useScroll, useTransform, useInView, AnimatePresence } from 'framer-motion';
 import { useRef, useState, useEffect, useCallback } from 'react';
 import {
-  ChevronDown, X, Check, Shield, Lock, ToggleRight, CreditCard, Fingerprint,
+  ChevronDown, ChevronLeft, ChevronRight, X, Check, Shield, Lock, ToggleRight, CreditCard, Fingerprint,
   UserPlus, Car, Wallet, SlidersHorizontal, Zap, Smile, ArrowRight, Phone,
   Bell, FileText, MessageCircle, Receipt, User
 } from 'lucide-react';
@@ -38,22 +38,39 @@ const chaosPositions = [
 
 const chaosIcons = [Bell, FileText, Phone, MessageCircle, Receipt, User, CreditCard, Bell];
 
+const TOTAL_FRAMES = 7;
+
 const ChaosSimulation = () => {
   const sectionRef = useRef<HTMLDivElement>(null);
   const isInView = useInView(sectionRef, { once: true, amount: 0.15 });
   const [frame, setFrame] = useState(0);
+  const [manualMode, setManualMode] = useState(false);
+  const [showNav, setShowNav] = useState(false);
   const isMobile = typeof window !== 'undefined' && window.innerWidth < 768;
 
+  // Show nav arrows after 1.5s delay
   useEffect(() => {
     if (!isInView) return;
-    if (frame >= 7) return;
+    const t = setTimeout(() => setShowNav(true), 1500);
+    return () => clearTimeout(t);
+  }, [isInView]);
+
+  // Auto-advance only if not in manual mode
+  useEffect(() => {
+    if (!isInView || manualMode) return;
+    if (frame >= TOTAL_FRAMES) return;
 
     const durations = [2500, 2500, 2000, 4200, 2500, 2000, 1500];
     const delay = durations[frame] || 2000;
 
     const timer = setTimeout(() => setFrame(f => f + 1), delay);
     return () => clearTimeout(timer);
-  }, [isInView, frame]);
+  }, [isInView, frame, manualMode]);
+
+  const goTo = (dir: 'prev' | 'next') => {
+    setManualMode(true);
+    setFrame(f => dir === 'prev' ? Math.max(0, f - 1) : Math.min(TOTAL_FRAMES - 1, f + 1));
+  };
 
   return (
     <section
@@ -270,6 +287,51 @@ const ChaosSimulation = () => {
               >
                 If you don't control vehicle spend, it controls your business.
               </motion.h2>
+            </motion.div>
+          )}
+        </AnimatePresence>
+
+        {/* Navigation Arrows + Dots */}
+        <AnimatePresence>
+          {showNav && (
+            <motion.div
+              initial={{ opacity: 0, y: 10 }}
+              animate={{ opacity: 1, y: 0 }}
+              transition={{ duration: 0.5 }}
+              className="absolute bottom-8 left-1/2 -translate-x-1/2 z-20 flex items-center gap-3 md:gap-4"
+            >
+              <button
+                onClick={() => goTo('prev')}
+                disabled={frame === 0}
+                className="w-11 h-11 md:w-12 md:h-12 rounded-full bg-white/10 hover:bg-white/20 border border-white/20 flex items-center justify-center transition-all disabled:opacity-20 disabled:cursor-not-allowed"
+                aria-label="Previous frame"
+              >
+                <ChevronLeft className="w-5 h-5 text-white" />
+              </button>
+
+              <div className="flex items-center gap-2">
+                {Array.from({ length: TOTAL_FRAMES }).map((_, i) => (
+                  <button
+                    key={i}
+                    onClick={() => { setManualMode(true); setFrame(i); }}
+                    className={`rounded-full transition-all duration-300 ${
+                      i === frame
+                        ? 'w-3 h-3 bg-white'
+                        : 'w-2 h-2 bg-white/30 hover:bg-white/50'
+                    }`}
+                    aria-label={`Go to frame ${i + 1}`}
+                  />
+                ))}
+              </div>
+
+              <button
+                onClick={() => goTo('next')}
+                disabled={frame >= TOTAL_FRAMES - 1}
+                className="w-11 h-11 md:w-12 md:h-12 rounded-full bg-white/10 hover:bg-white/20 border border-white/20 flex items-center justify-center transition-all disabled:opacity-20 disabled:cursor-not-allowed"
+                aria-label="Next frame"
+              >
+                <ChevronRight className="w-5 h-5 text-white" />
+              </button>
             </motion.div>
           )}
         </AnimatePresence>
