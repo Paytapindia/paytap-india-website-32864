@@ -3,12 +3,14 @@ import { memo } from "react";
 import { Button } from "@/components/ui/button";
 import { ArrowRight } from "lucide-react";
 import { useTranslation } from "react-i18next";
+import { useNavigate } from "react-router-dom";
 
 const CTASection = memo(() => {
   const { t } = useTranslation();
   
+  const navigate = useNavigate();
   const handleRedirect = () => {
-    window.open('https://dashboard.paytap.co.in/login', '_blank');
+    navigate('/checkout');
   };
   
   return (

@@ -10,7 +10,7 @@ const HeroSection = memo(() => {
   const navigate = useNavigate();
 
   const handleActivateAccount = () => {
-    navigate('/how-it-works');
+    navigate('/checkout');
   };
 
   const valueStripItems = [
