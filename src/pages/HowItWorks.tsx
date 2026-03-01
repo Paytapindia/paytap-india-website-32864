@@ -156,6 +156,16 @@ const HowItWorks = () => {
         {/* ── PROBLEM ── */}
         <section id="problem-section" className="py-24 md:py-32 px-4">
           <div className="max-w-3xl mx-auto">
+            <motion.h2
+              variants={fadeUp}
+              initial="hidden"
+              whileInView="visible"
+              viewport={{ once: true }}
+              className="text-3xl md:text-5xl font-bold text-white mb-12 text-center"
+            >
+              Are you the owner or manager of a vehicle?
+            </motion.h2>
+
             {["It starts with one vehicle.", "Then five.", "Then confusion."].map((line, i) => (
               <motion.p
                 key={i}
