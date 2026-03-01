@@ -46,7 +46,7 @@ const HeroSection = memo(() => {
     <section
       ref={sectionRef}
       onMouseMove={handleMouseMove}
-      className="relative pt-28 md:pt-36 lg:pt-40 pb-16 md:pb-24 lg:pb-32 px-6 md:px-12 min-h-screen flex items-center bg-background"
+      className="relative pt-24 md:pt-36 lg:pt-40 pb-12 md:pb-24 lg:pb-32 px-6 md:px-12 min-h-screen flex items-center bg-background"
     >
       <div className="max-w-7xl mx-auto w-full relative z-10">
         <div className="grid grid-cols-1 lg:grid-cols-2 gap-10 lg:gap-20 items-center">
@@ -65,7 +65,7 @@ const HeroSection = memo(() => {
               {featurePills.map((pill, i) => (
                 <div
                   key={i}
-                  className="flex items-center gap-2 border border-foreground/[0.12] bg-background px-4 py-2.5 rounded-xl text-sm text-foreground/75 transition-all duration-200 hover:border-accent/40 hover:shadow-[0_2px_12px_rgba(0,0,0,0.04)] cursor-default"
+                  className="flex items-center gap-1.5 md:gap-2 border border-foreground/[0.12] bg-background px-3 py-2 md:px-4 md:py-2.5 rounded-xl text-xs md:text-sm text-foreground/75 transition-all duration-200 hover:border-accent/40 hover:shadow-[0_2px_12px_rgba(0,0,0,0.04)] cursor-default"
                 >
                   <pill.icon className="w-4 h-4" strokeWidth={1.5} />
                   <span>{pill.label}</span>
@@ -91,10 +91,10 @@ const HeroSection = memo(() => {
           </div>
 
           {/* Right Column — Visual Stack */}
-          <div className="relative h-[340px] sm:h-[400px] md:h-[520px] lg:h-[560px]">
+          <div className="relative h-[300px] sm:h-[400px] md:h-[520px] lg:h-[560px]">
             {/* Dashboard Mini UI */}
             <div
-              className="absolute -top-2 sm:top-0 md:top-6 left-0 md:-left-4 w-28 sm:w-36 md:w-52 z-10 animate-[float-slow_7s_ease-in-out_infinite]"
+              className={`absolute -top-2 sm:top-0 md:top-6 left-0 md:-left-4 w-28 sm:w-36 md:w-52 z-10 ${isMobile ? '' : 'animate-[float-slow_7s_ease-in-out_infinite]'}`}
               style={!isMobile ? { transform: `translate(${parallax.x * -0.5}px, ${parallax.y * -0.5}px)` } : undefined}
             >
               <div className="bg-background rounded-xl border border-border/40 shadow-[0_4px_24px_rgba(0,0,0,0.06)] p-2 md:p-3">
@@ -137,7 +137,7 @@ const HeroSection = memo(() => {
 
             {/* PayTap Card — Center */}
             <div
-              className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-56 sm:w-72 md:w-[340px] h-36 sm:h-44 md:h-52 rounded-2xl shadow-[0_4px_24px_rgba(0,0,0,0.06)] transform rotate-[-5deg] hover:rotate-0 transition-all duration-500 z-20 overflow-hidden animate-[float-slow_5s_ease-in-out_infinite]"
+              className={`absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-52 sm:w-72 md:w-[340px] h-32 sm:h-44 md:h-52 rounded-2xl shadow-[0_4px_24px_rgba(0,0,0,0.06)] transform rotate-[-5deg] hover:rotate-0 transition-all duration-500 z-20 overflow-hidden ${isMobile ? '' : 'animate-[float-slow_5s_ease-in-out_infinite]'}`}
               style={{
                 backgroundColor: '#021a42',
                 ...(isMobile ? {} : { transform: `translate(calc(-50% + ${parallax.x}px), calc(-50% + ${parallax.y}px)) rotate(-5deg)` })
@@ -209,7 +209,7 @@ const HeroSection = memo(() => {
 
             {/* Balance Widget — Top Right */}
             <div
-              className="absolute -top-2 sm:-top-4 md:top-0 right-0 sm:right-2 md:right-4 w-24 sm:w-32 md:w-48 bg-background rounded-2xl md:rounded-3xl shadow-[0_4px_24px_rgba(0,0,0,0.06)] p-1.5 sm:p-2 md:p-3 z-30 border border-border/30 animate-[float-slow_6s_ease-in-out_infinite_0.5s]"
+              className={`absolute -top-2 sm:-top-4 md:top-0 right-0 sm:right-2 md:right-4 w-24 sm:w-32 md:w-48 bg-background rounded-2xl md:rounded-3xl shadow-[0_4px_24px_rgba(0,0,0,0.06)] p-1.5 sm:p-2 md:p-3 z-30 border border-border/30 ${isMobile ? '' : 'animate-[float-slow_6s_ease-in-out_infinite_0.5s]'}`}
               style={!isMobile ? { transform: `translate(${parallax.x * 0.8}px, ${parallax.y * 0.8}px)` } : undefined}
             >
               <div className="bg-primary rounded-xl md:rounded-2xl p-2 sm:p-3 md:p-4 text-center">
@@ -232,7 +232,7 @@ const HeroSection = memo(() => {
             {/* NFC Icon — Bottom Left with Ripple */}
             <div
               ref={nfcRef}
-              className="absolute bottom-8 sm:bottom-10 md:bottom-8 left-2 sm:left-6 md:left-8 z-10 animate-[float-slow_5s_ease-in-out_infinite_1s]"
+              className={`absolute bottom-4 sm:bottom-10 md:bottom-8 left-2 sm:left-6 md:left-8 z-10 ${isMobile ? '' : 'animate-[float-slow_5s_ease-in-out_infinite_1s]'}`}
               style={!isMobile ? { transform: `translate(${parallax.x * -0.3}px, ${parallax.y * -0.3}px)` } : undefined}
             >
               <div className="relative">
@@ -244,25 +244,56 @@ const HeroSection = memo(() => {
                     <span className="absolute inset-0 w-12 h-12 sm:w-16 sm:h-16 md:w-24 md:h-24 rounded-full border-2 border-accent/20 animate-[nfc-ripple_1.5s_ease-out_infinite_0.6s]" />
                   </>
                 )}
-                <div className="w-12 h-12 sm:w-16 sm:h-16 md:w-24 md:h-24 bg-primary rounded-full shadow-[0_4px_24px_rgba(0,0,0,0.06)] flex items-center justify-center relative z-10">
-                  <Wifi className="w-6 h-6 sm:w-8 sm:h-8 md:w-12 md:h-12 text-primary-foreground rotate-45" />
+                <div className="w-10 h-10 sm:w-16 sm:h-16 md:w-24 md:h-24 bg-primary rounded-full shadow-[0_4px_24px_rgba(0,0,0,0.06)] flex items-center justify-center relative z-10">
+                  <Wifi className="w-5 h-5 sm:w-8 sm:h-8 md:w-12 md:h-12 text-primary-foreground rotate-45" />
                 </div>
               </div>
             </div>
 
-            {/* Mini Statement — Bottom Right */}
+            {/* Expense Dashboard — Bottom Right */}
             <div
-              className="absolute bottom-16 sm:bottom-20 md:bottom-16 right-2 sm:right-6 md:right-16 w-24 sm:w-32 md:w-44 bg-background rounded-lg md:rounded-xl shadow-[0_4px_24px_rgba(0,0,0,0.06)] p-1.5 sm:p-2 md:p-3 z-10 border border-border/30 animate-[float-slow_6s_ease-in-out_infinite_0.8s]"
+              className={`absolute bottom-4 sm:bottom-20 md:bottom-16 right-0 sm:right-6 md:right-16 w-28 sm:w-36 md:w-48 bg-background rounded-lg md:rounded-xl shadow-[0_4px_24px_rgba(0,0,0,0.06)] p-1.5 sm:p-2 md:p-3 z-10 border border-border/30 ${isMobile ? '' : 'animate-[float-slow_6s_ease-in-out_infinite_0.8s]'}`}
               style={!isMobile ? { transform: `translate(${parallax.x * 0.4}px, ${parallax.y * 0.4}px)` } : undefined}
             >
-              <div className="flex items-center gap-1 sm:gap-1.5 md:gap-2 mb-1 sm:mb-1.5 md:mb-2">
+              <div className="flex items-center gap-1 sm:gap-1.5 md:gap-2 mb-1.5 sm:mb-2 md:mb-2.5">
                 <FileText className="w-2.5 h-2.5 sm:w-3 sm:h-3 md:w-4 md:h-4 text-foreground" />
-                <span className="text-[8px] sm:text-[10px] md:text-xs font-medium text-foreground">Statement</span>
+                <span className="text-[7px] sm:text-[9px] md:text-xs font-semibold text-foreground tracking-wide uppercase">Expenses</span>
               </div>
-              <div className="space-y-0.5 sm:space-y-1 md:space-y-1.5">
-                <div className="h-1 sm:h-1.5 md:h-2 bg-secondary rounded w-full" />
-                <div className="h-1 sm:h-1.5 md:h-2 bg-secondary rounded w-3/4" />
-                <div className="h-1 sm:h-1.5 md:h-2 bg-accent/30 rounded w-1/2" />
+              <div className="space-y-1 sm:space-y-1.5 md:space-y-2">
+                {/* Fuel */}
+                <div>
+                  <div className="flex justify-between text-[6px] sm:text-[8px] md:text-[10px] mb-0.5">
+                    <span className="text-muted-foreground">Fuel</span>
+                    <span className="text-foreground font-medium">62%</span>
+                  </div>
+                  <div className="h-1 sm:h-1.5 md:h-2 bg-secondary rounded-full overflow-hidden">
+                    <div className="h-full bg-primary rounded-full" style={{ width: '62%' }} />
+                  </div>
+                </div>
+                {/* Toll */}
+                <div>
+                  <div className="flex justify-between text-[6px] sm:text-[8px] md:text-[10px] mb-0.5">
+                    <span className="text-muted-foreground">Toll</span>
+                    <span className="text-foreground font-medium">28%</span>
+                  </div>
+                  <div className="h-1 sm:h-1.5 md:h-2 bg-secondary rounded-full overflow-hidden">
+                    <div className="h-full bg-accent rounded-full" style={{ width: '28%' }} />
+                  </div>
+                </div>
+                {/* Service */}
+                <div>
+                  <div className="flex justify-between text-[6px] sm:text-[8px] md:text-[10px] mb-0.5">
+                    <span className="text-muted-foreground">Service</span>
+                    <span className="text-foreground font-medium">10%</span>
+                  </div>
+                  <div className="h-1 sm:h-1.5 md:h-2 bg-secondary rounded-full overflow-hidden">
+                    <div className="h-full bg-muted-foreground/40 rounded-full" style={{ width: '10%' }} />
+                  </div>
+                </div>
+              </div>
+              <div className="mt-1.5 sm:mt-2 pt-1 sm:pt-1.5 border-t border-border/30 flex justify-between text-[6px] sm:text-[8px] md:text-[10px]">
+                <span className="text-muted-foreground font-medium">Total</span>
+                <span className="text-foreground font-bold">₹18,240</span>
               </div>
             </div>
           </div>
