@@ -1,20 +1,23 @@
 
 
-## Fix Navigation Arrows Centering
+## Remove Hero Section, Start with Chaos Simulation
 
-### Problem
-The navigation arrows and dots are slightly shifted to the right because `left-1/2 -translate-x-1/2` is calculated relative to the section container which has `px-4` padding, causing a small offset.
+### What Changes
+Remove the hero section ("Your Vehicle Can Now Pay on Its Own" with its buttons and bouncing chevron) from the How It Works page. The page will go directly from the Navbar into the Chaos Simulation section.
 
-### Fix
-**File: `src/pages/HowItWorks.tsx` (line 301)**
+### Details
 
-Replace the positioning classes on the navigation container from:
-```
-absolute bottom-8 left-1/2 -translate-x-1/2 z-20 flex items-center gap-3 md:gap-4
-```
-to:
-```
-absolute bottom-8 inset-x-0 z-20 flex items-center justify-center gap-3 md:gap-4
-```
+**File: `src/pages/HowItWorks.tsx`**
 
-This uses `inset-x-0` (left: 0; right: 0) with `justify-center` to perfectly center the nav bar regardless of parent padding. One line change, no other modifications needed.
+1. Delete the entire hero section (lines 422-475) — the `<section>` containing:
+   - NFC glow ring animations
+   - "Your Vehicle Can Now Pay on Its Own" heading
+   - "One dashboard. Full control. Real-time visibility." subtitle
+   - "Get Started" and "See How It Works" buttons
+   - Bouncing ChevronDown arrow
+
+2. Remove the now-unused `scrollToContent` function (line 350-352) since it referenced `#problem-section` which was linked from the hero's "See How It Works" button.
+
+3. The page flow becomes: Navbar -> Chaos Simulation -> Solution section -> rest of page.
+
+No other files affected. No new dependencies.
