@@ -347,10 +347,6 @@ const HowItWorks = () => {
   const { scrollYProgress } = useScroll({ target: flowRef, offset: ["start end", "end start"] });
   const lineWidth = useTransform(scrollYProgress, [0.1, 0.7], ["0%", "100%"]);
 
-  const scrollToContent = () => {
-    document.getElementById('problem-section')?.scrollIntoView({ behavior: 'smooth' });
-  };
-
   const chaosItems = [
     "Drivers call you for fuel money",
     "Toll payments via cash or FASTag chaos",
@@ -418,61 +414,6 @@ const HowItWorks = () => {
 
       <div className="min-h-screen bg-[#021a42]">
         <Navbar />
-
-        {/* ── HERO ── */}
-        <section className="relative min-h-screen flex items-center justify-center px-4 overflow-hidden">
-          {/* NFC glow rings */}
-          {[1, 2, 3].map(i => (
-            <motion.div
-              key={i}
-              className="absolute rounded-full border border-[#f6245b]/20"
-              style={{ width: 200 + i * 140, height: 200 + i * 140 }}
-              animate={{ scale: [1, 1.15, 1], opacity: [0.15, 0.3, 0.15] }}
-              transition={{ duration: 3 + i, repeat: Infinity, ease: "easeInOut", delay: i * 0.5 }}
-            />
-          ))}
-
-          <div className="relative z-10 text-center max-w-4xl mx-auto">
-            <motion.h1
-              initial={{ opacity: 0, y: 40 }}
-              animate={{ opacity: 1, y: 0 }}
-              transition={{ duration: 0.8 }}
-              className="text-4xl sm:text-5xl md:text-7xl font-bold text-white mb-6 leading-tight"
-            >
-              Your Vehicle Can Now{' '}
-              <span className="text-[#f6245b]">Pay on Its Own.</span>
-            </motion.h1>
-            <motion.p
-              initial={{ opacity: 0, y: 20 }}
-              animate={{ opacity: 1, y: 0 }}
-              transition={{ duration: 0.8, delay: 0.2 }}
-              className="text-lg md:text-xl text-white/70 mb-10 max-w-2xl mx-auto"
-            >
-              One dashboard. Full control. Real-time visibility.
-            </motion.p>
-            <motion.div
-              initial={{ opacity: 0, y: 20 }}
-              animate={{ opacity: 1, y: 0 }}
-              transition={{ duration: 0.8, delay: 0.4 }}
-              className="flex flex-col sm:flex-row gap-4 justify-center"
-            >
-              <Button onClick={() => navigate('/checkout')} className="bg-[#f6245b] hover:bg-[#f6245b]/90 text-white rounded-full px-8 py-6 text-lg font-semibold">
-                Get Started <ArrowRight className="ml-2 w-5 h-5" />
-              </Button>
-              <Button onClick={scrollToContent} className="bg-transparent border border-white/30 text-white hover:bg-white/10 rounded-full px-8 py-6 text-lg">
-                See How It Works
-              </Button>
-            </motion.div>
-          </div>
-
-          <motion.div
-            className="absolute bottom-10 left-1/2 -translate-x-1/2"
-            animate={{ y: [0, 10, 0] }}
-            transition={{ duration: 2, repeat: Infinity }}
-          >
-            <ChevronDown className="w-8 h-8 text-white/40" />
-          </motion.div>
-        </section>
 
         {/* ── PROBLEM — CHAOS SIMULATION ── */}
         <ChaosSimulation />
