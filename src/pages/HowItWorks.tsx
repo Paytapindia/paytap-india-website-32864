@@ -1,10 +1,11 @@
 import { useNavigate } from 'react-router-dom';
 import { Helmet } from 'react-helmet-async';
-import { motion, useScroll, useTransform } from 'framer-motion';
-import { useRef } from 'react';
+import { motion, useScroll, useTransform, useInView, AnimatePresence } from 'framer-motion';
+import { useRef, useState, useEffect, useCallback } from 'react';
 import {
   ChevronDown, X, Check, Shield, Lock, ToggleRight, CreditCard, Fingerprint,
-  UserPlus, Car, Wallet, SlidersHorizontal, Zap, Smile, ArrowRight, Phone
+  UserPlus, Car, Wallet, SlidersHorizontal, Zap, Smile, ArrowRight, Phone,
+  Bell, FileText, MessageCircle, Receipt, User
 } from 'lucide-react';
 import Navbar from '@/components/Navbar';
 import FooterSection from '@/components/FooterSection';
@@ -17,6 +18,264 @@ const fadeUp = {
     opacity: 1, y: 0,
     transition: { duration: 0.6, delay: i * 0.12, ease: [0.25, 0.1, 0.25, 1] as const }
   })
+};
+
+/* ── CHAOS SIMULATION COMPONENT ── */
+const chatBubbles = [
+  { text: "Sir, fuel money needed urgently", from: "Driver - Ramesh" },
+  { text: "Toll payment done, send screenshot?", from: "Driver - Suresh" },
+  { text: "Service bill pending — ₹4,500", from: "Garage - AutoCare" },
+  { text: "FASTag balance low again", from: "Alert" },
+  { text: "Who approved this expense?", from: "You (Owner)" },
+];
+
+const chaosPositions = [
+  { top: '8%', left: '5%' }, { top: '15%', right: '8%' },
+  { bottom: '25%', left: '10%' }, { top: '35%', right: '5%' },
+  { bottom: '10%', right: '15%' }, { top: '55%', left: '3%' },
+  { bottom: '40%', right: '3%' }, { top: '70%', left: '15%' },
+];
+
+const chaosIcons = [Bell, FileText, Phone, MessageCircle, Receipt, User, CreditCard, Bell];
+
+const ChaosSimulation = () => {
+  const sectionRef = useRef<HTMLDivElement>(null);
+  const isInView = useInView(sectionRef, { once: true, amount: 0.15 });
+  const [frame, setFrame] = useState(0);
+  const isMobile = typeof window !== 'undefined' && window.innerWidth < 768;
+
+  useEffect(() => {
+    if (!isInView) return;
+    if (frame >= 7) return;
+
+    const durations = [2500, 2500, 2000, 4200, 2500, 2000, 1500];
+    const delay = durations[frame] || 2000;
+
+    const timer = setTimeout(() => setFrame(f => f + 1), delay);
+    return () => clearTimeout(timer);
+  }, [isInView, frame]);
+
+  return (
+    <section
+      id="problem-section"
+      ref={sectionRef}
+      className="relative min-h-screen py-24 md:py-32 px-4 overflow-hidden"
+    >
+      {/* Red glow intensifies with chaos */}
+      <motion.div
+        className="absolute inset-0 pointer-events-none"
+        animate={{
+          background: frame >= 2
+            ? 'radial-gradient(ellipse at center, rgba(246,36,91,0.08) 0%, transparent 70%)'
+            : 'radial-gradient(ellipse at center, transparent 0%, transparent 70%)'
+        }}
+        transition={{ duration: 1.5 }}
+      />
+
+      <div className="relative z-10 max-w-4xl mx-auto">
+        <AnimatePresence mode="wait">
+          {/* Frame 0: Calm */}
+          {frame === 0 && (
+            <motion.div
+              key="calm"
+              initial={{ opacity: 0 }}
+              animate={{ opacity: 1 }}
+              exit={{ opacity: 0 }}
+              transition={{ duration: 0.6 }}
+              className="text-center min-h-[60vh] flex flex-col items-center justify-center"
+            >
+              <motion.p
+                initial={{ opacity: 0, y: 20 }}
+                animate={{ opacity: 1, y: 0 }}
+                transition={{ duration: 0.8 }}
+                className="text-lg md:text-xl text-white/50 mb-8 uppercase tracking-widest"
+              >
+                Are you the owner or manager of a vehicle?
+              </motion.p>
+              <motion.h2
+                initial={{ opacity: 0, y: 30 }}
+                animate={{ opacity: 1, y: 0 }}
+                transition={{ duration: 0.8, delay: 0.3 }}
+                className="text-3xl md:text-6xl font-bold text-white mb-12"
+              >
+                It starts with one vehicle.
+              </motion.h2>
+              <motion.div
+                initial={{ scale: 0 }}
+                animate={{ scale: 1 }}
+                transition={{ delay: 0.6, type: 'spring' }}
+              >
+                <Car className="w-10 h-10 md:w-14 md:h-14 text-white/40" />
+              </motion.div>
+            </motion.div>
+          )}
+
+          {/* Frame 1: Growth */}
+          {frame === 1 && (
+            <motion.div
+              key="growth"
+              initial={{ opacity: 0 }}
+              animate={{ opacity: 1 }}
+              exit={{ opacity: 0 }}
+              transition={{ duration: 0.6 }}
+              className="text-center min-h-[60vh] flex flex-col items-center justify-center"
+            >
+              <motion.h2
+                initial={{ opacity: 0, y: 20 }}
+                animate={{ opacity: 1, y: 0 }}
+                transition={{ duration: 0.6 }}
+                className="text-3xl md:text-6xl font-bold text-white mb-12"
+              >
+                Then five.
+              </motion.h2>
+              <div className="flex items-center justify-center gap-3 md:gap-5">
+                {Array.from({ length: 5 }).map((_, i) => (
+                  <motion.div
+                    key={i}
+                    initial={{ scale: 0, opacity: 0 }}
+                    animate={{ scale: 1, opacity: 1 }}
+                    transition={{ delay: i * 0.15, duration: 0.4, type: 'spring' }}
+                  >
+                    <Car className="w-8 h-8 md:w-12 md:h-12 text-white/40" />
+                  </motion.div>
+                ))}
+              </div>
+            </motion.div>
+          )}
+
+          {/* Frame 2: Confusion + floating chaos icons */}
+          {frame === 2 && (
+            <motion.div
+              key="confusion"
+              initial={{ opacity: 0 }}
+              animate={{ opacity: 1 }}
+              exit={{ opacity: 0 }}
+              className="text-center min-h-[60vh] flex flex-col items-center justify-center relative"
+            >
+              <motion.h2
+                initial={{ opacity: 0, scale: 0.9 }}
+                animate={{ opacity: 1, scale: 1 }}
+                transition={{ duration: 0.5 }}
+                className="text-4xl md:text-7xl font-bold text-[#f6245b] mb-8"
+              >
+                Then confusion.
+              </motion.h2>
+
+              {(isMobile ? chaosPositions.slice(0, 4) : chaosPositions).map((pos, i) => {
+                const Icon = chaosIcons[i % chaosIcons.length];
+                return (
+                  <motion.div
+                    key={i}
+                    className="absolute"
+                    style={pos as React.CSSProperties}
+                    initial={{ opacity: 0, scale: 0 }}
+                    animate={{
+                      opacity: [0, 0.5, 0.3, 0.5],
+                      scale: [0, 1, 0.9, 1],
+                      y: [0, -10, 5, -5],
+                      rotate: [0, 5, -5, 3],
+                    }}
+                    transition={{ delay: i * 0.15, duration: 2, repeat: Infinity, repeatType: 'reverse' }}
+                  >
+                    <Icon className="w-6 h-6 md:w-8 md:h-8 text-white/20" />
+                  </motion.div>
+                );
+              })}
+            </motion.div>
+          )}
+
+          {/* Frame 3: Chat Bubbles */}
+          {frame === 3 && (
+            <motion.div
+              key="bubbles"
+              initial={{ opacity: 0 }}
+              animate={{ opacity: 1 }}
+              exit={{ opacity: 0 }}
+              className="min-h-[60vh] flex flex-col items-center justify-center"
+            >
+              <div className="w-full max-w-lg mx-auto space-y-4">
+                {chatBubbles.map((bubble, i) => (
+                  <motion.div
+                    key={i}
+                    initial={{ opacity: 0, x: i % 2 === 0 ? -40 : 40, scale: 0.8 }}
+                    animate={{ opacity: 1, x: 0, scale: 1 }}
+                    transition={{ delay: i * 0.7, duration: 0.4, ease: 'easeOut' }}
+                    className={`flex ${i % 2 === 0 ? 'justify-start' : 'justify-end'}`}
+                  >
+                    <div className="bg-[#1a3a2a] border border-green-900/40 rounded-2xl rounded-bl-sm px-5 py-3 max-w-[85%] shadow-lg shadow-black/20">
+                      <p className="text-xs text-green-400/60 font-medium mb-1">{bubble.from}</p>
+                      <p className="text-white/90 text-sm md:text-base">{bubble.text}</p>
+                    </div>
+                  </motion.div>
+                ))}
+              </div>
+            </motion.div>
+          )}
+
+          {/* Frame 4: Stress */}
+          {frame === 4 && (
+            <motion.div
+              key="stress"
+              initial={{ opacity: 0 }}
+              animate={{ opacity: 1 }}
+              exit={{ opacity: 0 }}
+              className="text-center min-h-[60vh] flex items-center justify-center"
+            >
+              <motion.h2
+                initial={{ opacity: 0, y: 20 }}
+                animate={{ opacity: 1, y: 0 }}
+                transition={{ duration: 0.8 }}
+                className="text-2xl md:text-5xl font-bold text-white/80 max-w-2xl leading-tight"
+              >
+                You still don't know{' '}
+                <span className="text-white">who spent what, when, where.</span>
+              </motion.h2>
+            </motion.div>
+          )}
+
+          {/* Frame 5: Pain */}
+          {frame === 5 && (
+            <motion.div
+              key="pain"
+              initial={{ opacity: 0 }}
+              animate={{ opacity: 1 }}
+              exit={{ opacity: 0, transition: { duration: 0.3 } }}
+              className="text-center min-h-[60vh] flex items-center justify-center"
+            >
+              <motion.h2
+                initial={{ opacity: 0, scale: 0.95 }}
+                animate={{ opacity: 1, scale: 1 }}
+                transition={{ duration: 1 }}
+                className="text-3xl md:text-6xl font-bold text-white"
+              >
+                Money leaks silently.
+              </motion.h2>
+            </motion.div>
+          )}
+
+          {/* Frame 6+: Final Hit */}
+          {frame >= 6 && (
+            <motion.div
+              key="final"
+              initial={{ opacity: 0 }}
+              animate={{ opacity: 1 }}
+              transition={{ duration: 0.5 }}
+              className="text-center min-h-[60vh] flex items-center justify-center"
+            >
+              <motion.h2
+                initial={{ opacity: 0, y: 30 }}
+                animate={{ opacity: 1, y: 0 }}
+                transition={{ duration: 0.8, delay: 0.2 }}
+                className="text-3xl md:text-5xl lg:text-6xl font-bold text-[#f6245b] max-w-3xl leading-tight"
+              >
+                If you don't control vehicle spend, it controls your business.
+              </motion.h2>
+            </motion.div>
+          )}
+        </AnimatePresence>
+      </div>
+    </section>
+  );
 };
 
 const HowItWorks = () => {
@@ -153,68 +412,8 @@ const HowItWorks = () => {
           </motion.div>
         </section>
 
-        {/* ── PROBLEM ── */}
-        <section id="problem-section" className="py-24 md:py-32 px-4">
-          <div className="max-w-3xl mx-auto">
-            <motion.h2
-              variants={fadeUp}
-              initial="hidden"
-              whileInView="visible"
-              viewport={{ once: true }}
-              className="text-3xl md:text-5xl font-bold text-white mb-12 text-center"
-            >
-              Are you the owner or manager of a vehicle?
-            </motion.h2>
-
-            {["It starts with one vehicle.", "Then five.", "Then confusion."].map((line, i) => (
-              <motion.p
-                key={i}
-                variants={fadeUp}
-                initial="hidden"
-                whileInView="visible"
-                viewport={{ once: true, amount: 0.5 }}
-                custom={i}
-                className={`text-2xl md:text-4xl font-bold mb-4 ${i === 2 ? 'text-[#f6245b]' : 'text-white'}`}
-              >
-                {line}
-              </motion.p>
-            ))}
-
-            <div className="mt-12 space-y-4">
-              {[
-                "Drivers call you for fuel money",
-                "Another calls for toll",
-                "Another for a service payment",
-                "Approvals happen on WhatsApp",
-                "You still don't know who spent what"
-              ].map((item, i) => (
-                <motion.div
-                  key={i}
-                  variants={fadeUp}
-                  initial="hidden"
-                  whileInView="visible"
-                  viewport={{ once: true }}
-                  custom={i}
-                  className="flex items-start gap-3"
-                >
-                  <div className="w-2 h-2 rounded-full bg-[#f6245b] mt-3 shrink-0" />
-                  <p className="text-white/70 text-lg md:text-xl">{item}</p>
-                </motion.div>
-              ))}
-            </div>
-
-            <motion.p
-              variants={fadeUp}
-              initial="hidden"
-              whileInView="visible"
-              viewport={{ once: true }}
-              custom={0}
-              className="mt-12 text-xl md:text-2xl font-bold text-[#f6245b]"
-            >
-              If you don't control vehicle spend, it controls your business.
-            </motion.p>
-          </div>
-        </section>
+        {/* ── PROBLEM — CHAOS SIMULATION ── */}
+        <ChaosSimulation />
 
         {/* ── SOLUTION ── */}
         <section className="py-24 md:py-32 px-4">
