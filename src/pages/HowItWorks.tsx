@@ -138,7 +138,7 @@ const HowItWorks = () => {
               <Button onClick={() => navigate('/checkout')} className="bg-[#f6245b] hover:bg-[#f6245b]/90 text-white rounded-full px-8 py-6 text-lg font-semibold">
                 Get Started <ArrowRight className="ml-2 w-5 h-5" />
               </Button>
-              <Button onClick={scrollToContent} variant="outline" className="border-white/20 text-white hover:bg-white/10 rounded-full px-8 py-6 text-lg">
+              <Button onClick={scrollToContent} className="bg-transparent border border-white/30 text-white hover:bg-white/10 rounded-full px-8 py-6 text-lg">
                 See How It Works
               </Button>
             </motion.div>
