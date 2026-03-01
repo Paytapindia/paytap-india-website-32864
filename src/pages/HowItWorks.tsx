@@ -472,65 +472,105 @@ const HowItWorks = () => {
           </div>
         </section>
 
-        {/* ── SECURITY ── */}
-        <section className="py-24 md:py-32 px-4">
-          <div className="max-w-4xl mx-auto text-center">
+        {/* ── SECURITY — CINEMATIC ── */}
+        <section className="relative py-24 md:py-40 px-4 overflow-hidden">
+          {/* Radial glow background */}
+          <motion.div
+            className="absolute inset-0 pointer-events-none"
+            animate={{
+              background: [
+                'radial-gradient(ellipse at center, rgba(246,36,91,0.06) 0%, transparent 70%)',
+                'radial-gradient(ellipse at center, rgba(246,36,91,0.12) 0%, transparent 70%)',
+                'radial-gradient(ellipse at center, rgba(246,36,91,0.06) 0%, transparent 70%)',
+              ]
+            }}
+            transition={{ duration: 4, repeat: Infinity, ease: 'easeInOut' }}
+          />
+
+          <div className="relative z-10 max-w-3xl mx-auto">
             <motion.h2
               variants={fadeUp} initial="hidden" whileInView="visible" viewport={{ once: true }}
-              className="text-3xl md:text-5xl font-bold text-white mb-16"
+              className="text-3xl md:text-5xl lg:text-6xl font-bold text-white text-center mb-20"
             >
               Built Like a Bank.{' '}
               <span className="text-[#f6245b]">Designed for Vehicles.</span>
             </motion.h2>
 
-            <div className="grid sm:grid-cols-2 md:grid-cols-3 gap-6">
+            <div className="space-y-5">
               {securityItems.map((item, i) => (
                 <motion.div
                   key={i}
-                  variants={fadeUp} initial="hidden" whileInView="visible" viewport={{ once: true }} custom={i}
-                  className="bg-white/5 backdrop-blur-sm border border-white/10 rounded-2xl p-6 flex flex-col items-center gap-3"
+                  initial={{ opacity: 0, x: -40 }}
+                  whileInView={{ opacity: 1, x: 0 }}
+                  viewport={{ once: true }}
+                  transition={{ duration: 0.5, delay: i * 0.12, ease: [0.25, 0.1, 0.25, 1] }}
+                  className="group relative bg-white/[0.04] backdrop-blur-xl border border-white/10 rounded-2xl p-6 md:p-8 flex items-center gap-5 md:gap-6 hover:border-[#f6245b]/30 transition-colors duration-300"
                 >
-                  <item.icon className="w-8 h-8 text-[#f6245b]" />
-                  <span className="text-white/80 text-sm font-medium">{item.text}</span>
+                  {/* Hover glow */}
+                  <div className="absolute -inset-px rounded-2xl bg-gradient-to-r from-[#f6245b]/0 to-[#f6245b]/0 group-hover:from-[#f6245b]/5 group-hover:to-transparent transition-all duration-500 pointer-events-none" />
+                  
+                  {/* Icon with glow ring */}
+                  <div className="relative shrink-0">
+                    <div className="absolute inset-0 w-14 h-14 md:w-16 md:h-16 rounded-full bg-[#f6245b]/20 blur-xl group-hover:bg-[#f6245b]/30 transition-all duration-500" />
+                    <div className="relative w-14 h-14 md:w-16 md:h-16 rounded-full bg-white/5 border border-white/10 flex items-center justify-center">
+                      <item.icon className="w-7 h-7 md:w-8 md:h-8 text-[#f6245b]" />
+                    </div>
+                  </div>
+                  
+                  <span className="text-white/90 text-lg md:text-xl font-medium relative z-10">{item.text}</span>
                 </motion.div>
               ))}
             </div>
 
+            {/* Tagline */}
             <motion.p
-              variants={fadeUp} initial="hidden" whileInView="visible" viewport={{ once: true }}
-              className="mt-12 text-white/60 text-lg"
+              initial={{ opacity: 0, y: 20 }}
+              whileInView={{ opacity: 1, y: 0 }}
+              viewport={{ once: true }}
+              transition={{ duration: 0.8, delay: 0.6 }}
+              className="text-center mt-16 md:mt-20"
             >
-              Your vehicle isn't just moving. It's transacting.
+              <span className="text-white/40 text-lg md:text-xl italic">Your vehicle isn't just moving. </span>
+              <span className="text-white text-lg md:text-xl font-semibold italic">It's transacting.</span>
             </motion.p>
           </div>
         </section>
 
-        {/* ── HOW IT WORKS FLOW ── */}
-        <section className="py-24 md:py-32 px-4 overflow-hidden" ref={flowRef}>
+        {/* ── HOW IT WORKS FLOW — CINEMATIC ── */}
+        <section className="py-24 md:py-40 px-4 overflow-hidden" ref={flowRef}>
           <div className="max-w-6xl mx-auto">
             <motion.h2
               variants={fadeUp} initial="hidden" whileInView="visible" viewport={{ once: true }}
-              className="text-3xl md:text-5xl font-bold text-white text-center mb-20"
+              className="text-3xl md:text-5xl lg:text-6xl font-bold text-white text-center mb-20 md:mb-28"
             >
               How It Works
             </motion.h2>
 
             {/* Desktop horizontal flow */}
             <div className="hidden md:block relative">
-              {/* Connector line */}
-              <div className="absolute top-12 left-0 right-0 h-0.5 bg-white/10">
-                <motion.div className="h-full bg-[#f6245b] origin-left" style={{ width: lineWidth }} />
+              {/* Connector line — thicker */}
+              <div className="absolute top-[48px] left-[8%] right-[8%] h-1 bg-white/5 rounded-full">
+                <motion.div className="h-full bg-gradient-to-r from-[#f6245b] to-[#f6245b]/60 rounded-full origin-left" style={{ width: lineWidth }} />
               </div>
 
               <div className="grid grid-cols-6 gap-4">
                 {steps.map((step, i) => (
                   <motion.div
                     key={i}
-                    variants={fadeUp} initial="hidden" whileInView="visible" viewport={{ once: true }} custom={i}
-                    className="flex flex-col items-center text-center"
+                    initial={{ opacity: 0, y: 30, scale: 0.8 }}
+                    whileInView={{ opacity: 1, y: 0, scale: 1 }}
+                    viewport={{ once: true }}
+                    transition={{ duration: 0.5, delay: i * 0.1, ease: [0.25, 0.1, 0.25, 1] }}
+                    className="flex flex-col items-center text-center group"
                   >
-                    <div className="w-24 h-24 rounded-full bg-white/5 border border-white/10 flex items-center justify-center mb-4 relative z-10">
-                      <step.icon className="w-10 h-10 text-[#f6245b]" />
+                    {/* Node */}
+                    <div className="relative mb-5">
+                      {/* Glow */}
+                      <div className="absolute inset-0 w-24 h-24 rounded-full bg-[#f6245b]/10 blur-xl opacity-0 group-hover:opacity-100 transition-opacity duration-500" />
+                      <div className="relative w-24 h-24 rounded-full bg-gradient-to-br from-white/10 to-white/[0.03] border border-white/15 flex flex-col items-center justify-center z-10 group-hover:border-[#f6245b]/30 transition-colors duration-300">
+                        <span className="text-[#f6245b] text-xs font-bold mb-0.5">{i + 1}</span>
+                        <step.icon className="w-8 h-8 text-white/80" />
+                      </div>
                     </div>
                     <span className="text-white font-medium text-sm">{step.label}</span>
                   </motion.div>
@@ -538,27 +578,62 @@ const HowItWorks = () => {
               </div>
             </div>
 
-            {/* Mobile vertical flow */}
-            <div className="md:hidden space-y-6">
-              {steps.map((step, i) => (
+            {/* Mobile vertical timeline */}
+            <div className="md:hidden relative pl-10">
+              {/* Vertical line */}
+              <div className="absolute left-[22px] top-0 bottom-0 w-0.5 bg-white/10">
                 <motion.div
-                  key={i}
-                  variants={fadeUp} initial="hidden" whileInView="visible" viewport={{ once: true }} custom={i}
-                  className="flex items-center gap-4"
-                >
-                  <div className="w-14 h-14 rounded-full bg-white/5 border border-white/10 flex items-center justify-center shrink-0">
-                    <step.icon className="w-7 h-7 text-[#f6245b]" />
-                  </div>
-                  <span className="text-white font-medium">{step.label}</span>
-                </motion.div>
-              ))}
+                  className="w-full bg-gradient-to-b from-[#f6245b] to-[#f6245b]/30 origin-top"
+                  initial={{ height: '0%' }}
+                  whileInView={{ height: '100%' }}
+                  viewport={{ once: true }}
+                  transition={{ duration: 1.5, ease: 'easeOut' }}
+                />
+              </div>
+
+              <div className="space-y-8">
+                {steps.map((step, i) => (
+                  <motion.div
+                    key={i}
+                    initial={{ opacity: 0, x: -20 }}
+                    whileInView={{ opacity: 1, x: 0 }}
+                    viewport={{ once: true }}
+                    transition={{ duration: 0.4, delay: i * 0.08 }}
+                    className="flex items-center gap-5 relative"
+                  >
+                    {/* Node */}
+                    <div className="absolute -left-10 w-11 h-11 rounded-full bg-gradient-to-br from-white/10 to-white/[0.03] border border-white/15 flex items-center justify-center z-10">
+                      <span className="text-[#f6245b] text-sm font-bold">{i + 1}</span>
+                    </div>
+                    <div className="flex items-center gap-3 ml-4">
+                      <step.icon className="w-6 h-6 text-[#f6245b] shrink-0" />
+                      <span className="text-white font-medium">{step.label}</span>
+                    </div>
+                  </motion.div>
+                ))}
+              </div>
             </div>
 
+            {/* Tagline — word-by-word reveal */}
             <motion.p
-              variants={fadeUp} initial="hidden" whileInView="visible" viewport={{ once: true }}
-              className="text-center text-white/60 text-lg mt-16"
+              initial={{ opacity: 0 }}
+              whileInView={{ opacity: 1 }}
+              viewport={{ once: true }}
+              transition={{ duration: 0.6, delay: 0.3 }}
+              className="text-center mt-20 md:mt-24"
             >
-              One connected ecosystem. Zero manual work.
+              {'One connected ecosystem. Zero manual work.'.split(' ').map((word, i) => (
+                <motion.span
+                  key={i}
+                  initial={{ opacity: 0, y: 10 }}
+                  whileInView={{ opacity: 1, y: 0 }}
+                  viewport={{ once: true }}
+                  transition={{ duration: 0.3, delay: 0.4 + i * 0.08 }}
+                  className="inline-block mr-2 text-white/60 text-lg md:text-xl"
+                >
+                  {word}
+                </motion.span>
+              ))}
             </motion.p>
           </div>
         </section>
