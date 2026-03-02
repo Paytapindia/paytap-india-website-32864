@@ -94,7 +94,7 @@ const HeroSection = memo(() => {
           <div className="relative h-[300px] sm:h-[400px] md:h-[520px] lg:h-[560px]">
             {/* Dashboard Mini UI */}
             <div
-              className={`absolute -top-2 sm:top-0 md:top-6 left-0 md:-left-4 w-28 sm:w-36 md:w-52 z-10 ${isMobile ? '' : 'animate-[float-slow_7s_ease-in-out_infinite]'}`}
+              className={`absolute -top-2 sm:top-0 md:-top-2 left-0 md:-left-8 w-28 sm:w-36 md:w-52 z-30 ${isMobile ? '' : 'animate-[float-slow_7s_ease-in-out_infinite]'}`}
               style={!isMobile ? { transform: `translate(${parallax.x * -0.5}px, ${parallax.y * -0.5}px)` } : undefined}
             >
               <div className="bg-background rounded-xl border border-border/40 shadow-[0_4px_24px_rgba(0,0,0,0.06)] p-2 md:p-3">
