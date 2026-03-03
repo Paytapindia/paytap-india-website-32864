@@ -299,7 +299,7 @@ const Checkout = () => {
         gstAmount: gstAmount,
         total: total,
       };
-      generateInvoice(invoiceData);
+      await generateInvoice(invoiceData);
     }
     await supabase.from('orders').update({ payment_status: 'confirmed' } as any).eq('txnid', orderTxnId);
     navigate("/");

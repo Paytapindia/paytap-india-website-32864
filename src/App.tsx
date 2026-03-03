@@ -27,6 +27,7 @@ import Security from "./pages/Security";
 
 import Newsroom from "./pages/Newsroom";
 import PayAtPump from "./pages/PayAtPump";
+import SampleInvoice from "./pages/SampleInvoice";
 
 
 const queryClient = new QueryClient({
@@ -57,6 +58,7 @@ const App = () => (
               <Route path="/newsroom" element={<Newsroom />} />
               <Route path="/pay-at-pump" element={<PayAtPump />} />
               <Route path="/security" element={<Security />} />
+              <Route path="/sample-invoice" element={<SampleInvoice />} />
               
               <Route path="/support" element={<Support />} />
               <Route path="/terms-and-conditions" element={<TermsAndConditions />} />
