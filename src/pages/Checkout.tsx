@@ -45,7 +45,7 @@ const PLANS: Record<PlanType, PlanInfo> = {
   business_basic: {
     name: 'Business Basic',
     subtitle: 'For growing fleets (1–10 vehicles)',
-    price: 1998,
+    price: 2350,
     tags: 2,
     amcYear2: 1200,
     features: ['2 NFC Payment Tags', 'Full Dashboard', 'MyFleet AI Access', 'Smart Reports'],
@@ -77,7 +77,7 @@ const PLANS: Record<PlanType, PlanInfo> = {
 // PayU payment links keyed by plan (use ₹999 link as fallback for now)
 const PAYU_PAYMENT_LINKS: Record<PlanType, string> = {
   starter: "https://u.payu.in/PAYUMN/BICnJ3sPnq1K",
-  business_basic: "https://u.payu.in/PAYUMN/RrgpdqmXfsEN",
+  business_basic: "https://u.payu.in/PAYUMN/hrGp6pGNhp8P",
   business_pro: "https://u.payu.in/PAYUMN/prS7p8roOCn5",   // fallback – update when link ready
   corporate: "https://u.payu.in/PAYUMN/prS7p8roOCn5",       // fallback – update when link ready
 };
