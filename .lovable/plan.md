@@ -1,49 +1,59 @@
 
 
-## Hero Section Premium Revamp
+## Redesign: Mobile Control Center + Our Platform Ecosystem
 
-### What Changes
+### MobileAppSection.tsx — Full Rewrite
 
-**Strip to essentials.** Remove all floating widgets (dashboard mini UI, balance widget, NFC icon, expense dashboard). Keep only the Paytap card as the single dominant visual on the right.
+**Layout**: Switch from centered single-column to two-column grid on desktop. Left column: text + store buttons. Right column: programmatic phone mockup with navy UI inside.
 
-### HeroSection.tsx — Full Rewrite
+**Left Column**:
+- Heading: `text-2xl md:text-4xl font-bold text-[#021a42]` with tighter tracking
+- Subtext: `text-[#334155] max-w-[520px] leading-[1.8]`
+- "Launching Soon" note as subtle muted text below heading (replaces floating badge)
+- Store buttons: custom branded — `bg-[#021a42] text-white rounded-[14px] px-6 py-4`, iOS greyed out with `opacity-60 cursor-not-allowed`, no floating "Coming Soon" badge
 
-**Left Column (Text Stack)**
-- Headline: same text, but bumped to `lg:text-7xl`, tighter tracking (`-0.035em`), `max-w-[600px]`, more line height
-- Subtext: color changed to `text-[#334155]`, `max-w-[520px]`, increased line height (`leading-[1.8]`), 36px gap before CTA
-- Remove all 4 feature pills entirely
-- CTA button: `bg-[#f6245b]` (crimson), white text, `px-9 py-[18px] rounded-[14px] font-semibold`, hover glow `box-shadow: 0 10px 30px rgba(246,36,91,0.25)`, hover darken to `#e01e52`
-- Trust line below CTA: replace with "Built for fleets, enterprises, and mobility operators across India." — muted, small, single line
+**Right Column — Programmatic Phone Mockup**:
+- A div styled as a phone frame (rounded-[40px], navy border, white bg, aspect ratio ~9:19)
+- Inside: a mini navy UI showing balance widget (₹24,500), a "Tag Control" row, and an "Approve" button — all static, built with divs
+- Phone has soft shadow (`box-shadow: 0 20px 60px rgba(2,26,66,0.12)`) and slow float animation (reuse `hero-float` keyframes, 6s)
 
-**Right Column (Card Only)**
-- Remove: dashboard mini UI (lines 96–136), balance widget (lines 210–230), NFC icon + ripple (lines 232–251), expense dashboard (lines 253–298)
-- Keep only the Paytap card, scaled up ~15% (`md:w-[390px] md:h-[240px]`), centered in the column
-- Add perspective 3D tilt: `perspective(1200px) rotateY(-3deg) rotateX(2deg)`
-- Premium shadow: `box-shadow: 0 20px 60px rgba(2,26,66,0.12)`
-- Slow float animation: `translateY(0) → translateY(-8px)`, 7s ease-in-out infinite
-- Remove parallax mouse tracking (simplify)
+**Background**: `bg-gradient-to-b from-white to-[#f4f6f9]` — subtle separation from hero
 
-**Background**
-- Replace flat white with subtle radial gradient: `radial-gradient(ellipse at 60% 40%, #ffffff 0%, #f4f6f9 100%)`
+**Spacing**: `py-20 md:py-28` — generous vertical padding
 
-**Spacing**
-- Top padding: `pt-[140px]` on desktop
-- Stats bar below: kept as-is (already clean)
+---
 
-**Stats section** — unchanged, already minimal
+### OurProductsSection.tsx — Elevated
 
-### Navbar.tsx — Minor Polish
+**Background**: `bg-[#f8fafc]` — subtle tinted background
 
-- Nav link font weight: already `font-medium` (good)
-- Add subtle bottom border: `border-b border-white/5` always (not just on scroll)
-- Platform Login button: reduce padding slightly, use `text-xs` instead of `text-sm`, lower opacity hover
+**Header**: 
+- Heading: `text-3xl md:text-5xl font-bold text-[#021a42]` with tight tracking
+- Spacing below header: `mb-16 md:mb-24` (80–100px)
 
-### Summary
+**Cards**:
+- `bg-white border border-[#021a42]/8 rounded-2xl p-6 md:p-12 shadow-sm`
+- Hover: `shadow-lg` elevation, `border-[#021a42]/15`, `translate-y-[-2px]` — subtle, no aggressive animation
+- Text left-aligned (not centered)
+
+**Icons**: `w-14 h-14 md:w-16 md:h-16 bg-[#021a42] rounded-2xl` — solid navy, white icon, slight shadow
+
+**Product Names**: `text-xl md:text-3xl font-bold text-[#021a42]` — larger, bolder, feel like product pillars
+
+**Descriptions**: More spacing below title (`mb-4 md:mb-6`), `text-[#334155]`
+
+**CTA**: Replace "Learn more ↗" with "Explore MyFleet AI →" / "Explore ExpensePro →" — `text-sm md:text-base font-semibold text-[#021a42]`
+
+**Grid gap**: `gap-6 md:gap-10` — consistent spacing
+
+---
+
+### Files Changed
 
 | File | Change |
 |------|--------|
-| `src/components/HeroSection.tsx` | Remove 4 floating widgets, remove feature pills, remove parallax/NFC logic. Keep card only (scaled up, 3D tilt, premium shadow, slow float). CTA → crimson with glow. Background → subtle gradient. Typography tightened. |
-| `src/components/Navbar.tsx` | Add permanent subtle bottom border, slightly reduce login button size |
+| `src/components/MobileAppSection.tsx` | Full rewrite: two-column layout, phone mockup, premium store buttons, no floating badges |
+| `src/components/OurProductsSection.tsx` | Elevated cards, left-aligned, larger product names, stronger icons, directional CTAs, tinted background |
 
-No new files, no new dependencies.
+No new dependencies. Reuses existing `hero-float` animation from `index.css`.
 
