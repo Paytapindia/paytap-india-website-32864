@@ -16,7 +16,7 @@ import { Dialog, DialogContent, DialogHeader, DialogTitle, DialogDescription } f
 import { supabase } from "@/integrations/supabase/client";
 import { useIsMobile } from "@/hooks/use-mobile";
 import { Sheet, SheetContent, SheetHeader, SheetTitle, SheetTrigger } from "@/components/ui/sheet";
-import paytapTag from '@/assets/paytap-tag-sticker-v2.png';
+import paytapTag from '@/assets/paytap-tag-checkout.png';
 import paytapCard from '@/assets/paytap-card-product.png';
 
 // ── Plan Data ──────────────────────────────────────────────
