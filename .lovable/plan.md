@@ -1,85 +1,42 @@
 
 
-## Checkout Revamp — 4-Step Wizard Flow
+## Plan: Add Logo to Invoice PDF + Sample Invoice Test Page
 
-### Overview
+### Changes
 
-Convert the current single-page checkout into a 4-step wizard with progress indicator, premium styling, and product type selection integrated into Step 1. All existing functionality (plans, validation, PayU payment links, invoice generation, order creation) is preserved — only the UX structure and visual design change.
+**1. Copy logo to `public/images/paytap-logo-invoice.png`**
+- Copy the uploaded `Paytap_Logo_2.png` to `public` so it can be loaded as a base64 image for the PDF.
 
-### Step Flow
+**2. Update `src/lib/generateInvoice.ts`**
+- Replace the `doc.text('Paytap', margin, y + 5)` line (line 99) with `doc.addImage(...)` using the logo.
+- The logo will be embedded as a base64-encoded PNG. We'll convert it at build time by importing it and using a canvas, or more simply, we'll fetch the image from `public/` and convert to base64 inside the function.
+- Since `jspdf.addImage()` supports base64 data URLs, the cleanest approach: preload the logo as base64 and pass it to `addImage`. We'll add a helper that fetches `/images/paytap-logo-invoice.png`, converts to base64, and caches it.
+- Logo size: approximately 35mm wide × 12mm tall, placed at the top-left where the text was.
 
-```text
-Step 1: Plan & Product    Step 2: Basic Details    Step 3: Business & Delivery    Step 4: Review & Pay
-   ●━━━━━━━━━━━━━━━━━━━━━━━━○━━━━━━━━━━━━━━━━━━━━━━━━○━━━━━━━━━━━━━━━━━━━━━━━━○
+**3. Create `src/pages/SampleInvoice.tsx`**
+- A simple page at route `/sample-invoice` that generates a sample invoice with dummy data when you click a button.
+- This lets you test the invoice output without going through the full checkout flow.
+
+**4. Add route in `src/App.tsx`**
+- Add `/sample-invoice` route pointing to the new page.
+
+### Technical Detail
+
+For embedding the logo in the PDF:
+```typescript
+// Fetch logo once and cache as base64
+let logoCached: string | null = null;
+async function getLogoBase64(): Promise<string> {
+  if (logoCached) return logoCached;
+  const res = await fetch('/images/paytap-logo-invoice.png');
+  const blob = await res.blob();
+  return new Promise((resolve) => {
+    const reader = new FileReader();
+    reader.onloadend = () => { logoCached = reader.result as string; resolve(logoCached); };
+    reader.readAsDataURL(blob);
+  });
+}
 ```
 
-### What Each Step Contains
-
-**Step 1 — Select Your Activation Plan**
-- New headline: "Turn Your Vehicles Into Intelligent Payment Machines."
-- Subheadline: "One-time activation. NFC hardware included. Centralised dashboard access in minutes."
-- Plan cards (4): Name, vehicle range, price, tag count, "One-Time Activation" label. Selected card gets crimson (#f6245b) border + soft glow. "Most Popular" badge on Business Pro.
-- Product type selector (NFC Tag vs Prepaid Card) — same toggle, moved below plan cards
-- "What You're Activating Today" dynamic summary (short icon list, not long sentences)
-- "Next" button to proceed
-
-**Step 2 — Basic Details**
-- Light grey background (#f9fafb)
-- Only 3 fields: Full Name, Phone, Email
-- Rounded-12px inputs with soft shadow, crimson focus border
-- Back / Next navigation
-
-**Step 3 — Business & Delivery**
-- GST toggle: "Do you have GST? Yes / No" — conditionally shows GST or PAN field (not both)
-- Company Name (for business plans)
-- Delivery address group: Address, State, City, PIN
-- Back / Next navigation
-
-**Step 4 — Review & Pay**
-- Full order summary: plan name, product type, price breakdown, GST, total
-- Customer details recap (name, phone, email, address)
-- Trust badges: Secure Checkout, 3–5 Day Delivery, Dedicated Onboarding Support
-- CTA button: "Activate & Pay ₹X,XXX" in crimson (#f6245b) with hover lift animation
-- "GST Invoice Provided" note
-
-### Technical Approach
-
-**Single file change**: `src/pages/Checkout.tsx` — full rewrite of the JSX structure.
-
-- Add `currentStep` state (1–4) with Next/Back handlers
-- Each step validates its own fields before allowing "Next"
-- Progress bar component at top with 4 labeled dots
-- Plan cards get crimson selected border, hover scale(1.02), tag count display
-- GST toggle state controls which identity field renders
-- Mobile: single column, sticky bottom "Next" / "Activate & Pay" button
-- Form data persists across steps (already managed by react-hook-form)
-- All existing logic (order creation, PayU redirect, invoice, confirmation dialog) stays in Step 4's submit handler
-
-### Visual Changes
-
-| Element | Current | New |
-|---------|---------|-----|
-| Selected plan border | Navy | Crimson (#f6245b) + soft shadow |
-| CTA button | Navy bg | Crimson bg, rounded-[14px], large padding |
-| Input focus | Navy border | Crimson border, rounded-xl, soft shadow |
-| Feature list | Full sentences in grid | Short labels with icons |
-| GST/PAN fields | Both shown | Toggle — one at a time |
-| Layout | Single scroll | 4-step wizard with progress bar |
-| Headline | "Activate Paytap for Your Vehicles" | "Turn Your Vehicles Into Intelligent Payment Machines." |
-
-### Mobile Optimizations
-
-- Sticky bottom bar shows "Next" or "Activate & Pay ₹X" depending on step
-- Plan cards in 2-column grid (same as now)
-- Step transitions use framer-motion fade
-- All inputs large and thumb-friendly
-
-### What Stays the Same
-
-- Plan data, pricing, PayU links — unchanged
-- Order creation logic, Supabase insert — unchanged  
-- Invoice generation — unchanged
-- Confirmation dialog — unchanged
-- Form validation schema — unchanged (just split across steps)
-- Product type selector (NFC vs Card) — preserved, moved to Step 1
+The `generateInvoice` function becomes `async` to await the logo fetch on first call.
 
