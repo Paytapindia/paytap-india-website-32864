@@ -1,19 +1,15 @@
 
 
-## Move Plan Features into Dynamic "What You're Activating Today"
+## Add "GST Invoice Provided" Note Under Total Payable
 
-### Changes in `src/pages/Checkout.tsx`
+### Change in `src/pages/Checkout.tsx`
 
-**1. Strip plan cards (lines 349-357)** — Remove the AMC line and the features `<ul>` from each card. Cards will show only: name, subtitle, price, recommended badge, and selection checkmark.
+**Line 286** — After the total amount line, add a small muted text: "GST Invoice Provided"
 
-**2. Make "What You're Activating Today" dynamic (lines 370-382)** — Replace the static `ACTIVATION_ITEMS` list with:
-- The selected plan's `features` array (changes when user switches plans)
-- AMC line: "AMC ₹X/mo · Billed annually from Year 2"
-- Keep baseline items: NFC Hardware, Secure Payment Control, Real-Time Transaction Visibility, Centralised Dashboard Access, 3–5 Day Delivery
+```tsx
+// After the existing total line, add:
+<p className="text-[11px] text-[#021a42]/50 text-right mt-1">GST Invoice Provided</p>
+```
 
-**3. Remove `ACTIVATION_ITEMS` constant (lines 87-93)** — No longer needed; baseline items will be inline.
-
-### Result
-- Plan cards become compact price-only selectors
-- "What You're Activating Today" becomes a rich summary that updates per selected plan
+Single line addition, single file.
 
