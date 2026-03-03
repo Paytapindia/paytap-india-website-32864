@@ -40,7 +40,7 @@ const PLANS: Record<PlanType, PlanInfo> = {
     price: 999,
     tags: 1,
     amcYear2: 1200,
-    features: ['1 NFC Payment Tag', 'Basic Dashboard', 'Tag Control', 'Transaction View'],
+    features: ['1 Prepaid Tag/Card', 'Basic Dashboard', 'Tag Control', 'Transaction View'],
     recommended: false,
     isBusinessPlan: false,
   },
@@ -50,7 +50,7 @@ const PLANS: Record<PlanType, PlanInfo> = {
     price: 1998,
     tags: 2,
     amcYear2: 1200,
-    features: ['2 NFC Payment Tags', 'Full Dashboard', 'MyFleet AI Access', 'Smart Reports'],
+    features: ['2 Prepaid Tag/Card', 'Full Dashboard', 'MyFleet AI Access', 'Smart Reports'],
     recommended: false,
     isBusinessPlan: true,
   },
@@ -60,7 +60,7 @@ const PLANS: Record<PlanType, PlanInfo> = {
     price: 4998,
     tags: 5,
     amcYear2: 6000,
-    features: ['5 NFC Payment Tags', 'MyFleet AI', 'ExpensePro', 'Advanced Reporting', 'Priority Support'],
+    features: ['5 Prepaid Tag/Card', 'MyFleet AI', 'ExpensePro', 'Advanced Reporting', 'Priority Support'],
     recommended: true,
     isBusinessPlan: true,
   },
@@ -70,7 +70,7 @@ const PLANS: Record<PlanType, PlanInfo> = {
     price: 9999,
     tags: 10,
     amcYear2: 12000,
-    features: ['10 NFC Tags', 'MyFleet AI', 'ExpensePro', 'Multi-User Access', 'Dedicated Support'],
+    features: ['10 Prepaid Tag/Card', 'MyFleet AI', 'ExpensePro', 'Multi-User Access', 'Dedicated Support'],
     recommended: false,
     isBusinessPlan: true,
   },
@@ -322,47 +322,6 @@ const Checkout = () => {
           </p>
         </div>
 
-        {/* ── Product Type Selector ── */}
-        <div className="max-w-5xl mx-auto px-4 pb-8">
-          <h2 className="text-sm font-semibold text-[#021a42] mb-3">Choose Your Product</h2>
-          <div className="grid grid-cols-2 gap-3 md:gap-4">
-            {([
-              { key: 'sticker' as const, label: 'NFC Payment Tag', desc: 'Tap-to-pay sticker for your vehicle', icon: Nfc, image: paytapTag },
-              { key: 'card' as const, label: 'Prepaid Card', desc: 'Prepaid card for driver expenses', icon: CreditCard, image: paytapCard },
-            ]).map((product) => {
-              const isActive = productType === product.key;
-              return (
-                <button
-                  key={product.key}
-                  type="button"
-                  onClick={() => setProductType(product.key)}
-                  className={`relative text-left rounded-xl border-2 transition-all duration-200 bg-white overflow-hidden ${
-                    isActive
-                      ? 'border-[#021a42] shadow-sm'
-                      : 'border-[#021a42]/10 hover:border-[#021a42]/25'
-                  }`}
-                >
-                  <div className="aspect-[4/3] bg-gradient-to-br from-[#021a42]/5 to-[#021a42]/10 flex items-center justify-center p-4">
-                    <img src={product.image} alt={product.label} className="max-h-full max-w-full object-contain" />
-                  </div>
-                  <div className="p-4">
-                    <div className="flex items-center gap-2 mb-1">
-                      <product.icon className="w-4 h-4 text-[#021a42]" />
-                      <p className="text-sm font-semibold text-[#021a42]">{product.label}</p>
-                    </div>
-                    <p className="text-[11px] text-[#021a42]/50 leading-snug">{product.desc}</p>
-                  </div>
-                  {isActive && (
-                    <div className="absolute top-3 right-3 w-5 h-5 rounded-full bg-[#021a42] flex items-center justify-center">
-                      <Check className="w-3 h-3 text-white" />
-                    </div>
-                  )}
-                </button>
-              );
-            })}
-          </div>
-        </div>
-
         {/* ── Plan Cards ── */}
         <div className="max-w-5xl mx-auto px-4 pb-8">
           <div className="grid grid-cols-2 md:grid-cols-4 gap-3 md:gap-4">
@@ -418,7 +377,48 @@ const Checkout = () => {
                   <span>{item}</span>
                 </div>
               ))}
-            </div>
+           </div>
+          </div>
+        </div>
+
+        {/* ── Product Type Selector ── */}
+        <div className="max-w-5xl mx-auto px-4 pb-8">
+          <h2 className="text-sm font-semibold text-[#021a42] mb-3">Choose Your Product</h2>
+          <div className="grid grid-cols-2 gap-3 md:gap-4">
+            {([
+              { key: 'sticker' as const, label: 'NFC Payment Tag', desc: 'Tap-to-pay sticker for your vehicle', icon: Nfc, image: paytapTag },
+              { key: 'card' as const, label: 'Prepaid Card', desc: 'Prepaid card for driver expenses', icon: CreditCard, image: paytapCard },
+            ]).map((product) => {
+              const isActive = productType === product.key;
+              return (
+                <button
+                  key={product.key}
+                  type="button"
+                  onClick={() => setProductType(product.key)}
+                  className={`relative flex items-center gap-3 text-left rounded-xl border-2 transition-all duration-200 bg-white p-3 ${
+                    isActive
+                      ? 'border-[#021a42] shadow-sm'
+                      : 'border-[#021a42]/10 hover:border-[#021a42]/25'
+                  }`}
+                >
+                  <div className="w-16 h-16 flex-shrink-0 bg-gradient-to-br from-[#021a42]/5 to-[#021a42]/10 rounded-lg flex items-center justify-center p-1.5">
+                    <img src={product.image} alt={product.label} className="max-h-full max-w-full object-contain" />
+                  </div>
+                  <div className="flex-1 min-w-0">
+                    <div className="flex items-center gap-1.5 mb-0.5">
+                      <product.icon className="w-3.5 h-3.5 text-[#021a42]" />
+                      <p className="text-sm font-semibold text-[#021a42]">{product.label}</p>
+                    </div>
+                    <p className="text-[11px] text-[#021a42]/50 leading-snug">{product.desc}</p>
+                  </div>
+                  {isActive && (
+                    <div className="absolute top-2 right-2 w-5 h-5 rounded-full bg-[#021a42] flex items-center justify-center">
+                      <Check className="w-3 h-3 text-white" />
+                    </div>
+                  )}
+                </button>
+              );
+            })}
           </div>
         </div>
 
