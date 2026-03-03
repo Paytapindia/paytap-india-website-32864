@@ -84,7 +84,7 @@ const PAYU_PAYMENT_LINKS: Record<PlanType, string> = {
   corporate: "https://u.payu.in/PAYUMN/4IXb9s4OqWwn",
 };
 
-const ACTIVATION_ITEMS = [
+const BASELINE_ITEMS = [
   'NFC Hardware',
   'Secure Payment Control',
   'Real-Time Transaction Visibility',
@@ -346,15 +346,6 @@ const Checkout = () => {
                   <p className="text-sm font-semibold text-[#021a42]">{p.name}</p>
                   <p className="text-[11px] text-[#021a42]/50 mt-0.5 leading-snug">{p.subtitle}</p>
                   <p className="text-lg md:text-2xl font-bold text-[#021a42] mt-2 md:mt-3">{formatINR(p.price)}</p>
-                  <p className="text-[10px] text-[#021a42]/40 mt-0.5">AMC {formatINR(Math.round(p.amcYear2 / 12))}/mo · Billed annually from Year 2</p>
-                  <ul className="mt-2 md:mt-3 space-y-1">
-                    {p.features.map((f) => (
-                      <li key={f} className="flex items-start gap-1.5 text-xs text-[#021a42]/70">
-                        <Check className="w-3.5 h-3.5 text-[#021a42] mt-0.5 flex-shrink-0" />
-                        <span>{f}</span>
-                      </li>
-                    ))}
-                  </ul>
                   {isSelected && (
                     <div className="absolute top-3 right-3 w-5 h-5 rounded-full bg-[#021a42] flex items-center justify-center">
                       <Check className="w-3 h-3 text-white" />
@@ -371,7 +362,17 @@ const Checkout = () => {
           <div className="border border-[#021a42]/10 rounded-xl p-4 md:p-6">
             <h2 className="text-sm font-semibold text-[#021a42] mb-3">What You're Activating Today</h2>
             <div className="grid grid-cols-1 sm:grid-cols-2 gap-2">
-              {ACTIVATION_ITEMS.map((item) => (
+              {plan.features.map((item) => (
+                <div key={item} className="flex items-center gap-2 text-sm text-[#021a42]/70">
+                  <Check className="w-4 h-4 text-[#021a42] flex-shrink-0" />
+                  <span>{item}</span>
+                </div>
+              ))}
+              <div className="flex items-center gap-2 text-sm text-[#021a42]/70">
+                <Check className="w-4 h-4 text-[#021a42] flex-shrink-0" />
+                <span>AMC {formatINR(Math.round(plan.amcYear2 / 12))}/mo · Billed annually from Year 2</span>
+              </div>
+              {BASELINE_ITEMS.map((item) => (
                 <div key={item} className="flex items-center gap-2 text-sm text-[#021a42]/70">
                   <Check className="w-4 h-4 text-[#021a42] flex-shrink-0" />
                   <span>{item}</span>
