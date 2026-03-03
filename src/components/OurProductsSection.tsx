@@ -1,6 +1,5 @@
-
 import { memo } from "react";
-import { ArrowUpRight, Truck, Receipt } from "lucide-react";
+import { ArrowRight, Truck, Receipt } from "lucide-react";
 import { useTranslation } from "react-i18next";
 import { Link } from "react-router-dom";
 
@@ -8,16 +7,18 @@ const products = [
   {
     id: 1,
     name: "MyFleet AI",
-    description: "Automated spend control and reconciliation for fleets",
+    description: "Automated spend control and reconciliation for fleets. Real-time tracking, route optimization, and intelligent fuel management — all in one platform.",
     icon: Truck,
     link: "https://www.myfleetai.in",
+    cta: "Explore MyFleet AI",
   },
   {
     id: 2,
     name: "ExpensePro",
-    description: "Real-time expense tracking and reimbursement workflows",
+    description: "Real-time expense tracking and reimbursement workflows. Automate approvals, enforce policies, and gain full visibility into corporate spending.",
     icon: Receipt,
     link: "https://expensepro.in/",
+    cta: "Explore ExpensePro",
   },
 ];
 
@@ -25,60 +26,54 @@ const OurProductsSection = memo(() => {
   const { t } = useTranslation();
 
   return (
-    <section id="our-products" className="py-16 md:py-32 px-6 md:px-12 bg-gradient-to-b from-background to-paytap-dark/5">
+    <section id="our-products" className="py-20 md:py-32 px-6 md:px-12 bg-muted/50">
       <div className="max-w-6xl mx-auto">
         {/* Section header */}
-        <div className="text-center mb-10 md:mb-20">
-          <h2 className="text-2xl md:text-5xl font-semibold text-foreground mb-3 md:mb-4 tracking-tight">
+        <div className="text-center mb-16 md:mb-24">
+          <h2 className="text-3xl md:text-5xl font-bold text-primary tracking-tight mb-3 md:mb-4">
             Our Platform Ecosystem
           </h2>
-          <p className="text-muted-foreground text-sm md:text-xl max-w-2xl mx-auto">
+          <p className="text-muted-foreground text-sm md:text-lg max-w-2xl mx-auto">
             {t('ourProducts.subtitle')}
           </p>
         </div>
 
         {/* Products grid */}
-        <div className="grid grid-cols-1 md:grid-cols-2 gap-4 md:gap-8">
+        <div className="grid grid-cols-1 md:grid-cols-2 gap-6 md:gap-10">
           {products.map((product) => {
-            const isInternal = product.link.startsWith('/');
             const isExternal = product.link.startsWith('http');
-            
+            const isInternal = product.link.startsWith('/');
+
             const cardContent = (
               <>
-                {/* Icon with navy blue gradient */}
-                <div className="w-12 h-12 md:w-14 md:h-14 rounded-lg md:rounded-xl bg-gradient-to-br from-paytap-dark to-paytap-dark/70 flex items-center justify-center mb-4 md:mb-6 mx-auto shadow-lg shadow-paytap-dark/20 md:group-hover:shadow-xl md:group-hover:shadow-paytap-dark/30 transition-shadow duration-300">
-                  <product.icon className="w-6 h-6 md:w-7 md:h-7 text-white" />
+                {/* Icon */}
+                <div className="w-14 h-14 md:w-16 md:h-16 rounded-2xl bg-primary flex items-center justify-center mb-5 md:mb-7 shadow-md">
+                  <product.icon className="w-7 h-7 md:w-8 md:h-8 text-primary-foreground" />
                 </div>
 
-                {/* Content */}
-                <h3 className="text-lg md:text-2xl font-semibold text-paytap-dark mb-2 md:mb-3 md:group-hover:text-paytap-dark/80 transition-colors text-center">
+                {/* Product name */}
+                <h3 className="text-xl md:text-3xl font-bold text-primary mb-3 md:mb-5 tracking-tight">
                   {product.name}
                 </h3>
-                <p className="text-muted-foreground text-sm md:text-base leading-relaxed mb-4 md:mb-6 text-center">
+
+                {/* Description */}
+                <p className="text-foreground/80 text-sm md:text-base leading-relaxed mb-6 md:mb-8">
                   {product.description}
                 </p>
 
-                {/* Link indicator with navy blue */}
-                <div className="flex items-center justify-center text-paytap-dark font-medium text-xs md:text-sm">
-                  <span>Learn more</span>
-                  <ArrowUpRight className="w-3.5 h-3.5 md:w-4 md:h-4 ml-1 md:group-hover:translate-x-0.5 md:group-hover:-translate-y-0.5 transition-transform" />
+                {/* CTA */}
+                <div className="flex items-center text-primary font-semibold text-sm md:text-base group-hover:gap-2 transition-all">
+                  <span>{product.cta}</span>
+                  <ArrowRight className="w-4 h-4 ml-1.5 group-hover:translate-x-1 transition-transform" />
                 </div>
-
-                {/* Hover effect with navy blue tint - hidden on mobile for performance */}
-                <div className="absolute inset-0 rounded-xl md:rounded-2xl bg-gradient-to-br from-paytap-dark/8 to-paytap-dark/3 opacity-0 md:group-hover:opacity-100 transition-opacity pointer-events-none hidden md:block" />
               </>
             );
 
-            // Card styling with subtle navy blue background
-            const cardClassName = "group relative bg-gradient-to-br from-paytap-dark/[0.03] to-paytap-dark/[0.08] rounded-xl md:rounded-2xl p-4 sm:p-6 md:p-10 border border-paytap-dark/10 md:hover:border-paytap-dark/25 transition-all duration-300 md:hover:shadow-xl md:hover:shadow-paytap-dark/10 text-center";
+            const cardClassName = "group text-left bg-background border border-primary/[0.08] rounded-2xl p-6 md:p-12 shadow-sm hover:shadow-lg hover:border-primary/[0.15] hover:-translate-y-0.5 transition-all duration-300";
 
             if (isInternal) {
               return (
-                <Link
-                  key={product.id}
-                  to={product.link}
-                  className={cardClassName}
-                >
+                <Link key={product.id} to={product.link} className={cardClassName}>
                   {cardContent}
                 </Link>
               );
