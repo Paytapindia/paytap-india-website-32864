@@ -1,17 +1,15 @@
 
 
-## Update Business Basic PayU Payment Link
+## Update Business Pro PayU Payment Link
 
 ### Change
-**File: `src/pages/Checkout.tsx`, line 80**
+**File: `src/pages/Checkout.tsx`, line 81**
 
-Update the `business_basic` payment link from the current value to the new link provided:
+Replace the fallback payment link for `business_pro` with the provided URL:
 
 ```
-business_basic: "https://u.payu.in/PAYUMN/hrGp6pGNhp8P",
+business_pro: "https://u.payu.in/PAYUMN/UI5bcsfONe0o",
 ```
 
-This maps to the ₹2,358 total (₹1,998 + 18% GST) for the Business Basic plan.
-
-Single line change, no other modifications needed.
+Single line change.
 
