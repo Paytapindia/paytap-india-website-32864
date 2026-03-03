@@ -1,15 +1,15 @@
 
 
-## Update Business Pro PayU Payment Link
+## Update Corporate PayU Payment Link
 
 ### Change
-**File: `src/pages/Checkout.tsx`, line 81**
+**File: `src/pages/Checkout.tsx`, line 82**
 
-Replace the fallback payment link for `business_pro` with the provided URL:
+Replace the fallback payment link for `corporate` with the provided URL:
 
 ```
-business_pro: "https://u.payu.in/PAYUMN/UI5bcsfONe0o",
+corporate: "https://u.payu.in/PAYUMN/4IXb9s4OqWwn",
 ```
 
-Single line change.
+Single line change. Removes the fallback comment since all 4 plans now have their correct payment links.
 
