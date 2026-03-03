@@ -77,7 +77,7 @@ const PLANS: Record<PlanType, PlanInfo> = {
 // PayU payment links keyed by plan (use ₹999 link as fallback for now)
 const PAYU_PAYMENT_LINKS: Record<PlanType, string> = {
   starter: "https://u.payu.in/PAYUMN/BICnJ3sPnq1K",
-  business_basic: "https://u.payu.in/PAYUMN/RrgpdqmXfsEN",
+  business_basic: "https://u.payu.in/PAYUMN/hrGp6pGNhp8P",
   business_pro: "https://u.payu.in/PAYUMN/prS7p8roOCn5",   // fallback – update when link ready
   corporate: "https://u.payu.in/PAYUMN/prS7p8roOCn5",       // fallback – update when link ready
 };
