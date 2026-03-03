@@ -313,8 +313,8 @@ const Checkout = () => {
         </div>
 
         {/* ── Hero ── */}
-        <div className="max-w-5xl mx-auto px-4 pt-10 pb-6 md:pt-14 md:pb-8 text-center">
-          <h1 className="text-2xl md:text-3xl font-bold text-[#021a42] tracking-tight">
+        <div className="max-w-5xl mx-auto px-4 pt-6 pb-4 md:pt-14 md:pb-8 text-center">
+          <h1 className="text-xl md:text-3xl font-bold text-[#021a42] tracking-tight">
             Activate Paytap for Your Vehicles
           </h1>
           <p className="mt-2 text-sm text-[#021a42]/50 max-w-md mx-auto">
@@ -324,7 +324,7 @@ const Checkout = () => {
 
         {/* ── Plan Cards ── */}
         <div className="max-w-5xl mx-auto px-4 pb-8">
-          <div className="grid grid-cols-2 md:grid-cols-4 gap-3 md:gap-4">
+          <div className="grid grid-cols-2 md:grid-cols-4 gap-2 md:gap-4">
             {(Object.entries(PLANS) as [PlanType, PlanInfo][]).map(([key, p]) => {
               const isSelected = selectedPlan === key;
               return (
@@ -332,7 +332,7 @@ const Checkout = () => {
                   key={key}
                   type="button"
                   onClick={() => setSelectedPlan(key)}
-                  className={`relative text-left p-4 md:p-5 rounded-xl border-2 transition-all duration-200 bg-white ${
+                  className={`relative text-left p-3 md:p-5 rounded-xl border-2 transition-all duration-200 bg-white ${
                     isSelected
                       ? 'border-[#021a42] shadow-sm'
                       : 'border-[#021a42]/10 hover:border-[#021a42]/25'
@@ -345,9 +345,9 @@ const Checkout = () => {
                   )}
                   <p className="text-sm font-semibold text-[#021a42]">{p.name}</p>
                   <p className="text-[11px] text-[#021a42]/50 mt-0.5 leading-snug">{p.subtitle}</p>
-                  <p className="text-xl md:text-2xl font-bold text-[#021a42] mt-3">{formatINR(p.price)}</p>
+                  <p className="text-lg md:text-2xl font-bold text-[#021a42] mt-2 md:mt-3">{formatINR(p.price)}</p>
                   <p className="text-[10px] text-[#021a42]/40 mt-0.5">AMC {formatINR(p.amcYear2)}/yr from Year 2</p>
-                  <ul className="mt-3 space-y-1.5">
+                  <ul className="mt-2 md:mt-3 space-y-1">
                     {p.features.map((f) => (
                       <li key={f} className="flex items-start gap-1.5 text-xs text-[#021a42]/70">
                         <Check className="w-3.5 h-3.5 text-[#021a42] mt-0.5 flex-shrink-0" />
@@ -368,7 +368,7 @@ const Checkout = () => {
 
         {/* ── What You're Activating ── */}
         <div className="max-w-5xl mx-auto px-4 pb-8">
-          <div className="border border-[#021a42]/10 rounded-xl p-5 md:p-6">
+          <div className="border border-[#021a42]/10 rounded-xl p-4 md:p-6">
             <h2 className="text-sm font-semibold text-[#021a42] mb-3">What You're Activating Today</h2>
             <div className="grid grid-cols-1 sm:grid-cols-2 gap-2">
               {ACTIVATION_ITEMS.map((item) => (
@@ -384,7 +384,7 @@ const Checkout = () => {
         {/* ── Product Type Selector ── */}
         <div className="max-w-5xl mx-auto px-4 pb-8">
           <h2 className="text-sm font-semibold text-[#021a42] mb-3">Choose Your Product</h2>
-          <div className="grid grid-cols-2 gap-3 md:gap-4">
+          <div className="grid grid-cols-1 md:grid-cols-2 gap-3 md:gap-4">
             {([
               { key: 'sticker' as const, label: 'NFC Payment Tag', desc: 'Tap-to-pay sticker for your vehicle', icon: Nfc, image: paytapTag },
               { key: 'card' as const, label: 'Prepaid Card', desc: 'Prepaid card for driver expenses', icon: CreditCard, image: paytapCard },
@@ -424,11 +424,11 @@ const Checkout = () => {
 
         {/* ── Form + Order Summary (Two Column Desktop) ── */}
         <form onSubmit={handleSubmit(onSubmit)}>
-          <div className="max-w-5xl mx-auto px-4 pb-24 md:pb-16">
-            <div className="grid grid-cols-1 md:grid-cols-5 gap-6 md:gap-8">
+            <div className="max-w-5xl mx-auto px-4 pb-20 md:pb-16">
+              <div className="grid grid-cols-1 md:grid-cols-5 gap-4 md:gap-8">
 
               {/* LEFT: Form */}
-              <div className="md:col-span-3 space-y-6">
+              <div className="md:col-span-3 space-y-4 md:space-y-6">
                 {/* Personal Details */}
                 <div className="space-y-4">
                   <h3 className="text-sm font-semibold text-[#021a42]">Personal Details</h3>
@@ -577,7 +577,7 @@ const Checkout = () => {
           </div>
 
           {/* ── Mobile: Sticky Bottom Bar ── */}
-          <div className="fixed bottom-0 left-0 right-0 bg-white border-t border-[#021a42]/10 p-4 md:hidden z-50">
+          <div className="fixed bottom-0 left-0 right-0 bg-white border-t border-[#021a42]/10 shadow-[0_-4px_12px_rgba(0,0,0,0.06)] px-4 py-3 md:hidden z-50">
             <div className="flex items-center gap-3">
               {/* Expandable order summary trigger */}
               <Sheet open={mobileOrderOpen} onOpenChange={setMobileOrderOpen}>
