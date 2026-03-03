@@ -1,36 +1,21 @@
 
 
-## Add Product Type Selector (NFC Tag vs Prepaid Card)
+## Reorganize Product Selector and Update Text
 
-### What we're building
-A product type selector with two visually appealing cards (NFC Tag and Prepaid Card) placed between the Hero section and the Plan Cards section. Each card shows the product image, name, and a brief description. The selected product gets a highlighted border.
+### Changes to `src/pages/Checkout.tsx`
 
-### Design
-- Two side-by-side cards with product images (`paytap-tag-sticker-v2.png` for NFC Tag, `paytap-card-product.png` for Prepaid Card)
-- Matches existing checkout styling: `#021a42` color palette, rounded-xl borders, clean minimal look
-- Selected card gets `border-[#021a42]` with a check indicator (same pattern as plan cards)
-- Unselected card gets `border-[#021a42]/10` with hover effect
+**1. Move "Choose Your Product" section below "What You're Activating Today"**
+- Cut the product selector block (lines 325-364) from its current position (between Hero and Plan Cards)
+- Re-insert it after the "What You're Activating Today" section (after line 423), before the form
 
-### Technical changes
+**2. Make product selector cards smaller**
+- Remove the large `aspect-[4/3]` image container
+- Use a compact horizontal layout (icon + image thumbnail + text side by side) or reduce image size significantly to match plan card proportions
+- Use `max-h-24` or similar constraint on images so they don't dominate
 
-**File: `src/pages/Checkout.tsx`**
-
-1. Add imports for product images at top:
-   ```typescript
-   import paytapTag from '@/assets/paytap-tag-sticker-v2.png';
-   import paytapCard from '@/assets/paytap-card-product.png';
-   ```
-
-2. Add a `productType` state (`'sticker' | 'card'`, default `'sticker'`) alongside existing state variables.
-
-3. Insert a product selector section between the Hero and Plan Cards sections (around line 317). Two clickable cards in a `grid-cols-2` layout:
-   - **NFC Payment Tag** — image, title, short description ("Tap-to-pay sticker for your vehicle")
-   - **Prepaid Card** — image, title, short description ("Prepaid card for driver expenses")
-   - Section heading: "Choose Your Product"
-
-4. Update the order insert (line 232) to use the `productType` state instead of hardcoded `'sticker'`.
-
-5. Update the Order Summary to show the selected product type name.
-
-No database changes needed — the `product_type` column already exists in the orders table.
+**3. Rename "NFC Payment Tag" to "Prepaid Tag/Card" in all 4 plan feature lists**
+- Starter: `'1 NFC Payment Tag'` → `'1 Prepaid Tag/Card'`
+- Business Basic: `'2 NFC Payment Tags'` → `'2 Prepaid Tag/Card'`
+- Business Pro: `'5 NFC Payment Tags'` → `'5 Prepaid Tag/Card'`
+- Corporate: `'10 NFC Tags'` → `'10 Prepaid Tag/Card'`
 
