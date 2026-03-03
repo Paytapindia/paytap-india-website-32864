@@ -11,7 +11,8 @@ import { Separator } from "@/components/ui/separator";
 import { useToast } from "@/hooks/use-toast";
 import { getStates, getCitiesByState } from "@/data/indianStatesAndCities";
 import { useNavigate } from "react-router-dom";
-import { Loader2, ShieldCheck, Truck, Home, Package, CheckCircle, Check, Lock, ChevronUp, ChevronDown, Nfc, CreditCard } from "lucide-react";
+import { Loader2, ShieldCheck, Truck, Home, Package, CheckCircle, Check, Lock, ChevronUp, ChevronDown, Nfc, CreditCard, Download, XCircle } from "lucide-react";
+import { generateInvoice, type InvoiceData } from "@/lib/generateInvoice";
 import { Dialog, DialogContent, DialogHeader, DialogTitle, DialogDescription } from "@/components/ui/dialog";
 import { supabase } from "@/integrations/supabase/client";
 import { useIsMobile } from "@/hooks/use-mobile";
@@ -125,6 +126,7 @@ const Checkout = () => {
   const [orderTxnId, setOrderTxnId] = useState("");
   const [fieldErrors, setFieldErrors] = useState<Record<string, string>>({});
   const [mobileOrderOpen, setMobileOrderOpen] = useState(false);
+  const [lastFormData, setLastFormData] = useState<CheckoutFormData | null>(null);
   const { toast } = useToast();
   const navigate = useNavigate();
   const isMobile = useIsMobile();
@@ -181,6 +183,30 @@ const Checkout = () => {
   const handleCityChange = (city: string) => { setValue("city", city); trigger("city"); };
 
   const handleConfirmPayment = async () => {
+    // Generate invoice before confirming
+    if (lastFormData) {
+      const invoiceData: InvoiceData = {
+        txnid: orderTxnId,
+        name: lastFormData.name,
+        address: lastFormData.address,
+        city: lastFormData.city,
+        state: lastFormData.state,
+        pincode: lastFormData.pincode,
+        phone: lastFormData.phone,
+        email: lastFormData.email,
+        pan: lastFormData.pan,
+        gst: lastFormData.gst,
+        companyName: lastFormData.companyName,
+        productType,
+        planName: plan.name,
+        quantity: plan.tags,
+        unitPrice: plan.price,
+        subtotal: subtotal,
+        gstAmount: gst,
+        total: total,
+      };
+      generateInvoice(invoiceData);
+    }
     await supabase.from('orders').update({ payment_status: 'confirmed' } as any).eq('txnid', orderTxnId);
     navigate("/");
   };
@@ -247,6 +273,7 @@ const Checkout = () => {
       if (error) throw new Error('Failed to save order');
 
       setOrderTxnId(txnid);
+      setLastFormData(data);
       setShowConfirmation(true);
       window.open(PAYU_PAYMENT_LINKS[selectedPlan], '_blank');
     } catch {
@@ -619,20 +646,21 @@ const Checkout = () => {
         <DialogContent className="sm:max-w-md [&>button]:hidden">
           <DialogHeader className="text-center">
             <div className="flex justify-center mb-4">
-              <Package className="w-16 h-16 text-[#021a42]" />
+              <CheckCircle className="w-16 h-16 text-green-500" />
             </div>
-            <DialogTitle className="text-xl text-[#021a42]">Looks like you have placed an order</DialogTitle>
+            <DialogTitle className="text-xl text-[#021a42]">Payment Completed?</DialogTitle>
             <DialogDescription className="text-[#021a42]/50 mt-2">
-              Did you complete the payment successfully?
+              If your payment was successful, download your GST invoice now.
             </DialogDescription>
           </DialogHeader>
           <div className="space-y-3 mt-4">
-            <Button onClick={handleConfirmPayment} className="w-full h-12 bg-[#021a42] hover:bg-[#031d4a] text-base font-semibold">
-              <CheckCircle className="mr-2 h-5 w-5" />
-              Yes, Payment Successful
+            <Button onClick={handleConfirmPayment} className="w-full h-12 bg-green-600 hover:bg-green-700 text-base font-semibold text-white">
+              <Download className="mr-2 h-5 w-5" />
+              Yes, Download Invoice
             </Button>
             <Button variant="outline" onClick={handleDeclinePayment} className="w-full h-12 text-base border-[#021a42]/15 text-[#021a42]">
-              No, Will Try Later
+              <XCircle className="mr-2 h-4 w-4" />
+              Cancel Order
             </Button>
           </div>
           <p className="text-center text-xs text-[#021a42]/40 mt-3">
