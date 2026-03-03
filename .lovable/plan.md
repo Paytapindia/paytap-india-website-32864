@@ -1,28 +1,19 @@
 
 
-## Show AMC as Monthly with "Billed Annually" Note
+## Move Plan Features into Dynamic "What You're Activating Today"
 
-### Change in `src/pages/Checkout.tsx`
+### Changes in `src/pages/Checkout.tsx`
 
-**Line 349** — Update the AMC display line in plan cards from:
-```
-AMC ₹1,200/yr from Year 2
-```
-to:
-```
-AMC ₹100/mo · Billed annually from Year 2
-```
+**1. Strip plan cards (lines 349-357)** — Remove the AMC line and the features `<ul>` from each card. Cards will show only: name, subtitle, price, recommended badge, and selection checkmark.
 
-Calculate monthly by dividing `amcYear2 / 12` and display with the monthly figure + "Billed annually" qualifier.
+**2. Make "What You're Activating Today" dynamic (lines 370-382)** — Replace the static `ACTIVATION_ITEMS` list with:
+- The selected plan's `features` array (changes when user switches plans)
+- AMC line: "AMC ₹X/mo · Billed annually from Year 2"
+- Keep baseline items: NFC Hardware, Secure Payment Control, Real-Time Transaction Visibility, Centralised Dashboard Access, 3–5 Day Delivery
 
-**Line 288** — Update the footer note from:
-```
-Annual AMC applicable from Year 2 as per selected plan.
-```
-to:
-```
-AMC billed annually from Year 2 as per selected plan.
-```
+**3. Remove `ACTIVATION_ITEMS` constant (lines 87-93)** — No longer needed; baseline items will be inline.
 
-Single file change: `src/pages/Checkout.tsx`
+### Result
+- Plan cards become compact price-only selectors
+- "What You're Activating Today" becomes a rich summary that updates per selected plan
 
