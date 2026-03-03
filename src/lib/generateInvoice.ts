@@ -75,7 +75,23 @@ function getPlaceOfSupply(state: string): string {
   return `${state} (${codes[state] || '00'})`;
 }
 
-export function generateInvoice(data: InvoiceData): void {
+// Logo fetcher with caching
+let logoCached: string | null = null;
+async function getLogoBase64(): Promise<string> {
+  if (logoCached) return logoCached;
+  const res = await fetch('/images/paytap-logo-invoice.png');
+  const blob = await res.blob();
+  return new Promise((resolve) => {
+    const reader = new FileReader();
+    reader.onloadend = () => {
+      logoCached = reader.result as string;
+      resolve(logoCached);
+    };
+    reader.readAsDataURL(blob);
+  });
+}
+
+export async function generateInvoice(data: InvoiceData): Promise<void> {
   const doc = new jsPDF('p', 'mm', 'a4');
   const pageWidth = 210;
   const margin = 15;
@@ -84,22 +100,27 @@ export function generateInvoice(data: InvoiceData): void {
   const invoiceNo = `INV-${data.txnid}`;
   const isInterState = data.state !== 'Karnataka';
 
-  // Colors
   const dark = '#021a42';
   const gray = '#666666';
-  const lightGray = '#f5f5f5';
   const lineColor = '#cccccc';
 
   let y = margin;
 
-  // ── Header ──
-  doc.setFontSize(16);
-  doc.setFont('helvetica', 'bold');
-  doc.setTextColor(dark);
-  doc.text('Paytap', margin, y + 5);
+  // ── Header with Logo ──
+  try {
+    const logoBase64 = await getLogoBase64();
+    doc.addImage(logoBase64, 'PNG', margin, y - 2, 35, 12);
+  } catch {
+    // Fallback to text if logo fails
+    doc.setFontSize(16);
+    doc.setFont('helvetica', 'bold');
+    doc.setTextColor(dark);
+    doc.text('Paytap', margin, y + 5);
+  }
 
   doc.setFontSize(9);
   doc.setFont('helvetica', 'bold');
+  doc.setTextColor(dark);
   doc.text(COMPANY.name, margin, y + 12);
   
   doc.setFont('helvetica', 'normal');
@@ -156,7 +177,6 @@ export function generateInvoice(data: InvoiceData): void {
 
   const halfWidth = contentWidth / 2;
 
-  // Bill To
   doc.setFontSize(9);
   doc.setFont('helvetica', 'bold');
   doc.setTextColor(dark);
@@ -190,7 +210,6 @@ export function generateInvoice(data: InvoiceData): void {
     doc.text(`PAN ${data.pan}`, margin, billY); billY += 4;
   }
 
-  // Ship To
   const shipX = margin + halfWidth + 5;
   doc.setFontSize(9);
   doc.setFont('helvetica', 'bold');
@@ -213,7 +232,6 @@ export function generateInvoice(data: InvoiceData): void {
   doc.setDrawColor(lineColor);
   doc.line(margin, y, pageWidth - margin, y);
 
-  // Table header
   const colX = {
     item: margin + 1,
     hsn: margin + 70,
@@ -240,7 +258,6 @@ export function generateInvoice(data: InvoiceData): void {
   doc.line(margin, y, pageWidth - margin, y);
   y += 5;
 
-  // Table row
   const itemName = data.productType === 'sticker'
     ? `Paytap NFC Payment Tag`
     : `Paytap Prepaid Card`;
@@ -328,6 +345,5 @@ export function generateInvoice(data: InvoiceData): void {
   doc.setFontSize(7);
   doc.text('This is a computer-generated invoice, no signature required.', pageWidth / 2, y, { align: 'center' });
 
-  // Save
   doc.save(`${invoiceNo}.pdf`);
 }
