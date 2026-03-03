@@ -37,7 +37,7 @@ const PLANS: Record<PlanType, PlanInfo> = {
   starter: {
     name: 'Starter',
     subtitle: 'For individuals (1–5 vehicles)',
-    price: 1179,
+    price: 999,
     tags: 1,
     amcYear2: 1200,
     features: ['1 Prepaid Tag/Card', 'Basic Dashboard', 'Tag Control', 'Transaction View'],
@@ -47,7 +47,7 @@ const PLANS: Record<PlanType, PlanInfo> = {
   business_basic: {
     name: 'Business Basic',
     subtitle: 'For growing fleets (1–10 vehicles)',
-    price: 2358,
+    price: 1998,
     tags: 2,
     amcYear2: 1200,
     features: ['2 Prepaid Tag/Card', 'Full Dashboard', 'MyFleet AI Access', 'Smart Reports'],
@@ -57,7 +57,7 @@ const PLANS: Record<PlanType, PlanInfo> = {
   business_pro: {
     name: 'Business Pro',
     subtitle: 'For scaling fleets (1–25 vehicles)',
-    price: 5898,
+    price: 4998,
     tags: 5,
     amcYear2: 6000,
     features: ['5 Prepaid Tag/Card', 'MyFleet AI', 'ExpensePro', 'Advanced Reporting', 'Priority Support'],
@@ -67,7 +67,7 @@ const PLANS: Record<PlanType, PlanInfo> = {
   corporate: {
     name: 'Corporate',
     subtitle: 'For large operations (1–100+ vehicles)',
-    price: 11799,
+    price: 9999,
     tags: 10,
     amcYear2: 12000,
     features: ['10 Prepaid Tag/Card', 'MyFleet AI', 'ExpensePro', 'Multi-User Access', 'Dedicated Support'],
@@ -130,7 +130,9 @@ const Checkout = () => {
   const isMobile = useIsMobile();
 
   const plan = PLANS[selectedPlan];
-  const total = plan.price;
+  const subtotal = plan.price;
+  const gst = Math.round(subtotal * 0.18);
+  const total = subtotal + gst;
 
   const {
     register,
@@ -148,7 +150,7 @@ const Checkout = () => {
     if (typeof window !== 'undefined' && window.gtag) {
       window.gtag('event', 'begin_checkout', {
         value: total, currency: 'INR',
-        items: [{ item_id: selectedPlan, item_name: plan.name, price: total, quantity: 1 }],
+        items: [{ item_id: selectedPlan, item_name: plan.name, price: subtotal, quantity: 1 }],
       });
     }
     if (typeof window !== 'undefined' && window.fbq) {
@@ -215,7 +217,7 @@ const Checkout = () => {
     if (typeof window !== 'undefined' && window.gtag) {
       window.gtag('event', 'purchase_intent', {
         value: total, currency: 'INR',
-        items: [{ item_id: selectedPlan, item_name: plan.name, price: total, quantity: 1 }],
+        items: [{ item_id: selectedPlan, item_name: plan.name, price: subtotal, quantity: 1 }],
       });
     }
 
@@ -266,8 +268,12 @@ const Checkout = () => {
         <span className="font-medium text-[#021a42]">{plan.name}</span>
       </div>
       <div className="flex justify-between text-sm text-[#021a42]/60">
-        <span>Activation Fee (incl. GST)</span>
-        <span className="font-medium text-[#021a42]">{formatINR(plan.price)}</span>
+        <span>Activation Fee</span>
+        <span className="font-medium text-[#021a42]">{formatINR(subtotal)}</span>
+      </div>
+      <div className="flex justify-between text-sm text-[#021a42]/60">
+        <span>GST (18%)</span>
+        <span className="font-medium text-[#021a42]">{formatINR(gst)}</span>
       </div>
       <div className="flex justify-between text-sm text-[#021a42]/60">
         <span>Shipping</span>
@@ -340,7 +346,6 @@ const Checkout = () => {
                   <p className="text-sm font-semibold text-[#021a42]">{p.name}</p>
                   <p className="text-[11px] text-[#021a42]/50 mt-0.5 leading-snug">{p.subtitle}</p>
                   <p className="text-lg md:text-2xl font-bold text-[#021a42] mt-2 md:mt-3">{formatINR(p.price)}</p>
-                  <p className="text-[9px] text-[#021a42]/40">incl. GST</p>
                   <p className="text-[10px] text-[#021a42]/40 mt-0.5">AMC {formatINR(Math.round(p.amcYear2 / 12))}/mo · Billed annually from Year 2</p>
                   <ul className="mt-2 md:mt-3 space-y-1">
                     {p.features.map((f) => (
