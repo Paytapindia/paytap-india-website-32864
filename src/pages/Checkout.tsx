@@ -285,7 +285,7 @@ const Checkout = () => {
         <span className="text-2xl font-bold text-[#021a42]">{formatINR(total)}</span>
       </div>
       <p className="text-xs text-[#021a42]/40 leading-relaxed">
-        Annual AMC applicable from Year 2 as per selected plan.
+        AMC billed annually from Year 2 as per selected plan.
       </p>
     </div>
   );
@@ -346,7 +346,7 @@ const Checkout = () => {
                   <p className="text-sm font-semibold text-[#021a42]">{p.name}</p>
                   <p className="text-[11px] text-[#021a42]/50 mt-0.5 leading-snug">{p.subtitle}</p>
                   <p className="text-lg md:text-2xl font-bold text-[#021a42] mt-2 md:mt-3">{formatINR(p.price)}</p>
-                  <p className="text-[10px] text-[#021a42]/40 mt-0.5">AMC {formatINR(p.amcYear2)}/yr from Year 2</p>
+                  <p className="text-[10px] text-[#021a42]/40 mt-0.5">AMC {formatINR(Math.round(p.amcYear2 / 12))}/mo · Billed annually from Year 2</p>
                   <ul className="mt-2 md:mt-3 space-y-1">
                     {p.features.map((f) => (
                       <li key={f} className="flex items-start gap-1.5 text-xs text-[#021a42]/70">
