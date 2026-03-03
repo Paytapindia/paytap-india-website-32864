@@ -7,37 +7,98 @@ import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
-import { Card, CardContent } from "@/components/ui/card";
 import { Separator } from "@/components/ui/separator";
-import { Badge } from "@/components/ui/badge";
 import { useToast } from "@/hooks/use-toast";
 import { getStates, getCitiesByState } from "@/data/indianStatesAndCities";
-import { useNavigate, useSearchParams } from "react-router-dom";
-import { Loader2, ShieldCheck, Truck, CreditCard, Home, Package, CheckCircle, MapPin, Check, Lock, User, Building, X, Timer } from "lucide-react";
+import { useNavigate } from "react-router-dom";
+import { Loader2, ShieldCheck, Truck, Home, Package, CheckCircle, Check, Lock, ChevronUp, ChevronDown } from "lucide-react";
 import { Dialog, DialogContent, DialogHeader, DialogTitle, DialogDescription } from "@/components/ui/dialog";
 import { supabase } from "@/integrations/supabase/client";
-import paytapCheckoutSticker from "@/assets/paytap-checkout-sticker.png";
-import paytapCard from "@/assets/paytap-card-product.png";
+import { useIsMobile } from "@/hooks/use-mobile";
+import { Sheet, SheetContent, SheetHeader, SheetTitle, SheetTrigger } from "@/components/ui/sheet";
 
-// PayU payment links based on product and quantity
-const PAYU_PAYMENT_LINKS = {
-  sticker_1: "https://u.payu.in/PAYUMN/prS7p8roOCn5",  // ₹999
-  sticker_2: "https://u.payu.in/PAYUMN/RrgpdqmXfsEN",  // ₹1,998
-  card_1: "https://u.payu.in/PAYUMN/prS7p8roOCn5",     // ₹999
-  card_2: "https://u.payu.in/PAYUMN/RrgpdqmXfsEN"      // ₹1,998
+// ── Plan Data ──────────────────────────────────────────────
+type PlanType = 'starter' | 'business_basic' | 'business_pro' | 'corporate';
+
+interface PlanInfo {
+  name: string;
+  subtitle: string;
+  price: number;
+  tags: number;
+  amcYear2: number;
+  features: string[];
+  recommended: boolean;
+  isBusinessPlan: boolean;
+}
+
+const PLANS: Record<PlanType, PlanInfo> = {
+  starter: {
+    name: 'Starter',
+    subtitle: 'For individuals (1–5 vehicles)',
+    price: 999,
+    tags: 1,
+    amcYear2: 1200,
+    features: ['1 NFC Payment Tag', 'Basic Dashboard', 'Tag Control', 'Transaction View'],
+    recommended: false,
+    isBusinessPlan: false,
+  },
+  business_basic: {
+    name: 'Business Basic',
+    subtitle: 'For growing fleets (1–10 vehicles)',
+    price: 1998,
+    tags: 2,
+    amcYear2: 1200,
+    features: ['2 NFC Payment Tags', 'Full Dashboard', 'MyFleet AI Access', 'Smart Reports'],
+    recommended: false,
+    isBusinessPlan: true,
+  },
+  business_pro: {
+    name: 'Business Pro',
+    subtitle: 'For scaling fleets (1–25 vehicles)',
+    price: 4998,
+    tags: 5,
+    amcYear2: 6000,
+    features: ['5 NFC Payment Tags', 'MyFleet AI', 'ExpensePro', 'Advanced Reporting', 'Priority Support'],
+    recommended: true,
+    isBusinessPlan: true,
+  },
+  corporate: {
+    name: 'Corporate',
+    subtitle: 'For large operations (1–100+ vehicles)',
+    price: 9999,
+    tags: 10,
+    amcYear2: 12000,
+    features: ['10 NFC Tags', 'MyFleet AI', 'ExpensePro', 'Multi-User Access', 'Dedicated Support'],
+    recommended: false,
+    isBusinessPlan: true,
+  },
 };
 
-type AccountType = 'personal' | 'business';
+// PayU payment links keyed by plan (use ₹999 link as fallback for now)
+const PAYU_PAYMENT_LINKS: Record<PlanType, string> = {
+  starter: "https://u.payu.in/PAYUMN/prS7p8roOCn5",
+  business_basic: "https://u.payu.in/PAYUMN/RrgpdqmXfsEN",
+  business_pro: "https://u.payu.in/PAYUMN/prS7p8roOCn5",   // fallback – update when link ready
+  corporate: "https://u.payu.in/PAYUMN/prS7p8roOCn5",       // fallback – update when link ready
+};
 
-// Required schema for checkout - shipping is mandatory for physical products
+const ACTIVATION_ITEMS = [
+  'NFC Hardware',
+  'Secure Payment Control',
+  'Real-Time Transaction Visibility',
+  'Centralised Dashboard Access',
+  '3–5 Day Delivery',
+];
+
+// ── Form Schema ────────────────────────────────────────────
 const checkoutSchema = z.object({
-  name: z.string().trim().min(1, "Name is required").max(50, "Name must be less than 50 characters"),
-  phone: z.string().regex(/^[6-9]\d{9}$/, "Please enter a valid 10-digit mobile number"),
-  email: z.string().email("Please enter a valid email address"),
-  address: z.string().trim().min(1, "Address is required").max(200, "Address must be less than 200 characters"),
+  name: z.string().trim().min(1, "Name is required").max(50),
+  phone: z.string().regex(/^[6-9]\d{9}$/, "Enter a valid 10-digit mobile number"),
+  email: z.string().email("Enter a valid email address"),
+  address: z.string().trim().min(1, "Address is required").max(200),
   city: z.string().min(1, "City is required"),
   state: z.string().min(1, "State is required"),
-  pincode: z.string().regex(/^[1-9][0-9]{5}$/, "Please enter a valid 6-digit PIN code"),
+  pincode: z.string().regex(/^[1-9][0-9]{5}$/, "Enter a valid 6-digit PIN code"),
   pan: z.string().optional(),
   gst: z.string().optional(),
   companyName: z.string().optional(),
@@ -45,54 +106,30 @@ const checkoutSchema = z.object({
 
 type CheckoutFormData = z.infer<typeof checkoutSchema>;
 
-const PRODUCTS = {
-  sticker: {
-    name: "Paytap NFC Tag Plan",
-    description: "Contactless payment sticker",
-    price: 999,
-    image: paytapCheckoutSticker
-  },
-  card: {
-    name: "Prepaid Card Plan",
-    description: "RuPay-powered prepaid card",
-    price: 999,
-    image: paytapCard
-  }
-};
+// ── Helpers ────────────────────────────────────────────────
+const formatINR = (n: number) => '₹' + n.toLocaleString('en-IN');
 
-type ProductType = keyof typeof PRODUCTS;
+const panRegex = /^[A-Z]{5}[0-9]{4}[A-Z]{1}$/i;
+const gstRegex = /^[0-9]{2}[A-Z]{5}[0-9]{4}[A-Z]{1}[1-9A-Z]{1}Z[0-9A-Z]{1}$/i;
 
+// ── Component ──────────────────────────────────────────────
 const Checkout = () => {
-  const [searchParams] = useSearchParams();
-  const rawProduct = searchParams.get("product") || "sticker";
-  const normalizedProduct = rawProduct === "tag" ? "sticker" : rawProduct;
-  const initialProduct: ProductType = (normalizedProduct in PRODUCTS) ? normalizedProduct as ProductType : "sticker";
-  
+  const [selectedPlan, setSelectedPlan] = useState<PlanType>('business_pro');
   const [isLoading, setIsLoading] = useState(false);
-  const [orderPlaced, setOrderPlaced] = useState(false);
   const [selectedState, setSelectedState] = useState("");
-  const [productType, setProductType] = useState<ProductType>(initialProduct);
-  const [accountType, setAccountType] = useState<AccountType>('personal');
-  const [timeLeft, setTimeLeft] = useState(300);
   const [showConfirmation, setShowConfirmation] = useState(false);
   const [confirmTimeLeft, setConfirmTimeLeft] = useState(15);
   const [orderTxnId, setOrderTxnId] = useState("");
+  const [fieldErrors, setFieldErrors] = useState<Record<string, string>>({});
+  const [mobileOrderOpen, setMobileOrderOpen] = useState(false);
   const { toast } = useToast();
   const navigate = useNavigate();
+  const isMobile = useIsMobile();
 
-  // Derive quantity from account type
-  const quantity = accountType === 'personal' ? 1 : 2;
-
-  // Get correct payment link based on product and quantity
-  const getPaymentLink = () => {
-    const key = `${productType}_${quantity}` as keyof typeof PAYU_PAYMENT_LINKS;
-    return PAYU_PAYMENT_LINKS[key] || PAYU_PAYMENT_LINKS.sticker_1;
-  };
-
-  // Handle product change
-  const handleProductChange = (type: ProductType) => {
-    setProductType(type);
-  };
+  const plan = PLANS[selectedPlan];
+  const subtotal = plan.price;
+  const gst = Math.round(subtotal * 0.18);
+  const total = subtotal + gst;
 
   const {
     register,
@@ -100,166 +137,90 @@ const Checkout = () => {
     formState: { errors },
     setValue,
     trigger,
-    getValues
   } = useForm<CheckoutFormData>({
     resolver: zodResolver(checkoutSchema),
-    defaultValues: {
-      name: "",
-      phone: "",
-      email: "",
-      address: "",
-      city: "",
-      state: "",
-      pincode: "",
-      pan: "",
-      gst: "",
-      companyName: "",
-    }
+    defaultValues: { name: "", phone: "", email: "", address: "", city: "", state: "", pincode: "", pan: "", gst: "", companyName: "" },
   });
 
-  // Update product from URL params
+  // ── Analytics ──
   useEffect(() => {
-    const raw = searchParams.get("product") || "";
-    const normalized = raw === "tag" ? "sticker" : raw;
-    if (normalized && normalized in PRODUCTS) {
-      setProductType(normalized as ProductType);
-    }
-  }, [searchParams]);
-
-  // Track begin_checkout and add_to_cart events
-  useEffect(() => {
-    const product = PRODUCTS[productType];
-    const itemPrice = product.price * quantity;
-
     if (typeof window !== 'undefined' && window.gtag) {
       window.gtag('event', 'begin_checkout', {
-        'value': itemPrice,
-        'currency': 'INR',
-        'items': [{
-          'item_id': productType,
-          'item_name': product.name,
-          'price': product.price,
-          'quantity': quantity
-        }]
-      });
-
-      window.gtag('event', 'add_to_cart', {
-        'value': itemPrice,
-        'currency': 'INR',
-        'items': [{
-          'item_id': productType,
-          'item_name': product.name,
-          'price': product.price,
-          'quantity': quantity
-        }]
+        value: total, currency: 'INR',
+        items: [{ item_id: selectedPlan, item_name: plan.name, price: subtotal, quantity: 1 }],
       });
     }
-
     if (typeof window !== 'undefined' && window.fbq) {
-      window.fbq('track', 'AddToCart', {
-        value: itemPrice,
-        currency: 'INR',
-        content_ids: [productType],
-        content_type: 'product'
-      });
+      window.fbq('track', 'AddToCart', { value: total, currency: 'INR', content_ids: [selectedPlan], content_type: 'product' });
     }
   }, []);
 
-  // 120-second checkout urgency timer
-  useEffect(() => {
-    if (showConfirmation) return; // pause main timer if confirmation is showing
-    const interval = setInterval(() => {
-      setTimeLeft((prev) => {
-        if (prev <= 1) {
-          clearInterval(interval);
-          navigate("/");
-          return 0;
-        }
-        return prev - 1;
-      });
-    }, 1000);
-    return () => clearInterval(interval);
-  }, [navigate, showConfirmation]);
-
-  // 15-second auto-redirect on confirmation popup
+  // ── Confirmation auto-redirect ──
   useEffect(() => {
     if (!showConfirmation) return;
     setConfirmTimeLeft(15);
     const interval = setInterval(() => {
       setConfirmTimeLeft((prev) => {
-        if (prev <= 1) {
-          clearInterval(interval);
-          navigate("/");
-          return 0;
-        }
+        if (prev <= 1) { clearInterval(interval); navigate("/"); return 0; }
         return prev - 1;
       });
     }, 1000);
     return () => clearInterval(interval);
   }, [showConfirmation, navigate]);
 
-  const product = PRODUCTS[productType];
-  const total = product.price * quantity;
+  // ── Handlers ──
+  const handleStateChange = (state: string) => {
+    setSelectedState(state);
+    setValue("state", state);
+    setValue("city", "");
+    trigger("state");
+  };
+  const handleCityChange = (city: string) => { setValue("city", city); trigger("city"); };
 
-  const panRegex = /^[A-Z]{5}[0-9]{4}[A-Z]{1}$/i;
-  const gstRegex = /^[0-9]{2}[A-Z]{5}[0-9]{4}[A-Z]{1}[1-9A-Z]{1}Z[0-9A-Z]{1}$/i;
-
-  const [fieldErrors, setFieldErrors] = useState<Record<string, string>>({});
+  const handleConfirmPayment = async () => {
+    await supabase.from('orders').update({ payment_status: 'confirmed' } as any).eq('txnid', orderTxnId);
+    navigate("/");
+  };
+  const handleDeclinePayment = async () => {
+    await supabase.from('orders').update({ payment_status: 'cancelled' } as any).eq('txnid', orderTxnId);
+    navigate("/");
+  };
 
   const onSubmit = async (data: CheckoutFormData) => {
     const newFieldErrors: Record<string, string> = {};
 
-    if (accountType === 'personal') {
-      if (!data.pan || data.pan.trim().length === 0) {
-        newFieldErrors.pan = "PAN number is required";
-      } else if (!panRegex.test(data.pan.trim())) {
-        newFieldErrors.pan = "Invalid PAN format (e.g. ABCDE1234F)";
-      }
-    }
-
-    if (accountType === 'business') {
-      if (!data.companyName || data.companyName.trim().length === 0) {
-        newFieldErrors.companyName = "Company name is required";
-      }
+    if (!plan.isBusinessPlan) {
+      if (!data.pan || !data.pan.trim()) newFieldErrors.pan = "PAN number is required";
+      else if (!panRegex.test(data.pan.trim())) newFieldErrors.pan = "Invalid PAN format (e.g. ABCDE1234F)";
+    } else {
+      if (!data.companyName || !data.companyName.trim()) newFieldErrors.companyName = "Company name is required";
       const hasGst = data.gst && data.gst.trim().length > 0;
       const hasPan = data.pan && data.pan.trim().length > 0;
       if (!hasGst && !hasPan) {
-        newFieldErrors.gst = "Either GST or PAN number is required";
-        newFieldErrors.pan = "Either GST or PAN number is required";
+        newFieldErrors.gst = "Either GST or PAN is required";
+        newFieldErrors.pan = "Either GST or PAN is required";
       } else {
-        if (hasGst && !gstRegex.test(data.gst!.trim())) {
-          newFieldErrors.gst = "Invalid GST format (e.g. 22AAAAA0000A1Z5)";
-        }
-        if (hasPan && !panRegex.test(data.pan!.trim())) {
-          newFieldErrors.pan = "Invalid PAN format (e.g. ABCDE1234F)";
-        }
+        if (hasGst && !gstRegex.test(data.gst!.trim())) newFieldErrors.gst = "Invalid GST format";
+        if (hasPan && !panRegex.test(data.pan!.trim())) newFieldErrors.pan = "Invalid PAN format";
       }
     }
 
     setFieldErrors(newFieldErrors);
     if (Object.keys(newFieldErrors).length > 0) {
-      toast({ title: "Validation Error", description: Object.values(newFieldErrors)[0], variant: "destructive" });
+      toast({ title: "Please check your details", description: Object.values(newFieldErrors)[0], variant: "destructive" });
       return;
     }
 
-    // Fire purchase_intent event before processing
     if (typeof window !== 'undefined' && window.gtag) {
       window.gtag('event', 'purchase_intent', {
-        'value': total,
-        'currency': 'INR',
-        'items': [{
-          'item_id': productType,
-          'item_name': product.name,
-          'price': product.price,
-          'quantity': quantity
-        }]
+        value: total, currency: 'INR',
+        items: [{ item_id: selectedPlan, item_name: plan.name, price: subtotal, quantity: 1 }],
       });
     }
 
     setIsLoading(true);
     try {
       const txnid = `TXN${Date.now()}${Math.random().toString(36).substring(2, 8).toUpperCase()}`;
-      
       const { error } = await supabase.from('orders').insert({
         name: data.name.trim(),
         email: data.email.trim().toLowerCase(),
@@ -268,568 +229,364 @@ const Checkout = () => {
         city: data.city,
         state: data.state,
         pincode: data.pincode,
-        product_type: productType,
-        quantity: quantity,
+        product_type: 'sticker',
+        quantity: plan.tags,
         amount: total,
-        txnid: txnid,
+        txnid,
         payment_status: 'pending',
         details_pending: false,
-        account_type: accountType,
+        account_type: selectedPlan,
         pan: data.pan?.trim() || null,
-        gst: accountType === 'business' ? (data.gst?.trim() || null) : null,
-        company_name: accountType === 'business' ? (data.companyName?.trim() || null) : null,
+        gst: plan.isBusinessPlan ? (data.gst?.trim() || null) : null,
+        company_name: plan.isBusinessPlan ? (data.companyName?.trim() || null) : null,
       } as any);
 
-      if (error) {
-        throw new Error('Failed to save order');
-      }
+      if (error) throw new Error('Failed to save order');
 
       setOrderTxnId(txnid);
       setShowConfirmation(true);
-
-      // Open payment gateway
-      window.open(getPaymentLink(), '_blank');
-
-    } catch (error) {
-      toast({
-        title: "Error",
-        description: "Something went wrong. Please try again.",
-        variant: "destructive"
-      });
+      window.open(PAYU_PAYMENT_LINKS[selectedPlan], '_blank');
+    } catch {
+      toast({ title: "Error", description: "Something went wrong. Please try again.", variant: "destructive" });
     } finally {
       setIsLoading(false);
     }
   };
 
-  const handleStateChange = (state: string) => {
-    setSelectedState(state);
-    setValue("state", state);
-    setValue("city", "");
-    trigger("state");
-  };
-
-  const handleCityChange = (city: string) => {
-    setValue("city", city);
-    trigger("city");
-  };
-
-  const formatTime = (seconds: number) => {
-    const m = Math.floor(seconds / 60);
-    const s = seconds % 60;
-    return `${m}:${s.toString().padStart(2, '0')}`;
-  };
-
-  const handleConfirmPayment = async () => {
-    await supabase.from('orders').update({ payment_status: 'confirmed' } as any).eq('txnid', orderTxnId);
-    navigate("/");
-  };
-
-  const handleDeclinePayment = async () => {
-    await supabase.from('orders').update({ payment_status: 'cancelled' } as any).eq('txnid', orderTxnId);
-    navigate("/");
-  };
+  // ── Order Summary Content (reused desktop + mobile drawer) ──
+  const OrderSummaryContent = () => (
+    <div className="space-y-4">
+      <div className="flex justify-between text-sm text-[#021a42]/60">
+        <span>Selected Plan</span>
+        <span className="font-medium text-[#021a42]">{plan.name}</span>
+      </div>
+      <div className="flex justify-between text-sm text-[#021a42]/60">
+        <span>Activation Fee</span>
+        <span className="font-medium text-[#021a42]">{formatINR(subtotal)}</span>
+      </div>
+      <div className="flex justify-between text-sm text-[#021a42]/60">
+        <span>GST (18%)</span>
+        <span className="font-medium text-[#021a42]">{formatINR(gst)}</span>
+      </div>
+      <div className="flex justify-between text-sm text-[#021a42]/60">
+        <span>Shipping</span>
+        <span className="font-medium text-green-600">Free</span>
+      </div>
+      <Separator className="bg-[#021a42]/10" />
+      <div className="flex justify-between items-baseline">
+        <span className="text-sm font-medium text-[#021a42]">Total Payable Today</span>
+        <span className="text-2xl font-bold text-[#021a42]">{formatINR(total)}</span>
+      </div>
+      <p className="text-xs text-[#021a42]/40 leading-relaxed">
+        Annual AMC applicable from Year 2 as per selected plan.
+      </p>
+    </div>
+  );
 
   return (
     <>
       <Helmet>
         <meta name="robots" content="noindex, nofollow" />
-        <title>Checkout - Paytap</title>
+        <title>Checkout – Paytap</title>
       </Helmet>
-      <div className="min-h-screen bg-muted py-6 md:py-8">
-      <div className="container mx-auto px-4 max-w-lg">
-        {/* Go Back Home Button */}
-        <div className="flex justify-between items-center mb-4">
-          <Button 
-            variant="ghost" 
-            onClick={() => navigate("/")}
-            className="flex items-center gap-2 text-muted-foreground hover:text-foreground p-0"
-          >
-            <Home className="w-4 h-4" />
-            <span className="text-sm">Home</span>
-          </Button>
-          <div className="flex items-center gap-1 text-primary">
-            <ShieldCheck className="w-4 h-4" />
-            <span className="text-xs font-medium">Secure Checkout</span>
+
+      <div className="min-h-screen bg-white">
+        {/* ── Top Bar ── */}
+        <div className="border-b border-[#021a42]/10">
+          <div className="max-w-5xl mx-auto px-4 py-4 flex justify-between items-center">
+            <button onClick={() => navigate("/")} className="flex items-center gap-2 text-[#021a42]/50 hover:text-[#021a42] transition-colors text-sm">
+              <Home className="w-4 h-4" />
+              <span>Home</span>
+            </button>
+            <div className="flex items-center gap-1.5 text-[#021a42]/50">
+              <Lock className="w-4 h-4" />
+              <span className="text-xs font-medium">Secure Checkout</span>
+            </div>
           </div>
         </div>
 
-        <form onSubmit={handleSubmit(onSubmit)}>
-          {/* ORDER SUMMARY CARD - HERO SECTION */}
-          <Card className="shadow-lg border-0 overflow-hidden">
-            <div className="bg-paytap-dark p-4 text-white">
-              <div className="flex items-center justify-between mb-1">
-                <div className="flex items-center gap-2">
-                  <CreditCard className="w-5 h-5" />
-                  <h1 className="text-xl font-bold">Activate Your Paytap Account</h1>
-                </div>
-                <div className={`flex items-center gap-1.5 px-2.5 py-1 rounded-full bg-accent/20 text-accent${timeLeft <= 30 ? ' animate-pulse' : ''}`}>
-                  <Timer className="w-4 h-4" />
-                  <span className="text-sm font-mono font-bold">{formatTime(timeLeft)}</span>
-                </div>
-              </div>
-              <p className="text-white/80 text-sm">One-time platform access fee — includes hardware</p>
-            </div>
-            
-            <CardContent className="p-4 space-y-5">
-              {/* Account Type Selection */}
-              <div className="space-y-3">
-                <Label className="text-sm font-medium text-muted-foreground">Choose Your Account Type</Label>
-                <div className="grid grid-cols-2 gap-3">
-                  {/* Personal Account */}
-                  <button
-                    type="button"
-                    onClick={() => setAccountType('personal')}
-                    className={`relative p-4 rounded-xl border-2 transition-all text-left ${
-                      accountType === 'personal'
-                        ? "border-primary bg-primary/5 shadow-md"
-                        : "border-border hover:border-muted-foreground bg-card"
-                    }`}
-                  >
-                    <User className="w-8 h-8 text-primary mb-2" />
-                    <p className="text-sm font-bold text-foreground">Personal Account</p>
-                    <p className="text-2xl font-bold text-primary mt-1">₹999</p>
-                    {accountType === 'personal' && (
-                      <div className="absolute top-2 right-2">
-                        <div className="w-5 h-5 rounded-full bg-primary flex items-center justify-center">
-                          <Check className="w-3 h-3 text-primary-foreground" />
-                        </div>
-                      </div>
-                    )}
-                  </button>
+        {/* ── Hero ── */}
+        <div className="max-w-5xl mx-auto px-4 pt-10 pb-6 md:pt-14 md:pb-8 text-center">
+          <h1 className="text-2xl md:text-3xl font-bold text-[#021a42] tracking-tight">
+            Activate Paytap for Your Vehicles
+          </h1>
+          <p className="mt-2 text-sm text-[#021a42]/50 max-w-md mx-auto">
+            One-time platform activation. Includes NFC hardware and dashboard access.
+          </p>
+        </div>
 
-                  {/* Business Account */}
-                  <button
-                    type="button"
-                    onClick={() => setAccountType('business')}
-                    className={`relative p-4 rounded-xl border-2 transition-all text-left ${
-                      accountType === 'business'
-                        ? "border-primary bg-primary/5 shadow-md"
-                        : "border-border hover:border-muted-foreground bg-card"
-                    }`}
-                  >
-                    <Badge className="absolute top-2 right-2 bg-primary/10 text-primary border-primary/20 text-[10px]">
-                      Recommended
-                    </Badge>
-                    <Building className="w-8 h-8 text-primary mb-2" />
-                    <p className="text-sm font-bold text-foreground">Business Account</p>
-                    <p className="text-2xl font-bold text-primary mt-1">₹1,998</p>
-                    {accountType === 'business' && (
-                      <div className="absolute top-8 right-2">
-                        <div className="w-5 h-5 rounded-full bg-primary flex items-center justify-center">
-                          <Check className="w-3 h-3 text-primary-foreground" />
-                        </div>
-                      </div>
-                    )}
-                  </button>
-                </div>
-              </div>
-
-              {/* Product Selection - below account type */}
-              <div className="space-y-3">
-                <Label className="text-sm font-medium text-muted-foreground">Choose Your Product</Label>
-                <div className="grid grid-cols-2 gap-3">
-                  {(Object.keys(PRODUCTS) as ProductType[]).map((type) => (
-                    <button
-                      key={type}
-                      type="button"
-                      onClick={() => handleProductChange(type)}
-                      className={`p-3 rounded-xl border-2 transition-all ${
-                        productType === type 
-                          ? "border-primary bg-primary/5 shadow-md" 
-                          : "border-border hover:border-muted-foreground bg-card"
-                      }`}
-                    >
-                      <img 
-                        src={PRODUCTS[type].image} 
-                        alt={PRODUCTS[type].name} 
-                        className="w-14 h-14 object-contain mx-auto mb-2"
-                      />
-                      <p className="text-sm font-semibold text-center text-foreground">
-                        {type === 'sticker' ? 'NFC Payment Tag' : 'Prepaid Card'}
-                      </p>
-                      <p className="text-[10px] text-center text-muted-foreground mt-0.5">
-                        {type === 'sticker' ? 'For vehicles' : 'For teams'}
-                      </p>
-                      {productType === type && (
-                        <div className="flex items-center justify-center gap-1 mt-1">
-                          <Check className="w-3 h-3 text-primary" />
-                          <span className="text-xs text-primary font-medium">Selected</span>
-                        </div>
-                      )}
-                    </button>
-                  ))}
-                </div>
-              </div>
-
-              <Separator />
-
-              {/* What's Included - Dynamic based on accountType */}
-              <div className="bg-primary/5 border border-primary/10 rounded-xl p-4 space-y-3">
-                <p className="text-sm font-semibold text-foreground">What's Included:</p>
-                <div className="space-y-2">
-                  <div className="flex items-center gap-2 text-sm">
-                    <Check className="w-4 h-4 text-primary flex-shrink-0" />
-                    <span className="text-muted-foreground">
-                      {productType === 'sticker' 
-                        ? `PayTap Contactless Tag — ${quantity} ${quantity > 1 ? 'Units' : 'Unit'}` 
-                        : `PayTap Prepaid Card — ${quantity} ${quantity > 1 ? 'Units' : 'Unit'}`}
+        {/* ── Plan Cards ── */}
+        <div className="max-w-5xl mx-auto px-4 pb-8">
+          <div className="grid grid-cols-2 md:grid-cols-4 gap-3 md:gap-4">
+            {(Object.entries(PLANS) as [PlanType, PlanInfo][]).map(([key, p]) => {
+              const isSelected = selectedPlan === key;
+              return (
+                <button
+                  key={key}
+                  type="button"
+                  onClick={() => setSelectedPlan(key)}
+                  className={`relative text-left p-4 md:p-5 rounded-xl border-2 transition-all duration-200 bg-white ${
+                    isSelected
+                      ? 'border-[#021a42] shadow-sm'
+                      : 'border-[#021a42]/10 hover:border-[#021a42]/25'
+                  }`}
+                >
+                  {p.recommended && (
+                    <span className="absolute -top-2.5 left-4 px-2.5 py-0.5 text-[10px] font-semibold bg-[#f6245b] text-white rounded-full">
+                      Most Popular
                     </span>
-                    <span className="ml-auto text-xs text-muted-foreground">
-                      ₹{999 * quantity} value
-                    </span>
-                  </div>
-                  {accountType === 'business' && (
-                    <div className="flex items-center gap-2 text-sm">
-                      <Check className="w-4 h-4 text-primary flex-shrink-0" />
-                      <span className="text-muted-foreground">Need more Payment Tags (Flat Offer)</span>
-                      <span className="ml-auto text-xs text-muted-foreground">₹499 each</span>
+                  )}
+                  <p className="text-sm font-semibold text-[#021a42]">{p.name}</p>
+                  <p className="text-[11px] text-[#021a42]/50 mt-0.5 leading-snug">{p.subtitle}</p>
+                  <p className="text-xl md:text-2xl font-bold text-[#021a42] mt-3">{formatINR(p.price)}</p>
+                  <p className="text-[10px] text-[#021a42]/40 mt-0.5">AMC {formatINR(p.amcYear2)}/yr from Year 2</p>
+                  <ul className="mt-3 space-y-1.5">
+                    {p.features.map((f) => (
+                      <li key={f} className="flex items-start gap-1.5 text-xs text-[#021a42]/70">
+                        <Check className="w-3.5 h-3.5 text-[#021a42] mt-0.5 flex-shrink-0" />
+                        <span>{f}</span>
+                      </li>
+                    ))}
+                  </ul>
+                  {isSelected && (
+                    <div className="absolute top-3 right-3 w-5 h-5 rounded-full bg-[#021a42] flex items-center justify-center">
+                      <Check className="w-3 h-3 text-white" />
                     </div>
                   )}
-                  <div className="flex items-center gap-2 text-sm">
-                    <Check className="w-4 h-4 text-primary flex-shrink-0" />
-                    <span className="text-muted-foreground">PayTap Lifetime Access</span>
-                    <span className="ml-auto text-xs text-muted-foreground">₹10,000 value</span>
-                  </div>
-                  {accountType === 'business' && (
-                    <>
-                      <div className="flex items-center gap-2 text-sm">
-                        <Check className="w-4 h-4 text-primary flex-shrink-0" />
-                        <span className="text-muted-foreground">MyFleet AI Access</span>
-                        <span className="ml-auto text-xs text-muted-foreground">₹10,000 value</span>
-                      </div>
-                      <div className="flex items-center gap-2 text-sm">
-                        <Check className="w-4 h-4 text-primary flex-shrink-0" />
-                        <span className="text-muted-foreground">ExpensePro Access</span>
-                        <span className="ml-auto text-xs text-muted-foreground">₹10,000 value</span>
-                      </div>
-                    </>
-                  )}
-                  {accountType === 'personal' && (
-                    <>
-                      <div className="flex items-center gap-2 text-sm opacity-50">
-                        <X className="w-4 h-4 text-muted-foreground flex-shrink-0" />
-                        <span className="text-muted-foreground">No access to MyFleet AI</span>
-                      </div>
-                      <div className="flex items-center gap-2 text-sm opacity-50">
-                        <X className="w-4 h-4 text-muted-foreground flex-shrink-0" />
-                        <span className="text-muted-foreground">No access to ExpensePro</span>
-                      </div>
-                      <div className="flex items-center gap-2 text-sm">
-                        <Check className="w-4 h-4 text-primary flex-shrink-0" />
-                        <span className="text-muted-foreground">Need more Payment Tags 30% Discount</span>
-                        <span className="ml-auto text-xs text-muted-foreground">₹699 each</span>
-                      </div>
-                      <p className="text-xs text-muted-foreground pt-1">To add more vehicles or tags → Contact Support</p>
-                    </>
-                  )}
+                </button>
+              );
+            })}
+          </div>
+        </div>
 
-                  {/* Total Value vs You Pay */}
-                  <div className="mt-4 pt-3 border-t border-dashed border-primary/30 flex items-center justify-between">
-                    <span className="text-sm font-medium text-muted-foreground">
-                      Total Value: <span className="line-through text-accent">₹{accountType === 'business' ? '31,998' : '10,999'}</span>
-                    </span>
-                    <span className="text-base font-bold text-primary">
-                      You Pay: ₹{accountType === 'business' ? '1,998' : '999'}
-                    </span>
-                  </div>
+        {/* ── What You're Activating ── */}
+        <div className="max-w-5xl mx-auto px-4 pb-8">
+          <div className="border border-[#021a42]/10 rounded-xl p-5 md:p-6">
+            <h2 className="text-sm font-semibold text-[#021a42] mb-3">What You're Activating Today</h2>
+            <div className="grid grid-cols-1 sm:grid-cols-2 gap-2">
+              {ACTIVATION_ITEMS.map((item) => (
+                <div key={item} className="flex items-center gap-2 text-sm text-[#021a42]/70">
+                  <Check className="w-4 h-4 text-[#021a42] flex-shrink-0" />
+                  <span>{item}</span>
                 </div>
-              </div>
+              ))}
+            </div>
+          </div>
+        </div>
 
-              {/* Payment Summary */}
-              <div className="space-y-2 text-sm">
-                <div className="flex justify-between text-muted-foreground">
-                  <span>Platform Activation Fee</span>
-                  <span className="font-medium text-foreground">₹{total}</span>
-                </div>
-                <div className="flex justify-between text-muted-foreground">
-                  <span>Shipping</span>
-                  <span className="text-primary font-medium">FREE</span>
-                </div>
-                <Separator />
-                <div className="flex justify-between font-bold text-lg text-foreground">
-                  <span>Total Payable Today</span>
-                  <span className="text-primary text-2xl">₹{total}</span>
-                </div>
-              </div>
-            </CardContent>
-          </Card>
+        {/* ── Form + Order Summary (Two Column Desktop) ── */}
+        <form onSubmit={handleSubmit(onSubmit)}>
+          <div className="max-w-5xl mx-auto px-4 pb-24 md:pb-16">
+            <div className="grid grid-cols-1 md:grid-cols-5 gap-6 md:gap-8">
 
-          {/* DELIVERY DETAILS SECTION - Required */}
-          <Card className="mt-4 border border-border">
-            <CardContent className="p-4">
-              <div className="flex items-center gap-3 mb-4">
-                <div className="w-10 h-10 rounded-full bg-primary/10 flex items-center justify-center">
-                  <MapPin className="w-5 h-5 text-primary" />
-                </div>
-                <div>
-                  <p className="font-medium text-foreground">Delivery Details</p>
-                  <p className="text-xs text-muted-foreground">Required for 3-5 day delivery</p>
-                </div>
-              </div>
-              
-              <div className="space-y-4">
-                {/* Personal Information */}
-                <div className="space-y-3">
-                  <h3 className="font-medium text-sm text-muted-foreground">Personal Details</h3>
-                  
+              {/* LEFT: Form */}
+              <div className="md:col-span-3 space-y-6">
+                {/* Personal Details */}
+                <div className="space-y-4">
+                  <h3 className="text-sm font-semibold text-[#021a42]">Personal Details</h3>
                   <div>
-                    <Label htmlFor="name" className="text-xs text-muted-foreground">Full Name *</Label>
-                    <Input
-                      id="name"
-                      {...register("name")}
-                      placeholder="Enter your full name"
-                      className={`mt-1 ${errors.name ? "border-destructive" : ""}`}
-                    />
-                    {errors.name && <p className="text-destructive text-xs mt-1">{errors.name.message}</p>}
+                    <Label htmlFor="name" className="text-xs text-[#021a42]/50">Full Name</Label>
+                    <Input id="name" {...register("name")} placeholder="Enter your full name"
+                      className="mt-1 rounded-lg border-[#021a42]/15 focus:border-[#021a42] focus-visible:ring-0 focus-visible:ring-offset-0" />
+                    {errors.name && <p className="text-xs text-[#f6245b]/80 mt-1">{errors.name.message}</p>}
                   </div>
-
                   <div className="grid grid-cols-2 gap-3">
                     <div>
-                      <Label htmlFor="phone" className="text-xs text-muted-foreground">Phone *</Label>
-                      <Input
-                        id="phone"
-                        {...register("phone")}
-                        placeholder="10-digit number"
-                        className={`mt-1 ${errors.phone ? "border-destructive" : ""}`}
-                      />
-                      {errors.phone && <p className="text-destructive text-xs mt-1">{errors.phone.message}</p>}
+                      <Label htmlFor="phone" className="text-xs text-[#021a42]/50">Phone</Label>
+                      <Input id="phone" {...register("phone")} placeholder="10-digit number"
+                        className="mt-1 rounded-lg border-[#021a42]/15 focus:border-[#021a42] focus-visible:ring-0 focus-visible:ring-offset-0" />
+                      {errors.phone && <p className="text-xs text-[#f6245b]/80 mt-1">{errors.phone.message}</p>}
                     </div>
                     <div>
-                      <Label htmlFor="email" className="text-xs text-muted-foreground">Email *</Label>
-                      <Input
-                        id="email"
-                        type="email"
-                        {...register("email")}
-                        placeholder="your@email.com"
-                        className={`mt-1 ${errors.email ? "border-destructive" : ""}`}
-                      />
-                      {errors.email && <p className="text-destructive text-xs mt-1">{errors.email.message}</p>}
+                      <Label htmlFor="email" className="text-xs text-[#021a42]/50">Email</Label>
+                      <Input id="email" type="email" {...register("email")} placeholder="you@email.com"
+                        className="mt-1 rounded-lg border-[#021a42]/15 focus:border-[#021a42] focus-visible:ring-0 focus-visible:ring-offset-0" />
+                      {errors.email && <p className="text-xs text-[#f6245b]/80 mt-1">{errors.email.message}</p>}
                     </div>
                   </div>
                 </div>
 
-                <Separator />
+                <Separator className="bg-[#021a42]/10" />
 
-                {/* Conditional PAN / GST fields */}
-                <div className="space-y-3">
-                  <h3 className="font-medium text-sm text-muted-foreground">
-                    {accountType === 'personal' ? 'Identity Verification' : 'Business Details'}
+                {/* Identity / Business Fields — Progressive */}
+                <div className="space-y-4">
+                  <h3 className="text-sm font-semibold text-[#021a42]">
+                    {plan.isBusinessPlan ? 'Business Details' : 'Identity Verification'}
                   </h3>
-                  
-                  {accountType === 'personal' ? (
+
+                  {!plan.isBusinessPlan ? (
                     <div>
-                      <Label htmlFor="pan" className="text-xs text-muted-foreground">PAN Number *</Label>
-                      <Input
-                        id="pan"
-                        {...register("pan")}
-                        placeholder="e.g. ABCDE1234F"
-                        maxLength={10}
-                        className={`mt-1 uppercase ${fieldErrors.pan ? "border-destructive" : ""}`}
-                      />
-                      {fieldErrors.pan && <p className="text-destructive text-xs mt-1">{fieldErrors.pan}</p>}
+                      <Label htmlFor="pan" className="text-xs text-[#021a42]/50">PAN Number</Label>
+                      <Input id="pan" {...register("pan")} placeholder="e.g. ABCDE1234F" maxLength={10}
+                        className="mt-1 rounded-lg border-[#021a42]/15 focus:border-[#021a42] focus-visible:ring-0 focus-visible:ring-offset-0 uppercase" />
+                      {fieldErrors.pan && <p className="text-xs text-[#f6245b]/80 mt-1">{fieldErrors.pan}</p>}
                     </div>
                   ) : (
                     <>
                       <div>
-                        <Label htmlFor="companyName" className="text-xs text-muted-foreground">Registered Company Name *</Label>
-                        <Input
-                          id="companyName"
-                          {...register("companyName")}
-                          placeholder="Your company name"
-                          className={`mt-1 ${fieldErrors.companyName ? "border-destructive" : ""}`}
-                        />
-                        {fieldErrors.companyName && <p className="text-destructive text-xs mt-1">{fieldErrors.companyName}</p>}
+                        <Label htmlFor="companyName" className="text-xs text-[#021a42]/50">Company Name</Label>
+                        <Input id="companyName" {...register("companyName")} placeholder="Registered company name"
+                          className="mt-1 rounded-lg border-[#021a42]/15 focus:border-[#021a42] focus-visible:ring-0 focus-visible:ring-offset-0" />
+                        {fieldErrors.companyName && <p className="text-xs text-[#f6245b]/80 mt-1">{fieldErrors.companyName}</p>}
                       </div>
                       <div>
-                        <Label htmlFor="gst" className="text-xs text-muted-foreground">GST Number (or provide PAN below) *</Label>
-                        <Input
-                          id="gst"
-                          {...register("gst")}
-                          placeholder="e.g. 22AAAAA0000A1Z5"
-                          maxLength={15}
-                          className={`mt-1 uppercase ${fieldErrors.gst ? "border-destructive" : ""}`}
-                        />
-                        {fieldErrors.gst && <p className="text-destructive text-xs mt-1">{fieldErrors.gst}</p>}
+                        <Label htmlFor="gst" className="text-xs text-[#021a42]/50">GST Number (or provide PAN below)</Label>
+                        <Input id="gst" {...register("gst")} placeholder="e.g. 22AAAAA0000A1Z5" maxLength={15}
+                          className="mt-1 rounded-lg border-[#021a42]/15 focus:border-[#021a42] focus-visible:ring-0 focus-visible:ring-offset-0 uppercase" />
+                        {fieldErrors.gst && <p className="text-xs text-[#f6245b]/80 mt-1">{fieldErrors.gst}</p>}
                       </div>
                       <div>
-                        <Label htmlFor="pan" className="text-xs text-muted-foreground">PAN Number (if no GST)</Label>
-                        <Input
-                          id="pan"
-                          {...register("pan")}
-                          placeholder="e.g. ABCDE1234F"
-                          maxLength={10}
-                          className={`mt-1 uppercase ${fieldErrors.pan ? "border-destructive" : ""}`}
-                        />
-                        {fieldErrors.pan && <p className="text-destructive text-xs mt-1">{fieldErrors.pan}</p>}
+                        <Label htmlFor="pan" className="text-xs text-[#021a42]/50">PAN Number (if no GST)</Label>
+                        <Input id="pan" {...register("pan")} placeholder="e.g. ABCDE1234F" maxLength={10}
+                          className="mt-1 rounded-lg border-[#021a42]/15 focus:border-[#021a42] focus-visible:ring-0 focus-visible:ring-offset-0 uppercase" />
+                        {fieldErrors.pan && <p className="text-xs text-[#f6245b]/80 mt-1">{fieldErrors.pan}</p>}
                       </div>
                     </>
                   )}
                 </div>
 
-                <Separator />
+                <Separator className="bg-[#021a42]/10" />
 
-                {/* Address Information */}
-                <div className="space-y-3">
-                  <h3 className="font-medium text-sm text-muted-foreground">
-                    {accountType === 'personal' ? 'Delivery Address' : 'Business Address'}
-                  </h3>
-                  
+                {/* Address */}
+                <div className="space-y-4">
+                  <h3 className="text-sm font-semibold text-[#021a42]">Delivery Address</h3>
                   <div>
-                    <Label htmlFor="address" className="text-xs text-muted-foreground">Complete Address *</Label>
-                    <Input
-                      id="address"
-                      {...register("address")}
-                      placeholder="House/Flat No, Street, Landmark"
-                      className={`mt-1 ${errors.address ? "border-destructive" : ""}`}
-                    />
-                    {errors.address && <p className="text-destructive text-xs mt-1">{errors.address.message}</p>}
+                    <Label htmlFor="address" className="text-xs text-[#021a42]/50">Complete Address</Label>
+                    <Input id="address" {...register("address")} placeholder="House/Flat No, Street, Landmark"
+                      className="mt-1 rounded-lg border-[#021a42]/15 focus:border-[#021a42] focus-visible:ring-0 focus-visible:ring-offset-0" />
+                    {errors.address && <p className="text-xs text-[#f6245b]/80 mt-1">{errors.address.message}</p>}
                   </div>
-
                   <div className="grid grid-cols-2 gap-3">
                     <div>
-                      <Label htmlFor="state" className="text-xs text-muted-foreground">State *</Label>
+                      <Label htmlFor="state" className="text-xs text-[#021a42]/50">State</Label>
                       <Select onValueChange={handleStateChange}>
-                        <SelectTrigger className={`mt-1 ${errors.state ? "border-destructive" : ""}`}>
+                        <SelectTrigger className="mt-1 rounded-lg border-[#021a42]/15 focus:border-[#021a42]">
                           <SelectValue placeholder="Select State" />
                         </SelectTrigger>
                         <SelectContent>
-                          {getStates().map((state) => (
-                            <SelectItem key={state} value={state}>
-                              {state}
-                            </SelectItem>
-                          ))}
+                          {getStates().map((s) => <SelectItem key={s} value={s}>{s}</SelectItem>)}
                         </SelectContent>
                       </Select>
-                      {errors.state && <p className="text-destructive text-xs mt-1">{errors.state.message}</p>}
+                      {errors.state && <p className="text-xs text-[#f6245b]/80 mt-1">{errors.state.message}</p>}
                     </div>
-
                     <div>
-                      <Label htmlFor="city" className="text-xs text-muted-foreground">City *</Label>
+                      <Label htmlFor="city" className="text-xs text-[#021a42]/50">City</Label>
                       <Select onValueChange={handleCityChange} disabled={!selectedState}>
-                        <SelectTrigger className={`mt-1 ${errors.city ? "border-destructive" : ""}`}>
+                        <SelectTrigger className="mt-1 rounded-lg border-[#021a42]/15 focus:border-[#021a42]">
                           <SelectValue placeholder="Select City" />
                         </SelectTrigger>
                         <SelectContent>
-                          {getCitiesByState(selectedState).map((city) => (
-                            <SelectItem key={city} value={city}>
-                              {city}
-                            </SelectItem>
-                          ))}
+                          {getCitiesByState(selectedState).map((c) => <SelectItem key={c} value={c}>{c}</SelectItem>)}
                         </SelectContent>
                       </Select>
-                      {errors.city && <p className="text-destructive text-xs mt-1">{errors.city.message}</p>}
+                      {errors.city && <p className="text-xs text-[#f6245b]/80 mt-1">{errors.city.message}</p>}
                     </div>
                   </div>
-
                   <div>
-                    <Label htmlFor="pincode" className="text-xs text-muted-foreground">PIN Code *</Label>
-                    <Input
-                      id="pincode"
-                      {...register("pincode")}
-                      placeholder="6-digit PIN code"
-                      className={`mt-1 ${errors.pincode ? "border-destructive" : ""}`}
-                    />
-                    {errors.pincode && <p className="text-destructive text-xs mt-1">{errors.pincode.message}</p>}
+                    <Label htmlFor="pincode" className="text-xs text-[#021a42]/50">PIN Code</Label>
+                    <Input id="pincode" {...register("pincode")} placeholder="6-digit PIN code"
+                      className="mt-1 rounded-lg border-[#021a42]/15 focus:border-[#021a42] focus-visible:ring-0 focus-visible:ring-offset-0" />
+                    {errors.pincode && <p className="text-xs text-[#f6245b]/80 mt-1">{errors.pincode.message}</p>}
                   </div>
                 </div>
-              </div>
-            </CardContent>
-          </Card>
 
-          {/* Payment Methods & Trust Section */}
-          <div className="mt-4 space-y-3">
-            <div className="flex items-center justify-center gap-4 py-3 bg-card border border-border rounded-lg">
-              <img src="/visa.svg" alt="Visa" className="h-6 grayscale opacity-70" />
-              <img src="/mastercard.svg" alt="Mastercard" className="h-6 grayscale opacity-70" />
-              <img src="/rupay.svg" alt="RuPay" className="h-6 grayscale opacity-70" />
-              <img src="/upi.svg" alt="UPI" className="h-6 grayscale opacity-70" />
-            </div>
+                {/* Trust Layer */}
+                <div className="flex items-center justify-center gap-4 text-[#021a42]/40 text-xs py-3">
+                  <div className="flex items-center gap-1">
+                    <Lock className="w-3.5 h-3.5" />
+                    <span>Secure Payment</span>
+                  </div>
+                  <span>·</span>
+                  <span>Processed via PayU</span>
+                  <span>·</span>
+                  <span>No recurring charges</span>
+                </div>
 
-            <div className="bg-primary/5 border border-primary/10 p-3 rounded-lg flex items-center justify-center gap-4">
-              <div className="flex items-center gap-1.5">
-                <Lock className="w-4 h-4 text-primary" />
-                <span className="text-xs font-medium text-muted-foreground">SSL Secured</span>
+                {/* CTA — Desktop */}
+                <div className="hidden md:block">
+                  <Button
+                    type="submit"
+                    disabled={isLoading}
+                    className="w-full h-14 text-base font-semibold bg-[#021a42] hover:bg-[#031d4a] text-white rounded-[10px] transition-colors"
+                  >
+                    {isLoading ? (
+                      <><Loader2 className="mr-2 h-5 w-5 animate-spin" /> Processing...</>
+                    ) : (
+                      plan.isBusinessPlan ? 'Activate & Ship My Tags' : 'Activate My Account'
+                    )}
+                  </Button>
+                </div>
               </div>
-              <Separator orientation="vertical" className="h-4" />
-              <div className="flex items-center gap-1.5">
-                <ShieldCheck className="w-4 h-4 text-primary" />
-                <span className="text-xs font-medium text-muted-foreground">PayU Bank-Grade Security</span>
+
+              {/* RIGHT: Order Summary (desktop only) */}
+              <div className="hidden md:block md:col-span-2">
+                <div className="sticky top-8 border border-[#021a42]/10 rounded-xl p-6">
+                  <h3 className="text-sm font-semibold text-[#021a42] mb-4">Order Summary</h3>
+                  <OrderSummaryContent />
+                </div>
               </div>
             </div>
           </div>
 
-          {/* BIG CTA BUTTON */}
-          <Button 
-            type="submit"
-            className="w-full h-14 text-lg font-bold bg-paytap-dark hover:bg-[#031d4a] shadow-lg transition-all hover:shadow-xl mt-4" 
-            disabled={isLoading}
-          >
-            {isLoading ? (
-              <>
-                <Loader2 className="mr-2 h-5 w-5 animate-spin" />
-                Processing...
-              </>
-            ) : (
-              <>
-                <CreditCard className="mr-2 h-5 w-5" />
-                {accountType === 'personal' 
-                  ? `Activate Personal Account — ₹${total}` 
-                  : `Activate Business Account — ₹${total}`}
-              </>
-            )}
-          </Button>
+          {/* ── Mobile: Sticky Bottom Bar ── */}
+          <div className="fixed bottom-0 left-0 right-0 bg-white border-t border-[#021a42]/10 p-4 md:hidden z-50">
+            <div className="flex items-center gap-3">
+              {/* Expandable order summary trigger */}
+              <Sheet open={mobileOrderOpen} onOpenChange={setMobileOrderOpen}>
+                <SheetTrigger asChild>
+                  <button type="button" className="flex-1 text-left">
+                    <p className="text-xs text-[#021a42]/50">{plan.name}</p>
+                    <div className="flex items-center gap-1">
+                      <span className="text-lg font-bold text-[#021a42]">{formatINR(total)}</span>
+                      {mobileOrderOpen ? <ChevronDown className="w-4 h-4 text-[#021a42]/50" /> : <ChevronUp className="w-4 h-4 text-[#021a42]/50" />}
+                    </div>
+                  </button>
+                </SheetTrigger>
+                <SheetContent side="bottom" className="rounded-t-2xl">
+                  <SheetHeader>
+                    <SheetTitle className="text-[#021a42]">Order Summary</SheetTitle>
+                  </SheetHeader>
+                  <div className="mt-4">
+                    <OrderSummaryContent />
+                  </div>
+                </SheetContent>
+              </Sheet>
 
-          {/* Trust Badges */}
-          <div className="flex justify-center gap-3 text-xs text-muted-foreground mt-4">
-            <div className="flex items-center gap-1">
-              <Lock className="w-3.5 h-3.5 text-primary" />
-              <span>Secure Payment</span>
-            </div>
-            <span className="text-border">•</span>
-            <div className="flex items-center gap-1">
-              <ShieldCheck className="w-3.5 h-3.5 text-primary" />
-              <span>One-time fee</span>
-            </div>
-            <span className="text-border">•</span>
-            <div className="flex items-center gap-1">
-              <Truck className="w-3.5 h-3.5 text-primary" />
-              <span>No hidden charges</span>
+              <Button
+                type="submit"
+                disabled={isLoading}
+                className="h-12 px-6 text-sm font-semibold bg-[#021a42] hover:bg-[#031d4a] text-white rounded-[10px] transition-colors"
+              >
+                {isLoading ? <Loader2 className="h-5 w-5 animate-spin" /> : (plan.isBusinessPlan ? 'Activate & Ship' : 'Activate')}
+              </Button>
             </div>
           </div>
         </form>
       </div>
-    </div>
 
-      {/* Payment Confirmation Dialog */}
+      {/* ── Payment Confirmation Dialog ── */}
       <Dialog open={showConfirmation} onOpenChange={() => {}}>
         <DialogContent className="sm:max-w-md [&>button]:hidden">
           <DialogHeader className="text-center">
             <div className="flex justify-center mb-4">
-              <Package className="w-16 h-16 text-primary" />
+              <Package className="w-16 h-16 text-[#021a42]" />
             </div>
-            <DialogTitle className="text-xl">Looks like you have placed an order to get access</DialogTitle>
-            <DialogDescription className="text-muted-foreground mt-2">
+            <DialogTitle className="text-xl text-[#021a42]">Looks like you have placed an order</DialogTitle>
+            <DialogDescription className="text-[#021a42]/50 mt-2">
               Did you complete the payment successfully?
             </DialogDescription>
           </DialogHeader>
           <div className="space-y-3 mt-4">
-            <Button 
-              onClick={handleConfirmPayment}
-              className="w-full h-12 bg-paytap-dark hover:bg-[#031d4a] text-base font-semibold"
-            >
+            <Button onClick={handleConfirmPayment} className="w-full h-12 bg-[#021a42] hover:bg-[#031d4a] text-base font-semibold">
               <CheckCircle className="mr-2 h-5 w-5" />
               Yes, Payment Successful
             </Button>
-            <Button 
-              variant="outline"
-              onClick={handleDeclinePayment}
-              className="w-full h-12 text-base"
-            >
-              No, Will Try After Sometime
+            <Button variant="outline" onClick={handleDeclinePayment} className="w-full h-12 text-base border-[#021a42]/15 text-[#021a42]">
+              No, Will Try Later
             </Button>
           </div>
-          <p className="text-center text-xs text-muted-foreground mt-3">
-            Redirecting to home in <span className="font-bold text-accent">{confirmTimeLeft}s</span>...
+          <p className="text-center text-xs text-[#021a42]/40 mt-3">
+            Redirecting to home in <span className="font-bold text-[#f6245b]">{confirmTimeLeft}s</span>...
           </p>
         </DialogContent>
       </Dialog>
