@@ -78,7 +78,7 @@ const PLANS: Record<PlanType, PlanInfo> = {
 const PAYU_PAYMENT_LINKS: Record<PlanType, string> = {
   starter: "https://u.payu.in/PAYUMN/BICnJ3sPnq1K",
   business_basic: "https://u.payu.in/PAYUMN/hrGp6pGNhp8P",
-  business_pro: "https://u.payu.in/PAYUMN/prS7p8roOCn5",   // fallback – update when link ready
+  business_pro: "https://u.payu.in/PAYUMN/UI5bcsfONe0o",
   corporate: "https://u.payu.in/PAYUMN/prS7p8roOCn5",       // fallback – update when link ready
 };
 
