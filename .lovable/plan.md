@@ -1,42 +1,49 @@
 
 
-## Plan: Add Logo to Invoice PDF + Sample Invoice Test Page
+## Hero Section Premium Revamp
 
-### Changes
+### What Changes
 
-**1. Copy logo to `public/images/paytap-logo-invoice.png`**
-- Copy the uploaded `Paytap_Logo_2.png` to `public` so it can be loaded as a base64 image for the PDF.
+**Strip to essentials.** Remove all floating widgets (dashboard mini UI, balance widget, NFC icon, expense dashboard). Keep only the Paytap card as the single dominant visual on the right.
 
-**2. Update `src/lib/generateInvoice.ts`**
-- Replace the `doc.text('Paytap', margin, y + 5)` line (line 99) with `doc.addImage(...)` using the logo.
-- The logo will be embedded as a base64-encoded PNG. We'll convert it at build time by importing it and using a canvas, or more simply, we'll fetch the image from `public/` and convert to base64 inside the function.
-- Since `jspdf.addImage()` supports base64 data URLs, the cleanest approach: preload the logo as base64 and pass it to `addImage`. We'll add a helper that fetches `/images/paytap-logo-invoice.png`, converts to base64, and caches it.
-- Logo size: approximately 35mm wide × 12mm tall, placed at the top-left where the text was.
+### HeroSection.tsx — Full Rewrite
 
-**3. Create `src/pages/SampleInvoice.tsx`**
-- A simple page at route `/sample-invoice` that generates a sample invoice with dummy data when you click a button.
-- This lets you test the invoice output without going through the full checkout flow.
+**Left Column (Text Stack)**
+- Headline: same text, but bumped to `lg:text-7xl`, tighter tracking (`-0.035em`), `max-w-[600px]`, more line height
+- Subtext: color changed to `text-[#334155]`, `max-w-[520px]`, increased line height (`leading-[1.8]`), 36px gap before CTA
+- Remove all 4 feature pills entirely
+- CTA button: `bg-[#f6245b]` (crimson), white text, `px-9 py-[18px] rounded-[14px] font-semibold`, hover glow `box-shadow: 0 10px 30px rgba(246,36,91,0.25)`, hover darken to `#e01e52`
+- Trust line below CTA: replace with "Built for fleets, enterprises, and mobility operators across India." — muted, small, single line
 
-**4. Add route in `src/App.tsx`**
-- Add `/sample-invoice` route pointing to the new page.
+**Right Column (Card Only)**
+- Remove: dashboard mini UI (lines 96–136), balance widget (lines 210–230), NFC icon + ripple (lines 232–251), expense dashboard (lines 253–298)
+- Keep only the Paytap card, scaled up ~15% (`md:w-[390px] md:h-[240px]`), centered in the column
+- Add perspective 3D tilt: `perspective(1200px) rotateY(-3deg) rotateX(2deg)`
+- Premium shadow: `box-shadow: 0 20px 60px rgba(2,26,66,0.12)`
+- Slow float animation: `translateY(0) → translateY(-8px)`, 7s ease-in-out infinite
+- Remove parallax mouse tracking (simplify)
 
-### Technical Detail
+**Background**
+- Replace flat white with subtle radial gradient: `radial-gradient(ellipse at 60% 40%, #ffffff 0%, #f4f6f9 100%)`
 
-For embedding the logo in the PDF:
-```typescript
-// Fetch logo once and cache as base64
-let logoCached: string | null = null;
-async function getLogoBase64(): Promise<string> {
-  if (logoCached) return logoCached;
-  const res = await fetch('/images/paytap-logo-invoice.png');
-  const blob = await res.blob();
-  return new Promise((resolve) => {
-    const reader = new FileReader();
-    reader.onloadend = () => { logoCached = reader.result as string; resolve(logoCached); };
-    reader.readAsDataURL(blob);
-  });
-}
-```
+**Spacing**
+- Top padding: `pt-[140px]` on desktop
+- Stats bar below: kept as-is (already clean)
 
-The `generateInvoice` function becomes `async` to await the logo fetch on first call.
+**Stats section** — unchanged, already minimal
+
+### Navbar.tsx — Minor Polish
+
+- Nav link font weight: already `font-medium` (good)
+- Add subtle bottom border: `border-b border-white/5` always (not just on scroll)
+- Platform Login button: reduce padding slightly, use `text-xs` instead of `text-sm`, lower opacity hover
+
+### Summary
+
+| File | Change |
+|------|--------|
+| `src/components/HeroSection.tsx` | Remove 4 floating widgets, remove feature pills, remove parallax/NFC logic. Keep card only (scaled up, 3D tilt, premium shadow, slow float). CTA → crimson with glow. Background → subtle gradient. Typography tightened. |
+| `src/components/Navbar.tsx` | Add permanent subtle bottom border, slightly reduce login button size |
+
+No new files, no new dependencies.
 
