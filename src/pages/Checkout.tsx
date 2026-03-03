@@ -11,11 +11,13 @@ import { Separator } from "@/components/ui/separator";
 import { useToast } from "@/hooks/use-toast";
 import { getStates, getCitiesByState } from "@/data/indianStatesAndCities";
 import { useNavigate } from "react-router-dom";
-import { Loader2, ShieldCheck, Truck, Home, Package, CheckCircle, Check, Lock, ChevronUp, ChevronDown } from "lucide-react";
+import { Loader2, ShieldCheck, Truck, Home, Package, CheckCircle, Check, Lock, ChevronUp, ChevronDown, Nfc, CreditCard } from "lucide-react";
 import { Dialog, DialogContent, DialogHeader, DialogTitle, DialogDescription } from "@/components/ui/dialog";
 import { supabase } from "@/integrations/supabase/client";
 import { useIsMobile } from "@/hooks/use-mobile";
 import { Sheet, SheetContent, SheetHeader, SheetTitle, SheetTrigger } from "@/components/ui/sheet";
+import paytapTag from '@/assets/paytap-tag-sticker-v2.png';
+import paytapCard from '@/assets/paytap-card-product.png';
 
 // ── Plan Data ──────────────────────────────────────────────
 type PlanType = 'starter' | 'business_basic' | 'business_pro' | 'corporate';
@@ -115,6 +117,7 @@ const gstRegex = /^[0-9]{2}[A-Z]{5}[0-9]{4}[A-Z]{1}[1-9A-Z]{1}Z[0-9A-Z]{1}$/i;
 // ── Component ──────────────────────────────────────────────
 const Checkout = () => {
   const [selectedPlan, setSelectedPlan] = useState<PlanType>('business_pro');
+  const [productType, setProductType] = useState<'sticker' | 'card'>('sticker');
   const [isLoading, setIsLoading] = useState(false);
   const [selectedState, setSelectedState] = useState("");
   const [showConfirmation, setShowConfirmation] = useState(false);
@@ -229,7 +232,7 @@ const Checkout = () => {
         city: data.city,
         state: data.state,
         pincode: data.pincode,
-        product_type: 'sticker',
+        product_type: productType === 'sticker' ? 'sticker' : 'card',
         quantity: plan.tags,
         amount: total,
         txnid,
@@ -256,6 +259,10 @@ const Checkout = () => {
   // ── Order Summary Content (reused desktop + mobile drawer) ──
   const OrderSummaryContent = () => (
     <div className="space-y-4">
+      <div className="flex justify-between text-sm text-[#021a42]/60">
+        <span>Product</span>
+        <span className="font-medium text-[#021a42]">{productType === 'sticker' ? 'NFC Payment Tag' : 'Prepaid Card'}</span>
+      </div>
       <div className="flex justify-between text-sm text-[#021a42]/60">
         <span>Selected Plan</span>
         <span className="font-medium text-[#021a42]">{plan.name}</span>
@@ -313,6 +320,47 @@ const Checkout = () => {
           <p className="mt-2 text-sm text-[#021a42]/50 max-w-md mx-auto">
             One-time platform activation. Includes NFC hardware and dashboard access.
           </p>
+        </div>
+
+        {/* ── Product Type Selector ── */}
+        <div className="max-w-5xl mx-auto px-4 pb-8">
+          <h2 className="text-sm font-semibold text-[#021a42] mb-3">Choose Your Product</h2>
+          <div className="grid grid-cols-2 gap-3 md:gap-4">
+            {([
+              { key: 'sticker' as const, label: 'NFC Payment Tag', desc: 'Tap-to-pay sticker for your vehicle', icon: Nfc, image: paytapTag },
+              { key: 'card' as const, label: 'Prepaid Card', desc: 'Prepaid card for driver expenses', icon: CreditCard, image: paytapCard },
+            ]).map((product) => {
+              const isActive = productType === product.key;
+              return (
+                <button
+                  key={product.key}
+                  type="button"
+                  onClick={() => setProductType(product.key)}
+                  className={`relative text-left rounded-xl border-2 transition-all duration-200 bg-white overflow-hidden ${
+                    isActive
+                      ? 'border-[#021a42] shadow-sm'
+                      : 'border-[#021a42]/10 hover:border-[#021a42]/25'
+                  }`}
+                >
+                  <div className="aspect-[4/3] bg-gradient-to-br from-[#021a42]/5 to-[#021a42]/10 flex items-center justify-center p-4">
+                    <img src={product.image} alt={product.label} className="max-h-full max-w-full object-contain" />
+                  </div>
+                  <div className="p-4">
+                    <div className="flex items-center gap-2 mb-1">
+                      <product.icon className="w-4 h-4 text-[#021a42]" />
+                      <p className="text-sm font-semibold text-[#021a42]">{product.label}</p>
+                    </div>
+                    <p className="text-[11px] text-[#021a42]/50 leading-snug">{product.desc}</p>
+                  </div>
+                  {isActive && (
+                    <div className="absolute top-3 right-3 w-5 h-5 rounded-full bg-[#021a42] flex items-center justify-center">
+                      <Check className="w-3 h-3 text-white" />
+                    </div>
+                  )}
+                </button>
+              );
+            })}
+          </div>
         </div>
 
         {/* ── Plan Cards ── */}
