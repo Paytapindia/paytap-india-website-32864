@@ -46,9 +46,9 @@ const Navbar = memo(() => {
   }, []);
 
   return (
-    <header className={`w-full py-3 md:py-4 px-4 md:px-12 flex items-center justify-between fixed top-0 z-50 transition-all duration-300 bg-paytap-dark ${
+    <header className={`w-full py-3 md:py-4 px-4 md:px-12 flex items-center justify-between fixed top-0 z-50 transition-all duration-300 bg-paytap-dark border-b border-white/[0.06] ${
       isScrolled 
-        ? 'shadow-lg border-b border-white/10' 
+        ? 'shadow-lg border-white/10' 
         : 'shadow-sm'
     }`}>
       <div className="flex items-center">
@@ -302,7 +302,7 @@ const Navbar = memo(() => {
         <LanguageSelector />
                 <Button
                   onClick={() => window.open("https://dashboard.paytap.co.in/login", "_blank")}
-                  className="hidden md:inline-flex bg-paytap-light hover:bg-paytap-light/90 text-white px-4 md:px-5 py-2 rounded-md text-sm font-medium transition-colors duration-200 min-h-[40px]"
+                  className="hidden md:inline-flex bg-white/10 hover:bg-white/15 text-white/80 hover:text-white px-3.5 py-1.5 rounded-md text-xs font-medium transition-colors duration-200 min-h-[36px] border border-white/10"
                 >
                   {t('nav.platformLogin')}
                 </Button>
