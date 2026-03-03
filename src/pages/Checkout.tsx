@@ -284,6 +284,7 @@ const Checkout = () => {
         <span className="text-sm font-medium text-[#021a42]">Total Payable Today</span>
         <span className="text-2xl font-bold text-[#021a42]">{formatINR(total)}</span>
       </div>
+      <p className="text-[11px] text-[#021a42]/50 text-right mt-1">GST Invoice Provided</p>
       <p className="text-xs text-[#021a42]/40 leading-relaxed">
         AMC billed annually from Year 2 as per selected plan.
       </p>
