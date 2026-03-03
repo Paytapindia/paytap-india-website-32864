@@ -1,28 +1,30 @@
 
 
-## Show AMC as Monthly with "Billed Annually" Note
+## Make All Checkout Prices Inclusive of 18% GST
 
-### Change in `src/pages/Checkout.tsx`
+### Changes to `src/pages/Checkout.tsx`
 
-**Line 349** — Update the AMC display line in plan cards from:
-```
-AMC ₹1,200/yr from Year 2
-```
-to:
-```
-AMC ₹100/mo · Billed annually from Year 2
-```
+**1. Update plan prices to GST-inclusive amounts**
 
-Calculate monthly by dividing `amcYear2 / 12` and display with the monthly figure + "Billed annually" qualifier.
+| Plan | Current (ex-GST) | New (incl. GST) |
+|------|------------------|-----------------|
+| Starter | ₹999 | ₹1,179 |
+| Business Basic | ₹1,998 | ₹2,358 |
+| Business Pro | ₹4,998 | ₹5,898 |
+| Corporate | ₹9,999 | ₹11,799 |
 
-**Line 288** — Update the footer note from:
-```
-Annual AMC applicable from Year 2 as per selected plan.
-```
-to:
-```
-AMC billed annually from Year 2 as per selected plan.
-```
+**2. Remove separate GST calculation** (lines 133-135)
+- Remove `subtotal`, `gst`, `total` logic — price is now the final amount
 
-Single file change: `src/pages/Checkout.tsx`
+**3. Update plan card display** (line 348)
+- Add "incl. GST" label below the price: `₹1,179 incl. GST`
+
+**4. Simplify order summary** (lines 260-291)
+- Remove the separate "Activation Fee" and "GST (18%)" rows
+- Show single "Activation Fee (incl. GST)" row with the plan price
+- "Total Payable Today" = plan price directly
+
+**5. Update sticky bottom bar** — use `plan.price` directly instead of `total`
+
+Single file: `src/pages/Checkout.tsx`
 
