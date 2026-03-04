@@ -716,7 +716,7 @@ const Checkout = () => {
 
         {/* ── Step Content ── */}
         <form onSubmit={handleSubmit(onSubmit)}>
-          <div className="max-w-5xl mx-auto px-4 pb-28 md:pb-16">
+          <div className="max-w-5xl mx-auto px-4 pb-40 md:pb-24">
             <StepWrapper stepKey={currentStep}>
               {currentStep === 1 && renderStep1()}
               {currentStep === 2 && renderStep2()}
