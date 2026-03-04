@@ -380,14 +380,14 @@ const Checkout = () => {
   const renderStep1 = () => (
     <div className="space-y-6 md:space-y-10">
       {/* Header */}
-      <div className="text-center">
-        <h1 className="text-xl md:text-4xl font-bold text-foreground tracking-tight leading-tight">
+      <div className="text-center space-y-2 md:space-y-3">
+        <h1 className="text-2xl md:text-4xl font-bold text-foreground tracking-tight leading-tight">
           Activate Smart Payments<br className="hidden md:block" /> For Your Vehicles
         </h1>
-        <p className="mt-2 md:mt-3 text-xs md:text-base text-muted-foreground max-w-lg mx-auto">
+        <p className="text-sm md:text-base text-muted-foreground max-w-lg mx-auto">
           Control fuel, tolls, and driver expenses across all your vehicles from one central dashboard.
         </p>
-        <p className="mt-2 text-[11px] md:text-xs text-muted-foreground/70">
+        <p className="text-xs text-muted-foreground/70">
           Built for personal vehicles, businesses, and fleet operators across India.
         </p>
       </div>
