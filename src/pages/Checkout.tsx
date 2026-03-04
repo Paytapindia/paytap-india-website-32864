@@ -86,7 +86,7 @@ const PAYU_PAYMENT_LINKS: Record<PlanType, string> = {
 
 const ACTIVATION_INCLUDES = [
   { icon: Nfc, label: 'NFC PayTap Tag for every vehicle' },
-  { icon: CreditCard, label: 'Driver Prepaid Expense Card' },
+  { icon: CreditCard, label: 'Driver Prepaid Expense Card (select plans)' },
   { icon: LayoutDashboard, label: 'PayTap Fleet Dashboard Access' },
   { icon: BarChart3, label: 'Real-Time Expense Tracking' },
   { icon: CalendarCheck, label: '1 Year Platform Access Included' },
