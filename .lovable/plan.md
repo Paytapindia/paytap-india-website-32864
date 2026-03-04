@@ -1,26 +1,32 @@
 
 
-## Plan: Change Plan Box Text from "NFC Tags Included" to "Vehicles Activated"
+## Plan: Optimize Checkout Step 1 Layout & Fix Scrolling
 
-### Change in `src/pages/Checkout.tsx`
+### Issues
+- Content not scrolling due to `pb-28 md:pb-16` not providing enough clearance for the sticky bottom bar
+- Mobile CTA button placement is poor
+- Button text needs to change from "Activate My Fleet" to "Activate Account"
 
-**Line 408** — Replace the tag/card count text with "Vehicle Activated" phrasing:
+### Changes in `src/pages/Checkout.tsx`
 
-```typescript
-// Before:
-<p className="text-[10px] text-muted-foreground">{p.tags} {productType === 'sticker' ? 'NFC Tag' : 'Card'}{p.tags > 1 ? 's' : ''} included</p>
+**1. Fix scrolling — increase bottom padding (line 719)**
+- Change `pb-28 md:pb-16` to `pb-36 md:pb-24` to ensure all content is accessible above the sticky bottom bar
 
-// After:
-<p className="text-[10px] text-muted-foreground">{p.tags} Vehicle{p.tags > 1 ? 's' : ''} Activated</p>
-```
+**2. Optimize Step 1 spacing for mobile (lines 372-436)**
+- Reduce `space-y-10` to `space-y-6 md:space-y-10` on the step 1 container
+- Reduce padding on plan cards for mobile: `p-4 md:p-6`
+- Make "What Your Activation Includes" section more compact on mobile: `p-4 md:p-8`
+- Reduce header text size slightly on mobile for better fit
 
-This will show:
-- Starter (1 tag): **1 Vehicle Activated**
-- Business Basic (2 tags): **2 Vehicles Activated**
-- Business Pro (5 tags): **5 Vehicles Activated**
-- Corporate (10 tags): **10 Vehicles Activated**
+**3. Fix mobile CTA button placement (lines 728-769)**
+- Ensure the sticky bottom bar has consistent padding and the button is full-width on mobile
+- Change button layout: on mobile, make CTA button `w-full` and stack Back/Next vertically if needed
+- Add `safe-area-inset` padding for notched devices
+
+**4. Change CTA text (line 753)**
+- Replace `'Activate My Fleet'` with `'Activate Account'`
 
 | File | Change |
 |------|--------|
-| `src/pages/Checkout.tsx` | Line 408: replace NFC Tag/Card text with "Vehicle(s) Activated" |
+| `src/pages/Checkout.tsx` | Fix scroll padding, optimize mobile spacing, improve sticky CTA layout, rename button text |
 
