@@ -84,12 +84,13 @@ const PAYU_PAYMENT_LINKS: Record<PlanType, string> = {
   corporate: "https://u.payu.in/PAYUMN/4IXb9s4OqWwn",
 };
 
-const BASELINE_ITEMS = [
-  'NFC Hardware',
-  'Centralised Dashboard',
-  'Real-Time Visibility',
-  'Secure Payment Control',
-  '3–5 Day Delivery',
+const ACTIVATION_INCLUDES = [
+  { icon: Nfc, label: 'NFC PayTap Tag for every vehicle' },
+  { icon: CreditCard, label: 'Driver Prepaid Expense Card' },
+  { icon: LayoutDashboard, label: 'PayTap Fleet Dashboard Access' },
+  { icon: BarChart3, label: 'Real-Time Expense Tracking' },
+  { icon: CalendarCheck, label: '1 Year Platform Access Included' },
+  { icon: TruckIcon, label: '3–5 Day Delivery' },
 ];
 
 // ── Form Schema ────────────────────────────────────────────
