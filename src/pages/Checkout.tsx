@@ -452,8 +452,16 @@ const Checkout = () => {
           <div>
             <p className="text-sm font-bold text-foreground">{plan.tags} Vehicle{plan.tags > 1 ? 's' : ''} Activated</p>
             <p className="text-xs text-muted-foreground mt-0.5">
-              {plan.tags} NFC PayTap Tag{plan.tags > 1 ? 's' : ''} · {plan.tags} Driver Expense Card{plan.tags > 1 ? 's' : ''}
+              {plan.tags} NFC PayTap Tag{plan.tags > 1 ? 's' : ''}
+              {getDriverCards(selectedPlan) > 0 && ` · ${getDriverCards(selectedPlan)} Driver Expense Card${getDriverCards(selectedPlan) > 1 ? 's' : ''}`}
             </p>
+            {isPremiumPlan(selectedPlan) && (
+              <div className="flex flex-wrap gap-2 mt-2">
+                <span className="text-[10px] text-accent font-medium">✔ Dedicated Support</span>
+                <span className="text-[10px] text-accent font-medium">✔ Myfleet AI Vehicle Manager</span>
+                <span className="text-[10px] text-accent font-medium">✔ ExpensePro Business Expense Management</span>
+              </div>
+            )}
           </div>
           <div className="text-right">
             <p className="text-lg font-bold text-foreground">Total Today: {formatINR(total)}</p>
