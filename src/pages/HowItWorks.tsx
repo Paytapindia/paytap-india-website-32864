@@ -382,20 +382,33 @@ const HowItWorks = () => {
 
   const plans = [
     {
-      name: "Personal",
-      features: ["Up to 5 vehicles", "₹1,000 activation", "1 tag included", "₹999/year"],
-      highlighted: false
+      name: "Starter",
+      subtitle: "1–5 vehicles",
+      price: "₹999",
+      features: ["1 Prepaid Tag/Card", "Basic Dashboard", "Tag Control", "Transaction View"],
+      highlighted: false,
     },
     {
-      name: "Business",
-      features: ["Up to 20 vehicles", "₹1,000 activation", "1 tag included", "₹1,999/year"],
-      highlighted: true
+      name: "Business Basic",
+      subtitle: "1–10 vehicles",
+      price: "₹1,998",
+      features: ["2 Prepaid Tags/Cards", "Full Dashboard", "MyFleet AI Access", "Smart Reports"],
+      highlighted: false,
+    },
+    {
+      name: "Business Pro",
+      subtitle: "1–25 vehicles",
+      price: "₹4,998",
+      features: ["5 Prepaid Tags/Cards", "MyFleet AI", "ExpensePro", "Advanced Reporting", "Priority Support"],
+      highlighted: true,
     },
     {
       name: "Corporate",
-      features: ["Unlimited vehicles", "₹4,999 activation", "Central dashboard", "Enterprise controls"],
-      highlighted: false
-    }
+      subtitle: "1–100+ vehicles",
+      price: "₹9,999",
+      features: ["10 Prepaid Tags/Cards", "MyFleet AI", "ExpensePro", "Multi-User Access", "Dedicated Support"],
+      highlighted: false,
+    },
   ];
 
   const kycLimits = [
@@ -648,7 +661,7 @@ const HowItWorks = () => {
               Choose Your Plan
             </motion.h2>
 
-            <div className="grid md:grid-cols-3 gap-6">
+            <div className="grid md:grid-cols-2 lg:grid-cols-4 gap-6">
               {plans.map((plan, i) => (
                 <motion.div
                   key={i}
@@ -661,9 +674,11 @@ const HowItWorks = () => {
                   }`}
                 >
                   {plan.highlighted && (
-                    <span className="text-xs font-semibold text-[#f6245b] uppercase tracking-wider mb-2">Most Popular</span>
+                    <span className="text-xs font-semibold text-[#f6245b] uppercase tracking-wider mb-2">Recommended</span>
                   )}
-                  <h3 className="text-2xl font-bold text-white mb-6">{plan.name}</h3>
+                  <h3 className="text-2xl font-bold text-white">{plan.name}</h3>
+                  <p className="text-white/50 text-sm mb-4">{plan.subtitle}</p>
+                  <p className="text-3xl font-bold text-white mb-6">{plan.price}</p>
                   <ul className="space-y-3 flex-1">
                     {plan.features.map((f, fi) => (
                       <li key={fi} className="flex items-center gap-2 text-white/70">
