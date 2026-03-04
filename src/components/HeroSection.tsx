@@ -55,7 +55,7 @@ const HeroSection = memo(() => {
 
           {/* Right Column — Card + Floating UI Elements */}
           <div className="flex items-center justify-center lg:justify-end">
-            <div className="relative">
+            <div className="relative mb-16 sm:mb-0">
               {/* Floating element: NFC Tap Detected */}
               <motion.div
                 initial={{ opacity: 0, y: 10 }}
