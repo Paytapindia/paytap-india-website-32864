@@ -4,9 +4,9 @@ import { Building2, CreditCard, ArrowLeftRight, ShieldCheck, Landmark } from "lu
 const badges = [
   { icon: Building2, label: "RBI-Compliant PPI" },
   { icon: CreditCard, label: "RuPay Network" },
-  { icon: ArrowLeftRight, label: "NPCI Rails" },
+  { icon: ArrowLeftRight, label: "NPCI Payment Rails" },
   { icon: ShieldCheck, label: "PCI-DSS Secure" },
-  { icon: Landmark, label: "PPI Licensed-Partnered" },
+  { icon: Landmark, label: "Bank-Partnered PPI License" },
 ];
 
 const ComplianceBadgeBar = memo(() => {
