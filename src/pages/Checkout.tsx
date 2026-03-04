@@ -86,7 +86,7 @@ const PAYU_PAYMENT_LINKS: Record<PlanType, string> = {
 
 const ACTIVATION_INCLUDES = [
   { icon: Nfc, label: 'NFC PayTap Tag for every vehicle' },
-  { icon: CreditCard, label: 'Driver Prepaid Expense Card' },
+  { icon: CreditCard, label: 'Driver Prepaid Expense Card (select plans)' },
   { icon: LayoutDashboard, label: 'PayTap Fleet Dashboard Access' },
   { icon: BarChart3, label: 'Real-Time Expense Tracking' },
   { icon: CalendarCheck, label: '1 Year Platform Access Included' },
@@ -112,6 +112,15 @@ type CheckoutFormData = z.infer<typeof checkoutSchema>;
 const formatINR = (n: number) => '₹' + n.toLocaleString('en-IN');
 const panRegex = /^[A-Z]{5}[0-9]{4}[A-Z]{1}$/i;
 const gstRegex = /^[0-9]{2}[A-Z]{5}[0-9]{4}[A-Z]{1}[1-9A-Z]{1}Z[0-9A-Z]{1}$/i;
+
+const getDriverCards = (planKey: PlanType): number => {
+  if (planKey === 'starter' || planKey === 'business_basic') return 0;
+  return Math.floor(PLANS[planKey].tags / 2);
+};
+
+const isPremiumPlan = (planKey: PlanType): boolean => {
+  return planKey === 'business_pro' || planKey === 'corporate';
+};
 
 const STEP_LABELS = ['Choose Plan', 'Basic Details', 'Business & Delivery', 'Review & Pay'];
 
@@ -443,8 +452,16 @@ const Checkout = () => {
           <div>
             <p className="text-sm font-bold text-foreground">{plan.tags} Vehicle{plan.tags > 1 ? 's' : ''} Activated</p>
             <p className="text-xs text-muted-foreground mt-0.5">
-              {plan.tags} NFC PayTap Tag{plan.tags > 1 ? 's' : ''} · {plan.tags} Driver Expense Card{plan.tags > 1 ? 's' : ''}
+              {plan.tags} NFC PayTap Tag{plan.tags > 1 ? 's' : ''}
+              {getDriverCards(selectedPlan) > 0 && ` · ${getDriverCards(selectedPlan)} Driver Expense Card${getDriverCards(selectedPlan) > 1 ? 's' : ''}`}
             </p>
+            {isPremiumPlan(selectedPlan) && (
+              <div className="flex flex-wrap gap-2 mt-2">
+                <span className="text-[10px] text-accent font-medium">✔ Dedicated Support</span>
+                <span className="text-[10px] text-accent font-medium">✔ Myfleet AI Vehicle Manager</span>
+                <span className="text-[10px] text-accent font-medium">✔ ExpensePro Business Expense Management</span>
+              </div>
+            )}
           </div>
           <div className="text-right">
             <p className="text-lg font-bold text-foreground">Total Today: {formatINR(total)}</p>
@@ -773,7 +790,16 @@ const Checkout = () => {
                     <p className="text-sm font-bold text-foreground">{plan.name}</p>
                     <p className="text-sm text-muted-foreground">{plan.tags} Vehicle{plan.tags > 1 ? 's' : ''} Activated</p>
                     <p className="text-sm text-muted-foreground">{plan.tags} NFC PayTap Tag{plan.tags > 1 ? 's' : ''}</p>
-                    <p className="text-sm text-muted-foreground">{plan.tags} Driver Expense Card{plan.tags > 1 ? 's' : ''}</p>
+                    {getDriverCards(selectedPlan) > 0 && (
+                      <p className="text-sm text-muted-foreground">{getDriverCards(selectedPlan)} Driver Expense Card{getDriverCards(selectedPlan) > 1 ? 's' : ''}</p>
+                    )}
+                    {isPremiumPlan(selectedPlan) && (
+                      <div className="space-y-1 mt-2 pt-2 border-t border-border">
+                        <p className="text-[10px] text-accent font-medium">✔ Dedicated Support</p>
+                        <p className="text-[10px] text-accent font-medium">✔ Myfleet AI Vehicle Manager</p>
+                        <p className="text-[10px] text-accent font-medium">✔ ExpensePro Business Expense Management</p>
+                      </div>
+                    )}
                     <Separator className="bg-border" />
                     <div className="flex justify-between items-baseline">
                       <span className="text-xs text-muted-foreground">Total</span>
