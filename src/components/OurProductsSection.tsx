@@ -1,6 +1,7 @@
 import { memo } from "react";
-import { ArrowRight, Truck } from "lucide-react";
+import { ArrowRight } from "lucide-react";
 import paytapIconTp from "@/assets/paytap-icon-tp.png";
+import myfleetIcon from "@/assets/myfleet-ai-icon.png";
 import { useTranslation } from "react-i18next";
 import { Link } from "react-router-dom";
 
@@ -9,7 +10,7 @@ const products = [
     id: 1,
     name: "MyFleet AI",
     description: "Automated spend control and reconciliation for fleets. Real-time tracking, route optimization, and intelligent fuel management — all in one platform.",
-    icon: Truck,
+    image: myfleetIcon,
     link: "https://www.myfleetai.in",
     cta: "Explore MyFleet AI",
   },
