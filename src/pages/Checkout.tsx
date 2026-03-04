@@ -487,9 +487,9 @@ const Checkout = () => {
 
       {/* Trust Microcopy */}
       <div className="flex flex-col sm:flex-row items-center justify-center gap-3 sm:gap-6 text-xs text-muted-foreground">
-        <span className="flex items-center gap-1.5"><CheckCircle className="w-3.5 h-3.5 text-accent" /> One-time activation</span>
-        <span className="flex items-center gap-1.5"><CheckCircle className="w-3.5 h-3.5 text-accent" /> Secure payments via UPI & cards</span>
-        <span className="flex items-center gap-1.5"><CheckCircle className="w-3.5 h-3.5 text-accent" /> Setup takes less than 2 minutes</span>
+        <span className="flex items-center gap-1.5"><CheckCircle className="w-3.5 h-3.5 text-primary" /> One-time activation</span>
+        <span className="flex items-center gap-1.5"><CheckCircle className="w-3.5 h-3.5 text-primary" /> Secure payments via UPI & cards</span>
+        <span className="flex items-center gap-1.5"><CheckCircle className="w-3.5 h-3.5 text-primary" /> Setup takes less than 2 minutes</span>
       </div>
     </div>
   );
