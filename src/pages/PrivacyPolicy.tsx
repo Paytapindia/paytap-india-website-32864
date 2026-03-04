@@ -132,7 +132,7 @@ const PrivacyPolicy = () => {
               <AccordionContent className="prose max-w-none">
                 <p>We may share your data only under the following circumstances:</p>
                 <ul className="list-disc list-inside space-y-1">
-                  <li>With Transcorp International Ltd., our RBI-authorized PPI co-branding partner</li>
+                  <li>With our RBI-authorized PPI co-branding partner</li>
                   <li>With backend service providers like M2P Fintech for technical processing</li>
                   <li>With law enforcement or regulators under legal obligation</li>
                   <li>Never for unsolicited marketing or third-party advertising</li>
@@ -214,14 +214,11 @@ const PrivacyPolicy = () => {
               </AccordionTrigger>
               <AccordionContent className="prose max-w-none">
                 <p>
-                  Our service may contain links to external websites (e.g., fuel stations, toll operators, Transcorp PPI policies). We are not responsible for the content or data practices of those sites.
+                  Our service may contain links to external websites (e.g., fuel stations, toll operators, PPI partner policies). We are not responsible for the content or data practices of those sites.
                 </p>
                 <div className="bg-blue-50 p-3 rounded-lg mt-3">
                   <p className="text-sm text-blue-800">
-                    <strong>Transcorp Terms:</strong>{" "}
-                    <a href="https://transcorpint.com/ppi-policies-and-tc/" target="_blank" rel="noopener noreferrer" className="text-blue-600 hover:text-blue-800 underline">
-                      https://transcorpint.com/ppi-policies-and-tc/
-                    </a>
+                    <strong>PPI Partner Terms:</strong> For PPI policies and terms, please contact us at support@paytap.co.in.
                   </p>
                 </div>
               </AccordionContent>
