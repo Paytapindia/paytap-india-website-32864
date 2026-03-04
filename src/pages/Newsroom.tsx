@@ -7,7 +7,16 @@ import { Carousel, CarouselContent, CarouselItem, CarouselPrevious, CarouselNext
 import FooterSection from "@/components/FooterSection";
 
 const pressArticles = [
-  // NEW - February 2026 - RuPay NFC Tag Launch (Featured)
+  // NEW - March 2026 - MyFleet AI Launch (Featured)
+  { 
+    publication: "DailyHunt", 
+    url: "https://m.dailyhunt.in/news/india/english/republicnewsindia-epaper-dhfacc36dfce9c4bb68db0e89d033c921b/myfleet+ai+builds+indias+first+vehiclelevel+financial+operating+system+for+fleet+owners-newsid-dhfacc36dfce9c4bb68db0e89d033c921b_09cf84e0dc9811f09fff8ea76b3d216e",
+    headline: "MyFleet AI Builds India's First Vehicle-Level Financial Operating System for Fleet Owners",
+    date: "March 4, 2026",
+    datePublished: "2026-03-04",
+    featured: true
+  },
+  // February 2026 - RuPay NFC Tag Launch (Featured)
   { 
     publication: "Republic News India Business", 
     url: "https://business.republicnewsindia.com/beyond-personal-payments-paytap-debuts-indias-first-rupay-nfc-tag-for-integrated-vehicle-enterprise-management/",
