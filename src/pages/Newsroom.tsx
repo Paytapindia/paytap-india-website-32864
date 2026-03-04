@@ -150,6 +150,13 @@ const pressArticles = [
 // Featured articles for the carousel
 const featuredArticles = [
   {
+    publication: "DailyHunt",
+    url: "https://m.dailyhunt.in/news/india/english/republicnewsindia-epaper-dhfacc36dfce9c4bb68db0e89d033c921b/myfleet+ai+builds+indias+first+vehiclelevel+financial+operating+system+for+fleet+owners-newsid-dhfacc36dfce9c4bb68db0e89d033c921b_09cf84e0dc9811f09fff8ea76b3d216e",
+    headline: "MyFleet AI Builds India's First Vehicle-Level Financial Operating System for Fleet Owners",
+    description: "Drivetap Innovation India introduces MyFleet AI — a unified vehicle-level operating system that lets fleet owners track, control, and manage all vehicle expenses from fuel to tolls through a single dashboard.",
+    date: "March 4, 2026"
+  },
+  {
     publication: "Republic News India Business",
     url: "https://business.republicnewsindia.com/beyond-personal-payments-paytap-debuts-indias-first-rupay-nfc-tag-for-integrated-vehicle-enterprise-management/",
     headline: "Beyond Personal Payments: Paytap Debuts India's First RuPay NFC Tag for Integrated Vehicle Enterprise Management",
