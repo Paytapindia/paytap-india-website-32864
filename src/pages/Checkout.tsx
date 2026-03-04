@@ -705,15 +705,15 @@ const Checkout = () => {
       {/* Trust Badges */}
       <div className="flex flex-col sm:flex-row items-center justify-center gap-4 py-4">
         <div className="flex items-center gap-2 text-sm text-muted-foreground">
-          <Shield className="w-4 h-4 text-accent" />
+          <Shield className="w-4 h-4 text-primary" />
           <span>Secure Checkout</span>
         </div>
         <div className="flex items-center gap-2 text-sm text-muted-foreground">
-          <Truck className="w-4 h-4 text-accent" />
+          <Truck className="w-4 h-4 text-primary" />
           <span>3–5 Day Delivery</span>
         </div>
         <div className="flex items-center gap-2 text-sm text-muted-foreground">
-          <Headphones className="w-4 h-4 text-accent" />
+          <Headphones className="w-4 h-4 text-primary" />
           <span>Dedicated Onboarding</span>
         </div>
       </div>
