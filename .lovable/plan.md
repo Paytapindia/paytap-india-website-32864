@@ -1,29 +1,26 @@
 
 
-## Plan: Add MyFleet AI Article to Newsroom & PressSection
+## Plan: Change Plan Box Text from "NFC Tags Included" to "Vehicles Activated"
 
-Add the new "MYFLEET AI Builds India's First Vehicle-Level Financial Operating System for Fleet Owners" article (published Dec 19, 2025 on DailyHunt/R News India) to both data sources.
+### Change in `src/pages/Checkout.tsx`
 
-### Changes
+**Line 408** — Replace the tag/card count text with "Vehicle Activated" phrasing:
 
-**1. `src/pages/Newsroom.tsx`**
-- Add new entry to `pressArticles` array (at top, as newest featured article)
-- Add new entry to `featuredArticles` carousel array (first position) with title, description, date, and URL
+```typescript
+// Before:
+<p className="text-[10px] text-muted-foreground">{p.tags} {productType === 'sticker' ? 'NFC Tag' : 'Card'}{p.tags > 1 ? 's' : ''} included</p>
 
-**2. `src/components/PressSection.tsx`**
-- Add new entry to `pressArticles` marquee array
-- Add new entry to `featuredArticles` carousel array (first position)
+// After:
+<p className="text-[10px] text-muted-foreground">{p.tags} Vehicle{p.tags > 1 ? 's' : ''} Activated</p>
+```
 
-### Data for the new article
+This will show:
+- Starter (1 tag): **1 Vehicle Activated**
+- Business Basic (2 tags): **2 Vehicles Activated**
+- Business Pro (5 tags): **5 Vehicles Activated**
+- Corporate (10 tags): **10 Vehicles Activated**
 
-| Field | Value |
-|-------|-------|
-| Title | MyFleet AI Builds India's First Vehicle-Level Financial Operating System for Fleet Owners |
-| Description | Drivetap Innovation India introduces MyFleet AI — a unified vehicle-level operating system that lets fleet owners track, control, and manage all vehicle expenses from fuel to tolls through a single dashboard. |
-| Publication | DailyHunt |
-| Date | December 19, 2025 |
-| datePublished | 2025-12-19 |
-| URL | https://m.dailyhunt.in/news/india/english/republicnewsindia-epaper-dhfacc36dfce9c4bb68db0e89d033c921b/myfleet+ai+builds+indias+first+vehiclelevel+financial+operating+system+for+fleet+owners-newsid-dhfacc36dfce9c4bb68db0e89d033c921b_09cf84e0dc9811f09fff8ea76b3d216e |
-
-Both files maintain existing article order. The new article will appear as the first featured story in the carousel and in the coverage grid on the Newsroom page.
+| File | Change |
+|------|--------|
+| `src/pages/Checkout.tsx` | Line 408: replace NFC Tag/Card text with "Vehicle(s) Activated" |
 
