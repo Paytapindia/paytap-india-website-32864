@@ -1,38 +1,26 @@
 
 
-## Plan: Add 5-Minute Urgency Timer to Checkout
+## Plan: Change Plan Box Text from "NFC Tags Included" to "Vehicles Activated"
 
-Add a persistent countdown timer visible across all 4 checkout steps. When it expires, show a toast and redirect to home.
+### Change in `src/pages/Checkout.tsx`
 
-### Changes in `src/pages/Checkout.tsx`
+**Line 408** — Replace the tag/card count text with "Vehicle Activated" phrasing:
 
-1. **Add timer state and effect** in the `Checkout` component:
-   - `timeLeft` state initialized to `300` (5 minutes)
-   - `useEffect` with a 1-second interval that decrements the timer
-   - On expiry: show a toast ("Session expired") and navigate to `/`
+```typescript
+// Before:
+<p className="text-[10px] text-muted-foreground">{p.tags} {productType === 'sticker' ? 'NFC Tag' : 'Card'}{p.tags > 1 ? 's' : ''} included</p>
 
-2. **Add timer UI** — render a sticky banner just above the `ProgressBar` (around line 727):
-   - Display as `MM:SS` format with a clock icon
-   - Red/urgent styling when under 60 seconds
-   - Example: `⏱ Complete your order in 04:32` with amber/red pulsing when < 1 min
-
-3. **Format helper**: Simple `Math.floor(timeLeft/60)` and `timeLeft%60` formatting inline
-
-### Visual Design
-
-```text
-┌─────────────────────────────────────┐
-│  🔒 Secure Checkout                │
-│  ⏱ Complete your order in 04:32    │  ← new timer bar
-│  ● ── ○ ── ○ ── ○                 │  ← existing progress
-│  [Step content...]                  │
-└─────────────────────────────────────┘
+// After:
+<p className="text-[10px] text-muted-foreground">{p.tags} Vehicle{p.tags > 1 ? 's' : ''} Activated</p>
 ```
 
-- Amber text normally, red + pulse animation when under 60s
-- Compact single line, centered, with `Clock` icon from lucide-react
+This will show:
+- Starter (1 tag): **1 Vehicle Activated**
+- Business Basic (2 tags): **2 Vehicles Activated**
+- Business Pro (5 tags): **5 Vehicles Activated**
+- Corporate (10 tags): **10 Vehicles Activated**
 
 | File | Change |
 |------|--------|
-| `src/pages/Checkout.tsx` | Add `timeLeft` state, countdown effect, and timer banner above progress bar |
+| `src/pages/Checkout.tsx` | Line 408: replace NFC Tag/Card text with "Vehicle(s) Activated" |
 
