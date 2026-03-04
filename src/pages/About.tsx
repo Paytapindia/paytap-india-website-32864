@@ -181,6 +181,9 @@ const About = () => {
             <h3 className="text-3xl font-bold text-gray-900 mb-8 text-center">Our Story</h3>
             <div className="bg-white rounded-lg shadow-sm p-8">
               <p className="text-lg text-gray-700 mb-6">
+                PayTap is India's fintech infrastructure layer for mobility, fleets, and business payments — giving you real-time control, visibility, and automation over how money flows across vehicles, teams, and daily operations.
+              </p>
+              <p className="text-lg text-gray-700 mb-6">
                 Paytap is a product of DriveTap Innovation India Pvt. Ltd., co-branded with RBI-authorized PPI partners.
               </p>
               <p className="text-lg text-gray-700">
