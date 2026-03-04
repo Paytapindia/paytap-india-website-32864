@@ -23,7 +23,7 @@ export const generalFAQs = [
   {
     id: "general-5",
     question: "Is Paytap RBI approved?",
-    answer: "Yes. Paytap operates in partnership with Transcorp International Ltd, an RBI-authorized Prepaid Payment Instrument (PPI) issuer."
+    answer: "Yes. Paytap operates in partnership with RBI-authorized Prepaid Payment Instrument (PPI) issuers, ensuring full regulatory compliance."
   }
 ];
 

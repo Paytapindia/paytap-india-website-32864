@@ -181,7 +181,7 @@ const About = () => {
             <h3 className="text-3xl font-bold text-gray-900 mb-8 text-center">Our Story</h3>
             <div className="bg-white rounded-lg shadow-sm p-8">
               <p className="text-lg text-gray-700 mb-6">
-                Paytap is a product of DriveTap Innovation India Pvt. Ltd., co-branded with Transcorp International Ltd., an RBI-authorized PPI issuer.
+                Paytap is a product of DriveTap Innovation India Pvt. Ltd., co-branded with RBI-authorized PPI partners.
               </p>
               <p className="text-lg text-gray-700">
                 The company is built by technologists and fintech operators with over a decade of experience in digital payments, mobility systems, and enterprise infrastructure — spanning prepaid platforms, logistics automation, and transaction technology.
@@ -200,7 +200,7 @@ const About = () => {
                 </CardHeader>
                 <CardContent>
                   <p className="text-gray-600">
-                    Built in partnership with Transcorp International Ltd., an RBI-authorized PPI issuer, ensuring regulated, secure, and auditable financial operations.
+                    Built in partnership with RBI-authorized PPI partners, ensuring regulated, secure, and auditable financial operations.
                   </p>
                 </CardContent>
               </Card>
@@ -264,7 +264,7 @@ const About = () => {
                     <p><strong>Legal Name:</strong> DriveTap Innovation India Pvt. Ltd.</p>
                     <p><strong>Trade Name:</strong> Paytap</p>
                     <p><strong>GSTIN:</strong> 29AALCD4626M1Z3</p>
-                    <p><strong>PPI Partner:</strong> Transcorp International Ltd.</p>
+                    <p><strong>PPI Partner:</strong> RBI-Authorized PPI Partners</p>
                   </div>
                 </div>
                 <div>

@@ -63,7 +63,7 @@ const CancellationRefunds = () => {
                     DriveTap Innovation India Pvt. Ltd. (trading as PayTap) is committed to providing a fair and transparent cancellation and refunds policy. This policy covers PayTap NFC tag orders, PayTap wallet transactions, and related services.
                   </p>
                   <p>
-                    All refunds are processed in compliance with RBI guidelines for Prepaid Payment Instruments (PPI) and our co-issuer Transcorp International Ltd.'s policies.
+                    All refunds are processed in compliance with RBI guidelines for Prepaid Payment Instruments (PPI) and our RBI-authorized PPI partner's policies.
                   </p>
                 </div>
               </AccordionContent>
@@ -277,8 +277,8 @@ const CancellationRefunds = () => {
                     <p>GSTIN: 29AALCD4626M1Z3</p>
                   </div>
                   <div className="bg-blue-50 p-4 rounded-lg">
-                    <p><strong>Co-issuer:</strong> Transcorp International Ltd.</p>
-                    <p>For PPI-related queries, please refer to: <a href="https://www.transcorpintl.com" className="text-blue-600 hover:underline">Transcorp PPI Policies</a></p>
+                    <p><strong>Co-issuer:</strong> RBI-Authorized PPI Partners</p>
+                    <p>For PPI-related queries, please contact us at support@paytap.co.in.</p>
                   </div>
                   <p className="text-sm text-gray-600">
                     This cancellation and refunds policy is governed by Indian law and is subject to the jurisdiction of Bengaluru courts. Policy subject to change without prior notice.

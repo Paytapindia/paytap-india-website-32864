@@ -56,7 +56,7 @@ const FooterSection = memo(() => {
               <p className="mb-1">Bengaluru – 560001</p>
               <p className="mb-2">Karnataka, India</p>
               <p className="mb-1">GSTIN: 29AALCD4626M1Z3</p>
-              <p className="text-gray-400">PPI Partner: Transcorp International Ltd. (RBI-authorized)</p>
+              <p className="text-gray-400">RBI-Authorized PPI Partners</p>
             </div>
           </div>
           

@@ -248,7 +248,7 @@ const Support = () => {
                       <strong>Company Name:</strong> DriveTap Innovation India Pvt. Ltd.<br />
                       <strong>Trade Name:</strong> PayTap<br />
                       <strong>GSTIN:</strong> 29AALCD4626M1Z3<br />
-                      <strong>PPI Partner:</strong> Transcorp International Ltd.<br />
+                      <strong>PPI Partner:</strong> RBI-Authorized PPI Partners<br />
                       <strong>Address:</strong> Level 15 UB City Concorde Tower 1<br />
                       Vittal Mallya Road Rajbhavan<br />
                       Bengaluru - 560001

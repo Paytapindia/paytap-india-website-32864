@@ -67,7 +67,7 @@ const TermsAndConditions = () => {
               </AccordionTrigger>
               <AccordionContent className="prose max-w-none">
                 <div className="space-y-4">
-                  <p><strong>"Paytap"</strong> refers to the contactless payment tag and prepaid wallet solution developed and owned by DriveTap Innovation India Pvt. Ltd., and co-branded with Transcorp International Ltd., a Prepaid Payment Instrument (PPI) issuer authorized by the Reserve Bank of India (RBI).</p>
+                  <p><strong>"Paytap"</strong> refers to the contactless payment tag and prepaid wallet solution developed and owned by DriveTap Innovation India Pvt. Ltd., co-branded with RBI-authorized Prepaid Payment Instrument (PPI) partners.</p>
                   <p><strong>"User"</strong> refers to any individual or entity that accesses or uses the Paytap services.</p>
                   <p><strong>"Wallet"</strong> means the semi-closed prepaid payment instrument issued in the name of the user.</p>
                   <p><strong>"KYC"</strong> stands for "Know Your Customer" as required by RBI.</p>
@@ -114,7 +114,7 @@ const TermsAndConditions = () => {
               <AccordionContent className="prose max-w-none">
                 <div className="space-y-4">
                   <ul className="list-disc list-inside space-y-2">
-                    <li>Paytap provides a semi-closed PPI wallet issued by Transcorp International Ltd.</li>
+                    <li>Paytap provides a semi-closed PPI wallet issued by our RBI-authorized PPI partner.</li>
                     <li>The wallet can be loaded using UPI and other permitted digital instruments.</li>
                     <li>Wallet funds can be used at RuPay-enabled POS terminals and partner merchants across India, including fuel stations, toll booths, metro (NCMC), service centers, and more.</li>
                   </ul>
@@ -299,11 +299,8 @@ const TermsAndConditions = () => {
                   <div className="bg-blue-50 p-4 rounded-lg mt-4">
                     <h4 className="font-semibold text-blue-900 mb-2">Co-Issuer Policy Reference</h4>
                     <p className="text-sm text-blue-800">
-                      This wallet is co-issued by Transcorp International Ltd as the licensed PPI issuer. Please refer to their PPI policies and customer grievance guidelines at:
+                      This wallet is co-issued by our RBI-authorized PPI partner. For PPI policies and customer grievance guidelines, please contact us at support@paytap.co.in.
                     </p>
-                    <a href="https://transcorpint.com/ppi-policies-and-tc/" target="_blank" rel="noopener noreferrer" className="text-blue-600 hover:text-blue-800 font-medium">
-                      👉 https://transcorpint.com/ppi-policies-and-tc/
-                    </a>
                   </div>
                 </div>
               </AccordionContent>
