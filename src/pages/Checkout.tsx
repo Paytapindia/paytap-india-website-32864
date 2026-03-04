@@ -758,12 +758,36 @@ const Checkout = () => {
         {/* ── Step Content ── */}
         <form onSubmit={handleSubmit(onSubmit)}>
           <div className="max-w-5xl mx-auto px-4 pb-40 md:pb-24">
-            <StepWrapper stepKey={currentStep}>
-              {currentStep === 1 && renderStep1()}
-              {currentStep === 2 && renderStep2()}
-              {currentStep === 3 && renderStep3()}
-              {currentStep === 4 && renderStep4()}
-            </StepWrapper>
+            {currentStep > 1 ? (
+              <div className="grid grid-cols-1 md:grid-cols-[1fr_300px] gap-6">
+                <StepWrapper stepKey={currentStep}>
+                  {currentStep === 2 && renderStep2()}
+                  {currentStep === 3 && renderStep3()}
+                  {currentStep === 4 && renderStep4()}
+                </StepWrapper>
+                {/* Sticky Order Summary Sidebar */}
+                <div className="hidden md:block">
+                  <div className="sticky top-6 rounded-2xl border border-border bg-card p-5 space-y-3">
+                    <h3 className="text-xs font-semibold text-muted-foreground uppercase tracking-wide">Your Fleet Activation</h3>
+                    <Separator className="bg-border" />
+                    <p className="text-sm font-bold text-foreground">{plan.name}</p>
+                    <p className="text-sm text-muted-foreground">{plan.tags} Vehicle{plan.tags > 1 ? 's' : ''} Activated</p>
+                    <p className="text-sm text-muted-foreground">{plan.tags} NFC PayTap Tag{plan.tags > 1 ? 's' : ''}</p>
+                    <p className="text-sm text-muted-foreground">{plan.tags} Driver Expense Card{plan.tags > 1 ? 's' : ''}</p>
+                    <Separator className="bg-border" />
+                    <div className="flex justify-between items-baseline">
+                      <span className="text-xs text-muted-foreground">Total</span>
+                      <span className="text-lg font-bold text-foreground">{formatINR(total)}</span>
+                    </div>
+                    <p className="text-[10px] text-muted-foreground">Incl. 18% GST</p>
+                  </div>
+                </div>
+              </div>
+            ) : (
+              <StepWrapper stepKey={currentStep}>
+                {renderStep1()}
+              </StepWrapper>
+            )}
           </div>
 
           {/* ── Sticky Bottom Navigation ── */}
