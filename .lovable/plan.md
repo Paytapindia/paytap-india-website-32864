@@ -1,15 +1,18 @@
 
 
-## Plan: Replace ExpensePro Icon with Custom Image
+## Plan: Remove Auto-Redirect Timer from Payment Confirmation Dialog
 
-Copy the uploaded icon to `src/assets/` and use it as the ExpensePro card icon in `OurProductsSection.tsx`.
+The payment confirmation dialog currently has a 15-second countdown timer that auto-redirects to home. This needs to be removed so the user **must** explicitly click "Yes, Download Invoice" or "Cancel Order" — otherwise we can't determine payment status.
 
-### Changes
+### Changes in `src/pages/Checkout.tsx`
 
-1. **Copy asset**: `user-uploads://Paytap_App_Icon_New-2.png` → `src/assets/paytap-icon-tp.png`
+1. **Remove the timer state and useEffect** (lines 178, 221–228): Delete `confirmTimeLeft` state and the countdown interval that auto-navigates on expiry.
 
-2. **`src/components/OurProductsSection.tsx`**: 
-   - Import the new image
-   - Change the ExpensePro product entry to use an `img` tag with the custom icon instead of the `Receipt` Lucide icon
-   - Keep the navy container styling, just swap the icon content
+2. **Remove the timer text from the dialog** (lines 814–816): Delete the "Redirecting to home in Xs..." paragraph.
+
+3. **Keep everything else**: The dialog stays non-dismissable (`onOpenChange={() => {}}`), close button hidden — user must click one of the two buttons.
+
+| File | Change |
+|------|--------|
+| `src/pages/Checkout.tsx` | Remove `confirmTimeLeft` state, countdown `useEffect`, and timer text from dialog |
 
