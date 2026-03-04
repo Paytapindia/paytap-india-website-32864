@@ -472,7 +472,7 @@ const Checkout = () => {
 
       {/* What Your Activation Includes */}
       <div className="rounded-2xl border border-border p-5 md:p-8 bg-card">
-        <h2 className="text-sm font-semibold text-foreground mb-4 md:mb-6">What Your Activation Includes</h2>
+        <h2 className="text-base font-semibold text-foreground mb-4 md:mb-6">What Your Activation Includes</h2>
         <div className="grid grid-cols-1 sm:grid-cols-2 gap-4 md:gap-5">
           {ACTIVATION_INCLUDES.map((item) => (
             <div key={item.label} className="flex items-center gap-3">
