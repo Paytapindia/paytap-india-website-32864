@@ -267,7 +267,7 @@ const About = () => {
                     <p><strong>Legal Name:</strong> DriveTap Innovation India Pvt. Ltd.</p>
                     <p><strong>Trade Name:</strong> Paytap</p>
                     <p><strong>GSTIN:</strong> 29AALCD4626M1Z3</p>
-                    <p><strong>PPI Partner:</strong> RBI-Authorized PPI Partners</p>
+                    <p><strong>In Association with</strong> RBI Authorised PPI Partners</p>
                   </div>
                 </div>
                 <div>
