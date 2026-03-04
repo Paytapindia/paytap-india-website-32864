@@ -143,9 +143,9 @@ const ProgressBar = ({ currentStep }: { currentStep: number }) => (
             <div
               className={`w-6 h-6 rounded-full flex items-center justify-center text-xs font-bold transition-all duration-300 ${
                 isActive
-                  ? 'bg-accent text-accent-foreground shadow-md'
+                  ? 'bg-primary text-primary-foreground shadow-md'
                   : 'bg-muted text-muted-foreground border border-border'
-              } ${isCurrent ? 'ring-4 ring-accent/20' : ''}`}
+              } ${isCurrent ? 'ring-4 ring-primary/20' : ''}`}
             >
               {isActive && step < currentStep ? <Check className="w-3.5 h-3.5" /> : step}
             </div>
