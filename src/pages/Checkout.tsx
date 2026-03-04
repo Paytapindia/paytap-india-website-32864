@@ -415,7 +415,7 @@ const Checkout = () => {
                 }`}
               >
                 {isRecommended && (
-                  <span className="absolute -top-3 left-1/2 -translate-x-1/2 px-3 py-0.5 text-[10px] font-semibold bg-accent text-accent-foreground rounded-full whitespace-nowrap">
+                  <span className="absolute -top-3 left-1/2 -translate-x-1/2 px-3 py-0.5 text-[10px] font-semibold bg-primary text-primary-foreground rounded-full whitespace-nowrap">
                     ⭐ Recommended For Most Fleets
                   </span>
                 )}
