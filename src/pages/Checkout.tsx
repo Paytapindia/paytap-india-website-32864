@@ -795,9 +795,9 @@ const Checkout = () => {
                     )}
                     {isPremiumPlan(selectedPlan) && (
                       <div className="space-y-1 mt-2 pt-2 border-t border-border">
-                        <p className="text-[10px] text-accent font-medium">✔ Dedicated Support</p>
-                        <p className="text-[10px] text-accent font-medium">✔ Myfleet AI Vehicle Manager</p>
-                        <p className="text-[10px] text-accent font-medium">✔ ExpensePro Business Expense Management</p>
+                        <p className="text-[10px] text-primary font-medium">✔ Dedicated Support</p>
+                        <p className="text-[10px] text-primary font-medium">✔ Myfleet AI Vehicle Manager</p>
+                        <p className="text-[10px] text-primary font-medium">✔ ExpensePro Business Expense Management</p>
                       </div>
                     )}
                     <Separator className="bg-border" />
