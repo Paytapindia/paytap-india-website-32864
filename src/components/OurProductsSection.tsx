@@ -1,5 +1,6 @@
 import { memo } from "react";
-import { ArrowRight, Truck, Receipt } from "lucide-react";
+import { ArrowRight, Truck } from "lucide-react";
+import paytapIconTp from "@/assets/paytap-icon-tp.png";
 import { useTranslation } from "react-i18next";
 import { Link } from "react-router-dom";
 
@@ -16,7 +17,7 @@ const products = [
     id: 2,
     name: "ExpensePro",
     description: "Real-time expense tracking and reimbursement workflows. Automate approvals, enforce policies, and gain full visibility into corporate spending.",
-    icon: Receipt,
+    image: paytapIconTp,
     link: "https://expensepro.in/",
     cta: "Explore ExpensePro",
   },
@@ -47,8 +48,12 @@ const OurProductsSection = memo(() => {
             const cardContent = (
               <>
                 {/* Icon */}
-                <div className="w-14 h-14 md:w-16 md:h-16 rounded-2xl bg-primary flex items-center justify-center mb-5 md:mb-7 shadow-md">
-                  <product.icon className="w-7 h-7 md:w-8 md:h-8 text-primary-foreground" />
+                <div className="w-14 h-14 md:w-16 md:h-16 rounded-2xl bg-primary flex items-center justify-center mb-5 md:mb-7 shadow-md overflow-hidden">
+                  {'image' in product ? (
+                    <img src={product.image} alt={product.name} className="w-10 h-10 md:w-11 md:h-11 object-contain" />
+                  ) : (
+                    <product.icon className="w-7 h-7 md:w-8 md:h-8 text-primary-foreground" />
+                  )}
                 </div>
 
                 {/* Product name */}
