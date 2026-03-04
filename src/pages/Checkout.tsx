@@ -394,7 +394,7 @@ const Checkout = () => {
 
       {/* Choose Your Fleet Size */}
       <div>
-        <h2 className="text-sm font-semibold text-foreground mb-4">Choose Your Fleet Size</h2>
+        <h2 className="text-base font-semibold text-foreground mb-5 md:mb-6">Choose Your Fleet Size</h2>
         <div className="grid grid-cols-2 md:grid-cols-4 gap-3 md:gap-5">
           {(Object.entries(PLANS) as [PlanType, PlanInfo][]).map(([key, p]) => {
             const isSelected = selectedPlan === key;
