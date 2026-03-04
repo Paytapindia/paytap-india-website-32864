@@ -14,6 +14,7 @@ export interface InvoiceData {
   companyName?: string;
   productType: 'sticker' | 'card';
   planName: string;
+  vehicleCount: number;
   quantity: number;
   unitPrice: number;
   subtotal: number;
@@ -104,6 +105,11 @@ export async function generateInvoice(data: InvoiceData): Promise<void> {
   const gray = '#666666';
   const lineColor = '#cccccc';
 
+  // Recalculate GST from subtotal for accuracy
+  const planPrice = data.subtotal;
+  const gstTotal = Math.round(planPrice * 0.18);
+  const grandTotal = planPrice + gstTotal;
+
   let y = margin;
 
   // ── Header with Logo ──
@@ -111,7 +117,6 @@ export async function generateInvoice(data: InvoiceData): Promise<void> {
     const logoBase64 = await getLogoBase64();
     doc.addImage(logoBase64, 'PNG', margin, y - 2, 35, 12);
   } catch {
-    // Fallback to text if logo fails
     doc.setFontSize(16);
     doc.setFont('helvetica', 'bold');
     doc.setTextColor(dark);
@@ -228,17 +233,16 @@ export async function generateInvoice(data: InvoiceData): Promise<void> {
 
   y = Math.max(billY, shipY) + 6;
 
-  // ── Line Items Table ──
+  // ── Line Items Table (no Tax column — tax shown only in summary) ──
   doc.setDrawColor(lineColor);
   doc.line(margin, y, pageWidth - margin, y);
 
   const colX = {
     item: margin + 1,
-    hsn: margin + 70,
-    qty: margin + 95,
-    rate: margin + 115,
-    pct: margin + 138,
-    tax: margin + 150,
+    hsn: margin + 85,
+    qty: margin + 110,
+    rate: margin + 125,
+    pct: margin + 148,
     amount: pageWidth - margin - 1,
   };
 
@@ -250,31 +254,27 @@ export async function generateInvoice(data: InvoiceData): Promise<void> {
   doc.text('HSN/SAC', colX.hsn, y);
   doc.text('Qty', colX.qty, y);
   doc.text('Rate', colX.rate, y);
-  doc.text('%', colX.pct, y);
-  doc.text('Tax', colX.tax, y);
+  doc.text('Tax %', colX.pct, y);
   doc.text('Amount', colX.amount, y, { align: 'right' });
 
   y += 3;
   doc.line(margin, y, pageWidth - margin, y);
   y += 5;
 
-  const itemName = data.productType === 'sticker'
-    ? `Paytap NFC Payment Tag`
-    : `Paytap Prepaid Card`;
+  // Item name reflects the vehicle activation plan
+  const vehicleLabel = data.vehicleCount === 1 ? '1 Vehicle' : `${data.vehicleCount} Vehicles`;
+  const itemName = `PayTap Vehicle Activation Plan – ${vehicleLabel}`;
   const hsnCode = '997159';
   const gstRate = 18;
-  const taxPerUnit = Math.round((data.unitPrice * gstRate / (100 + gstRate)) * 100) / 100;
-  const totalTax = Math.round(taxPerUnit * data.quantity * 100) / 100;
 
   doc.setFont('helvetica', 'normal');
   doc.setTextColor(gray);
   doc.text(itemName, colX.item, y);
   doc.text(hsnCode, colX.hsn, y);
-  doc.text(`${data.quantity}.00 pcs`, colX.qty, y);
-  doc.text(formatINR(data.unitPrice), colX.rate, y);
+  doc.text('1', colX.qty, y);
+  doc.text(formatINR(planPrice), colX.rate, y);
   doc.text(`${gstRate}%`, colX.pct, y);
-  doc.text(formatINR(totalTax), colX.tax, y);
-  doc.text(formatINR(data.subtotal), colX.amount, y, { align: 'right' });
+  doc.text(formatINR(planPrice), colX.amount, y, { align: 'right' });
 
   y += 8;
   doc.line(margin, y, pageWidth - margin, y);
@@ -284,8 +284,8 @@ export async function generateInvoice(data: InvoiceData): Promise<void> {
   doc.setFontSize(8);
   doc.setFont('helvetica', 'italic');
   doc.setTextColor(gray);
-  const totalWords = numberToWords(Math.round(data.total));
-  doc.text(`Total In Words: Indian Rupee ${totalWords} Only (Tax Inclusive)`, margin, y);
+  const totalWords = numberToWords(grandTotal);
+  doc.text(`Total In Words: Indian Rupees ${totalWords} Only`, margin, y);
   y += 10;
 
   // ── Totals ──
@@ -297,14 +297,14 @@ export async function generateInvoice(data: InvoiceData): Promise<void> {
   doc.setFontSize(8);
 
   doc.text('Sub Total:', labelX, y, { align: 'right' });
-  doc.text(formatINR(data.subtotal), totalsX, y, { align: 'right' });
+  doc.text(formatINR(planPrice), totalsX, y, { align: 'right' });
   y += 5;
 
   if (isInterState) {
-    doc.text(`IGST18 (18%):`, labelX, y, { align: 'right' });
-    doc.text(formatINR(data.gstAmount), totalsX, y, { align: 'right' });
+    doc.text(`IGST (18%):`, labelX, y, { align: 'right' });
+    doc.text(formatINR(gstTotal), totalsX, y, { align: 'right' });
   } else {
-    const halfGst = Math.round(data.gstAmount / 2 * 100) / 100;
+    const halfGst = Math.round(gstTotal / 2);
     doc.text(`CGST (9%):`, labelX, y, { align: 'right' });
     doc.text(formatINR(halfGst), totalsX, y, { align: 'right' });
     y += 5;
@@ -316,13 +316,13 @@ export async function generateInvoice(data: InvoiceData): Promise<void> {
   doc.setFont('helvetica', 'bold');
   doc.setTextColor(dark);
   doc.text('Total:', labelX, y, { align: 'right' });
-  doc.text(`₹${formatINR(data.total)}`, totalsX, y, { align: 'right' });
+  doc.text(`₹${formatINR(grandTotal)}`, totalsX, y, { align: 'right' });
   y += 5;
 
   doc.setFont('helvetica', 'normal');
   doc.setTextColor(gray);
   doc.text('Payment Made:', labelX, y, { align: 'right' });
-  doc.text(`(-) ${formatINR(data.total)}`, totalsX, y, { align: 'right' });
+  doc.text(`(-) ${formatINR(grandTotal)}`, totalsX, y, { align: 'right' });
   y += 5;
 
   doc.setFont('helvetica', 'bold');
