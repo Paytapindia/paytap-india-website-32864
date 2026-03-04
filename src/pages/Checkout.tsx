@@ -372,7 +372,7 @@ const Checkout = () => {
   // ── Input class helper ──
   const inputClass = "mt-1 rounded-xl border-border bg-background shadow-sm focus:border-accent focus-visible:ring-0 focus-visible:ring-offset-0 h-12 text-base";
   const labelClass = "text-xs font-medium text-muted-foreground";
-  const errorClass = "text-xs text-accent mt-1";
+  const errorClass = "text-xs text-destructive mt-1";
 
   // ══════════════════════════════════════════════════════════
   // ── STEP 1: Plan & Product ──
