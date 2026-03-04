@@ -475,6 +475,19 @@ const Checkout = () => {
             </div>
           ))}
         </div>
+        <div className="mt-4 md:mt-5 pt-4 md:pt-5 border-t border-border">
+          <p className="text-xs font-semibold text-muted-foreground mb-3">Dashboard Access Includes</p>
+          <div className="grid grid-cols-1 sm:grid-cols-2 gap-4 md:gap-5">
+            {DASHBOARD_INCLUDES.map((item) => (
+              <div key={item.label} className="flex items-center gap-3">
+                <div className="w-9 h-9 rounded-lg bg-primary/10 flex items-center justify-center flex-shrink-0">
+                  <item.icon className="w-4.5 h-4.5 text-primary" />
+                </div>
+                <span className="text-sm text-foreground">{item.label}</span>
+              </div>
+            ))}
+          </div>
+        </div>
         <div className="mt-5 md:mt-6 pt-4 md:pt-5 border-t border-border text-center space-y-1">
           <p className="text-sm text-muted-foreground">
             Control fuel, tolls, and driver expenses across all your vehicles from one central dashboard.
