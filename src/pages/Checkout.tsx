@@ -175,7 +175,7 @@ const Checkout = () => {
   const [isLoading, setIsLoading] = useState(false);
   const [selectedState, setSelectedState] = useState("");
   const [showConfirmation, setShowConfirmation] = useState(false);
-  const [confirmTimeLeft, setConfirmTimeLeft] = useState(15);
+  
   const [orderTxnId, setOrderTxnId] = useState("");
   const [fieldErrors, setFieldErrors] = useState<Record<string, string>>({});
   const [lastFormData, setLastFormData] = useState<CheckoutFormData | null>(null);
@@ -217,18 +217,6 @@ const Checkout = () => {
     }
   }, []);
 
-  // ── Confirmation auto-redirect ──
-  useEffect(() => {
-    if (!showConfirmation) return;
-    setConfirmTimeLeft(15);
-    const interval = setInterval(() => {
-      setConfirmTimeLeft((prev) => {
-        if (prev <= 1) { clearInterval(interval); navigate("/"); return 0; }
-        return prev - 1;
-      });
-    }, 1000);
-    return () => clearInterval(interval);
-  }, [showConfirmation, navigate]);
 
   // ── Step Navigation ──
   const nextStep = async () => {
@@ -811,9 +799,6 @@ const Checkout = () => {
               Cancel Order
             </Button>
           </div>
-          <p className="text-center text-xs text-muted-foreground mt-3">
-            Redirecting to home in <span className="font-bold text-accent">{confirmTimeLeft}s</span>...
-          </p>
         </DialogContent>
       </Dialog>
     </>
