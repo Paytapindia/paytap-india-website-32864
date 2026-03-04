@@ -454,13 +454,6 @@ const Checkout = () => {
               {plan.tags} NFC PayTap Tag{plan.tags > 1 ? 's' : ''}
               {getDriverCards(selectedPlan) > 0 && ` · ${getDriverCards(selectedPlan)} Driver Expense Card${getDriverCards(selectedPlan) > 1 ? 's' : ''}`}
             </p>
-            {isPremiumPlan(selectedPlan) && (
-              <div className="flex flex-wrap gap-2 mt-2">
-                <span className="text-[10px] text-primary font-medium">✔ Dedicated Support</span>
-                <span className="text-[10px] text-primary font-medium">✔ Myfleet AI Vehicle Manager</span>
-                <span className="text-[10px] text-primary font-medium">✔ ExpensePro Business Expense Management</span>
-              </div>
-            )}
           </div>
           <div className="text-right">
             <p className="text-lg font-bold text-foreground">Total Today: {formatINR(total)}</p>
