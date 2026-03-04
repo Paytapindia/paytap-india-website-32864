@@ -87,7 +87,7 @@ const PAYU_PAYMENT_LINKS: Record<PlanType, string> = {
 const ACTIVATION_INCLUDES = [
   { icon: Nfc, label: 'NFC PayTap Tag for every vehicle' },
   { icon: CreditCard, label: 'Driver Prepaid Expense Card (select plans)' },
-  { icon: LayoutDashboard, label: 'PayTap Fleet Dashboard Access' },
+  { icon: LayoutDashboard, label: 'Lifetime Platform Access' },
   { icon: BarChart3, label: 'Real-Time Expense Tracking' },
   { icon: CalendarCheck, label: '1 Year Platform Access Included' },
   { icon: TruckIcon, label: '3–5 Day Delivery' },
@@ -131,7 +131,7 @@ const ProgressBar = ({ currentStep }: { currentStep: number }) => (
       {/* Line behind dots */}
       <div className="absolute top-3 left-0 right-0 h-[2px] bg-border" />
       <div
-        className="absolute top-3 left-0 h-[2px] bg-accent transition-all duration-500"
+        className="absolute top-3 left-0 h-[2px] bg-primary transition-all duration-500"
         style={{ width: `${((currentStep - 1) / 3) * 100}%` }}
       />
       {STEP_LABELS.map((label, i) => {
@@ -143,9 +143,9 @@ const ProgressBar = ({ currentStep }: { currentStep: number }) => (
             <div
               className={`w-6 h-6 rounded-full flex items-center justify-center text-xs font-bold transition-all duration-300 ${
                 isActive
-                  ? 'bg-accent text-accent-foreground shadow-md'
+                  ? 'bg-primary text-primary-foreground shadow-md'
                   : 'bg-muted text-muted-foreground border border-border'
-              } ${isCurrent ? 'ring-4 ring-accent/20' : ''}`}
+              } ${isCurrent ? 'ring-4 ring-primary/20' : ''}`}
             >
               {isActive && step < currentStep ? <Check className="w-3.5 h-3.5" /> : step}
             </div>
@@ -370,9 +370,9 @@ const Checkout = () => {
   };
 
   // ── Input class helper ──
-  const inputClass = "mt-1 rounded-xl border-border bg-background shadow-sm focus:border-accent focus-visible:ring-0 focus-visible:ring-offset-0 h-12 text-base";
+  const inputClass = "mt-1 rounded-xl border-border bg-background shadow-sm focus:border-primary focus-visible:ring-0 focus-visible:ring-offset-0 h-12 text-base";
   const labelClass = "text-xs font-medium text-muted-foreground";
-  const errorClass = "text-xs text-accent mt-1";
+  const errorClass = "text-xs text-destructive mt-1";
 
   // ══════════════════════════════════════════════════════════
   // ── STEP 1: Plan & Product ──
@@ -380,21 +380,21 @@ const Checkout = () => {
   const renderStep1 = () => (
     <div className="space-y-6 md:space-y-10">
       {/* Header */}
-      <div className="text-center">
-        <h1 className="text-xl md:text-4xl font-bold text-foreground tracking-tight leading-tight">
+      <div className="text-center space-y-2 md:space-y-3">
+        <h1 className="text-2xl md:text-4xl font-bold text-foreground tracking-tight leading-tight">
           Activate Smart Payments<br className="hidden md:block" /> For Your Vehicles
         </h1>
-        <p className="mt-2 md:mt-3 text-xs md:text-base text-muted-foreground max-w-lg mx-auto">
+        <p className="text-sm md:text-base text-muted-foreground max-w-lg mx-auto">
           Control fuel, tolls, and driver expenses across all your vehicles from one central dashboard.
         </p>
-        <p className="mt-2 text-[11px] md:text-xs text-muted-foreground/70">
+        <p className="text-xs text-muted-foreground/70">
           Built for personal vehicles, businesses, and fleet operators across India.
         </p>
       </div>
 
       {/* Choose Your Fleet Size */}
       <div>
-        <h2 className="text-sm font-semibold text-foreground mb-4">Choose Your Fleet Size</h2>
+        <h2 className="text-base font-semibold text-foreground mb-5 md:mb-6">Choose Your Fleet Size</h2>
         <div className="grid grid-cols-2 md:grid-cols-4 gap-3 md:gap-5">
           {(Object.entries(PLANS) as [PlanType, PlanInfo][]).map(([key, p]) => {
             const isSelected = selectedPlan === key;
@@ -405,17 +405,17 @@ const Checkout = () => {
                 type="button"
                 onClick={() => setSelectedPlan(key)}
                 className={`relative text-center rounded-2xl border-2 transition-all duration-200 bg-card hover:scale-[1.02] ${
-                  isRecommended ? 'p-5 md:p-8 scale-[1.03] shadow-xl shadow-accent/15 border-[3px]' : 'p-4 md:p-6'
+                  isRecommended ? 'p-5 md:p-8 scale-[1.03] shadow-xl shadow-primary/15 border-[3px]' : 'p-4 md:p-6'
                 } ${
                   isSelected
-                    ? 'border-accent shadow-lg shadow-accent/10'
+                    ? 'border-primary shadow-lg shadow-primary/10'
                     : isRecommended
-                      ? 'border-accent/50 hover:border-accent'
+                      ? 'border-primary/50 hover:border-primary'
                       : 'border-border hover:border-muted-foreground/30'
                 }`}
               >
                 {isRecommended && (
-                  <span className="absolute -top-3 left-1/2 -translate-x-1/2 px-3 py-0.5 text-[10px] font-semibold bg-accent text-accent-foreground rounded-full whitespace-nowrap">
+                  <span className="absolute -top-3 left-1/2 -translate-x-1/2 px-3 py-0.5 text-[10px] font-semibold bg-primary text-primary-foreground rounded-full whitespace-nowrap">
                     ⭐ Recommended For Most Fleets
                   </span>
                 )}
@@ -430,13 +430,13 @@ const Checkout = () => {
                 )}
                 {isRecommended && (
                   <div className="mt-2 pt-2 border-t border-border">
-                    <p className="text-[10px] font-semibold text-accent">Best Value</p>
+                    <p className="text-[10px] font-semibold text-primary">Best Value</p>
                     <p className="text-[10px] text-muted-foreground">Only ₹999 per vehicle</p>
                   </div>
                 )}
                 {isSelected && (
-                  <div className="absolute top-3 right-3 w-5 h-5 rounded-full bg-accent flex items-center justify-center">
-                    <Check className="w-3 h-3 text-accent-foreground" />
+                  <div className="absolute top-3 right-3 w-5 h-5 rounded-full bg-primary flex items-center justify-center">
+                    <Check className="w-3 h-3 text-primary-foreground" />
                   </div>
                 )}
               </button>
@@ -457,9 +457,9 @@ const Checkout = () => {
             </p>
             {isPremiumPlan(selectedPlan) && (
               <div className="flex flex-wrap gap-2 mt-2">
-                <span className="text-[10px] text-accent font-medium">✔ Dedicated Support</span>
-                <span className="text-[10px] text-accent font-medium">✔ Myfleet AI Vehicle Manager</span>
-                <span className="text-[10px] text-accent font-medium">✔ ExpensePro Business Expense Management</span>
+                <span className="text-[10px] text-primary font-medium">✔ Dedicated Support</span>
+                <span className="text-[10px] text-primary font-medium">✔ Myfleet AI Vehicle Manager</span>
+                <span className="text-[10px] text-primary font-medium">✔ ExpensePro Business Expense Management</span>
               </div>
             )}
           </div>
@@ -472,12 +472,12 @@ const Checkout = () => {
 
       {/* What Your Activation Includes */}
       <div className="rounded-2xl border border-border p-5 md:p-8 bg-card">
-        <h2 className="text-sm font-semibold text-foreground mb-4 md:mb-6">What Your Activation Includes</h2>
+        <h2 className="text-base font-semibold text-foreground mb-4 md:mb-6">What Your Activation Includes</h2>
         <div className="grid grid-cols-1 sm:grid-cols-2 gap-4 md:gap-5">
           {ACTIVATION_INCLUDES.map((item) => (
             <div key={item.label} className="flex items-center gap-3">
-              <div className="w-9 h-9 rounded-lg bg-accent/10 flex items-center justify-center flex-shrink-0">
-                <item.icon className="w-4.5 h-4.5 text-accent" />
+              <div className="w-9 h-9 rounded-lg bg-primary/10 flex items-center justify-center flex-shrink-0">
+                <item.icon className="w-4.5 h-4.5 text-primary" />
               </div>
               <span className="text-sm text-foreground">{item.label}</span>
             </div>
@@ -487,9 +487,9 @@ const Checkout = () => {
 
       {/* Trust Microcopy */}
       <div className="flex flex-col sm:flex-row items-center justify-center gap-3 sm:gap-6 text-xs text-muted-foreground">
-        <span className="flex items-center gap-1.5"><CheckCircle className="w-3.5 h-3.5 text-accent" /> One-time activation</span>
-        <span className="flex items-center gap-1.5"><CheckCircle className="w-3.5 h-3.5 text-accent" /> Secure payments via UPI & cards</span>
-        <span className="flex items-center gap-1.5"><CheckCircle className="w-3.5 h-3.5 text-accent" /> Setup takes less than 2 minutes</span>
+        <span className="flex items-center gap-1.5"><CheckCircle className="w-3.5 h-3.5 text-primary" /> One-time activation</span>
+        <span className="flex items-center gap-1.5"><CheckCircle className="w-3.5 h-3.5 text-primary" /> Secure payments via UPI & cards</span>
+        <span className="flex items-center gap-1.5"><CheckCircle className="w-3.5 h-3.5 text-primary" /> Setup takes less than 2 minutes</span>
       </div>
     </div>
   );
@@ -705,15 +705,15 @@ const Checkout = () => {
       {/* Trust Badges */}
       <div className="flex flex-col sm:flex-row items-center justify-center gap-4 py-4">
         <div className="flex items-center gap-2 text-sm text-muted-foreground">
-          <Shield className="w-4 h-4 text-accent" />
+          <Shield className="w-4 h-4 text-primary" />
           <span>Secure Checkout</span>
         </div>
         <div className="flex items-center gap-2 text-sm text-muted-foreground">
-          <Truck className="w-4 h-4 text-accent" />
+          <Truck className="w-4 h-4 text-primary" />
           <span>3–5 Day Delivery</span>
         </div>
         <div className="flex items-center gap-2 text-sm text-muted-foreground">
-          <Headphones className="w-4 h-4 text-accent" />
+          <Headphones className="w-4 h-4 text-primary" />
           <span>Dedicated Onboarding</span>
         </div>
       </div>
@@ -795,9 +795,9 @@ const Checkout = () => {
                     )}
                     {isPremiumPlan(selectedPlan) && (
                       <div className="space-y-1 mt-2 pt-2 border-t border-border">
-                        <p className="text-[10px] text-accent font-medium">✔ Dedicated Support</p>
-                        <p className="text-[10px] text-accent font-medium">✔ Myfleet AI Vehicle Manager</p>
-                        <p className="text-[10px] text-accent font-medium">✔ ExpensePro Business Expense Management</p>
+                        <p className="text-[10px] text-primary font-medium">✔ Dedicated Support</p>
+                        <p className="text-[10px] text-primary font-medium">✔ Myfleet AI Vehicle Manager</p>
+                        <p className="text-[10px] text-primary font-medium">✔ ExpensePro Business Expense Management</p>
                       </div>
                     )}
                     <Separator className="bg-border" />
