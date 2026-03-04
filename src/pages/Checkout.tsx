@@ -457,9 +457,9 @@ const Checkout = () => {
             </p>
             {isPremiumPlan(selectedPlan) && (
               <div className="flex flex-wrap gap-2 mt-2">
-                <span className="text-[10px] text-accent font-medium">✔ Dedicated Support</span>
-                <span className="text-[10px] text-accent font-medium">✔ Myfleet AI Vehicle Manager</span>
-                <span className="text-[10px] text-accent font-medium">✔ ExpensePro Business Expense Management</span>
+                <span className="text-[10px] text-primary font-medium">✔ Dedicated Support</span>
+                <span className="text-[10px] text-primary font-medium">✔ Myfleet AI Vehicle Manager</span>
+                <span className="text-[10px] text-primary font-medium">✔ ExpensePro Business Expense Management</span>
               </div>
             )}
           </div>
