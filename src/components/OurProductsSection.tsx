@@ -1,6 +1,7 @@
 import { memo } from "react";
-import { ArrowRight, Truck } from "lucide-react";
+import { ArrowRight } from "lucide-react";
 import paytapIconTp from "@/assets/paytap-icon-tp.png";
+import myfleetIcon from "@/assets/myfleet-ai-icon.png";
 import { useTranslation } from "react-i18next";
 import { Link } from "react-router-dom";
 
@@ -9,7 +10,7 @@ const products = [
     id: 1,
     name: "MyFleet AI",
     description: "Automated spend control and reconciliation for fleets. Real-time tracking, route optimization, and intelligent fuel management — all in one platform.",
-    icon: Truck,
+    image: myfleetIcon,
     link: "https://www.myfleetai.in",
     cta: "Explore MyFleet AI",
   },
@@ -48,12 +49,8 @@ const OurProductsSection = memo(() => {
             const cardContent = (
               <>
                 {/* Icon */}
-                <div className={`w-14 h-14 md:w-16 md:h-16 rounded-2xl flex items-center justify-center mb-5 md:mb-7 shadow-md overflow-hidden ${'image' in product ? 'bg-white' : 'bg-primary'}`}>
-                  {'image' in product ? (
-                    <img src={product.image} alt={product.name} className="w-10 h-10 md:w-11 md:h-11 object-contain" />
-                  ) : (
-                    <product.icon className="w-7 h-7 md:w-8 md:h-8 text-primary-foreground" />
-                  )}
+                <div className="w-14 h-14 md:w-16 md:h-16 rounded-2xl flex items-center justify-center mb-5 md:mb-7 shadow-md overflow-hidden bg-white">
+                  <img src={product.image} alt={product.name} className="w-10 h-10 md:w-11 md:h-11 object-contain" />
                 </div>
 
                 {/* Product name */}

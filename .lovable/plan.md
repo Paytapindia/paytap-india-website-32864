@@ -1,19 +1,26 @@
 
 
-## Plan: Update MyFleet AI Icon in Our Platform Ecosystem
+## Plan: Change Plan Box Text from "NFC Tags Included" to "Vehicles Activated"
 
-### Changes
+### Change in `src/pages/Checkout.tsx`
 
-**1. Copy uploaded image to project**
-- Copy `user-uploads://app_icon_mf.png` → `src/assets/myfleet-ai-icon.png`
+**Line 408** — Replace the tag/card count text with "Vehicle Activated" phrasing:
 
-**2. Update `src/components/OurProductsSection.tsx`**
-- Import the new image asset
-- Replace the `Truck` Lucide icon for MyFleet AI with the uploaded image
-- Change the product data to use `image` instead of `icon`, so both products now use image-based icons with `bg-white` background (already handled by existing conditional logic)
+```typescript
+// Before:
+<p className="text-[10px] text-muted-foreground">{p.tags} {productType === 'sticker' ? 'NFC Tag' : 'Card'}{p.tags > 1 ? 's' : ''} included</p>
+
+// After:
+<p className="text-[10px] text-muted-foreground">{p.tags} Vehicle{p.tags > 1 ? 's' : ''} Activated</p>
+```
+
+This will show:
+- Starter (1 tag): **1 Vehicle Activated**
+- Business Basic (2 tags): **2 Vehicles Activated**
+- Business Pro (5 tags): **5 Vehicles Activated**
+- Corporate (10 tags): **10 Vehicles Activated**
 
 | File | Change |
 |------|--------|
-| `src/assets/myfleet-ai-icon.png` | New file (copied from upload) |
-| `src/components/OurProductsSection.tsx` | Replace Truck icon with image, remove Truck import |
+| `src/pages/Checkout.tsx` | Line 408: replace NFC Tag/Card text with "Vehicle(s) Activated" |
 
