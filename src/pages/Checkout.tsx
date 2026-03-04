@@ -369,20 +369,20 @@ const Checkout = () => {
   // ── STEP 1: Plan & Product ──
   // ══════════════════════════════════════════════════════════
   const renderStep1 = () => (
-    <div className="space-y-8">
-      {/* Headline */}
+    <div className="space-y-10">
+      {/* Header */}
       <div className="text-center">
         <h1 className="text-2xl md:text-4xl font-bold text-foreground tracking-tight leading-tight">
-          Turn Your Vehicles Into<br className="hidden md:block" /> Intelligent Payment Machines.
+          Activate Smart Payments<br className="hidden md:block" /> For Your Vehicles
         </h1>
         <p className="mt-3 text-sm md:text-base text-muted-foreground max-w-lg mx-auto">
-          One-time activation. NFC hardware included. Centralised dashboard access in minutes.
+          Control fuel, tolls, and driver expenses across all your vehicles from one central dashboard.
         </p>
       </div>
 
-      {/* Plan Cards */}
+      {/* Choose Your Fleet Size */}
       <div>
-        <h2 className="text-sm font-semibold text-foreground mb-4">Select Your Activation Plan</h2>
+        <h2 className="text-sm font-semibold text-foreground mb-4">Choose Your Fleet Size</h2>
         <div className="grid grid-cols-2 md:grid-cols-4 gap-3 md:gap-4">
           {(Object.entries(PLANS) as [PlanType, PlanInfo][]).map(([key, p]) => {
             const isSelected = selectedPlan === key;
@@ -391,22 +391,22 @@ const Checkout = () => {
                 key={key}
                 type="button"
                 onClick={() => setSelectedPlan(key)}
-                className={`relative text-left p-4 md:p-5 rounded-xl border-2 transition-all duration-200 bg-card hover:scale-[1.02] ${
+                className={`relative text-center p-5 md:p-6 rounded-2xl border-2 transition-all duration-200 bg-card hover:scale-[1.02] ${
                   isSelected
-                    ? 'border-accent shadow-[0_0_20px_hsl(346_92%_55%/0.15)]'
+                    ? 'border-accent shadow-lg shadow-accent/10'
                     : 'border-border hover:border-muted-foreground/30'
                 }`}
               >
                 {p.recommended && (
-                  <span className="absolute -top-2.5 left-4 px-2.5 py-0.5 text-[10px] font-semibold bg-accent text-accent-foreground rounded-full">
+                  <span className="absolute -top-2.5 left-1/2 -translate-x-1/2 px-3 py-0.5 text-[10px] font-semibold bg-accent text-accent-foreground rounded-full whitespace-nowrap">
                     Most Popular
                   </span>
                 )}
                 <p className="text-sm font-semibold text-foreground">{p.name}</p>
-                <p className="text-[11px] text-muted-foreground mt-0.5 leading-snug">{p.subtitle}</p>
-                <p className="text-lg md:text-2xl font-bold text-foreground mt-3">{formatINR(p.price)}</p>
-                <p className="text-[10px] text-muted-foreground mt-0.5">One-Time Activation</p>
-                <p className="text-[10px] text-muted-foreground">{p.tags} Vehicle{p.tags > 1 ? 's' : ''} Activated</p>
+                <p className="text-2xl md:text-3xl font-bold text-foreground mt-3">{formatINR(p.price)}</p>
+                <p className="text-xs text-muted-foreground mt-2 font-medium">
+                  {p.tags} Vehicle{p.tags > 1 ? 's' : ''} Activated
+                </p>
                 {isSelected && (
                   <div className="absolute top-3 right-3 w-5 h-5 rounded-full bg-accent flex items-center justify-center">
                     <Check className="w-3 h-3 text-accent-foreground" />
@@ -416,57 +416,19 @@ const Checkout = () => {
             );
           })}
         </div>
+        <p className="text-xs text-muted-foreground text-center mt-3">Additional vehicles can be added anytime.</p>
       </div>
 
-      {/* Product Type Selector */}
-      <div>
-        <h2 className="text-sm font-semibold text-foreground mb-3">Choose Your Product</h2>
-        <div className="grid grid-cols-1 md:grid-cols-2 gap-3">
-          {([
-            { key: 'sticker' as const, label: 'NFC Payment Tag', desc: 'Tap-to-pay sticker for your vehicle', icon: Nfc, image: paytapTag },
-            { key: 'card' as const, label: 'Prepaid Card', desc: 'Prepaid card for driver expenses', icon: CreditCard, image: paytapCard },
-          ]).map((product) => {
-            const isActive = productType === product.key;
-            return (
-              <button
-                key={product.key}
-                type="button"
-                onClick={() => setProductType(product.key)}
-                className={`relative flex items-center gap-3 text-left rounded-xl border-2 transition-all duration-200 bg-card p-3 hover:scale-[1.01] ${
-                  isActive
-                    ? 'border-accent shadow-[0_0_15px_hsl(346_92%_55%/0.1)]'
-                    : 'border-border hover:border-muted-foreground/30'
-                }`}
-              >
-                <div className="w-16 h-16 flex-shrink-0 bg-muted rounded-lg flex items-center justify-center p-1.5">
-                  <img src={product.image} alt={product.label} className="max-h-full max-w-full object-contain" />
-                </div>
-                <div className="flex-1 min-w-0">
-                  <div className="flex items-center gap-1.5 mb-0.5">
-                    <product.icon className="w-3.5 h-3.5 text-foreground" />
-                    <p className="text-sm font-semibold text-foreground">{product.label}</p>
-                  </div>
-                  <p className="text-[11px] text-muted-foreground leading-snug">{product.desc}</p>
-                </div>
-                {isActive && (
-                  <div className="absolute top-2 right-2 w-5 h-5 rounded-full bg-accent flex items-center justify-center">
-                    <Check className="w-3 h-3 text-accent-foreground" />
-                  </div>
-                )}
-              </button>
-            );
-          })}
-        </div>
-      </div>
-
-      {/* What You're Activating */}
-      <div className="border border-border rounded-xl p-4 md:p-6 bg-muted/30">
-        <h2 className="text-sm font-semibold text-foreground mb-3">What You're Activating Today</h2>
-        <div className="grid grid-cols-2 sm:grid-cols-3 gap-2">
-          {[...plan.features, ...BASELINE_ITEMS].map((item) => (
-            <div key={item} className="flex items-center gap-2 text-sm text-muted-foreground">
-              <Check className="w-3.5 h-3.5 text-accent flex-shrink-0" />
-              <span>{item}</span>
+      {/* What Your Activation Includes */}
+      <div className="rounded-2xl border border-border p-6 md:p-8 bg-card">
+        <h2 className="text-sm font-semibold text-foreground mb-5">What Your Activation Includes</h2>
+        <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
+          {ACTIVATION_INCLUDES.map((item) => (
+            <div key={item.label} className="flex items-center gap-3">
+              <div className="w-8 h-8 rounded-lg bg-accent/10 flex items-center justify-center flex-shrink-0">
+                <item.icon className="w-4 h-4 text-accent" />
+              </div>
+              <span className="text-sm text-foreground">{item.label}</span>
             </div>
           ))}
         </div>
