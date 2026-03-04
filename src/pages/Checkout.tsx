@@ -391,7 +391,7 @@ const Checkout = () => {
                 key={key}
                 type="button"
                 onClick={() => setSelectedPlan(key)}
-                className={`relative text-center p-5 md:p-6 rounded-2xl border-2 transition-all duration-200 bg-card hover:scale-[1.02] ${
+                className={`relative text-center p-4 md:p-6 rounded-2xl border-2 transition-all duration-200 bg-card hover:scale-[1.02] ${
                   isSelected
                     ? 'border-accent shadow-lg shadow-accent/10'
                     : 'border-border hover:border-muted-foreground/30'
