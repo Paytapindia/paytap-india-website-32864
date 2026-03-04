@@ -87,10 +87,15 @@ const PAYU_PAYMENT_LINKS: Record<PlanType, string> = {
 const ACTIVATION_INCLUDES = [
   { icon: Nfc, label: 'NFC PayTap Tag for every vehicle' },
   { icon: CreditCard, label: 'Driver Prepaid Expense Card (select plans)' },
-  { icon: LayoutDashboard, label: 'Lifetime Platform Access' },
   { icon: BarChart3, label: 'Real-Time Expense Tracking' },
-  { icon: CalendarCheck, label: '1 Year Platform Access Included' },
   { icon: TruckIcon, label: '3–5 Day Delivery' },
+  { icon: Headphones, label: 'Dedicated Support' },
+];
+
+const DASHBOARD_INCLUDES = [
+  { icon: Wallet, label: 'Paytap Prepaid Account' },
+  { icon: LayoutDashboard, label: 'ExpensePro Dashboard' },
+  { icon: Truck, label: 'Myfleet AI Vehicle Operating System' },
 ];
 
 // ── Form Schema ────────────────────────────────────────────
