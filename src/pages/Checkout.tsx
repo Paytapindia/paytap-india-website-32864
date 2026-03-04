@@ -477,6 +477,14 @@ const Checkout = () => {
             </div>
           ))}
         </div>
+        <div className="mt-5 md:mt-6 pt-4 md:pt-5 border-t border-border text-center space-y-1">
+          <p className="text-sm text-muted-foreground">
+            Control fuel, tolls, and driver expenses across all your vehicles from one central dashboard.
+          </p>
+          <p className="text-xs text-muted-foreground/70">
+            Built for personal vehicles, businesses, and fleet operators across India.
+          </p>
+        </div>
       </div>
 
       {/* Trust Microcopy */}
