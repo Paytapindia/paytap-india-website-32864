@@ -1,18 +1,26 @@
 
 
-## Plan: Change ExpensePro Icon Background to White
+## Plan: Change Plan Box Text from "NFC Tags Included" to "Vehicles Activated"
 
-### Change in `src/components/OurProductsSection.tsx`
+### Change in `src/pages/Checkout.tsx`
 
-**Line 51**: The icon container uses `bg-primary` (dark navy) for both products. For the ExpensePro card (which uses an `image` property), change the background to white.
+**Line 408** — Replace the tag/card count text with "Vehicle Activated" phrasing:
 
-Update the icon div to conditionally apply the background:
-- If the product has an `image` → use `bg-white`
-- If it has an `icon` (Lucide) → keep `bg-primary`
+```typescript
+// Before:
+<p className="text-[10px] text-muted-foreground">{p.tags} {productType === 'sticker' ? 'NFC Tag' : 'Card'}{p.tags > 1 ? 's' : ''} included</p>
 
-```tsx
-<div className={`w-14 h-14 md:w-16 md:h-16 rounded-2xl flex items-center justify-center mb-5 md:mb-7 shadow-md overflow-hidden ${'image' in product ? 'bg-white' : 'bg-primary'}`}>
+// After:
+<p className="text-[10px] text-muted-foreground">{p.tags} Vehicle{p.tags > 1 ? 's' : ''} Activated</p>
 ```
 
-Single line change in one file.
+This will show:
+- Starter (1 tag): **1 Vehicle Activated**
+- Business Basic (2 tags): **2 Vehicles Activated**
+- Business Pro (5 tags): **5 Vehicles Activated**
+- Corporate (10 tags): **10 Vehicles Activated**
+
+| File | Change |
+|------|--------|
+| `src/pages/Checkout.tsx` | Line 408: replace NFC Tag/Card text with "Vehicle(s) Activated" |
 

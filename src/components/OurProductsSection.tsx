@@ -48,7 +48,7 @@ const OurProductsSection = memo(() => {
             const cardContent = (
               <>
                 {/* Icon */}
-                <div className="w-14 h-14 md:w-16 md:h-16 rounded-2xl bg-primary flex items-center justify-center mb-5 md:mb-7 shadow-md overflow-hidden">
+                <div className={`w-14 h-14 md:w-16 md:h-16 rounded-2xl flex items-center justify-center mb-5 md:mb-7 shadow-md overflow-hidden ${'image' in product ? 'bg-white' : 'bg-primary'}`}>
                   {'image' in product ? (
                     <img src={product.image} alt={product.name} className="w-10 h-10 md:w-11 md:h-11 object-contain" />
                   ) : (
