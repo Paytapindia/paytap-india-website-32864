@@ -1,18 +1,38 @@
 
 
-## Plan: Remove Auto-Redirect Timer from Payment Confirmation Dialog
+## Plan: Add 5-Minute Urgency Timer to Checkout
 
-The payment confirmation dialog currently has a 15-second countdown timer that auto-redirects to home. This needs to be removed so the user **must** explicitly click "Yes, Download Invoice" or "Cancel Order" — otherwise we can't determine payment status.
+Add a persistent countdown timer visible across all 4 checkout steps. When it expires, show a toast and redirect to home.
 
 ### Changes in `src/pages/Checkout.tsx`
 
-1. **Remove the timer state and useEffect** (lines 178, 221–228): Delete `confirmTimeLeft` state and the countdown interval that auto-navigates on expiry.
+1. **Add timer state and effect** in the `Checkout` component:
+   - `timeLeft` state initialized to `300` (5 minutes)
+   - `useEffect` with a 1-second interval that decrements the timer
+   - On expiry: show a toast ("Session expired") and navigate to `/`
 
-2. **Remove the timer text from the dialog** (lines 814–816): Delete the "Redirecting to home in Xs..." paragraph.
+2. **Add timer UI** — render a sticky banner just above the `ProgressBar` (around line 727):
+   - Display as `MM:SS` format with a clock icon
+   - Red/urgent styling when under 60 seconds
+   - Example: `⏱ Complete your order in 04:32` with amber/red pulsing when < 1 min
 
-3. **Keep everything else**: The dialog stays non-dismissable (`onOpenChange={() => {}}`), close button hidden — user must click one of the two buttons.
+3. **Format helper**: Simple `Math.floor(timeLeft/60)` and `timeLeft%60` formatting inline
+
+### Visual Design
+
+```text
+┌─────────────────────────────────────┐
+│  🔒 Secure Checkout                │
+│  ⏱ Complete your order in 04:32    │  ← new timer bar
+│  ● ── ○ ── ○ ── ○                 │  ← existing progress
+│  [Step content...]                  │
+└─────────────────────────────────────┘
+```
+
+- Amber text normally, red + pulse animation when under 60s
+- Compact single line, centered, with `Clock` icon from lucide-react
 
 | File | Change |
 |------|--------|
-| `src/pages/Checkout.tsx` | Remove `confirmTimeLeft` state, countdown `useEffect`, and timer text from dialog |
+| `src/pages/Checkout.tsx` | Add `timeLeft` state, countdown effect, and timer banner above progress bar |
 
