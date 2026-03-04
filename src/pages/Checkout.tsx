@@ -744,13 +744,18 @@ const Checkout = () => {
 
               {/* Next / Pay */}
               {currentStep < 4 ? (
-                <Button
-                  type="button"
-                  onClick={nextStep}
-                  className="h-12 px-8 rounded-xl bg-primary hover:bg-primary/90 text-primary-foreground font-semibold"
-                >
-                  Next <ArrowRight className="w-4 h-4 ml-1" />
-                </Button>
+                <div className="flex flex-col items-end gap-1">
+                  <Button
+                    type="button"
+                    onClick={nextStep}
+                    className="h-12 px-8 rounded-xl bg-primary hover:bg-primary/90 text-primary-foreground font-semibold"
+                  >
+                    {currentStep === 1 ? 'Activate My Fleet' : 'Next'} <ArrowRight className="w-4 h-4 ml-1" />
+                  </Button>
+                  {currentStep === 1 && (
+                    <span className="text-[11px] text-muted-foreground">Setup takes less than 2 minutes.</span>
+                  )}
+                </div>
               ) : (
                 <Button
                   type="submit"
