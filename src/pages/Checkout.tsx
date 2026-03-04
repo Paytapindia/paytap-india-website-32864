@@ -405,12 +405,12 @@ const Checkout = () => {
                 type="button"
                 onClick={() => setSelectedPlan(key)}
                 className={`relative text-center rounded-2xl border-2 transition-all duration-200 bg-card hover:scale-[1.02] ${
-                  isRecommended ? 'p-5 md:p-8 scale-[1.03] shadow-xl shadow-accent/15 border-[3px]' : 'p-4 md:p-6'
+                  isRecommended ? 'p-5 md:p-8 scale-[1.03] shadow-xl shadow-primary/15 border-[3px]' : 'p-4 md:p-6'
                 } ${
                   isSelected
-                    ? 'border-accent shadow-lg shadow-accent/10'
+                    ? 'border-primary shadow-lg shadow-primary/10'
                     : isRecommended
-                      ? 'border-accent/50 hover:border-accent'
+                      ? 'border-primary/50 hover:border-primary'
                       : 'border-border hover:border-muted-foreground/30'
                 }`}
               >
