@@ -184,7 +184,7 @@ const About = () => {
                 PayTap is India's fintech infrastructure layer for mobility, fleets, and business payments — giving you real-time control, visibility, and automation over how money flows across vehicles, teams, and daily operations.
               </p>
               <p className="text-lg text-gray-700 mb-6">
-                Paytap is a product of DriveTap Innovation India Pvt. Ltd., co-branded with RBI-authorized PPI partners.
+                Paytap is a product of DriveTap Innovation India Pvt. Ltd., in association with RBI-authorized PPI partners
               </p>
               <p className="text-lg text-gray-700">
                 The company is built by technologists and fintech operators with over a decade of experience in digital payments, mobility systems, and enterprise infrastructure — spanning prepaid platforms, logistics automation, and transaction technology.
@@ -267,7 +267,7 @@ const About = () => {
                     <p><strong>Legal Name:</strong> DriveTap Innovation India Pvt. Ltd.</p>
                     <p><strong>Trade Name:</strong> Paytap</p>
                     <p><strong>GSTIN:</strong> 29AALCD4626M1Z3</p>
-                    <p><strong>PPI Partner:</strong> RBI-Authorized PPI Partners</p>
+                    <p><strong>In Association with</strong> RBI Authorised PPI Partners</p>
                   </div>
                 </div>
                 <div>
