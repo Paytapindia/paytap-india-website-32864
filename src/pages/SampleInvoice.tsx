@@ -18,11 +18,12 @@ const SampleInvoice = () => {
       gst: "29ABCDE1234F1Z5",
       productType: "sticker",
       planName: "Business Pro",
-      quantity: 5,
-      unitPrice: 999,
-      subtotal: 4995,
-      gstAmount: 899.10,
-      total: 5894.10,
+      vehicleCount: 5,
+      quantity: 1,
+      unitPrice: 4998,
+      subtotal: 4998,
+      gstAmount: 900,
+      total: 5898,
     });
   };
 
