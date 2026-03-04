@@ -11,7 +11,7 @@ import { Separator } from "@/components/ui/separator";
 import { useToast } from "@/hooks/use-toast";
 import { getStates, getCitiesByState } from "@/data/indianStatesAndCities";
 import { useNavigate } from "react-router-dom";
-import { Loader2, ShieldCheck, Truck, Home, Package, CheckCircle, Check, Lock, Nfc, CreditCard, Download, XCircle, ArrowLeft, ArrowRight, Shield, Phone, Headphones, Clock } from "lucide-react";
+import { Loader2, ShieldCheck, Truck, Home, Package, CheckCircle, Check, Lock, Nfc, CreditCard, Download, XCircle, ArrowLeft, ArrowRight, Shield, Phone, Headphones, Clock, Car, LayoutDashboard, BarChart3, CalendarCheck, TruckIcon } from "lucide-react";
 import { generateInvoice, type InvoiceData } from "@/lib/generateInvoice";
 import { Dialog, DialogContent, DialogHeader, DialogTitle, DialogDescription } from "@/components/ui/dialog";
 import { supabase } from "@/integrations/supabase/client";
