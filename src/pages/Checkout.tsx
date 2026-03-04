@@ -11,7 +11,7 @@ import { Separator } from "@/components/ui/separator";
 import { useToast } from "@/hooks/use-toast";
 import { getStates, getCitiesByState } from "@/data/indianStatesAndCities";
 import { useNavigate } from "react-router-dom";
-import { Loader2, ShieldCheck, Truck, Home, Package, CheckCircle, Check, Lock, Nfc, CreditCard, Download, XCircle, ArrowLeft, ArrowRight, Shield, Phone, Headphones } from "lucide-react";
+import { Loader2, ShieldCheck, Truck, Home, Package, CheckCircle, Check, Lock, Nfc, CreditCard, Download, XCircle, ArrowLeft, ArrowRight, Shield, Phone, Headphones, Clock } from "lucide-react";
 import { generateInvoice, type InvoiceData } from "@/lib/generateInvoice";
 import { Dialog, DialogContent, DialogHeader, DialogTitle, DialogDescription } from "@/components/ui/dialog";
 import { supabase } from "@/integrations/supabase/client";
@@ -175,7 +175,7 @@ const Checkout = () => {
   const [isLoading, setIsLoading] = useState(false);
   const [selectedState, setSelectedState] = useState("");
   const [showConfirmation, setShowConfirmation] = useState(false);
-  
+  const [timeLeft, setTimeLeft] = useState(300);
   const [orderTxnId, setOrderTxnId] = useState("");
   const [fieldErrors, setFieldErrors] = useState<Record<string, string>>({});
   const [lastFormData, setLastFormData] = useState<CheckoutFormData | null>(null);
@@ -216,6 +216,23 @@ const Checkout = () => {
       window.fbq('track', 'AddToCart', { value: total, currency: 'INR', content_ids: [selectedPlan], content_type: 'product' });
     }
   }, []);
+
+  // ── 5-minute urgency timer ──
+  useEffect(() => {
+    if (timeLeft <= 0) return;
+    const interval = setInterval(() => {
+      setTimeLeft((prev) => {
+        if (prev <= 1) {
+          clearInterval(interval);
+          toast({ title: "Session expired", description: "Your checkout session has timed out. Please try again.", variant: "destructive" });
+          navigate("/");
+          return 0;
+        }
+        return prev - 1;
+      });
+    }, 1000);
+    return () => clearInterval(interval);
+  }, [timeLeft <= 0, navigate, toast]);
 
 
   // ── Step Navigation ──
@@ -720,6 +737,14 @@ const Checkout = () => {
               <Lock className="w-4 h-4" />
               <span className="text-xs font-medium">Secure Checkout</span>
             </div>
+          </div>
+        </div>
+
+        {/* ── Urgency Timer ── */}
+        <div className="max-w-5xl mx-auto px-4 pt-3">
+          <div className={`flex items-center justify-center gap-2 text-sm font-medium transition-colors ${timeLeft < 60 ? 'text-destructive animate-pulse' : 'text-amber-600'}`}>
+            <Clock className="w-4 h-4" />
+            <span>Complete your order in {String(Math.floor(timeLeft / 60)).padStart(2, '0')}:{String(timeLeft % 60).padStart(2, '0')}</span>
           </div>
         </div>
 
