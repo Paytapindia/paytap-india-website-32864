@@ -1,51 +1,15 @@
 
 
-## Plan: Sync How It Works Plans with Checkout Plans
+## Plan: Replace ExpensePro Icon with Custom Image
 
-The "Choose Your Plan" section on `/how-it-works` shows 3 outdated plans (Personal/Business/Corporate) with mismatched pricing and features. The actual checkout has 4 plans: Starter (₹999), Business Basic (₹1,998), Business Pro (₹4,998), Corporate (₹9,999).
+Copy the uploaded icon to `src/assets/` and use it as the ExpensePro card icon in `OurProductsSection.tsx`.
 
-### Change: Update `src/pages/HowItWorks.tsx` lines 383–399
+### Changes
 
-Replace the `plans` array with 4 cards matching the checkout data:
+1. **Copy asset**: `user-uploads://Paytap_App_Icon_New-2.png` → `src/assets/paytap-icon-tp.png`
 
-```typescript
-const plans = [
-  {
-    name: "Starter",
-    subtitle: "1–5 vehicles",
-    price: "₹999",
-    features: ["1 Prepaid Tag/Card", "Basic Dashboard", "Tag Control", "Transaction View"],
-    highlighted: false,
-  },
-  {
-    name: "Business Basic",
-    subtitle: "1–10 vehicles",
-    price: "₹1,998",
-    features: ["2 Prepaid Tags/Cards", "Full Dashboard", "MyFleet AI Access", "Smart Reports"],
-    highlighted: false,
-  },
-  {
-    name: "Business Pro",
-    subtitle: "1–25 vehicles",
-    price: "₹4,998",
-    features: ["5 Prepaid Tags/Cards", "MyFleet AI", "ExpensePro", "Advanced Reporting", "Priority Support"],
-    highlighted: true,
-  },
-  {
-    name: "Corporate",
-    subtitle: "1–100+ vehicles",
-    price: "₹9,999",
-    features: ["10 Prepaid Tags/Cards", "MyFleet AI", "ExpensePro", "Multi-User Access", "Dedicated Support"],
-    highlighted: false,
-  },
-];
-```
-
-Also update the plan card grid from `md:grid-cols-3` to `md:grid-cols-4` (line 651), and add the price and subtitle to the card rendering (lines 662–684) — show price prominently above features, subtitle below the plan name.
-
-### Files Changed
-
-| File | Change |
-|------|--------|
-| `src/pages/HowItWorks.tsx` | Update plans array to 4 plans matching checkout, update grid to 4 columns, add price display to cards |
+2. **`src/components/OurProductsSection.tsx`**: 
+   - Import the new image
+   - Change the ExpensePro product entry to use an `img` tag with the custom icon instead of the `Receipt` Lucide icon
+   - Keep the navy container styling, just swap the icon content
 
