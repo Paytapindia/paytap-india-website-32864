@@ -1,18 +1,26 @@
 
 
-## Plan: Update Hero Subtitle and Preserve SEO Content in About Page
+## Plan: Change Plan Box Text from "NFC Tags Included" to "Vehicles Activated"
 
-### Changes
+### Change in `src/pages/Checkout.tsx`
 
-**1. `src/components/HeroSection.tsx` — Update subtitle text (line 27-29)**
-- Replace the current paragraph ("PayTap is India's fintech infrastructure layer for mobility, fleets, and business payments...") with the new subtitle:
-  - "PayTap lets your vehicles make payments — while you control every transaction from one dashboard."
+**Line 408** — Replace the tag/card count text with "Vehicle Activated" phrasing:
 
-**2. `src/pages/About.tsx` — Integrate the original hero description into "Our Story" section (lines 180-190)**
-- Add the original hero text ("PayTap is India's fintech infrastructure layer for mobility, fleets, and business payments — giving you real-time control, visibility, and automation over how money flows across vehicles, teams, and daily operations.") as a new paragraph in the "Our Story" section, preserving the SEO-rich keywords in an appropriate contextual location.
+```typescript
+// Before:
+<p className="text-[10px] text-muted-foreground">{p.tags} {productType === 'sticker' ? 'NFC Tag' : 'Card'}{p.tags > 1 ? 's' : ''} included</p>
+
+// After:
+<p className="text-[10px] text-muted-foreground">{p.tags} Vehicle{p.tags > 1 ? 's' : ''} Activated</p>
+```
+
+This will show:
+- Starter (1 tag): **1 Vehicle Activated**
+- Business Basic (2 tags): **2 Vehicles Activated**
+- Business Pro (5 tags): **5 Vehicles Activated**
+- Corporate (10 tags): **10 Vehicles Activated**
 
 | File | Change |
 |------|--------|
-| `src/components/HeroSection.tsx` | Replace subtitle paragraph with new copy |
-| `src/pages/About.tsx` | Add original hero description to "Our Story" section |
+| `src/pages/Checkout.tsx` | Line 408: replace NFC Tag/Card text with "Vehicle(s) Activated" |
 

@@ -24,7 +24,7 @@ const HeroSection = memo(() => {
             </h1>
 
             <p className="text-[#334155] text-base md:text-lg leading-[1.8] max-w-[520px] mb-9 mx-auto lg:mx-0">
-              PayTap is India's fintech infrastructure layer for mobility, fleets, and business payments — giving you real-time control, visibility, and automation over how money flows across vehicles, teams, and daily operations.
+              PayTap lets your vehicles make payments — while you control every transaction from one dashboard.
             </p>
 
             {/* CTA Button — Crimson */}
