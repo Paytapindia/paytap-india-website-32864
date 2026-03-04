@@ -405,7 +405,7 @@ const Checkout = () => {
                 <p className="text-[11px] text-muted-foreground mt-0.5 leading-snug">{p.subtitle}</p>
                 <p className="text-lg md:text-2xl font-bold text-foreground mt-3">{formatINR(p.price)}</p>
                 <p className="text-[10px] text-muted-foreground mt-0.5">One-Time Activation</p>
-                <p className="text-[10px] text-muted-foreground">{p.tags} {productType === 'sticker' ? 'NFC Tag' : 'Card'}{p.tags > 1 ? 's' : ''} included</p>
+                <p className="text-[10px] text-muted-foreground">{p.tags} Vehicle{p.tags > 1 ? 's' : ''} Activated</p>
                 {isSelected && (
                   <div className="absolute top-3 right-3 w-5 h-5 rounded-full bg-accent flex items-center justify-center">
                     <Check className="w-3 h-3 text-accent-foreground" />
