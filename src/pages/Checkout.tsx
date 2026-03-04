@@ -131,7 +131,7 @@ const ProgressBar = ({ currentStep }: { currentStep: number }) => (
       {/* Line behind dots */}
       <div className="absolute top-3 left-0 right-0 h-[2px] bg-border" />
       <div
-        className="absolute top-3 left-0 h-[2px] bg-accent transition-all duration-500"
+        className="absolute top-3 left-0 h-[2px] bg-primary transition-all duration-500"
         style={{ width: `${((currentStep - 1) / 3) * 100}%` }}
       />
       {STEP_LABELS.map((label, i) => {
