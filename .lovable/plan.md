@@ -1,20 +1,26 @@
 
 
-## Plan: Show Floating UI Elements on Mobile
+## Plan: Change Plan Box Text from "NFC Tags Included" to "Vehicles Activated"
 
-The three floating elements (NFC Tap Detected, Today's Spend, Transaction notification) around the card have `hidden sm:block` classes, making them invisible on screens below 640px.
+### Change in `src/pages/Checkout.tsx`
 
-### Change in `src/components/HeroSection.tsx`
+**Line 408** — Replace the tag/card count text with "Vehicle Activated" phrasing:
 
-Remove `hidden sm:block` from all three floating `motion.div` elements and adjust their positioning to fit smaller screens:
+```typescript
+// Before:
+<p className="text-[10px] text-muted-foreground">{p.tags} {productType === 'sticker' ? 'NFC Tag' : 'Card'}{p.tags > 1 ? 's' : ''} included</p>
 
-1. **NFC Tap Detected** (top-left): Change `className="absolute -top-8 -left-16 z-20 hidden sm:block"` → `className="absolute -top-6 -left-4 sm:-top-8 sm:-left-16 z-20"` with smaller padding/text on mobile
-2. **Today's Spend** (bottom-left): Change `className="absolute -bottom-6 -left-20 z-20 hidden sm:block"` → `className="absolute -bottom-4 -left-4 sm:-bottom-6 sm:-left-20 z-20"`
-3. **Transaction chip** (bottom-right): Change `className="absolute -bottom-4 -right-14 z-20 hidden sm:block"` → `className="absolute -bottom-12 -right-2 sm:-bottom-4 sm:-right-14 z-20"`
+// After:
+<p className="text-[10px] text-muted-foreground">{p.tags} Vehicle{p.tags > 1 ? 's' : ''} Activated</p>
+```
 
-This ensures the floating elements are visible on mobile with tighter positioning that doesn't overflow the viewport, while keeping the current desktop layout intact.
+This will show:
+- Starter (1 tag): **1 Vehicle Activated**
+- Business Basic (2 tags): **2 Vehicles Activated**
+- Business Pro (5 tags): **5 Vehicles Activated**
+- Corporate (10 tags): **10 Vehicles Activated**
 
 | File | Change |
 |------|--------|
-| `src/components/HeroSection.tsx` | Remove `hidden sm:block`, add responsive positioning |
+| `src/pages/Checkout.tsx` | Line 408: replace NFC Tag/Card text with "Vehicle(s) Activated" |
 
