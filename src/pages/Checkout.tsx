@@ -369,13 +369,13 @@ const Checkout = () => {
   // ── STEP 1: Plan & Product ──
   // ══════════════════════════════════════════════════════════
   const renderStep1 = () => (
-    <div className="space-y-10">
+    <div className="space-y-6 md:space-y-10">
       {/* Header */}
       <div className="text-center">
-        <h1 className="text-2xl md:text-4xl font-bold text-foreground tracking-tight leading-tight">
+        <h1 className="text-xl md:text-4xl font-bold text-foreground tracking-tight leading-tight">
           Activate Smart Payments<br className="hidden md:block" /> For Your Vehicles
         </h1>
-        <p className="mt-3 text-sm md:text-base text-muted-foreground max-w-lg mx-auto">
+        <p className="mt-2 md:mt-3 text-xs md:text-base text-muted-foreground max-w-lg mx-auto">
           Control fuel, tolls, and driver expenses across all your vehicles from one central dashboard.
         </p>
       </div>
