@@ -11,7 +11,7 @@ import { Separator } from "@/components/ui/separator";
 import { useToast } from "@/hooks/use-toast";
 import { getStates, getCitiesByState } from "@/data/indianStatesAndCities";
 import { useNavigate } from "react-router-dom";
-import { Loader2, ShieldCheck, Truck, Home, Package, CheckCircle, Check, Lock, Nfc, CreditCard, Download, XCircle, ArrowLeft, ArrowRight, Shield, Phone, Headphones, Clock, Car, LayoutDashboard, BarChart3, CalendarCheck, TruckIcon } from "lucide-react";
+import { Loader2, ShieldCheck, Truck, Home, Package, CheckCircle, Check, Lock, Nfc, CreditCard, Download, XCircle, ArrowLeft, ArrowRight, Shield, Phone, Headphones, Clock, Car, LayoutDashboard, BarChart3, CalendarCheck, TruckIcon, Wallet } from "lucide-react";
 import { generateInvoice, type InvoiceData } from "@/lib/generateInvoice";
 import { Dialog, DialogContent, DialogHeader, DialogTitle, DialogDescription } from "@/components/ui/dialog";
 import { supabase } from "@/integrations/supabase/client";
@@ -87,10 +87,15 @@ const PAYU_PAYMENT_LINKS: Record<PlanType, string> = {
 const ACTIVATION_INCLUDES = [
   { icon: Nfc, label: 'NFC PayTap Tag for every vehicle' },
   { icon: CreditCard, label: 'Driver Prepaid Expense Card (select plans)' },
-  { icon: LayoutDashboard, label: 'Lifetime Platform Access' },
   { icon: BarChart3, label: 'Real-Time Expense Tracking' },
-  { icon: CalendarCheck, label: '1 Year Platform Access Included' },
   { icon: TruckIcon, label: '3–5 Day Delivery' },
+  { icon: Headphones, label: 'Dedicated Support' },
+];
+
+const DASHBOARD_INCLUDES = [
+  { icon: Wallet, label: 'Paytap Prepaid Account' },
+  { icon: LayoutDashboard, label: 'ExpensePro Dashboard' },
+  { icon: Truck, label: 'Myfleet AI Vehicle Operating System' },
 ];
 
 // ── Form Schema ────────────────────────────────────────────
@@ -449,13 +454,6 @@ const Checkout = () => {
               {plan.tags} NFC PayTap Tag{plan.tags > 1 ? 's' : ''}
               {getDriverCards(selectedPlan) > 0 && ` · ${getDriverCards(selectedPlan)} Driver Expense Card${getDriverCards(selectedPlan) > 1 ? 's' : ''}`}
             </p>
-            {isPremiumPlan(selectedPlan) && (
-              <div className="flex flex-wrap gap-2 mt-2">
-                <span className="text-[10px] text-primary font-medium">✔ Dedicated Support</span>
-                <span className="text-[10px] text-primary font-medium">✔ Myfleet AI Vehicle Manager</span>
-                <span className="text-[10px] text-primary font-medium">✔ ExpensePro Business Expense Management</span>
-              </div>
-            )}
           </div>
           <div className="text-right">
             <p className="text-lg font-bold text-foreground">Total Today: {formatINR(total)}</p>
@@ -476,6 +474,19 @@ const Checkout = () => {
               <span className="text-sm text-foreground">{item.label}</span>
             </div>
           ))}
+        </div>
+        <div className="mt-4 md:mt-5 pt-4 md:pt-5 border-t border-border">
+          <p className="text-xs font-semibold text-muted-foreground mb-3">Dashboard Access Includes</p>
+          <div className="grid grid-cols-1 sm:grid-cols-2 gap-4 md:gap-5">
+            {DASHBOARD_INCLUDES.map((item) => (
+              <div key={item.label} className="flex items-center gap-3">
+                <div className="w-9 h-9 rounded-lg bg-primary/10 flex items-center justify-center flex-shrink-0">
+                  <item.icon className="w-4.5 h-4.5 text-primary" />
+                </div>
+                <span className="text-sm text-foreground">{item.label}</span>
+              </div>
+            ))}
+          </div>
         </div>
         <div className="mt-5 md:mt-6 pt-4 md:pt-5 border-t border-border text-center space-y-1">
           <p className="text-sm text-muted-foreground">
