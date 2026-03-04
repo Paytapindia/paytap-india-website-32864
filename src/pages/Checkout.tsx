@@ -814,9 +814,9 @@ const Checkout = () => {
                     <Button
                       type="button"
                       onClick={nextStep}
-                      className="h-12 w-full md:w-auto px-8 rounded-xl bg-primary hover:bg-primary/90 text-primary-foreground font-semibold"
+                      className="h-14 w-full md:w-auto px-10 rounded-xl bg-primary hover:bg-primary/90 text-primary-foreground font-semibold text-base"
                     >
-                      {currentStep === 1 ? 'Activate Account' : 'Next'} <ArrowRight className="w-4 h-4 ml-1" />
+                      {currentStep === 1 ? 'Activate My Fleet' : 'Next'} <ArrowRight className="w-4 h-4 ml-1" />
                     </Button>
                     {currentStep === 1 && (
                       <span className="text-[10px] md:text-[11px] text-muted-foreground">Setup takes less than 2 minutes.</span>
