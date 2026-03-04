@@ -1,7 +1,8 @@
 import { memo } from "react";
-import { ArrowRight } from "lucide-react";
+import { ArrowRight, Wifi, BarChart3, CreditCard } from "lucide-react";
 import { useTranslation } from "react-i18next";
 import { useNavigate } from "react-router-dom";
+import { motion } from "framer-motion";
 import paytapCardLogo from "@/assets/paytap-card-logo.png";
 
 const HeroSection = memo(() => {
@@ -23,26 +24,17 @@ const HeroSection = memo(() => {
               Control How Money Moves Across Your Operations
             </h1>
 
-            <p className="text-[#334155] text-base md:text-lg leading-[1.8] max-w-[520px] mb-9 mx-auto lg:mx-0">
-              PayTap lets your vehicles make payments — while you control every transaction from one dashboard.
+            <p className="text-muted-foreground text-base md:text-lg leading-[1.8] max-w-[520px] mb-9 mx-auto lg:mx-0">
+              PayTap lets your vehicles make payments — while you control every transaction from a single dashboard.
             </p>
 
-            {/* CTA Button — Crimson */}
-            <div className="flex justify-center lg:justify-start mb-5">
+            {/* CTA Button */}
+            <div className="flex justify-center lg:justify-start mb-4">
               <button
                 onClick={() => navigate('/checkout')}
-                className="inline-flex items-center gap-3 text-white px-9 py-[18px] rounded-[14px] text-base md:text-lg font-semibold transition-all duration-300 group"
+                className="inline-flex items-center gap-3 text-accent-foreground px-10 py-5 rounded-[14px] text-lg md:text-xl font-semibold transition-all duration-300 group bg-accent hover:brightness-95"
                 style={{
-                  backgroundColor: 'hsl(var(--accent))',
-                  boxShadow: '0 10px 30px rgba(246,36,91,0.25)',
-                }}
-                onMouseEnter={(e) => {
-                  e.currentTarget.style.backgroundColor = '#e01e52';
-                  e.currentTarget.style.boxShadow = '0 14px 40px rgba(246,36,91,0.35)';
-                }}
-                onMouseLeave={(e) => {
-                  e.currentTarget.style.backgroundColor = 'hsl(var(--accent))';
-                  e.currentTarget.style.boxShadow = '0 10px 30px rgba(246,36,91,0.25)';
+                  boxShadow: '0 12px 36px rgba(246,36,91,0.28)',
                 }}
               >
                 Activate PayTap Platform
@@ -50,75 +42,138 @@ const HeroSection = memo(() => {
               </button>
             </div>
 
+            {/* Reassurance line */}
+            <p className="text-muted-foreground text-sm md:text-base mb-2 text-center lg:text-left">
+              Works for personal vehicles, businesses, and fleet operators across India.
+            </p>
+
             {/* Trust Line */}
-            <p className="text-muted-foreground text-xs md:text-sm tracking-wide text-center lg:text-left">
+            <p className="text-muted-foreground/70 text-xs md:text-sm tracking-wide text-center lg:text-left">
               Built for fleets, enterprises, and mobility operators across India.
             </p>
           </div>
 
-          {/* Right Column — Card Only */}
+          {/* Right Column — Card + Floating UI Elements */}
           <div className="flex items-center justify-center lg:justify-end">
-            <div
-              className="w-[280px] h-[175px] sm:w-[320px] sm:h-[200px] md:w-[390px] md:h-[240px] rounded-2xl overflow-hidden animate-[hero-float_7s_ease-in-out_infinite]"
-              style={{
-                backgroundColor: '#021a42',
-                transform: 'perspective(1200px) rotateY(-3deg) rotateX(2deg)',
-                boxShadow: '0 20px 60px rgba(2,26,66,0.12)',
-              }}
-            >
-              {/* Wave pattern background */}
-              <div className="absolute inset-0 opacity-20">
-                <svg viewBox="0 0 390 240" className="w-full h-full" preserveAspectRatio="none">
-                  <path d="M0 140 Q97 95, 195 140 T390 140 V240 H0 Z" fill="#0a3a7a" />
-                  <path d="M0 165 Q97 120, 195 165 T390 165 V240 H0 Z" fill="#0a3a7a" />
-                </svg>
-              </div>
-              <div className="relative h-full p-3 sm:p-4 md:p-5 flex flex-col justify-between">
-                <div className="flex items-start justify-between">
-                  <img src={paytapCardLogo} alt="Paytap" className="h-5 sm:h-6 md:h-8 object-contain" loading="lazy" />
-                  <div className="w-8 h-8 sm:w-9 sm:h-9 md:w-11 md:h-11 rounded-full border border-white/40 flex items-center justify-center">
-                    <div className="text-[5px] sm:text-[6px] md:text-[7px] text-white/80 text-center leading-tight font-medium">
-                      <div>For Use</div><div>Only in</div><div>India</div>
-                    </div>
+            <div className="relative">
+              {/* Floating element: NFC Tap Detected */}
+              <motion.div
+                initial={{ opacity: 0, y: 10 }}
+                animate={{ opacity: 1, y: 0 }}
+                transition={{ delay: 0.6, duration: 0.5 }}
+                className="absolute -top-8 -left-16 z-20 hidden sm:block"
+              >
+                <div
+                  className="bg-card/90 backdrop-blur-sm px-4 py-2.5 rounded-xl border border-border/50 flex items-center gap-2.5"
+                  style={{ boxShadow: '0 8px 24px rgba(0,0,0,0.06)' }}
+                >
+                  <div className="w-2 h-2 rounded-full bg-green-500 animate-pulse" />
+                  <Wifi className="w-4 h-4 text-primary" />
+                  <span className="text-xs font-medium text-foreground whitespace-nowrap">NFC Tap Detected</span>
+                </div>
+              </motion.div>
+
+              {/* Floating element: Dashboard spend */}
+              <motion.div
+                initial={{ opacity: 0, y: 10 }}
+                animate={{ opacity: 1, y: 0 }}
+                transition={{ delay: 0.9, duration: 0.5 }}
+                className="absolute -bottom-6 -left-20 z-20 hidden sm:block"
+              >
+                <div
+                  className="bg-card/90 backdrop-blur-sm px-4 py-3 rounded-xl border border-border/50"
+                  style={{ boxShadow: '0 8px 24px rgba(0,0,0,0.06)' }}
+                >
+                  <div className="flex items-center gap-2 mb-1">
+                    <BarChart3 className="w-3.5 h-3.5 text-accent" />
+                    <span className="text-[10px] text-muted-foreground font-medium">Today's Spend</span>
+                  </div>
+                  <span className="text-sm font-semibold text-foreground">₹12,450</span>
+                </div>
+              </motion.div>
+
+              {/* Floating element: Transaction notification */}
+              <motion.div
+                initial={{ opacity: 0, y: 10 }}
+                animate={{ opacity: 1, y: 0 }}
+                transition={{ delay: 1.2, duration: 0.5 }}
+                className="absolute -bottom-4 -right-14 z-20 hidden sm:block"
+              >
+                <div
+                  className="bg-card/90 backdrop-blur-sm px-4 py-2.5 rounded-xl border border-border/50 flex items-center gap-2.5"
+                  style={{ boxShadow: '0 8px 24px rgba(0,0,0,0.06)' }}
+                >
+                  <CreditCard className="w-4 h-4 text-primary" />
+                  <div className="flex flex-col">
+                    <span className="text-xs font-medium text-foreground">Fuel ₹2,500</span>
+                    <span className="text-[10px] text-muted-foreground">KA-01-AB-1234</span>
                   </div>
                 </div>
-                <div className="flex items-center justify-between">
-                  <div className="relative w-10 h-10 sm:w-11 sm:h-11 md:w-14 md:h-14">
-                    <div className="absolute inset-0 flex flex-col rounded overflow-hidden">
-                      <div className="flex-1 bg-orange-500" />
-                      <div className="flex-1 bg-white" />
-                      <div className="flex-1 bg-green-600" />
-                    </div>
-                    <svg viewBox="0 0 24 24" className="absolute inset-0 w-full h-full p-1" fill="none" stroke="#021a42" strokeWidth="2">
-                      <path d="M8.5 14.5a5 5 0 0 1 0-7" strokeLinecap="round" />
-                      <path d="M5.5 17a9 9 0 0 1 0-12" strokeLinecap="round" />
-                      <circle cx="14" cy="12" r="2" fill="#021a42" />
-                    </svg>
-                  </div>
-                  <div className="flex flex-col items-end">
-                    <svg viewBox="0 0 40 20" className="w-12 sm:w-14 md:w-18 h-3 sm:h-4 md:h-5">
-                      <path d="M2 10 Q8 4, 16 8 T28 6" stroke="#c41e3a" strokeWidth="2.5" fill="none" strokeLinecap="round" />
-                      <path d="M4 14 Q10 8, 18 12 T30 10" stroke="#c41e3a" strokeWidth="2.5" fill="none" strokeLinecap="round" />
-                    </svg>
-                    <span className="text-white text-[8px] sm:text-[9px] md:text-[11px] font-bold tracking-wider">RuPay</span>
-                    <span className="text-white/70 text-[6px] sm:text-[7px] md:text-[9px] tracking-widest">PREPAID</span>
-                  </div>
+              </motion.div>
+
+              {/* Main Card */}
+              <div
+                className="w-[260px] h-[163px] sm:w-[290px] sm:h-[181px] md:w-[360px] md:h-[225px] rounded-2xl overflow-hidden animate-[hero-float_7s_ease-in-out_infinite] relative"
+                style={{
+                  backgroundColor: '#021a42',
+                  transform: 'perspective(1200px) rotateY(-3deg) rotateX(2deg)',
+                  boxShadow: '0 20px 60px rgba(2,26,66,0.12)',
+                }}
+              >
+                {/* Wave pattern background */}
+                <div className="absolute inset-0 opacity-20">
+                  <svg viewBox="0 0 390 240" className="w-full h-full" preserveAspectRatio="none">
+                    <path d="M0 140 Q97 95, 195 140 T390 140 V240 H0 Z" fill="#0a3a7a" />
+                    <path d="M0 165 Q97 120, 195 165 T390 165 V240 H0 Z" fill="#0a3a7a" />
+                  </svg>
                 </div>
-                <div className="space-y-0.5 sm:space-y-1">
-                  <div className="text-white/90 text-[9px] sm:text-[11px] md:text-sm tracking-[0.2em] font-mono">1234 5678 1234 5678</div>
-                  <div className="flex items-end justify-between">
-                    <div className="flex gap-3 sm:gap-4 items-end">
-                      <div>
-                        <div className="text-white/50 text-[6px] sm:text-[7px] md:text-[9px]">CVV</div>
-                        <div className="text-white text-[9px] sm:text-[11px] md:text-sm font-mono">123</div>
-                      </div>
-                      <div>
-                        <div className="text-white/50 text-[6px] sm:text-[7px] md:text-[9px]">VALID THRU</div>
-                        <div className="text-white text-[9px] sm:text-[11px] md:text-sm font-mono">01/28</div>
+                <div className="relative h-full p-3 sm:p-4 md:p-5 flex flex-col justify-between">
+                  <div className="flex items-start justify-between">
+                    <img src={paytapCardLogo} alt="PayTap" className="h-5 sm:h-6 md:h-8 object-contain" loading="lazy" />
+                    <div className="w-8 h-8 sm:w-9 sm:h-9 md:w-11 md:h-11 rounded-full border border-white/40 flex items-center justify-center">
+                      <div className="text-[5px] sm:text-[6px] md:text-[7px] text-white/80 text-center leading-tight font-medium">
+                        <div>For Use</div><div>Only in</div><div>India</div>
                       </div>
                     </div>
-                    <div className="text-right">
-                      <div className="text-white/80 text-[7px] sm:text-[9px] md:text-[11px] tracking-wide">CARDHOLDER NAME</div>
+                  </div>
+                  <div className="flex items-center justify-between">
+                    <div className="relative w-10 h-10 sm:w-11 sm:h-11 md:w-14 md:h-14">
+                      <div className="absolute inset-0 flex flex-col rounded overflow-hidden">
+                        <div className="flex-1 bg-orange-500" />
+                        <div className="flex-1 bg-white" />
+                        <div className="flex-1 bg-green-600" />
+                      </div>
+                      <svg viewBox="0 0 24 24" className="absolute inset-0 w-full h-full p-1" fill="none" stroke="#021a42" strokeWidth="2">
+                        <path d="M8.5 14.5a5 5 0 0 1 0-7" strokeLinecap="round" />
+                        <path d="M5.5 17a9 9 0 0 1 0-12" strokeLinecap="round" />
+                        <circle cx="14" cy="12" r="2" fill="#021a42" />
+                      </svg>
+                    </div>
+                    <div className="flex flex-col items-end">
+                      <svg viewBox="0 0 40 20" className="w-12 sm:w-14 md:w-18 h-3 sm:h-4 md:h-5">
+                        <path d="M2 10 Q8 4, 16 8 T28 6" stroke="#c41e3a" strokeWidth="2.5" fill="none" strokeLinecap="round" />
+                        <path d="M4 14 Q10 8, 18 12 T30 10" stroke="#c41e3a" strokeWidth="2.5" fill="none" strokeLinecap="round" />
+                      </svg>
+                      <span className="text-white text-[8px] sm:text-[9px] md:text-[11px] font-bold tracking-wider">RuPay</span>
+                      <span className="text-white/70 text-[6px] sm:text-[7px] md:text-[9px] tracking-widest">PREPAID</span>
+                    </div>
+                  </div>
+                  <div className="space-y-0.5 sm:space-y-1">
+                    <div className="text-white/90 text-[9px] sm:text-[11px] md:text-sm tracking-[0.2em] font-mono">1234 5678 1234 5678</div>
+                    <div className="flex items-end justify-between">
+                      <div className="flex gap-3 sm:gap-4 items-end">
+                        <div>
+                          <div className="text-white/50 text-[6px] sm:text-[7px] md:text-[9px]">CVV</div>
+                          <div className="text-white text-[9px] sm:text-[11px] md:text-sm font-mono">123</div>
+                        </div>
+                        <div>
+                          <div className="text-white/50 text-[6px] sm:text-[7px] md:text-[9px]">VALID THRU</div>
+                          <div className="text-white text-[9px] sm:text-[11px] md:text-sm font-mono">01/28</div>
+                        </div>
+                      </div>
+                      <div className="text-right">
+                        <div className="text-white/80 text-[7px] sm:text-[9px] md:text-[11px] tracking-wide">CARDHOLDER NAME</div>
+                      </div>
                     </div>
                   </div>
                 </div>
@@ -128,7 +183,7 @@ const HeroSection = memo(() => {
         </div>
 
         {/* Stats */}
-        <div className="border-t border-border/40 mt-12 lg:mt-20 pt-8 lg:pt-12">
+        <div className="border-t border-border/40 mt-16 lg:mt-24 pt-8 lg:pt-12">
           <div className="grid grid-cols-3 gap-3 sm:gap-6 md:gap-12">
             <div className="text-center">
               <div className="text-xl sm:text-2xl md:text-5xl font-semibold text-foreground mb-1 sm:mb-2 tracking-tight">8L+</div>
