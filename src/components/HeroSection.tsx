@@ -78,7 +78,7 @@ const HeroSection = memo(() => {
                 initial={{ opacity: 0, y: 10 }}
                 animate={{ opacity: 1, y: 0 }}
                 transition={{ delay: 0.9, duration: 0.5 }}
-                className="absolute -bottom-6 -left-20 z-20 hidden sm:block"
+                className="absolute -bottom-4 -left-4 sm:-bottom-6 sm:-left-20 z-20"
               >
                 <div
                   className="bg-card/90 backdrop-blur-sm px-4 py-3 rounded-xl border border-border/50"
