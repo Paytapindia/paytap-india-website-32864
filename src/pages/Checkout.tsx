@@ -384,12 +384,6 @@ const Checkout = () => {
         <h1 className="text-2xl md:text-4xl font-bold text-foreground tracking-tight leading-tight">
           Activate Smart Payments<br className="hidden md:block" /> For Your Vehicles
         </h1>
-        <p className="text-sm md:text-base text-muted-foreground max-w-lg mx-auto">
-          Control fuel, tolls, and driver expenses across all your vehicles from one central dashboard.
-        </p>
-        <p className="text-xs text-muted-foreground/70">
-          Built for personal vehicles, businesses, and fleet operators across India.
-        </p>
       </div>
 
       {/* Choose Your Fleet Size */}
@@ -482,6 +476,14 @@ const Checkout = () => {
               <span className="text-sm text-foreground">{item.label}</span>
             </div>
           ))}
+        </div>
+        <div className="mt-5 md:mt-6 pt-4 md:pt-5 border-t border-border text-center space-y-1">
+          <p className="text-sm text-muted-foreground">
+            Control fuel, tolls, and driver expenses across all your vehicles from one central dashboard.
+          </p>
+          <p className="text-xs text-muted-foreground/70">
+            Built for personal vehicles, businesses, and fleet operators across India.
+          </p>
         </div>
       </div>
 
