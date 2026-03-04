@@ -4,9 +4,9 @@ import { Building2, CreditCard, ArrowLeftRight, ShieldCheck, Landmark } from "lu
 const badges = [
   { icon: Building2, label: "RBI-Compliant PPI" },
   { icon: CreditCard, label: "RuPay Network" },
-  { icon: ArrowLeftRight, label: "NPCI Rails" },
+  { icon: ArrowLeftRight, label: "NPCI Payment Rails" },
   { icon: ShieldCheck, label: "PCI-DSS Secure" },
-  { icon: Landmark, label: "PPI Licensed-Partnered" },
+  { icon: Landmark, label: "Bank-Partnered PPI License" },
 ];
 
 const ComplianceBadgeBar = memo(() => {
@@ -32,7 +32,7 @@ const ComplianceBadgeBar = memo(() => {
 
         {/* Disclaimer */}
         <p className="text-[10px] md:text-xs text-muted-foreground/70 text-center max-w-3xl mx-auto">
-          Paytap operates as a regulated Prepaid Payment Instrument (PPI) under RBI guidelines through authorized banking partners. Paytap does not hold customer funds.
+          PayTap operates as a regulated Prepaid Payment Instrument (PPI) under RBI guidelines through authorized banking partners. PayTap does not hold customer funds.
         </p>
       </div>
     </section>
