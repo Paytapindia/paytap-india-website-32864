@@ -47,10 +47,6 @@ const HeroSection = memo(() => {
               Works for personal vehicles, businesses, and fleet operators across India.
             </p>
 
-            {/* Trust Line */}
-            <p className="text-muted-foreground/70 text-xs md:text-sm tracking-wide text-center lg:text-left">
-              Built for fleets, enterprises, and mobility operators across India.
-            </p>
           </div>
 
           {/* Right Column — Card + Floating UI Elements */}
