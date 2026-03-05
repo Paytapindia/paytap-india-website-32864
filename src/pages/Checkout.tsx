@@ -328,7 +328,7 @@ const Checkout = () => {
 
   const handleDeclinePayment = async () => {
     await supabase.from('orders').update({ payment_status: 'retry' } as any).eq('txnid', orderTxnId);
-    setTimer(300);
+    setTimeLeft(300);
     setShowConfirmation(false);
   };
 
