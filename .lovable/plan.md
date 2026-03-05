@@ -1,25 +1,26 @@
 
 
-## Plan: Preserve User Data on "No, Try Again" in Post-Payment Dialog
+## Plan: Change Plan Box Text from "NFC Tags Included" to "Vehicles Activated"
 
-### Problem
-When a user clicks "No, Try Again" (decline) in the post-payment confirmation dialog, they are navigated to the home page and lose all entered data. This forces them to re-enter everything, causing friction and drop-off.
+### Change in `src/pages/Checkout.tsx`
 
-### Solution
-Modify `handleDeclinePayment` in `src/pages/Checkout.tsx` to:
+**Line 408** — Replace the tag/card count text with "Vehicle Activated" phrasing:
 
-1. **Close the confirmation dialog** instead of navigating away
-2. **Keep the user on Step 4 (Review & Pay)** with all form data intact
-3. **Update the order status** to `retry` (instead of `cancelled`) so the record reflects the intent
-4. **Reset the timer** to give the user a fresh 5 minutes to retry
+```typescript
+// Before:
+<p className="text-[10px] text-muted-foreground">{p.tags} {productType === 'sticker' ? 'NFC Tag' : 'Card'}{p.tags > 1 ? 's' : ''} included</p>
 
-### Changes — `src/pages/Checkout.tsx`
+// After:
+<p className="text-[10px] text-muted-foreground">{p.tags} Vehicle{p.tags > 1 ? 's' : ''} Activated</p>
+```
 
-**`handleDeclinePayment` function (lines 329-332)**:
-- Instead of `navigate("/")`, simply close the dialog (`setShowConfirmation(false)`)
-- Keep `currentStep` at 4 so user lands on "Review & Pay"
-- Update order status to `retry` instead of `cancelled`
-- Reset the countdown timer to 300 seconds
+This will show:
+- Starter (1 tag): **1 Vehicle Activated**
+- Business Basic (2 tags): **2 Vehicles Activated**
+- Business Pro (5 tags): **5 Vehicles Activated**
+- Corporate (10 tags): **10 Vehicles Activated**
 
-No other files need changes. All form state (`lastFormData`, `formValues`, `selectedPlan`, etc.) is already preserved in React state — we just stop navigating away.
+| File | Change |
+|------|--------|
+| `src/pages/Checkout.tsx` | Line 408: replace NFC Tag/Card text with "Vehicle(s) Activated" |
 

@@ -327,8 +327,9 @@ const Checkout = () => {
   };
 
   const handleDeclinePayment = async () => {
-    await supabase.from('orders').update({ payment_status: 'cancelled' } as any).eq('txnid', orderTxnId);
-    navigate("/");
+    await supabase.from('orders').update({ payment_status: 'retry' } as any).eq('txnid', orderTxnId);
+    setTimeLeft(300);
+    setShowConfirmation(false);
   };
 
   const onSubmit = async (data: CheckoutFormData) => {
