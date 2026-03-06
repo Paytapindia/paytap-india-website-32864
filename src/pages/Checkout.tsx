@@ -86,7 +86,7 @@ const PAYU_PAYMENT_LINKS: Record<PlanType, string> = {
 
 const ACTIVATION_INCLUDES = [
   { icon: Nfc, label: 'Free Contactless Payment Tag for every vehicle' },
-  { icon: CalendarCheck, label: 'Lifetime Free with instant account activation' },
+  { icon: CalendarCheck, label: 'Lifetime Platform Access with instant account activation' },
   { icon: CreditCard, label: 'Driver Prepaid Expense Card (select plans)' },
   { icon: BarChart3, label: 'Real-Time Expense Tracking' },
   { icon: TruckIcon, label: '3–5 Day Delivery' },
