@@ -58,7 +58,7 @@ const PLANS: Record<PlanType, PlanInfo> = {
   business_pro: {
     name: 'Business Pro',
     subtitle: '',
-    price: 5040,
+    price: 4998,
     tags: 7,
     amcYear2: 6000,
     features: [],

@@ -1,10 +1,26 @@
 
 
-## Plan: Update Business Pro Price to ₹4,998
+## Plan: Change Plan Box Text from "NFC Tags Included" to "Vehicles Activated"
 
-Single change in `src/pages/Checkout.tsx`:
+### Change in `src/pages/Checkout.tsx`
 
-- **Line 61**: Change `price: 5040` → `price: 4998`
+**Line 408** — Replace the tag/card count text with "Vehicle Activated" phrasing:
 
-The "Only ₹720 per vehicle" label and 7 vehicles stay as-is — the per-vehicle text is a marketing display value, not dynamically calculated from the total price.
+```typescript
+// Before:
+<p className="text-[10px] text-muted-foreground">{p.tags} {productType === 'sticker' ? 'NFC Tag' : 'Card'}{p.tags > 1 ? 's' : ''} included</p>
+
+// After:
+<p className="text-[10px] text-muted-foreground">{p.tags} Vehicle{p.tags > 1 ? 's' : ''} Activated</p>
+```
+
+This will show:
+- Starter (1 tag): **1 Vehicle Activated**
+- Business Basic (2 tags): **2 Vehicles Activated**
+- Business Pro (5 tags): **5 Vehicles Activated**
+- Corporate (10 tags): **10 Vehicles Activated**
+
+| File | Change |
+|------|--------|
+| `src/pages/Checkout.tsx` | Line 408: replace NFC Tag/Card text with "Vehicle(s) Activated" |
 
