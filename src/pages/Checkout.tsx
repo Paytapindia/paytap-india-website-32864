@@ -446,6 +446,7 @@ const Checkout = () => {
           })}
         </div>
         <p className="text-xs text-muted-foreground text-center mt-3">Additional vehicles can be added anytime.</p>
+        <p className="text-xs text-muted-foreground text-center mt-1 font-medium">You Pay One Time Activation Fee / Vehicle</p>
       </div>
 
       {/* Dynamic Selection Summary */}
