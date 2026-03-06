@@ -58,8 +58,8 @@ const PLANS: Record<PlanType, PlanInfo> = {
   business_pro: {
     name: 'Business Pro',
     subtitle: '',
-    price: 4998,
-    tags: 5,
+    price: 5040,
+    tags: 7,
     amcYear2: 6000,
     features: [],
     recommended: true,
@@ -69,7 +69,7 @@ const PLANS: Record<PlanType, PlanInfo> = {
     name: 'Corporate',
     subtitle: '',
     price: 9999,
-    tags: 10,
+    tags: 15,
     amcYear2: 12000,
     features: [],
     recommended: false,
@@ -85,7 +85,8 @@ const PAYU_PAYMENT_LINKS: Record<PlanType, string> = {
 };
 
 const ACTIVATION_INCLUDES = [
-  { icon: Nfc, label: 'NFC PayTap Tag for every vehicle' },
+  { icon: Nfc, label: 'Free Contactless Payment Tag for every vehicle' },
+  { icon: CalendarCheck, label: 'Lifetime Free with instant account activation' },
   { icon: CreditCard, label: 'Driver Prepaid Expense Card (select plans)' },
   { icon: BarChart3, label: 'Real-Time Expense Tracking' },
   { icon: TruckIcon, label: '3–5 Day Delivery' },
@@ -432,7 +433,7 @@ const Checkout = () => {
                 {isRecommended && (
                   <div className="mt-2 pt-2 border-t border-border">
                     <p className="text-[10px] font-semibold text-primary">Best Value</p>
-                    <p className="text-[10px] text-muted-foreground">Only ₹999 per vehicle</p>
+                    <p className="text-[10px] text-muted-foreground">Only ₹720 per vehicle</p>
                   </div>
                 )}
                 {isSelected && (
@@ -445,6 +446,7 @@ const Checkout = () => {
           })}
         </div>
         <p className="text-xs text-muted-foreground text-center mt-3">Additional vehicles can be added anytime.</p>
+        <p className="text-xs text-muted-foreground text-center mt-1 font-medium">You Pay One Time Activation Fee / Vehicle</p>
       </div>
 
       {/* Dynamic Selection Summary */}
@@ -453,7 +455,7 @@ const Checkout = () => {
           <div>
             <p className="text-sm font-bold text-foreground">{plan.tags} Vehicle{plan.tags > 1 ? 's' : ''} Activated</p>
             <p className="text-xs text-muted-foreground mt-0.5">
-              {plan.tags} NFC PayTap Tag{plan.tags > 1 ? 's' : ''}
+              {plan.tags} Contactless Payment Tag{plan.tags > 1 ? 's' : ''}
               {getDriverCards(selectedPlan) > 0 && ` · ${getDriverCards(selectedPlan)} Driver Expense Card${getDriverCards(selectedPlan) > 1 ? 's' : ''}`}
             </p>
           </div>
