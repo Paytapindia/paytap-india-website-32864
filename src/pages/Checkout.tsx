@@ -433,7 +433,7 @@ const Checkout = () => {
                 {isRecommended && (
                   <div className="mt-2 pt-2 border-t border-border">
                     <p className="text-[10px] font-semibold text-primary">Best Value</p>
-                    <p className="text-[10px] text-muted-foreground">Only ₹999 per vehicle</p>
+                    <p className="text-[10px] text-muted-foreground">Only ₹720 per vehicle</p>
                   </div>
                 )}
                 {isSelected && (
