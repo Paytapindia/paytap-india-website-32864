@@ -455,7 +455,7 @@ const Checkout = () => {
           <div>
             <p className="text-sm font-bold text-foreground">{plan.tags} Vehicle{plan.tags > 1 ? 's' : ''} Activated</p>
             <p className="text-xs text-muted-foreground mt-0.5">
-              {plan.tags} NFC PayTap Tag{plan.tags > 1 ? 's' : ''}
+              {plan.tags} Contactless Payment Tag{plan.tags > 1 ? 's' : ''}
               {getDriverCards(selectedPlan) > 0 && ` · ${getDriverCards(selectedPlan)} Driver Expense Card${getDriverCards(selectedPlan) > 1 ? 's' : ''}`}
             </p>
           </div>
