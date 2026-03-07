@@ -48,8 +48,8 @@ const PLANS: Record<PlanType, PlanInfo> = {
   business_basic: {
     name: 'Business Basic',
     subtitle: '',
-    price: 1999,
-    tags: 2,
+    price: 2399,
+    tags: 3,
     amcYear2: 1200,
     features: [],
     recommended: false,
@@ -58,8 +58,8 @@ const PLANS: Record<PlanType, PlanInfo> = {
   business_pro: {
     name: 'Business Pro',
     subtitle: '',
-    price: 4999,
-    tags: 7,
+    price: 3749,
+    tags: 5,
     amcYear2: 6000,
     features: [],
     recommended: true,
@@ -68,8 +68,8 @@ const PLANS: Record<PlanType, PlanInfo> = {
   corporate: {
     name: 'Corporate',
     subtitle: '',
-    price: 9999,
-    tags: 15,
+    price: 6999,
+    tags: 10,
     amcYear2: 12000,
     features: [],
     recommended: false,
@@ -430,10 +430,16 @@ const Checkout = () => {
                 {key === 'starter' && (
                   <p className="text-[10px] text-muted-foreground/60 mt-1.5">Best for single vehicle use</p>
                 )}
-                {isRecommended && (
+                {key === 'business_basic' && (
                   <div className="mt-2 pt-2 border-t border-border">
                     <p className="text-[10px] font-semibold text-primary">Best Value</p>
-                    <p className="text-[10px] text-muted-foreground">Only ₹714 per vehicle</p>
+                    <p className="text-[10px] text-muted-foreground">Only ₹800 per vehicle</p>
+                  </div>
+                )}
+                {isRecommended && (
+                  <div className="mt-2 pt-2 border-t border-border">
+                    <p className="text-[10px] font-semibold text-primary">⭐ Recommended</p>
+                    <p className="text-[10px] text-muted-foreground">Only ₹750 per vehicle</p>
                   </div>
                 )}
                 {isSelected && (
