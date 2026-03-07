@@ -48,8 +48,8 @@ const PLANS: Record<PlanType, PlanInfo> = {
   business_basic: {
     name: 'Business Basic',
     subtitle: '',
-    price: 1998,
-    tags: 2,
+    price: 1999,
+    tags: 3,
     amcYear2: 1200,
     features: [],
     recommended: false,
@@ -58,7 +58,7 @@ const PLANS: Record<PlanType, PlanInfo> = {
   business_pro: {
     name: 'Business Pro',
     subtitle: '',
-    price: 4998,
+    price: 4999,
     tags: 7,
     amcYear2: 6000,
     features: [],
@@ -78,10 +78,10 @@ const PLANS: Record<PlanType, PlanInfo> = {
 };
 
 const PAYU_PAYMENT_LINKS: Record<PlanType, string> = {
-  starter: "https://u.payu.in/PAYUMN/BICnJ3sPnq1K",
-  business_basic: "https://u.payu.in/PAYUMN/hrGp6pGNhp8P",
-  business_pro: "https://u.payu.in/PAYUMN/UI5bcsfONe0o",
-  corporate: "https://u.payu.in/PAYUMN/4IXb9s4OqWwn",
+  starter: "https://u.payu.in/PAYUMN/irvSRzjqTMEv",
+  business_basic: "https://u.payu.in/PAYUMN/8JuydIyfE1kv",
+  business_pro: "https://u.payu.in/PAYUMN/uIDRzUuMnhY0",
+  corporate: "https://u.payu.in/PAYUMN/gI8lQYCFpedp",
 };
 
 const ACTIVATION_INCLUDES = [
@@ -200,9 +200,9 @@ const Checkout = () => {
   const isMobile = useIsMobile();
 
   const plan = PLANS[selectedPlan];
-  const subtotal = plan.price;
-  const gstAmount = Math.round(subtotal * 0.18);
-  const total = subtotal + gstAmount;
+  const total = plan.price;
+  const gstAmount = Math.round(total - (total / 1.18));
+  const subtotal = total - gstAmount;
 
   const {
     register,
@@ -433,7 +433,7 @@ const Checkout = () => {
                 {isRecommended && (
                   <div className="mt-2 pt-2 border-t border-border">
                     <p className="text-[10px] font-semibold text-primary">Best Value</p>
-                    <p className="text-[10px] text-muted-foreground">Only ₹720 per vehicle</p>
+                    <p className="text-[10px] text-muted-foreground">Only ₹714 per vehicle</p>
                   </div>
                 )}
                 {isSelected && (
