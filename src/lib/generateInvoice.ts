@@ -105,10 +105,10 @@ export async function generateInvoice(data: InvoiceData): Promise<void> {
   const gray = '#666666';
   const lineColor = '#cccccc';
 
-  // Recalculate GST from subtotal for accuracy
+  // Use passed-in values to avoid rounding discrepancies
   const planPrice = data.subtotal;
-  const gstTotal = Math.round(planPrice * 0.18);
-  const grandTotal = planPrice + gstTotal;
+  const grandTotal = data.total;
+  const gstTotal = grandTotal - planPrice;
 
   let y = margin;
 
