@@ -426,15 +426,22 @@ const Checkout = () => {
                 <p className="text-xs text-muted-foreground mt-2 font-medium">
                   {p.tags} Vehicle{p.tags > 1 ? 's' : ''} Activated
                 </p>
-                {/* Micro-text nudges */}
+                {/* Per-vehicle price */}
+                <p className="text-[10px] text-muted-foreground/80 mt-1">₹{Math.round(p.price / p.tags)}/vehicle</p>
+                {/* Taglines */}
                 {key === 'starter' && (
-                  <p className="text-[10px] text-muted-foreground/60 mt-1.5">Best for single vehicle use</p>
+                  <p className="text-[10px] text-muted-foreground/60 mt-1.5">Your vehicle gets its own payment identity. Forever.</p>
+                )}
+                {key === 'business_basic' && (
+                  <p className="text-[10px] text-muted-foreground/60 mt-1.5">Save ₹100/vehicle vs Starter</p>
                 )}
                 {isRecommended && (
                   <div className="mt-2 pt-2 border-t border-border">
-                    <p className="text-[10px] font-semibold text-primary">Best Value</p>
-                    <p className="text-[10px] text-muted-foreground">Only ₹720 per vehicle</p>
+                    <p className="text-[10px] font-semibold text-primary">Best Value · ₹{Math.round(p.price / p.tags)}/vehicle</p>
                   </div>
+                )}
+                {key === 'corporate' && (
+                  <p className="text-[10px] text-muted-foreground/60 mt-1.5">Lowest cost at ₹{Math.round(p.price / p.tags)}/vehicle</p>
                 )}
                 {isSelected && (
                   <div className="absolute top-3 right-3 w-5 h-5 rounded-full bg-primary flex items-center justify-center">
