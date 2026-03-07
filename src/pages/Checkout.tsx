@@ -38,7 +38,7 @@ const PLANS: Record<PlanType, PlanInfo> = {
   starter: {
     name: 'Starter',
     subtitle: '',
-    price: 699,
+    price: 999,
     tags: 1,
     amcYear2: 1200,
     features: [],
@@ -48,8 +48,8 @@ const PLANS: Record<PlanType, PlanInfo> = {
   business_basic: {
     name: 'Business Basic',
     subtitle: '',
-    price: 1799,
-    tags: 3,
+    price: 1998,
+    tags: 2,
     amcYear2: 1200,
     features: [],
     recommended: false,
@@ -58,7 +58,7 @@ const PLANS: Record<PlanType, PlanInfo> = {
   business_pro: {
     name: 'Business Pro',
     subtitle: '',
-    price: 3999,
+    price: 4998,
     tags: 7,
     amcYear2: 6000,
     features: [],
@@ -68,7 +68,7 @@ const PLANS: Record<PlanType, PlanInfo> = {
   corporate: {
     name: 'Corporate',
     subtitle: '',
-    price: 7499,
+    price: 9999,
     tags: 15,
     amcYear2: 12000,
     features: [],
@@ -426,22 +426,15 @@ const Checkout = () => {
                 <p className="text-xs text-muted-foreground mt-2 font-medium">
                   {p.tags} Vehicle{p.tags > 1 ? 's' : ''} Activated
                 </p>
-                {/* Per-vehicle price */}
-                <p className="text-[10px] text-muted-foreground/80 mt-1">₹{Math.round(p.price / p.tags)}/vehicle</p>
-                {/* Taglines */}
+                {/* Micro-text nudges */}
                 {key === 'starter' && (
-                  <p className="text-[10px] text-muted-foreground/60 mt-1.5">Your vehicle gets its own payment identity. Forever.</p>
-                )}
-                {key === 'business_basic' && (
-                  <p className="text-[10px] text-muted-foreground/60 mt-1.5">Save ₹100/vehicle vs Starter</p>
+                  <p className="text-[10px] text-muted-foreground/60 mt-1.5">Best for single vehicle use</p>
                 )}
                 {isRecommended && (
                   <div className="mt-2 pt-2 border-t border-border">
-                    <p className="text-[10px] font-semibold text-primary">Best Value · ₹{Math.round(p.price / p.tags)}/vehicle</p>
+                    <p className="text-[10px] font-semibold text-primary">Best Value</p>
+                    <p className="text-[10px] text-muted-foreground">Only ₹720 per vehicle</p>
                   </div>
-                )}
-                {key === 'corporate' && (
-                  <p className="text-[10px] text-muted-foreground/60 mt-1.5">Lowest cost at ₹{Math.round(p.price / p.tags)}/vehicle</p>
                 )}
                 {isSelected && (
                   <div className="absolute top-3 right-3 w-5 h-5 rounded-full bg-primary flex items-center justify-center">
