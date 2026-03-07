@@ -79,9 +79,9 @@ const PLANS: Record<PlanType, PlanInfo> = {
 
 const PAYU_PAYMENT_LINKS: Record<PlanType, string> = {
   starter: "https://u.payu.in/PAYUMN/irvSRzjqTMEv",
-  business_basic: "https://u.payu.in/PAYUMN/8JuydIyfE1kv",
-  business_pro: "https://u.payu.in/PAYUMN/uIDRzUuMnhY0",
-  corporate: "https://u.payu.in/PAYUMN/gI8lQYCFpedp",
+  business_basic: "https://u.payu.in/PAYUMN/rJAyWInVMJLz",
+  business_pro: "https://u.payu.in/PAYUMN/WrwSHz2KWQ2u",
+  corporate: "https://u.payu.in/PAYUMN/3IzbYrdCoYZy",
 };
 
 const ACTIVATION_INCLUDES = [
