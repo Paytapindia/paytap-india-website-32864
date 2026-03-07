@@ -48,8 +48,8 @@ const PLANS: Record<PlanType, PlanInfo> = {
   business_basic: {
     name: 'Business Basic',
     subtitle: '',
-    price: 2399,
-    tags: 3,
+    price: 1600,
+    tags: 2,
     amcYear2: 1200,
     features: [],
     recommended: false,
