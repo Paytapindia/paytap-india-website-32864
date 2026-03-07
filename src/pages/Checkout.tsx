@@ -78,10 +78,10 @@ const PLANS: Record<PlanType, PlanInfo> = {
 };
 
 const PAYU_PAYMENT_LINKS: Record<PlanType, string> = {
-  starter: "https://u.payu.in/PAYUMN/BICnJ3sPnq1K",
-  business_basic: "https://u.payu.in/PAYUMN/hrGp6pGNhp8P",
-  business_pro: "https://u.payu.in/PAYUMN/UI5bcsfONe0o",
-  corporate: "https://u.payu.in/PAYUMN/4IXb9s4OqWwn",
+  starter: "https://u.payu.in/PAYUMN/irvSRzjqTMEv",
+  business_basic: "https://u.payu.in/PAYUMN/8JuydIyfE1kv",
+  business_pro: "https://u.payu.in/PAYUMN/uIDRzUuMnhY0",
+  corporate: "https://u.payu.in/PAYUMN/gI8lQYCFpedp",
 };
 
 const ACTIVATION_INCLUDES = [
