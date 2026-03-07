@@ -200,9 +200,9 @@ const Checkout = () => {
   const isMobile = useIsMobile();
 
   const plan = PLANS[selectedPlan];
-  const subtotal = plan.price;
-  const gstAmount = Math.round(subtotal * 0.18);
-  const total = subtotal + gstAmount;
+  const total = plan.price;
+  const gstAmount = Math.round(total - (total / 1.18));
+  const subtotal = total - gstAmount;
 
   const {
     register,
