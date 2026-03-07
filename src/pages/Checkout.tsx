@@ -38,7 +38,7 @@ const PLANS: Record<PlanType, PlanInfo> = {
   starter: {
     name: 'Starter',
     subtitle: '',
-    price: 999,
+    price: 699,
     tags: 1,
     amcYear2: 1200,
     features: [],
@@ -48,8 +48,8 @@ const PLANS: Record<PlanType, PlanInfo> = {
   business_basic: {
     name: 'Business Basic',
     subtitle: '',
-    price: 1998,
-    tags: 2,
+    price: 1799,
+    tags: 3,
     amcYear2: 1200,
     features: [],
     recommended: false,
@@ -58,7 +58,7 @@ const PLANS: Record<PlanType, PlanInfo> = {
   business_pro: {
     name: 'Business Pro',
     subtitle: '',
-    price: 4998,
+    price: 3999,
     tags: 7,
     amcYear2: 6000,
     features: [],
@@ -68,7 +68,7 @@ const PLANS: Record<PlanType, PlanInfo> = {
   corporate: {
     name: 'Corporate',
     subtitle: '',
-    price: 9999,
+    price: 7499,
     tags: 15,
     amcYear2: 12000,
     features: [],
