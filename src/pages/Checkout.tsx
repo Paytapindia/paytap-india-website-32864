@@ -430,10 +430,16 @@ const Checkout = () => {
                 {key === 'starter' && (
                   <p className="text-[10px] text-muted-foreground/60 mt-1.5">Best for single vehicle use</p>
                 )}
-                {isRecommended && (
+                {key === 'business_basic' && (
                   <div className="mt-2 pt-2 border-t border-border">
                     <p className="text-[10px] font-semibold text-primary">Best Value</p>
-                    <p className="text-[10px] text-muted-foreground">Only ₹714 per vehicle</p>
+                    <p className="text-[10px] text-muted-foreground">Only ₹800 per vehicle</p>
+                  </div>
+                )}
+                {isRecommended && (
+                  <div className="mt-2 pt-2 border-t border-border">
+                    <p className="text-[10px] font-semibold text-primary">⭐ Recommended</p>
+                    <p className="text-[10px] text-muted-foreground">Only ₹750 per vehicle</p>
                   </div>
                 )}
                 {isSelected && (
