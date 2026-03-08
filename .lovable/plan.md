@@ -1,43 +1,39 @@
 
 
-## Plan: Create Edge Functions for Admin Dashboard Data Fetching
+## Plan: Create Admin Data-Fetching Edge Functions
 
-### Context
-This is the **live landing page** project with real orders in the database. The separate admin dashboard project needs to fetch this data. We'll create secure edge functions here that the admin dashboard can call.
+### What's happening
+This is the original landing page project with the real orders database. We need to create 3 edge functions here that the admin dashboard (remix project) can call to fetch data.
 
-### Edge Functions to Create
+### Prerequisites
+- One new secret: `ADMIN_API_KEY` — you pick any random string (e.g. `my-super-secret-key-123`). You'll add the same value in your admin dashboard project later.
 
-**1. `fetch-orders`** — Returns all orders with optional filters
-- Query params: `status` (filter by payment_status), `search` (name/phone/email), `limit`, `offset`
-- Uses service_role key to bypass RLS
-- Secured via a shared API secret (`ADMIN_API_KEY`) passed in the request header
+### Files to create
 
-**2. `fetch-leads`** — Returns all leads
-- Query params: `limit`, `offset`
-- Same auth mechanism
+**`supabase/functions/fetch-orders/index.ts`**
+- Validates `X-Admin-Key` header against `ADMIN_API_KEY` secret
+- Queries `orders` table using service role (bypasses RLS)
+- Supports query params: `status`, `search`, `limit`, `offset`
+- Returns orders sorted by `created_at` desc
 
-**3. `fetch-corporate-registrations`** — Returns all corporate registrations
-- Same pattern
+**`supabase/functions/fetch-leads/index.ts`**
+- Same auth pattern
+- Returns all leads with `limit`/`offset`
 
-### Security
-- `verify_jwt = false` in config.toml (since the admin dashboard is a different project, it won't have a valid JWT for this project)
-- Instead, each function validates a shared secret: `X-Admin-Key` header must match an `ADMIN_API_KEY` secret stored in this project
-- You'll set the same key in both projects
+**`supabase/functions/fetch-corporate-registrations/index.ts`**
+- Same auth pattern
+- Returns all corporate registrations
 
-### What You Need to Provide
-- An `ADMIN_API_KEY` secret — a random string you choose. You'll add it here and also in your admin dashboard project so it can authenticate.
+### Config change
+Add `verify_jwt = false` for all 3 functions in `supabase/config.toml` (since the admin dashboard won't have a valid JWT for this project — auth is via the shared API key instead).
 
-### Files
-
-| File | Action |
-|------|--------|
-| `supabase/functions/fetch-orders/index.ts` | Create — returns orders with filters |
-| `supabase/functions/fetch-leads/index.ts` | Create — returns leads |
-| `supabase/functions/fetch-corporate-registrations/index.ts` | Create — returns corporate registrations |
-| `supabase/config.toml` | Add `verify_jwt = false` for the 3 new functions |
-
-### No Changes To
-- Landing page, checkout, or any frontend code
-- Existing edge functions
+### No changes to
+- Landing page UI, checkout, or any frontend code
+- Existing edge functions (`create-payment`, `verify-payment`)
 - Database tables or RLS policies
+
+### Steps
+1. Request the `ADMIN_API_KEY` secret from you
+2. Create the 3 edge functions
+3. Update config.toml
 
