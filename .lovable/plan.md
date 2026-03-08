@@ -1,26 +1,43 @@
 
 
-## Plan: Change Plan Box Text from "NFC Tags Included" to "Vehicles Activated"
+## Plan: Create Edge Functions for Admin Dashboard Data Fetching
 
-### Change in `src/pages/Checkout.tsx`
+### Context
+This is the **live landing page** project with real orders in the database. The separate admin dashboard project needs to fetch this data. We'll create secure edge functions here that the admin dashboard can call.
 
-**Line 408** — Replace the tag/card count text with "Vehicle Activated" phrasing:
+### Edge Functions to Create
 
-```typescript
-// Before:
-<p className="text-[10px] text-muted-foreground">{p.tags} {productType === 'sticker' ? 'NFC Tag' : 'Card'}{p.tags > 1 ? 's' : ''} included</p>
+**1. `fetch-orders`** — Returns all orders with optional filters
+- Query params: `status` (filter by payment_status), `search` (name/phone/email), `limit`, `offset`
+- Uses service_role key to bypass RLS
+- Secured via a shared API secret (`ADMIN_API_KEY`) passed in the request header
 
-// After:
-<p className="text-[10px] text-muted-foreground">{p.tags} Vehicle{p.tags > 1 ? 's' : ''} Activated</p>
-```
+**2. `fetch-leads`** — Returns all leads
+- Query params: `limit`, `offset`
+- Same auth mechanism
 
-This will show:
-- Starter (1 tag): **1 Vehicle Activated**
-- Business Basic (2 tags): **2 Vehicles Activated**
-- Business Pro (5 tags): **5 Vehicles Activated**
-- Corporate (10 tags): **10 Vehicles Activated**
+**3. `fetch-corporate-registrations`** — Returns all corporate registrations
+- Same pattern
 
-| File | Change |
+### Security
+- `verify_jwt = false` in config.toml (since the admin dashboard is a different project, it won't have a valid JWT for this project)
+- Instead, each function validates a shared secret: `X-Admin-Key` header must match an `ADMIN_API_KEY` secret stored in this project
+- You'll set the same key in both projects
+
+### What You Need to Provide
+- An `ADMIN_API_KEY` secret — a random string you choose. You'll add it here and also in your admin dashboard project so it can authenticate.
+
+### Files
+
+| File | Action |
 |------|--------|
-| `src/pages/Checkout.tsx` | Line 408: replace NFC Tag/Card text with "Vehicle(s) Activated" |
+| `supabase/functions/fetch-orders/index.ts` | Create — returns orders with filters |
+| `supabase/functions/fetch-leads/index.ts` | Create — returns leads |
+| `supabase/functions/fetch-corporate-registrations/index.ts` | Create — returns corporate registrations |
+| `supabase/config.toml` | Add `verify_jwt = false` for the 3 new functions |
+
+### No Changes To
+- Landing page, checkout, or any frontend code
+- Existing edge functions
+- Database tables or RLS policies
 
