@@ -121,7 +121,9 @@ const gstRegex = /^[0-9]{2}[A-Z]{5}[0-9]{4}[A-Z]{1}[1-9A-Z]{1}Z[0-9A-Z]{1}$/i;
 
 const getDriverCards = (planKey: PlanType): number => {
   if (planKey === 'starter' || planKey === 'business_basic') return 0;
-  return Math.floor(PLANS[planKey].tags / 2);
+  if (planKey === 'business_pro') return 1;
+  if (planKey === 'corporate') return 2;
+  return 0;
 };
 
 const isPremiumPlan = (planKey: PlanType): boolean => {

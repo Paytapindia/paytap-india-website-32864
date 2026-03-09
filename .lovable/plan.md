@@ -1,25 +1,26 @@
 
 
-## Fix Driver Expense Card Counts
+## Plan: Change Plan Box Text from "NFC Tags Included" to "Vehicles Activated"
 
-Currently `getDriverCards` uses `Math.floor(tags / 2)` which gives Business Pro = 2 and Corporate = 5. Need to change to Business Pro = 1, Corporate = 2.
+### Change in `src/pages/Checkout.tsx`
 
-### Changes
+**Line 408** — Replace the tag/card count text with "Vehicle Activated" phrasing:
 
-**1. `src/pages/Checkout.tsx` (line 122-125)**
-Replace the formula with explicit values:
 ```typescript
-const getDriverCards = (planKey: PlanType): number => {
-  if (planKey === 'starter' || planKey === 'business_basic') return 0;
-  if (planKey === 'business_pro') return 1;
-  if (planKey === 'corporate') return 2;
-  return 0;
-};
+// Before:
+<p className="text-[10px] text-muted-foreground">{p.tags} {productType === 'sticker' ? 'NFC Tag' : 'Card'}{p.tags > 1 ? 's' : ''} included</p>
+
+// After:
+<p className="text-[10px] text-muted-foreground">{p.tags} Vehicle{p.tags > 1 ? 's' : ''} Activated</p>
 ```
 
-**2. `src/pages/HowItWorks.tsx` (line 402)**
-Change `"2 Driver Expense Cards"` → `"1 Driver Expense Card"`
+This will show:
+- Starter (1 tag): **1 Vehicle Activated**
+- Business Basic (2 tags): **2 Vehicles Activated**
+- Business Pro (5 tags): **5 Vehicles Activated**
+- Corporate (10 tags): **10 Vehicles Activated**
 
-**3. `src/pages/HowItWorks.tsx` (line 409)**
-Change `"5 Driver Expense Cards"` → `"2 Driver Expense Cards"`
+| File | Change |
+|------|--------|
+| `src/pages/Checkout.tsx` | Line 408: replace NFC Tag/Card text with "Vehicle(s) Activated" |
 
