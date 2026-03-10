@@ -56,7 +56,7 @@ Deno.serve(async (req) => {
   // Parse request
   const url = new URL(req.url);
   const type = url.searchParams.get('type');
-  const search = url.searchParams.get('search') || '';
+  const search = (url.searchParams.get('search') || '').replace(/[^a-zA-Z0-9@.\- ]/g, '');
   const limit = parseInt(url.searchParams.get('limit') || '50');
   const offset = parseInt(url.searchParams.get('offset') || '0');
   const status = url.searchParams.get('status');
