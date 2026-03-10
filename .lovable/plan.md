@@ -1,15 +1,26 @@
 
 
-## Fix KYC Limits Card Text Overflow
+## Plan: Change Plan Box Text from "NFC Tags Included" to "Vehicles Activated"
 
-The `₹2,00,000/month` text overflows on the KYC limit cards because `text-2xl md:text-3xl` is too large for that string within the card width.
+### Change in `src/pages/Checkout.tsx`
 
-### Change in `src/pages/HowItWorks.tsx` (line 723)
+**Line 408** — Replace the tag/card count text with "Vehicle Activated" phrasing:
 
-- Reduce font size: `text-2xl md:text-3xl` → `text-xl md:text-2xl`
-- Add `break-words` to prevent overflow
+```typescript
+// Before:
+<p className="text-[10px] text-muted-foreground">{p.tags} {productType === 'sticker' ? 'NFC Tag' : 'Card'}{p.tags > 1 ? 's' : ''} included</p>
 
-```tsx
-<p className="text-xl md:text-2xl font-bold text-white break-words">{item.value}</p>
+// After:
+<p className="text-[10px] text-muted-foreground">{p.tags} Vehicle{p.tags > 1 ? 's' : ''} Activated</p>
 ```
+
+This will show:
+- Starter (1 tag): **1 Vehicle Activated**
+- Business Basic (2 tags): **2 Vehicles Activated**
+- Business Pro (5 tags): **5 Vehicles Activated**
+- Corporate (10 tags): **10 Vehicles Activated**
+
+| File | Change |
+|------|--------|
+| `src/pages/Checkout.tsx` | Line 408: replace NFC Tag/Card text with "Vehicle(s) Activated" |
 
