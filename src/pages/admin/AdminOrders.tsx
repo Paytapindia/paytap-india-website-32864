@@ -152,19 +152,29 @@ const AdminOrders = () => {
                   <TableCell className="hidden md:table-cell text-muted-foreground">{order.phone || '—'}</TableCell>
                   <TableCell>₹{Number(order.amount).toLocaleString('en-IN')}</TableCell>
                   <TableCell>
-                    <span className={`px-2 py-0.5 rounded-full text-xs font-medium ${
-                      order.payment_status === 'success' ? 'bg-green-100 text-green-800' :
-                      order.payment_status === 'pending' ? 'bg-yellow-100 text-yellow-800' :
-                      'bg-red-100 text-red-800'
-                    }`}>
-                      {order.payment_status}
-                    </span>
+                    <select
+                      value={order.payment_status}
+                      onChange={(e) => handleStatusChange(order.id, e.target.value)}
+                      className={`px-2 py-0.5 rounded-full text-xs font-medium border-none cursor-pointer ${
+                        order.payment_status === 'success' ? 'bg-green-100 text-green-800' :
+                        order.payment_status === 'pending' ? 'bg-yellow-100 text-yellow-800' :
+                        'bg-red-100 text-red-800'
+                      }`}
+                    >
+                      <option value="pending">pending</option>
+                      <option value="success">success</option>
+                    </select>
                   </TableCell>
                   <TableCell className="hidden md:table-cell text-muted-foreground text-xs">{format(new Date(order.created_at), 'MMM d, yyyy')}</TableCell>
                   <TableCell>
-                    <Button variant="ghost" size="sm" onClick={() => setSelectedOrder(order)}>
-                      <FileText className="h-4 w-4" />
-                    </Button>
+                    <div className="flex gap-1">
+                      <Button variant="ghost" size="sm" onClick={() => setSelectedOrder(order)}>
+                        <FileText className="h-4 w-4" />
+                      </Button>
+                      <Button variant="ghost" size="sm" onClick={() => handleDeleteOrder(order.id)} className="text-destructive hover:text-destructive">
+                        <Trash2 className="h-4 w-4" />
+                      </Button>
+                    </div>
                   </TableCell>
                 </TableRow>
               ))}
