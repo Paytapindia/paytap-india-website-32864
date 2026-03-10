@@ -209,7 +209,20 @@ const AdminOrders = () => {
               <div><span className="text-muted-foreground">Email:</span> <span className="text-foreground">{selectedOrder.email || '—'}</span></div>
               <div><span className="text-muted-foreground">Phone:</span> <span className="text-foreground">{selectedOrder.phone || '—'}</span></div>
               <div><span className="text-muted-foreground">Amount:</span> <span className="text-foreground font-medium">₹{Number(selectedOrder.amount).toLocaleString('en-IN')}</span></div>
-              <div><span className="text-muted-foreground">Status:</span> <span className="text-foreground">{selectedOrder.payment_status}</span></div>
+              <div className="flex items-center gap-2"><span className="text-muted-foreground">Status:</span>
+                <select
+                  value={selectedOrder.payment_status}
+                  onChange={(e) => { handleStatusChange(selectedOrder.id, e.target.value); setSelectedOrder({ ...selectedOrder, payment_status: e.target.value }); }}
+                  className={`px-2 py-0.5 rounded text-xs font-medium cursor-pointer ${
+                    selectedOrder.payment_status === 'success' ? 'bg-green-100 text-green-800' :
+                    selectedOrder.payment_status === 'pending' ? 'bg-yellow-100 text-yellow-800' :
+                    'bg-red-100 text-red-800'
+                  }`}
+                >
+                  <option value="pending">pending</option>
+                  <option value="success">success</option>
+                </select>
+              </div>
               <div><span className="text-muted-foreground">Product:</span> <span className="text-foreground">{selectedOrder.product_type}</span></div>
               <div><span className="text-muted-foreground">Account Type:</span> <span className="text-foreground">{selectedOrder.account_type || '—'}</span></div>
               {selectedOrder.address && <div><span className="text-muted-foreground">Address:</span> <span className="text-foreground">{selectedOrder.address}, {selectedOrder.city}, {selectedOrder.state} - {selectedOrder.pincode}</span></div>}
