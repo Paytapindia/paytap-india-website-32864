@@ -1,7 +1,7 @@
 
 import { memo } from "react";
 import { Link, useNavigate } from "react-router-dom";
-import { Facebook, Instagram, Linkedin, Youtube, X, Mail, Phone, MapPin, Building2 } from "lucide-react";
+import { Facebook, Instagram, Linkedin, Youtube, X, Mail, Phone, MapPin, Building2, Settings } from "lucide-react";
 import { useTranslation } from "react-i18next";
 import paytapFooterLogo from "@/assets/paytap-footer-logo.png";
 
