@@ -1,26 +1,14 @@
 
 
-## Plan: Change Plan Box Text from "NFC Tags Included" to "Vehicles Activated"
+## Fix How It Works Plan Card Text
 
-### Change in `src/pages/Checkout.tsx`
+Two issues in `src/pages/HowItWorks.tsx`:
 
-**Line 408** — Replace the tag/card count text with "Vehicle Activated" phrasing:
+1. **Line 409**: `"52Driver Expense Cards"` → `"2 Driver Expense Cards"` (typo fix)
+2. **Line 402**: `"5 Prepaid Tags"` → `"5 Prepaid Tags free"` (add "free" text)
 
-```typescript
-// Before:
-<p className="text-[10px] text-muted-foreground">{p.tags} {productType === 'sticker' ? 'NFC Tag' : 'Card'}{p.tags > 1 ? 's' : ''} included</p>
-
-// After:
-<p className="text-[10px] text-muted-foreground">{p.tags} Vehicle{p.tags > 1 ? 's' : ''} Activated</p>
-```
-
-This will show:
-- Starter (1 tag): **1 Vehicle Activated**
-- Business Basic (2 tags): **2 Vehicles Activated**
-- Business Pro (5 tags): **5 Vehicles Activated**
-- Corporate (10 tags): **10 Vehicles Activated**
-
-| File | Change |
-|------|--------|
-| `src/pages/Checkout.tsx` | Line 408: replace NFC Tag/Card text with "Vehicle(s) Activated" |
+Will also add "free" to the other plans' tag text for consistency:
+- Starter: `"1 Prepaid Tag free"`
+- Business Basic: `"2 Prepaid Tags free"`
+- Corporate: `"10 Prepaid Tags free"`
 
