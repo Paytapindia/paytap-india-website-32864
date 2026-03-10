@@ -720,7 +720,7 @@ const HowItWorks = () => {
                   className="bg-white/5 backdrop-blur-sm border border-white/10 rounded-2xl p-8 text-center"
                 >
                   <p className="text-white/50 text-sm uppercase tracking-wider mb-2">{item.label}</p>
-                  <p className="text-2xl md:text-3xl font-bold text-white">{item.value}</p>
+                  <p className="text-xl md:text-2xl font-bold text-white break-words">{item.value}</p>
                 </motion.div>
               ))}
             </div>
