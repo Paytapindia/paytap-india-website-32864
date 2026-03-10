@@ -62,6 +62,32 @@ Deno.serve(async (req) => {
   const status = url.searchParams.get('status');
 
   try {
+    // Handle POST actions (update status, delete)
+    if (req.method === 'POST') {
+      const body = await req.json();
+      const { action, orderId, status: newStatus } = body;
+
+      if (action === 'update-order-status' && orderId && newStatus) {
+        const { error } = await supabase.from('orders').update({ payment_status: newStatus }).eq('id', orderId);
+        if (error) throw error;
+        return new Response(JSON.stringify({ success: true }), {
+          headers: { ...corsHeaders, 'Content-Type': 'application/json' }
+        });
+      }
+
+      if (action === 'delete-order' && orderId) {
+        const { error } = await supabase.from('orders').delete().eq('id', orderId);
+        if (error) throw error;
+        return new Response(JSON.stringify({ success: true }), {
+          headers: { ...corsHeaders, 'Content-Type': 'application/json' }
+        });
+      }
+
+      return new Response(JSON.stringify({ error: 'Invalid action' }), {
+        status: 400, headers: { ...corsHeaders, 'Content-Type': 'application/json' }
+      });
+    }
+
     switch (type) {
       case 'verify': {
         return new Response(JSON.stringify({ admin: true, userId }), {
