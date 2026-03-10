@@ -1,18 +1,26 @@
 
 
-## Navbar Updates
+## Plan: Change Plan Box Text from "NFC Tags Included" to "Vehicles Activated"
 
-Three changes to `src/components/Navbar.tsx`:
+### Change in `src/pages/Checkout.tsx`
 
-### 1. Remove "For Fleets" and "For Enterprises" from Solutions dropdown
-- **Desktop** (lines 146-175): Remove the two `<li>` items for "For Fleets" and "For Enterprises"
-- **Mobile** (lines 391-404): Remove the two `<Link>` items for "For Fleets" and "For Enterprises"
+**Line 408** — Replace the tag/card count text with "Vehicle Activated" phrasing:
 
-### 2. Compliance link → /security
-- **Desktop** (line 293): Change `to="/about#compliance"` to `to="/security"`
-- **Mobile** (line 441): Change `to="/about#compliance"` to `to="/security"`
+```typescript
+// Before:
+<p className="text-[10px] text-muted-foreground">{p.tags} {productType === 'sticker' ? 'NFC Tag' : 'Card'}{p.tags > 1 ? 's' : ''} included</p>
 
-### 3. Remove "Documentation" from Resources dropdown
-- **Desktop** (lines 266-280): Remove the Documentation `<li>` item
-- **Mobile** (lines 480-486): Remove the Documentation `<Link>` item
+// After:
+<p className="text-[10px] text-muted-foreground">{p.tags} Vehicle{p.tags > 1 ? 's' : ''} Activated</p>
+```
+
+This will show:
+- Starter (1 tag): **1 Vehicle Activated**
+- Business Basic (2 tags): **2 Vehicles Activated**
+- Business Pro (5 tags): **5 Vehicles Activated**
+- Corporate (10 tags): **10 Vehicles Activated**
+
+| File | Change |
+|------|--------|
+| `src/pages/Checkout.tsx` | Line 408: replace NFC Tag/Card text with "Vehicle(s) Activated" |
 

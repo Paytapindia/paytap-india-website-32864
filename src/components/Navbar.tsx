@@ -143,37 +143,8 @@ const Navbar = memo(() => {
                 </NavigationMenuTrigger>
                 <NavigationMenuContent>
                   <ul className="grid w-[280px] gap-1 p-3 bg-white">
-                    <li>
-                      <NavigationMenuLink asChild>
-                        <Link
-                          to="/how-it-works"
-                          className="block select-none space-y-1 rounded-md p-3 leading-none no-underline outline-none transition-colors hover:bg-accent hover:text-accent-foreground focus:bg-accent focus:text-accent-foreground"
-                        >
-                          <div className="text-sm font-medium leading-none">
-                            {t('nav.forFleets')}
-                          </div>
-                          <p className="line-clamp-2 text-sm leading-snug text-muted-foreground">
-                            Vehicle & fleet operators
-                          </p>
-                        </Link>
-                      </NavigationMenuLink>
-                    </li>
-                    <li>
-                      <NavigationMenuLink asChild>
-                        <Link
-                          to="/how-it-works"
-                          className="block select-none space-y-1 rounded-md p-3 leading-none no-underline outline-none transition-colors hover:bg-accent hover:text-accent-foreground focus:bg-accent focus:text-accent-foreground"
-                        >
-                          <div className="text-sm font-medium leading-none">
-                            {t('nav.forEnterprises')}
-                          </div>
-                          <p className="line-clamp-2 text-sm leading-snug text-muted-foreground">
-                            Teams & expense control
-                          </p>
-                        </Link>
-                      </NavigationMenuLink>
-                    </li>
-                    <li className="border-t border-gray-100 mt-2 pt-2">
+                    <li className="border-gray-100">
+
                       <NavigationMenuLink asChild>
                         <a
                           href="https://www.myfleetai.in"
@@ -263,21 +234,6 @@ const Navbar = memo(() => {
                         </Link>
                       </NavigationMenuLink>
                     </li>
-                    <li>
-                      <NavigationMenuLink asChild>
-                        <Link
-                          to="/support"
-                          className="block select-none space-y-1 rounded-md p-3 leading-none no-underline outline-none transition-colors hover:bg-accent hover:text-accent-foreground focus:bg-accent focus:text-accent-foreground"
-                        >
-                          <div className="text-sm font-medium leading-none">
-                            {t('nav.documentation')}
-                          </div>
-                          <p className="line-clamp-2 text-sm leading-snug text-muted-foreground">
-                            Technical docs
-                          </p>
-                        </Link>
-                      </NavigationMenuLink>
-                    </li>
                   </ul>
                 </NavigationMenuContent>
               </NavigationMenuItem>
@@ -290,7 +246,7 @@ const Navbar = memo(() => {
               {t('nav.howItWorks')}
               <span className="absolute -bottom-1 left-0 w-0 h-0.5 bg-white transition-all group-hover:w-full"></span>
             </Link>
-            <Link to="/about#compliance" className="text-sm font-medium text-white/80 hover:text-white transition-colors relative group">
+            <Link to="/security" className="text-sm font-medium text-white/80 hover:text-white transition-colors relative group">
               {t('nav.compliance')}
               <span className="absolute -bottom-1 left-0 w-0 h-0.5 bg-white transition-all group-hover:w-full"></span>
             </Link>
@@ -388,20 +344,6 @@ const Navbar = memo(() => {
               </button>
               {expandedMobileSection === 'solutions' && (
                 <div className="pb-2 space-y-1">
-                  <Link 
-                    to="/how-it-works" 
-                    className="block text-sm text-gray-600 hover:text-paytap-dark py-2 px-4 ml-2"
-                    onClick={handleNavClick}
-                  >
-                    {t('nav.forFleets')}
-                  </Link>
-                  <Link 
-                    to="/how-it-works" 
-                    className="block text-sm text-gray-600 hover:text-paytap-dark py-2 px-4 ml-2"
-                    onClick={handleNavClick}
-                  >
-                    {t('nav.forEnterprises')}
-                  </Link>
                   <div className="border-t border-gray-100 mt-2 pt-2 mx-4">
                     <span className="text-xs text-gray-400 uppercase tracking-wide">Ecosystem</span>
                   </div>
@@ -438,7 +380,7 @@ const Navbar = memo(() => {
 
             {/* Compliance - Direct Link */}
             <Link 
-              to="/about#compliance" 
+              to="/security" 
               className="block text-base font-medium text-gray-700 hover:text-paytap-dark py-3 px-2 border-b border-gray-100 transition-colors min-h-[48px] flex items-center"
               onClick={handleNavClick}
             >
@@ -476,13 +418,6 @@ const Navbar = memo(() => {
                     onClick={handleNavClick}
                   >
                     {t('nav.support')}
-                  </Link>
-                  <Link 
-                    to="/support" 
-                    className="block text-sm text-gray-600 hover:text-paytap-dark py-2 px-4 ml-2"
-                    onClick={handleNavClick}
-                  >
-                    {t('nav.documentation')}
                   </Link>
                 </div>
               )}
