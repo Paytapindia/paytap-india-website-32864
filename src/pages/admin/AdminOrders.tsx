@@ -1,10 +1,10 @@
 import { useEffect, useState, useCallback } from "react";
-import { adminFetch, exportToCSV } from "@/lib/adminApi";
+import { adminFetch, adminPost, exportToCSV } from "@/lib/adminApi";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Table, TableBody, TableCell, TableHead, TableHeader, TableRow } from "@/components/ui/table";
-import { Search, Download, FileText, X } from "lucide-react";
+import { Search, Download, FileText, X, Trash2 } from "lucide-react";
 import { format } from "date-fns";
 import { generateInvoice, InvoiceData } from "@/lib/generateInvoice";
 
@@ -75,6 +75,22 @@ const AdminOrders = () => {
     await generateInvoice(invoiceData);
   };
 
+  const handleStatusChange = async (orderId: string, newStatus: string) => {
+    try {
+      await adminPost({ action: 'update-order-status', orderId, status: newStatus });
+      fetchOrders();
+    } catch (e) { console.error(e); }
+  };
+
+  const handleDeleteOrder = async (orderId: string) => {
+    if (!window.confirm('Are you sure you want to delete this order?')) return;
+    try {
+      await adminPost({ action: 'delete-order', orderId });
+      setSelectedOrder(null);
+      fetchOrders();
+    } catch (e) { console.error(e); }
+  };
+
   const totalPages = Math.ceil(count / limit);
 
   return (
@@ -136,19 +152,29 @@ const AdminOrders = () => {
                   <TableCell className="hidden md:table-cell text-muted-foreground">{order.phone || '—'}</TableCell>
                   <TableCell>₹{Number(order.amount).toLocaleString('en-IN')}</TableCell>
                   <TableCell>
-                    <span className={`px-2 py-0.5 rounded-full text-xs font-medium ${
-                      order.payment_status === 'success' ? 'bg-green-100 text-green-800' :
-                      order.payment_status === 'pending' ? 'bg-yellow-100 text-yellow-800' :
-                      'bg-red-100 text-red-800'
-                    }`}>
-                      {order.payment_status}
-                    </span>
+                    <select
+                      value={order.payment_status}
+                      onChange={(e) => handleStatusChange(order.id, e.target.value)}
+                      className={`px-2 py-0.5 rounded-full text-xs font-medium border-none cursor-pointer ${
+                        order.payment_status === 'success' ? 'bg-green-100 text-green-800' :
+                        order.payment_status === 'pending' ? 'bg-yellow-100 text-yellow-800' :
+                        'bg-red-100 text-red-800'
+                      }`}
+                    >
+                      <option value="pending">pending</option>
+                      <option value="success">success</option>
+                    </select>
                   </TableCell>
                   <TableCell className="hidden md:table-cell text-muted-foreground text-xs">{format(new Date(order.created_at), 'MMM d, yyyy')}</TableCell>
                   <TableCell>
-                    <Button variant="ghost" size="sm" onClick={() => setSelectedOrder(order)}>
-                      <FileText className="h-4 w-4" />
-                    </Button>
+                    <div className="flex gap-1">
+                      <Button variant="ghost" size="sm" onClick={() => setSelectedOrder(order)}>
+                        <FileText className="h-4 w-4" />
+                      </Button>
+                      <Button variant="ghost" size="sm" onClick={() => handleDeleteOrder(order.id)} className="text-destructive hover:text-destructive">
+                        <Trash2 className="h-4 w-4" />
+                      </Button>
+                    </div>
                   </TableCell>
                 </TableRow>
               ))}
@@ -183,7 +209,20 @@ const AdminOrders = () => {
               <div><span className="text-muted-foreground">Email:</span> <span className="text-foreground">{selectedOrder.email || '—'}</span></div>
               <div><span className="text-muted-foreground">Phone:</span> <span className="text-foreground">{selectedOrder.phone || '—'}</span></div>
               <div><span className="text-muted-foreground">Amount:</span> <span className="text-foreground font-medium">₹{Number(selectedOrder.amount).toLocaleString('en-IN')}</span></div>
-              <div><span className="text-muted-foreground">Status:</span> <span className="text-foreground">{selectedOrder.payment_status}</span></div>
+              <div className="flex items-center gap-2"><span className="text-muted-foreground">Status:</span>
+                <select
+                  value={selectedOrder.payment_status}
+                  onChange={(e) => { handleStatusChange(selectedOrder.id, e.target.value); setSelectedOrder({ ...selectedOrder, payment_status: e.target.value }); }}
+                  className={`px-2 py-0.5 rounded text-xs font-medium cursor-pointer ${
+                    selectedOrder.payment_status === 'success' ? 'bg-green-100 text-green-800' :
+                    selectedOrder.payment_status === 'pending' ? 'bg-yellow-100 text-yellow-800' :
+                    'bg-red-100 text-red-800'
+                  }`}
+                >
+                  <option value="pending">pending</option>
+                  <option value="success">success</option>
+                </select>
+              </div>
               <div><span className="text-muted-foreground">Product:</span> <span className="text-foreground">{selectedOrder.product_type}</span></div>
               <div><span className="text-muted-foreground">Account Type:</span> <span className="text-foreground">{selectedOrder.account_type || '—'}</span></div>
               {selectedOrder.address && <div><span className="text-muted-foreground">Address:</span> <span className="text-foreground">{selectedOrder.address}, {selectedOrder.city}, {selectedOrder.state} - {selectedOrder.pincode}</span></div>}
@@ -192,9 +231,14 @@ const AdminOrders = () => {
               {selectedOrder.pan && <div><span className="text-muted-foreground">PAN:</span> <span className="text-foreground">{selectedOrder.pan}</span></div>}
               <div><span className="text-muted-foreground">Date:</span> <span className="text-foreground">{format(new Date(selectedOrder.created_at), 'PPpp')}</span></div>
             </div>
-            <Button className="w-full mt-6" onClick={() => handleDownloadInvoice(selectedOrder)}>
-              <Download className="h-4 w-4 mr-2" /> Download Invoice (PDF)
-            </Button>
+            <div className="flex gap-2 mt-6">
+              <Button className="flex-1" onClick={() => handleDownloadInvoice(selectedOrder)}>
+                <Download className="h-4 w-4 mr-2" /> Download Invoice
+              </Button>
+              <Button variant="destructive" onClick={() => handleDeleteOrder(selectedOrder.id)}>
+                <Trash2 className="h-4 w-4 mr-2" /> Delete
+              </Button>
+            </div>
           </div>
         </div>
       )}
