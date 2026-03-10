@@ -399,7 +399,7 @@ const HowItWorks = () => {
       name: "Business Pro",
       subtitle: "5 vehicles",
       price: "₹3,749",
-      features: ["5 Prepaid Tags", "1 Driver Expense Card", "Dedicated Support", "Myfleet AI", "ExpensePro"],
+      features: ["5 Prepaid Tags free", "1 Driver Expense Card", "Dedicated Support", "Myfleet AI", "ExpensePro"],
       highlighted: true,
     },
     {
