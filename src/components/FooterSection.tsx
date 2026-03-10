@@ -80,7 +80,7 @@ const FooterSection = memo(() => {
                 </Link>
               </li>
               <li>
-                <Link to="/about#compliance" className="text-gray-300 hover:text-paytap-light transition-colors duration-300 flex items-center group text-sm md:text-base">
+                <Link to="/security" className="text-gray-300 hover:text-paytap-light transition-colors duration-300 flex items-center group text-sm md:text-base">
                   <span className="group-hover:translate-x-1 transition-transform">Compliance & Security</span>
                 </Link>
               </li>
