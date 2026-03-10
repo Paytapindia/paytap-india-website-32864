@@ -1,26 +1,21 @@
 
 
-## Plan: Change Plan Box Text from "NFC Tags Included" to "Vehicles Activated"
+## Update "What If Someone Taps the Car" FAQ on Security Page
 
-### Change in `src/pages/Checkout.tsx`
+**File**: `src/pages/Security.tsx` (lines 225-234)
 
-**Line 408** — Replace the tag/card count text with "Vehicle Activated" phrasing:
+Update the first item in the `whatIfItems` array to include the expanded security points:
 
-```typescript
-// Before:
-<p className="text-[10px] text-muted-foreground">{p.tags} {productType === 'sticker' ? 'NFC Tag' : 'Card'}{p.tags > 1 ? 's' : ''} included</p>
-
-// After:
-<p className="text-[10px] text-muted-foreground">{p.tags} Vehicle{p.tags > 1 ? 's' : ''} Activated</p>
+```tsx
+{
+  q: "What if someone taps the car while it's parked?",
+  a: [
+    'NFC works only within 2–4 cm, so physical contact is required',
+    'Only registered merchant POS devices can initiate a payment',
+    'Transactions above ₹5,000 require a PIN for extra security',
+    'Owners can set limits or turn contactless ON/OFF anytime from the app',
+    'Instant payment alerts + full transaction traceability, and we assist with refunds for accidental ₹0–₹5,000 transactions',
+  ],
+},
 ```
-
-This will show:
-- Starter (1 tag): **1 Vehicle Activated**
-- Business Basic (2 tags): **2 Vehicles Activated**
-- Business Pro (5 tags): **5 Vehicles Activated**
-- Corporate (10 tags): **10 Vehicles Activated**
-
-| File | Change |
-|------|--------|
-| `src/pages/Checkout.tsx` | Line 408: replace NFC Tag/Card text with "Vehicle(s) Activated" |
 
