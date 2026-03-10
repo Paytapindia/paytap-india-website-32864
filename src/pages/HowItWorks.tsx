@@ -385,7 +385,7 @@ const HowItWorks = () => {
       name: "Starter",
       subtitle: "1 vehicle",
       price: "₹999",
-      features: ["1 Prepaid Tag", "Paytap Dashboard", "Tag Control", "Transaction View"],
+      features: ["1 Prepaid Tag free", "Paytap Dashboard", "Tag Control", "Transaction View"],
       highlighted: false,
     },
     {
