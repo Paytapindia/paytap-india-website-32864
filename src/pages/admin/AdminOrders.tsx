@@ -75,6 +75,22 @@ const AdminOrders = () => {
     await generateInvoice(invoiceData);
   };
 
+  const handleStatusChange = async (orderId: string, newStatus: string) => {
+    try {
+      await adminPost({ action: 'update-order-status', orderId, status: newStatus });
+      fetchOrders();
+    } catch (e) { console.error(e); }
+  };
+
+  const handleDeleteOrder = async (orderId: string) => {
+    if (!window.confirm('Are you sure you want to delete this order?')) return;
+    try {
+      await adminPost({ action: 'delete-order', orderId });
+      setSelectedOrder(null);
+      fetchOrders();
+    } catch (e) { console.error(e); }
+  };
+
   const totalPages = Math.ceil(count / limit);
 
   return (
