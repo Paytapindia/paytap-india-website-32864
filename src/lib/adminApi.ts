@@ -31,15 +31,6 @@ export async function adminPost<T = any>(body: Record<string, any>): Promise<T> 
   }
   return res.json();
 }
-  const headers = await getAuthHeaders();
-  const searchParams = new URLSearchParams({ type, ...params });
-  const res = await fetch(`${FUNCTION_URL}?${searchParams}`, { headers });
-  if (!res.ok) {
-    const err = await res.json().catch(() => ({ error: 'Request failed' }));
-    throw new Error(err.error || `HTTP ${res.status}`);
-  }
-  return res.json();
-}
 
 export async function verifyAdmin(): Promise<boolean> {
   try {
