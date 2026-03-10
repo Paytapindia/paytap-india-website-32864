@@ -1,26 +1,18 @@
 
 
-## Plan: Change Plan Box Text from "NFC Tags Included" to "Vehicles Activated"
+## Update Fees and Charges in Terms & Conditions
 
-### Change in `src/pages/Checkout.tsx`
+**File**: `src/pages/TermsAndConditions.tsx` (around lines 167-172)
 
-**Line 408** — Replace the tag/card count text with "Vehicle Activated" phrasing:
+Update the Fees and Charges accordion content to include AMC details, additional tag pricing, and fuel surcharge information:
 
-```typescript
-// Before:
-<p className="text-[10px] text-muted-foreground">{p.tags} {productType === 'sticker' ? 'NFC Tag' : 'Card'}{p.tags > 1 ? 's' : ''} included</p>
-
-// After:
-<p className="text-[10px] text-muted-foreground">{p.tags} Vehicle{p.tags > 1 ? 's' : ''} Activated</p>
+```tsx
+<ul className="list-disc list-inside space-y-2">
+  <li>Paytap reserves the right to apply fees for services like tag issuance, replacements, AMC, or enhanced features.</li>
+  <li>AMC ranges from ₹300 – ₹2,400 depending on the package plan you choose.</li>
+  <li>Additional new tag: ₹499.</li>
+  <li>Fuel surcharges are levied as per government charges and will be billed annually.</li>
+  <li>All applicable charges, if any, will be transparently communicated prior to transaction processing.</li>
+</ul>
 ```
-
-This will show:
-- Starter (1 tag): **1 Vehicle Activated**
-- Business Basic (2 tags): **2 Vehicles Activated**
-- Business Pro (5 tags): **5 Vehicles Activated**
-- Corporate (10 tags): **10 Vehicles Activated**
-
-| File | Change |
-|------|--------|
-| `src/pages/Checkout.tsx` | Line 408: replace NFC Tag/Card text with "Vehicle(s) Activated" |
 
