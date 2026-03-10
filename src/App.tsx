@@ -28,6 +28,9 @@ import Security from "./pages/Security";
 import Newsroom from "./pages/Newsroom";
 import PayAtPump from "./pages/PayAtPump";
 import SampleInvoice from "./pages/SampleInvoice";
+import AdminLogin from "./pages/AdminLogin";
+import AdminGuard from "./components/admin/AdminGuard";
+import AdminLayout from "./components/admin/AdminLayout";
 
 
 const queryClient = new QueryClient({
@@ -68,6 +71,8 @@ const App = () => (
               <Route path="/checkout" element={<Checkout />} />
               <Route path="/checkout/success" element={<CheckoutSuccess />} />
               <Route path="/checkout/cancel" element={<CheckoutCancel />} />
+              <Route path="/admin-login" element={<AdminLogin />} />
+              <Route path="/admin-dashboard/*" element={<AdminGuard><AdminLayout /></AdminGuard>} />
               {/* ADD ALL CUSTOM ROUTES ABOVE THE CATCH-ALL "*" ROUTE */}
               <Route path="*" element={<NotFound />} />
             </Routes>

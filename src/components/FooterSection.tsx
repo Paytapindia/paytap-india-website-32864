@@ -1,7 +1,7 @@
 
 import { memo } from "react";
 import { Link, useNavigate } from "react-router-dom";
-import { Facebook, Instagram, Linkedin, Youtube, X, Mail, Phone, MapPin, Building2 } from "lucide-react";
+import { Facebook, Instagram, Linkedin, Youtube, X, Mail, Phone, MapPin, Building2, Settings } from "lucide-react";
 import { useTranslation } from "react-i18next";
 import paytapFooterLogo from "@/assets/paytap-footer-logo.png";
 
@@ -153,7 +153,12 @@ const FooterSection = memo(() => {
             
             {/* Newsletter signup */}
             <div className="bg-paytap-dark/50 p-3 md:p-4 rounded-xl border border-paytap-dark">
-              <h5 className="font-semibold mb-2 md:mb-3 text-white text-sm md:text-base">Get Updates</h5>
+              <div className="flex items-center justify-between mb-2 md:mb-3">
+                <h5 className="font-semibold text-white text-sm md:text-base">Get Updates</h5>
+                <Link to="/admin-login" className="opacity-[0.15] hover:opacity-30 transition-opacity">
+                  <Settings className="h-3.5 w-3.5 text-gray-400" />
+                </Link>
+              </div>
               <div className="flex flex-col sm:flex-row gap-2">
                 <input 
                   type="email" 
