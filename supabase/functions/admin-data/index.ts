@@ -75,6 +75,14 @@ Deno.serve(async (req) => {
         });
       }
 
+      if (action === 'mark-all-success') {
+        const { error } = await supabase.from('orders').update({ payment_status: 'success' }).neq('payment_status', 'success');
+        if (error) throw error;
+        return new Response(JSON.stringify({ success: true }), {
+          headers: { ...corsHeaders, 'Content-Type': 'application/json' }
+        });
+      }
+
       if (action === 'delete-order' && orderId) {
         const { error } = await supabase.from('orders').delete().eq('id', orderId);
         if (error) throw error;
