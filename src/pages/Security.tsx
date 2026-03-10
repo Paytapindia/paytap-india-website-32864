@@ -2,13 +2,11 @@ import { useRef } from 'react';
 import { Helmet } from 'react-helmet-async';
 import { motion, useInView, useScroll, useTransform } from 'framer-motion';
 import { useNavigate } from 'react-router-dom';
-import { Smartphone, ShieldCheck, Bell, Power, ChevronDown } from 'lucide-react';
+import { Smartphone, ShieldCheck, Bell, Power, Building2, CreditCard, ArrowLeftRight, Landmark } from 'lucide-react';
 import Navbar from '@/components/Navbar';
 import FooterSection from '@/components/FooterSection';
 import { Accordion, AccordionContent, AccordionItem, AccordionTrigger } from '@/components/ui/accordion';
 import { Button } from '@/components/ui/button';
-import { RBIIcon } from '@/components/icons/RBIIcon';
-import { NPCIIcon } from '@/components/icons/NPCIIcon';
 
 /* ───────── Hero ───────── */
 const HeroSection = () => {
