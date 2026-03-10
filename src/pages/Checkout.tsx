@@ -694,6 +694,11 @@ const Checkout = () => {
             <span className="text-muted-foreground">Activation Fee</span>
             <span className="font-medium text-foreground">{formatINR(subtotal)}</span>
           </div>
+          <div className="pl-1 space-y-1">
+            <p className="text-xs text-muted-foreground italic">Which includes:</p>
+            <p className="text-xs text-muted-foreground">• {plan.tags} Contactless NFC Payment Tag{plan.tags > 1 ? 's' : ''} free</p>
+            <p className="text-xs text-muted-foreground">• AMC: {formatINR(getAmcAmount(selectedPlan))}/year</p>
+          </div>
           <div className="flex justify-between text-sm">
             <span className="text-muted-foreground">GST (18%)</span>
             <span className="font-medium text-foreground">{formatINR(gstAmount)}</span>
