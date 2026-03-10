@@ -448,13 +448,6 @@ const Navbar = memo(() => {
                   >
                     {t('nav.support')}
                   </Link>
-                  <Link 
-                    to="/support" 
-                    className="block text-sm text-gray-600 hover:text-paytap-dark py-2 px-4 ml-2"
-                    onClick={handleNavClick}
-                  >
-                    {t('nav.documentation')}
-                  </Link>
                 </div>
               )}
             </div>
