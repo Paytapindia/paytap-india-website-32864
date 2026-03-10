@@ -1,26 +1,15 @@
 
 
-## Plan: Change Plan Box Text from "NFC Tags Included" to "Vehicles Activated"
+## Fix Compliance & Security Footer Link
 
-### Change in `src/pages/Checkout.tsx`
+The "Compliance & Security" link in the footer currently points to `/about#compliance`. It should point to `/security` — the dedicated Security page that already exists.
 
-**Line 408** — Replace the tag/card count text with "Vehicle Activated" phrasing:
+### Change in `src/components/FooterSection.tsx` (line 83)
 
-```typescript
-// Before:
-<p className="text-[10px] text-muted-foreground">{p.tags} {productType === 'sticker' ? 'NFC Tag' : 'Card'}{p.tags > 1 ? 's' : ''} included</p>
-
-// After:
-<p className="text-[10px] text-muted-foreground">{p.tags} Vehicle{p.tags > 1 ? 's' : ''} Activated</p>
+```tsx
+// From:
+<Link to="/about#compliance" ...>
+// To:
+<Link to="/security" ...>
 ```
-
-This will show:
-- Starter (1 tag): **1 Vehicle Activated**
-- Business Basic (2 tags): **2 Vehicles Activated**
-- Business Pro (5 tags): **5 Vehicles Activated**
-- Corporate (10 tags): **10 Vehicles Activated**
-
-| File | Change |
-|------|--------|
-| `src/pages/Checkout.tsx` | Line 408: replace NFC Tag/Card text with "Vehicle(s) Activated" |
 
