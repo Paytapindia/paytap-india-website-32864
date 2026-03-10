@@ -56,7 +56,7 @@ Deno.serve(async (req) => {
   // Parse request
   const url = new URL(req.url);
   const type = url.searchParams.get('type');
-  const search = url.searchParams.get('search') || '';
+  const search = (url.searchParams.get('search') || '').replace(/[^a-zA-Z0-9@.\- ]/g, '');
   const limit = parseInt(url.searchParams.get('limit') || '50');
   const offset = parseInt(url.searchParams.get('offset') || '0');
   const status = url.searchParams.get('status');
@@ -67,7 +67,14 @@ Deno.serve(async (req) => {
       const body = await req.json();
       const { action, orderId, status: newStatus } = body;
 
+      const ALLOWED_STATUSES = ['pending', 'success', 'failed', 'cancelled'];
+
       if (action === 'update-order-status' && orderId && newStatus) {
+        if (!ALLOWED_STATUSES.includes(newStatus)) {
+          return new Response(JSON.stringify({ error: 'Invalid status value' }), {
+            status: 400, headers: { ...corsHeaders, 'Content-Type': 'application/json' }
+          });
+        }
         const { error } = await supabase.from('orders').update({ payment_status: newStatus }).eq('id', orderId);
         if (error) throw error;
         return new Response(JSON.stringify({ success: true }), {
