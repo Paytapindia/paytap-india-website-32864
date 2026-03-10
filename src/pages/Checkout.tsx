@@ -126,6 +126,11 @@ const getDriverCards = (planKey: PlanType): number => {
   return 0;
 };
 
+const getAmcAmount = (planKey: PlanType): number => {
+  const amcMap: Record<PlanType, number> = { starter: 300, business_basic: 600, business_pro: 1200, corporate: 2400 };
+  return amcMap[planKey];
+};
+
 const isPremiumPlan = (planKey: PlanType): boolean => {
   return planKey === 'business_pro' || planKey === 'corporate';
 };
