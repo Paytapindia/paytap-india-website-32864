@@ -28,6 +28,9 @@ import Security from "./pages/Security";
 import Newsroom from "./pages/Newsroom";
 import PayAtPump from "./pages/PayAtPump";
 import SampleInvoice from "./pages/SampleInvoice";
+import AdminLogin from "./pages/AdminLogin";
+import AdminGuard from "./components/admin/AdminGuard";
+import AdminLayout from "./components/admin/AdminLayout";
 
 
 const queryClient = new QueryClient({
