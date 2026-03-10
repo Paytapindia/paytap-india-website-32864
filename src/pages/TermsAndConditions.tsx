@@ -129,18 +129,17 @@ const TermsAndConditions = () => {
               <AccordionContent className="prose max-w-none">
                 <div className="space-y-4">
                   <div>
-                    <h4 className="font-semibold mb-2">Minimum KYC Wallet:</h4>
+                    <h4 className="font-semibold mb-2">Minimum KYC Wallet: Monthly deposit & withdrawal limit</h4>
                     <ul className="list-disc list-inside space-y-1">
-                      <li>Maximum Balance: ₹10,000</li>
-                      <li>Monthly Load Limit: ₹10,000</li>
-                      <li>Annual Load Limit: ₹1,20,000</li>
+                      <li>Monthly Limit: ₹10,000</li>
+                      <li>Annual Limit: ₹1,20,000</li>
                     </ul>
                   </div>
                   <div>
-                    <h4 className="font-semibold mb-2">Full KYC Wallet:</h4>
+                    <h4 className="font-semibold mb-2">Full KYC Wallet: Monthly deposit & withdrawal limit</h4>
                     <ul className="list-disc list-inside space-y-1">
-                      <li>Maximum Balance: ₹1,00,000</li>
-                      <li>Subject to RBI-regulated limits and guidelines.</li>
+                      <li>Monthly Limit: ₹2,00,000</li>
+                      <li>Annual Limit: ₹24,00,000</li>
                     </ul>
                   </div>
                 </div>
