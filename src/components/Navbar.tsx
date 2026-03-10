@@ -373,20 +373,6 @@ const Navbar = memo(() => {
               </button>
               {expandedMobileSection === 'solutions' && (
                 <div className="pb-2 space-y-1">
-                  <Link 
-                    to="/how-it-works" 
-                    className="block text-sm text-gray-600 hover:text-paytap-dark py-2 px-4 ml-2"
-                    onClick={handleNavClick}
-                  >
-                    {t('nav.forFleets')}
-                  </Link>
-                  <Link 
-                    to="/how-it-works" 
-                    className="block text-sm text-gray-600 hover:text-paytap-dark py-2 px-4 ml-2"
-                    onClick={handleNavClick}
-                  >
-                    {t('nav.forEnterprises')}
-                  </Link>
                   <div className="border-t border-gray-100 mt-2 pt-2 mx-4">
                     <span className="text-xs text-gray-400 uppercase tracking-wide">Ecosystem</span>
                   </div>
