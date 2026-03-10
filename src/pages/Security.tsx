@@ -224,12 +224,13 @@ const SnakeFlowSection = () => {
 /* ───────── What-If Accordion ───────── */
 const whatIfItems = [
   {
-    q: 'What if someone taps the car while parked?',
+    q: "What if someone taps the car while it's parked?",
     a: [
-      'NFC requires 2–4 cm physical contact',
-      'Requires active registered POS',
-      'Owner receives instant alert',
-      'Tag can be disabled anytime',
+      'NFC works only within 2–4 cm, so physical contact is required',
+      'Only registered merchant POS devices can initiate a payment',
+      'Transactions above ₹5,000 require a PIN for extra security',
+      'Owners can set limits or turn contactless ON/OFF anytime from the app',
+      'Instant payment alerts + full transaction traceability, and we assist with refunds for accidental ₹0–₹5,000 transactions',
     ],
   },
   {
