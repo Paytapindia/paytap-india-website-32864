@@ -23,7 +23,6 @@ function generateTransactionId(): string {
 }
 
 serve(async (req) => {
-  // Handle CORS preflight requests
   if (req.method === 'OPTIONS') {
     return new Response(null, { headers: corsHeaders });
   }
@@ -35,7 +34,6 @@ serve(async (req) => {
     const SUPABASE_SERVICE_ROLE_KEY = Deno.env.get('SUPABASE_SERVICE_ROLE_KEY')!;
 
     if (!PAYU_SALT || !PAYU_MERCHANT_KEY) {
-      console.error('PayU credentials not configured');
       return new Response(
         JSON.stringify({ error: 'Payment configuration error' }),
         { status: 500, headers: { ...corsHeaders, 'Content-Type': 'application/json' } }
@@ -43,134 +41,81 @@ serve(async (req) => {
     }
 
     const body = await req.json();
-    const {
-      name,
-      phone,
-      email,
-      address,
-      city,
-      state,
-      pincode,
-      productType,
-      quantity,
-      debugPreset // For sanity testing
-    } = body;
+    const { name, phone, email, address, city, state, pincode, productType, quantity } = body;
 
-    // Validate required fields (skip validation for debug preset)
-    if (!debugPreset && (!name || !phone || !email || !address || !city || !state || !pincode || !productType || !quantity)) {
+    // Validate required fields
+    if (!name || !phone || !email || !address || !city || !state || !pincode || !productType || !quantity) {
       return new Response(
         JSON.stringify({ error: 'Missing required fields' }),
         { status: 400, headers: { ...corsHeaders, 'Content-Type': 'application/json' } }
       );
     }
 
-    // Calculate amount server-side (prevent manipulation)
+    // Calculate amount server-side
     const PRODUCT_PRICES: Record<string, number> = {
       sticker: 999,
       card: 999
     };
 
-    // Sanity test mode: use hardcoded values
-    let firstname: string;
-    let emailClean: string;
-    let phoneClean: string;
-    let amountStr: string;
-    let productinfo: string;
-    let validQuantity: number;
+    const firstname = String(name).trim();
+    const emailClean = String(email).trim().toLowerCase();
+    const phoneClean = String(phone).trim();
 
-    if (debugPreset) {
-      // Hardcoded test values for sanity check
-      firstname = 'test';
-      emailClean = 'test@test.com';
-      phoneClean = '9999999999';
-      amountStr = '1.00';
-      productinfo = 'test';
-      validQuantity = 1;
-      console.log('=== SANITY TEST MODE ENABLED ===');
-    } else {
-      // Normal flow: normalize user-provided fields
-      firstname = String(name).trim();
-      emailClean = String(email).trim().toLowerCase();
-      phoneClean = String(phone).trim();
-      
-      const unitPrice = PRODUCT_PRICES[productType];
-      if (!unitPrice) {
-        return new Response(
-          JSON.stringify({ error: 'Invalid product type' }),
-          { status: 400, headers: { ...corsHeaders, 'Content-Type': 'application/json' } }
-        );
-      }
-
-      validQuantity = Math.min(Math.max(1, parseInt(quantity)), 10);
-      const amount = unitPrice * validQuantity;
-      amountStr = amount.toFixed(2);
-      
-      productinfo = productType === 'sticker' 
-        ? `Paytap NFC Sticker x${validQuantity}` 
-        : `Paytap Prepaid Card x${validQuantity}`;
+    const unitPrice = PRODUCT_PRICES[productType];
+    if (!unitPrice) {
+      return new Response(
+        JSON.stringify({ error: 'Invalid product type' }),
+        { status: 400, headers: { ...corsHeaders, 'Content-Type': 'application/json' } }
+      );
     }
 
-    // Generate transaction ID (or use fixed for sanity test)
-    const txnid = debugPreset ? 'PAYU_TEST_001' : generateTransactionId();
+    const validQuantity = Math.min(Math.max(1, parseInt(quantity)), 10);
+    const amount = unitPrice * validQuantity;
+    const amountStr = amount.toFixed(2);
 
-    // Create Supabase client
+    const productinfo = productType === 'sticker'
+      ? `Paytap NFC Sticker x${validQuantity}`
+      : `Paytap Prepaid Card x${validQuantity}`;
+
+    const txnid = generateTransactionId();
+
+    // Save order to database
     const supabase = createClient(SUPABASE_URL, SUPABASE_SERVICE_ROLE_KEY);
 
-    // Save order to database with pending status (skip for sanity test)
-    if (!debugPreset) {
-      const { error: insertError } = await supabase
-        .from('orders')
-        .insert({
-          txnid,
-          name: firstname,
-          phone: phoneClean,
-          email: emailClean,
-          address,
-          city,
-          state,
-          pincode,
-          product_type: productType,
-          quantity: validQuantity,
-          amount: parseFloat(amountStr),
-          payment_status: 'pending'
-        });
+    const { error: insertError } = await supabase
+      .from('orders')
+      .insert({
+        txnid,
+        name: firstname,
+        phone: phoneClean,
+        email: emailClean,
+        address,
+        city,
+        state,
+        pincode,
+        product_type: productType,
+        quantity: validQuantity,
+        amount: parseFloat(amountStr),
+        payment_status: 'pending'
+      });
 
-      if (insertError) {
-        console.error('Error saving order:', insertError);
-        return new Response(
-          JSON.stringify({ error: 'Failed to create order' }),
-          { status: 500, headers: { ...corsHeaders, 'Content-Type': 'application/json' } }
-        );
-      }
+    if (insertError) {
+      console.error('Order insert failed');
+      return new Response(
+        JSON.stringify({ error: 'Failed to create order' }),
+        { status: 500, headers: { ...corsHeaders, 'Content-Type': 'application/json' } }
+      );
     }
 
-    // UDF fields (empty for now)
-    const udf1 = '';
-    const udf2 = '';
-    const udf3 = '';
-    const udf4 = '';
-    const udf5 = '';
+    // UDF fields
+    const udf1 = '', udf2 = '', udf3 = '', udf4 = '', udf5 = '';
 
     // Generate hash
-    // PayU hash formula: key|txnid|amount|productinfo|firstname|email|udf1|udf2|udf3|udf4|udf5||||||salt
     const hashString = `${PAYU_MERCHANT_KEY}|${txnid}|${amountStr}|${productinfo}|${firstname}|${emailClean}|${udf1}|${udf2}|${udf3}|${udf4}|${udf5}||||||${PAYU_SALT}`;
     const hash = await generateHash(hashString);
 
-    // Debug logging with lengths
-    console.log('=== PayU Hash Debug ===');
-    console.log('Hash String:', hashString);
-    console.log('Generated Hash:', hash);
-    console.log(`Amount: "${amountStr}" (length: ${amountStr.length})`);
-    console.log(`Product Info: "${productinfo}" (length: ${productinfo.length})`);
-    console.log(`Firstname: "${firstname}" (length: ${firstname.length})`);
-    console.log(`Email: "${emailClean}" (length: ${emailClean.length})`);
-    console.log(`Phone: "${phoneClean}" (length: ${phoneClean.length})`);
-    console.log(`TxnID: "${txnid}" (length: ${txnid.length})`);
-
-    // Get origin from request for callbacks
     const origin = req.headers.get('origin') || 'https://paytap.co.in';
 
-    // Return payment parameters - minimal required fields only
     return new Response(
       JSON.stringify({
         success: true,
@@ -191,7 +136,7 @@ serve(async (req) => {
     );
 
   } catch (error) {
-    console.error('Error:', error);
+    console.error('Payment error occurred');
     return new Response(
       JSON.stringify({ error: 'Internal server error' }),
       { status: 500, headers: { ...corsHeaders, 'Content-Type': 'application/json' } }
