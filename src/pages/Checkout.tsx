@@ -684,7 +684,7 @@ const Checkout = () => {
         <div className="space-y-2.5">
           <div className="flex justify-between text-sm">
             <span className="text-muted-foreground">Product</span>
-            <span className="font-medium text-foreground">{productType === 'sticker' ? 'NFC Payment Tag' : 'Prepaid Card'}</span>
+            <span className="font-medium text-foreground">Paytap Activation Plan</span>
           </div>
           <div className="flex justify-between text-sm">
             <span className="text-muted-foreground">Plan</span>
