@@ -1,26 +1,32 @@
 
 
-## Plan: Change Plan Box Text from "NFC Tags Included" to "Vehicles Activated"
+## Add Order Status Change and Delete to Admin Orders
 
-### Change in `src/pages/Checkout.tsx`
+Two changes needed: backend (edge function) to support POST actions, and frontend to add status dropdown + delete button.
 
-**Line 408** — Replace the tag/card count text with "Vehicle Activated" phrasing:
+### 1. Edge Function (`supabase/functions/admin-data/index.ts`)
 
-```typescript
-// Before:
-<p className="text-[10px] text-muted-foreground">{p.tags} {productType === 'sticker' ? 'NFC Tag' : 'Card'}{p.tags > 1 ? 's' : ''} included</p>
+Add POST handler for two new actions:
+- `update-order-status` — updates `payment_status` on an order by ID
+- `delete-order` — deletes an order by ID
 
-// After:
-<p className="text-[10px] text-muted-foreground">{p.tags} Vehicle{p.tags > 1 ? 's' : ''} Activated</p>
-```
+Both use the same auth/admin verification already in place. Parse JSON body for `{ action, orderId, status }`.
 
-This will show:
-- Starter (1 tag): **1 Vehicle Activated**
-- Business Basic (2 tags): **2 Vehicles Activated**
-- Business Pro (5 tags): **5 Vehicles Activated**
-- Corporate (10 tags): **10 Vehicles Activated**
+### 2. Admin API (`src/lib/adminApi.ts`)
+
+Add `adminPost` helper that sends POST requests with JSON body to the same edge function.
+
+### 3. Admin Orders Page (`src/pages/admin/AdminOrders.tsx`)
+
+- **Status column**: Replace the static badge with a `<select>` dropdown showing `pending` / `success` options. On change, call `adminPost` to update status, then refresh the list.
+- **Delete button**: Add a `Trash2` icon button in the Actions column. On click, show a confirmation (`window.confirm`), then call `adminPost` to delete, and refresh.
+- Both the detail panel and the table row get these controls.
+
+### Files Modified
 
 | File | Change |
 |------|--------|
-| `src/pages/Checkout.tsx` | Line 408: replace NFC Tag/Card text with "Vehicle(s) Activated" |
+| `supabase/functions/admin-data/index.ts` | Add POST handler for `update-order-status` and `delete-order` |
+| `src/lib/adminApi.ts` | Add `adminPost` function |
+| `src/pages/admin/AdminOrders.tsx` | Add status dropdown + delete button in table and detail panel |
 
