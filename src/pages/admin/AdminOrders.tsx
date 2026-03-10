@@ -231,9 +231,14 @@ const AdminOrders = () => {
               {selectedOrder.pan && <div><span className="text-muted-foreground">PAN:</span> <span className="text-foreground">{selectedOrder.pan}</span></div>}
               <div><span className="text-muted-foreground">Date:</span> <span className="text-foreground">{format(new Date(selectedOrder.created_at), 'PPpp')}</span></div>
             </div>
-            <Button className="w-full mt-6" onClick={() => handleDownloadInvoice(selectedOrder)}>
-              <Download className="h-4 w-4 mr-2" /> Download Invoice (PDF)
-            </Button>
+            <div className="flex gap-2 mt-6">
+              <Button className="flex-1" onClick={() => handleDownloadInvoice(selectedOrder)}>
+                <Download className="h-4 w-4 mr-2" /> Download Invoice
+              </Button>
+              <Button variant="destructive" onClick={() => handleDeleteOrder(selectedOrder.id)}>
+                <Trash2 className="h-4 w-4 mr-2" /> Delete
+              </Button>
+            </div>
           </div>
         </div>
       )}
