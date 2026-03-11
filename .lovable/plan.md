@@ -1,44 +1,26 @@
 
 
-## Fix: Checkout Order Creation Blocked by RLS
+## Plan: Change Plan Box Text from "NFC Tags Included" to "Vehicles Activated"
 
-### Root Cause
+### Change in `src/pages/Checkout.tsx`
 
-The `orders` table has only two RLS policies:
-1. `No public read access to orders` — blocks all SELECT for public
-2. `Service role can manage orders` — allows ALL but only for `service_role`
+**Line 408** — Replace the tag/card count text with "Vehicle Activated" phrasing:
 
-The checkout page (`src/pages/Checkout.tsx` line 354) inserts orders directly via `supabase.from('orders').insert(...)` using the **anon** client. Since there's no INSERT policy for `anon`, the insert is silently denied by RLS, causing the "Failed to save order" error. The `FORCE ROW LEVEL SECURITY` migration made this apply even to table owners.
+```typescript
+// Before:
+<p className="text-[10px] text-muted-foreground">{p.tags} {productType === 'sticker' ? 'NFC Tag' : 'Card'}{p.tags > 1 ? 's' : ''} included</p>
 
-### Fix
-
-Add a restrictive INSERT policy for `anon` and `authenticated` roles on the `orders` table, with validation constraints (similar to the `leads` table pattern):
-
-```sql
-CREATE POLICY "Anon can insert orders"
-ON public.orders
-FOR INSERT
-TO anon, authenticated
-WITH CHECK (
-  payment_status = 'pending'
-  AND amount > 0
-  AND length(txnid) >= 5
-  AND name IS NOT NULL
-  AND phone IS NOT NULL
-  AND email IS NOT NULL
-);
+// After:
+<p className="text-[10px] text-muted-foreground">{p.tags} Vehicle{p.tags > 1 ? 's' : ''} Activated</p>
 ```
 
-This ensures:
-- Only `pending` status orders can be created (no one can insert a "success" order directly)
-- Basic field validation at the database level
-- No read/update/delete access for anon — that stays service_role only
+This will show:
+- Starter (1 tag): **1 Vehicle Activated**
+- Business Basic (2 tags): **2 Vehicles Activated**
+- Business Pro (5 tags): **5 Vehicles Activated**
+- Corporate (10 tags): **10 Vehicles Activated**
 
-### Files Changed
-
-| Action | File |
-|--------|------|
-| Migration | Add INSERT policy for anon on `orders` table |
-
-No code changes needed — the checkout page code is correct, it just needs the RLS policy to allow the insert.
+| File | Change |
+|------|--------|
+| `src/pages/Checkout.tsx` | Line 408: replace NFC Tag/Card text with "Vehicle(s) Activated" |
 
