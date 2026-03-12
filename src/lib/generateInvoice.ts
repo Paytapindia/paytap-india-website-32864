@@ -35,12 +35,12 @@ const COMPANY = {
   website: 'www.paytap.co.in',
 };
 
-// Plan breakdowns: GST-inclusive amounts
-const PLAN_BREAKDOWNS: Record<number, { amcInclGst: number; activationInclGst: number; perUnitActivation: number; vehicles: number }> = {
-  999:  { amcInclGst: 300,  activationInclGst: 699,  perUnitActivation: 699,   vehicles: 1 },
-  1600: { amcInclGst: 600,  activationInclGst: 1000, perUnitActivation: 500,   vehicles: 2 },
-  3749: { amcInclGst: 1199, activationInclGst: 2550, perUnitActivation: 510,   vehicles: 5 },
-  6999: { amcInclGst: 2400, activationInclGst: 4599, perUnitActivation: 459.90, vehicles: 10 },
+// Plan breakdowns: GST-inclusive amounts (base price before discount)
+const PLAN_BREAKDOWNS: Record<number, { amcInclGst: number; perUnitActivation: number; vehicles: number; discountInclGst: number }> = {
+  999:  { amcInclGst: 300,  perUnitActivation: 700,  vehicles: 1,  discountInclGst: 1 },
+  1600: { amcInclGst: 300,  perUnitActivation: 650,  vehicles: 2,  discountInclGst: 0 },
+  3749: { amcInclGst: 1250, perUnitActivation: 500,  vehicles: 5,  discountInclGst: 1 },
+  6999: { amcInclGst: 2400, perUnitActivation: 460,  vehicles: 10, discountInclGst: 1 },
 };
 
 function numberToWords(num: number): string {

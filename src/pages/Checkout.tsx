@@ -128,8 +128,8 @@ const getDriverCards = (planKey: PlanType): number => {
 
 const CHECKOUT_BREAKDOWNS: Record<PlanType, { amcInclGst: number; activationInclGst: number }> = {
   starter:        { amcInclGst: 300,  activationInclGst: 699 },
-  business_basic: { amcInclGst: 600,  activationInclGst: 1000 },
-  business_pro:   { amcInclGst: 1199, activationInclGst: 2550 },
+  business_basic: { amcInclGst: 300,  activationInclGst: 1300 },
+  business_pro:   { amcInclGst: 1250, activationInclGst: 2499 },
   corporate:      { amcInclGst: 2400, activationInclGst: 4599 },
 };
 
