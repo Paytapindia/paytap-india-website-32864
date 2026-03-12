@@ -126,9 +126,15 @@ const getDriverCards = (planKey: PlanType): number => {
   return 0;
 };
 
+const CHECKOUT_BREAKDOWNS: Record<PlanType, { amcInclGst: number; activationInclGst: number }> = {
+  starter:        { amcInclGst: 300,  activationInclGst: 699 },
+  business_basic: { amcInclGst: 600,  activationInclGst: 1000 },
+  business_pro:   { amcInclGst: 1199, activationInclGst: 2550 },
+  corporate:      { amcInclGst: 2400, activationInclGst: 4599 },
+};
+
 const getAmcAmount = (planKey: PlanType): number => {
-  const amcMap: Record<PlanType, number> = { starter: 300, business_basic: 600, business_pro: 1200, corporate: 2400 };
-  return amcMap[planKey];
+  return CHECKOUT_BREAKDOWNS[planKey].amcInclGst;
 };
 
 const isPremiumPlan = (planKey: PlanType): boolean => {
