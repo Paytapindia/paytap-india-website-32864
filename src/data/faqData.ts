@@ -184,7 +184,7 @@ export const faqSections: FAQSectionData[] = [
       {
         id: "support-2",
         question: "How do I close my PayTap account?",
-        answer: "You can request closure from your account dashboard.\n\nRemaining wallet balance (if any) will be refunded post verification."
+        answer: "To close your PayTap account, you must first clear your wallet balance completely.\n\nOnce your balance is zero, go to your Card Settings, scroll down, and select the option to permanently close your account.\n\nPlease note that account closure is permanent and cannot be reversed."
       }
     ]
   }
