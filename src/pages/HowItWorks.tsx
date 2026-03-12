@@ -4,7 +4,7 @@ import { motion, useScroll, useTransform, useInView, AnimatePresence } from 'fra
 import { useRef, useState, useEffect, useCallback } from 'react';
 import {
   ChevronDown, ChevronLeft, ChevronRight, X, Check, Shield, Lock, ToggleRight, CreditCard, Fingerprint,
-  UserPlus, Car, Wallet, SlidersHorizontal, Zap, Smile, ArrowRight, Phone,
+  UserPlus, Car, Wallet, SlidersHorizontal, Zap, Smile, ArrowRight, Phone, HelpCircle,
   Bell, FileText, MessageCircle, Receipt, User
 } from 'lucide-react';
 import Navbar from '@/components/Navbar';
@@ -753,8 +753,8 @@ const HowItWorks = () => {
               <Button onClick={() => navigate('/checkout')} className="bg-[#f6245b] hover:bg-[#f6245b]/90 text-white rounded-full px-8 py-6 text-lg font-semibold">
                 Activate Account <ArrowRight className="ml-2 w-5 h-5" />
               </Button>
-              <Button onClick={() => openContactForm()} className="bg-transparent border border-white/30 text-white hover:bg-white/10 rounded-full px-8 py-6 text-lg">
-                <Phone className="mr-2 w-5 h-5" /> Talk to Sales
+              <Button onClick={() => navigate('/faq')} className="bg-transparent border border-white/30 text-white hover:bg-white/10 rounded-full px-8 py-6 text-lg">
+                <HelpCircle className="mr-2 w-5 h-5" /> FAQ
               </Button>
             </motion.div>
           </div>
