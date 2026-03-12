@@ -7,16 +7,16 @@ const FAQ = () => {
   return (
     <>
       <Helmet>
-        <title>Frequently Asked Questions - Paytap | Digital Payment Solutions</title>
+        <title>PayTap FAQ – How NFC Vehicle Payment Tags Work | PayTap</title>
         <meta 
           name="description" 
-          content="Find answers to common questions about Paytap payment tags, wallet management, security features, and more. Get help with your digital payment needs." 
+          content="Learn how PayTap NFC payment tags work for vehicles. Understand security, setup, fleet management, and contactless payments at fuel stations and merchants." 
         />
-        <meta name="keywords" content="Paytap FAQ, payment tag questions, digital wallet help, UPI support, contactless payment guide" />
+        <meta name="keywords" content="PayTap FAQ, NFC payment tag, vehicle payment, contactless fuel payment, fleet payment management, PayTap security" />
         <link rel="canonical" href="https://paytap.co.in/faq" />
       </Helmet>
       
-      <div className="min-h-screen bg-white">
+      <div className="min-h-screen bg-background">
         <Navbar />
         <main className="pt-20">
           <FAQSection />
