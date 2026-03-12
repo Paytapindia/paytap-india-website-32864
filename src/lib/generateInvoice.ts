@@ -121,11 +121,13 @@ export async function generateInvoice(data: InvoiceData): Promise<void> {
   let perUnitActivation: number;
   let amcInclGst: number;
   let vehicles: number;
+  let discountInclGst = 0;
 
   if (breakdown) {
     perUnitActivation = breakdown.perUnitActivation;
     amcInclGst = breakdown.amcInclGst;
     vehicles = breakdown.vehicles;
+    discountInclGst = breakdown.discountInclGst;
   } else {
     amcInclGst = Math.round(grandTotal * 0.3);
     vehicles = data.vehicleCount;
@@ -135,13 +137,14 @@ export async function generateInvoice(data: InvoiceData): Promise<void> {
   // Rate = round(perUnitInclGst / 1.18, 2) — per-unit pre-tax
   const activationRate = round2(perUnitActivation / 1.18);
   const amcRate = round2(amcInclGst / 1.18);
+  const discountPreTax = discountInclGst > 0 ? round2(discountInclGst / 1.18) : 0;
 
   // Amount = Rate × Qty (always exact multiplication)
   const activationAmount = round2(activationRate * vehicles);
   const amcAmount = round2(amcRate * 1);
 
-  // Subtotal = sum of line amounts
-  const subtotalPreTax = round2(activationAmount + amcAmount);
+  // Subtotal = sum of line amounts minus discount
+  const subtotalPreTax = round2(activationAmount + amcAmount - discountPreTax);
 
   // GST from subtotal
   let cgst = 0, sgst = 0, igst = 0;
