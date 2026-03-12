@@ -9,10 +9,10 @@ import { format } from "date-fns";
 import { generateInvoice, InvoiceData } from "@/lib/generateInvoice";
 
 const PLAN_MAP: Record<number, { name: string; vehicles: number; unitPrice: number }> = {
-  499: { name: 'Starter', vehicles: 1, unitPrice: 423 },
-  899: { name: 'Business Basic', vehicles: 2, unitPrice: 762 },
-  1999: { name: 'Business Pro', vehicles: 5, unitPrice: 1694 },
-  4999: { name: 'Corporate', vehicles: 10, unitPrice: 4236 },
+  999:  { name: 'Starter', vehicles: 1, unitPrice: 847 },
+  1600: { name: 'Business Basic', vehicles: 2, unitPrice: 1356 },
+  3749: { name: 'Business Pro', vehicles: 5, unitPrice: 3177 },
+  6999: { name: 'Corporate', vehicles: 10, unitPrice: 5932 },
 };
 
 const AdminOrders = () => {

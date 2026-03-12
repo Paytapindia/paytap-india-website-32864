@@ -3,9 +3,11 @@ import { generateInvoice } from "@/lib/generateInvoice";
 import { FileDown } from "lucide-react";
 
 const SampleInvoice = () => {
-  const handleDownload = async () => {
+  const handleDownload = async (total: number, planName: string, vehicles: number) => {
+    const subtotal = Math.round(total / 1.18);
+    const gstAmount = total - subtotal;
     await generateInvoice({
-      txnid: "SAMPLE-2025-001",
+      txnid: `SAMPLE-${planName.replace(/\s/g, '-').toUpperCase()}`,
       name: "Rahul Sharma",
       address: "42, MG Road, Indiranagar",
       city: "Bengaluru",
@@ -17,25 +19,36 @@ const SampleInvoice = () => {
       companyName: "Sharma Fleet Services Pvt Ltd",
       gst: "29ABCDE1234F1Z5",
       productType: "sticker",
-      planName: "Business Pro",
-      vehicleCount: 5,
+      planName,
+      vehicleCount: vehicles,
       quantity: 1,
-      unitPrice: 4998,
-      subtotal: 4998,
-      gstAmount: 900,
-      total: 5898,
+      unitPrice: subtotal,
+      subtotal,
+      gstAmount,
+      total,
     });
   };
+
+  const plans = [
+    { name: 'Starter', total: 999, vehicles: 1 },
+    { name: 'Business Basic', total: 1600, vehicles: 2 },
+    { name: 'Business Pro', total: 3749, vehicles: 5 },
+    { name: 'Corporate', total: 6999, vehicles: 10 },
+  ];
 
   return (
     <div className="min-h-screen flex items-center justify-center bg-background">
       <div className="text-center space-y-6 p-8">
         <h1 className="text-2xl font-bold text-foreground">Sample Invoice Preview</h1>
-        <p className="text-muted-foreground">Click below to download a sample tax invoice PDF with the Paytap logo.</p>
-        <Button onClick={handleDownload} size="lg" className="gap-2">
-          <FileDown className="w-5 h-5" />
-          Download Sample Invoice
-        </Button>
+        <p className="text-muted-foreground">Download sample invoices for each plan to verify breakdowns.</p>
+        <div className="flex flex-wrap gap-3 justify-center">
+          {plans.map((p) => (
+            <Button key={p.name} onClick={() => handleDownload(p.total, p.name, p.vehicles)} size="lg" className="gap-2">
+              <FileDown className="w-5 h-5" />
+              {p.name} (₹{p.total})
+            </Button>
+          ))}
+        </div>
       </div>
     </div>
   );

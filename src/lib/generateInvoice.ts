@@ -34,6 +34,15 @@ const COMPANY = {
   website: 'www.paytap.co.in',
 };
 
+// Plan breakdowns: AMC + Activation amounts (GST-inclusive)
+// Activation = total - AMC
+const PLAN_BREAKDOWNS: Record<number, { amcInclGst: number; activationInclGst: number; perUnitActivation: number; vehicles: number }> = {
+  999:  { amcInclGst: 300,  activationInclGst: 699,  perUnitActivation: 699,   vehicles: 1 },
+  1600: { amcInclGst: 600,  activationInclGst: 1000, perUnitActivation: 500,   vehicles: 2 },
+  3749: { amcInclGst: 1199, activationInclGst: 2550, perUnitActivation: 510,   vehicles: 5 },
+  6999: { amcInclGst: 2400, activationInclGst: 4599, perUnitActivation: 459.90, vehicles: 10 },
+};
+
 function numberToWords(num: number): string {
   const ones = ['', 'One', 'Two', 'Three', 'Four', 'Five', 'Six', 'Seven', 'Eight', 'Nine',
     'Ten', 'Eleven', 'Twelve', 'Thirteen', 'Fourteen', 'Fifteen', 'Sixteen', 'Seventeen', 'Eighteen', 'Nineteen'];
@@ -96,7 +105,6 @@ export async function generateInvoice(data: InvoiceData): Promise<void> {
   const doc = new jsPDF('p', 'mm', 'a4');
   const pageWidth = 210;
   const margin = 15;
-  const contentWidth = pageWidth - margin * 2;
   const now = new Date();
   const invoiceNo = `INV-${data.txnid}`;
   const isInterState = data.state !== 'Karnataka';
@@ -105,10 +113,33 @@ export async function generateInvoice(data: InvoiceData): Promise<void> {
   const gray = '#666666';
   const lineColor = '#cccccc';
 
-  // Use passed-in values to avoid rounding discrepancies
-  const planPrice = data.subtotal;
   const grandTotal = data.total;
-  const gstTotal = grandTotal - planPrice;
+
+  // Get plan breakdown
+  const breakdown = PLAN_BREAKDOWNS[grandTotal];
+  let activationInclGst: number;
+  let amcInclGst: number;
+  let perUnitActivation: number;
+  let vehicles: number;
+
+  if (breakdown) {
+    activationInclGst = breakdown.activationInclGst;
+    amcInclGst = breakdown.amcInclGst;
+    perUnitActivation = breakdown.perUnitActivation;
+    vehicles = breakdown.vehicles;
+  } else {
+    // Fallback for custom amounts
+    amcInclGst = Math.round(grandTotal * 0.3);
+    activationInclGst = grandTotal - amcInclGst;
+    vehicles = data.vehicleCount;
+    perUnitActivation = activationInclGst / vehicles;
+  }
+
+  // Pre-tax amounts (÷1.18)
+  const activationPreTax = +(activationInclGst / 1.18).toFixed(2);
+  const amcPreTax = +(amcInclGst / 1.18).toFixed(2);
+  const subtotalPreTax = +(activationPreTax + amcPreTax).toFixed(2);
+  const gstTotal = +(grandTotal - subtotalPreTax).toFixed(2);
 
   let y = margin;
 
@@ -180,6 +211,7 @@ export async function generateInvoice(data: InvoiceData): Promise<void> {
   doc.line(margin, y, pageWidth - margin, y);
   y += 5;
 
+  const contentWidth = pageWidth - margin * 2;
   const halfWidth = contentWidth / 2;
 
   doc.setFontSize(9);
@@ -233,7 +265,7 @@ export async function generateInvoice(data: InvoiceData): Promise<void> {
 
   y = Math.max(billY, shipY) + 6;
 
-  // ── Line Items Table (no Tax column — tax shown only in summary) ──
+  // ── Line Items Table ──
   doc.setDrawColor(lineColor);
   doc.line(margin, y, pageWidth - margin, y);
 
@@ -261,20 +293,30 @@ export async function generateInvoice(data: InvoiceData): Promise<void> {
   doc.line(margin, y, pageWidth - margin, y);
   y += 5;
 
-  // Item name reflects the vehicle activation plan
-  const vehicleLabel = data.vehicleCount === 1 ? '1 Vehicle' : `${data.vehicleCount} Vehicles`;
-  const itemName = `PayTap Vehicle Activation Plan – ${vehicleLabel}`;
-  const hsnCode = '997159';
   const gstRate = 18;
+
+  // ── Line Item 1: One Time Activation & NFC Installation Charges ──
+  const vehicleLabel = vehicles === 1 ? '1 Vehicle' : `${vehicles} Vehicles`;
+  const activationItemName = `One Time Activation & NFC Installation Charges – ${vehicleLabel}`;
 
   doc.setFont('helvetica', 'normal');
   doc.setTextColor(gray);
-  doc.text(itemName, colX.item, y);
-  doc.text(hsnCode, colX.hsn, y);
-  doc.text('1', colX.qty, y);
-  doc.text(formatINR(planPrice), colX.rate, y);
+  doc.text(activationItemName, colX.item, y);
+  doc.text('997159', colX.hsn, y);
+  doc.text(String(vehicles), colX.qty, y);
+  doc.text(formatINR(+(perUnitActivation / 1.18).toFixed(2)), colX.rate, y);
   doc.text(`${gstRate}%`, colX.pct, y);
-  doc.text(formatINR(planPrice), colX.amount, y, { align: 'right' });
+  doc.text(formatINR(activationPreTax), colX.amount, y, { align: 'right' });
+
+  y += 7;
+
+  // ── Line Item 2: Annual Maintenance Charges (AMC) ──
+  doc.text('Annual Maintenance Charges (AMC)', colX.item, y);
+  doc.text('998313', colX.hsn, y);
+  doc.text('1', colX.qty, y);
+  doc.text(formatINR(amcPreTax), colX.rate, y);
+  doc.text(`${gstRate}%`, colX.pct, y);
+  doc.text(formatINR(amcPreTax), colX.amount, y, { align: 'right' });
 
   y += 8;
   doc.line(margin, y, pageWidth - margin, y);
@@ -297,14 +339,14 @@ export async function generateInvoice(data: InvoiceData): Promise<void> {
   doc.setFontSize(8);
 
   doc.text('Sub Total:', labelX, y, { align: 'right' });
-  doc.text(formatINR(planPrice), totalsX, y, { align: 'right' });
+  doc.text(formatINR(subtotalPreTax), totalsX, y, { align: 'right' });
   y += 5;
 
   if (isInterState) {
     doc.text(`IGST (18%):`, labelX, y, { align: 'right' });
     doc.text(formatINR(gstTotal), totalsX, y, { align: 'right' });
   } else {
-    const halfGst = Math.round(gstTotal / 2);
+    const halfGst = +(gstTotal / 2).toFixed(2);
     doc.text(`CGST (9%):`, labelX, y, { align: 'right' });
     doc.text(formatINR(halfGst), totalsX, y, { align: 'right' });
     y += 5;
@@ -317,18 +359,6 @@ export async function generateInvoice(data: InvoiceData): Promise<void> {
   doc.setTextColor(dark);
   doc.text('Total:', labelX, y, { align: 'right' });
   doc.text(`₹${formatINR(grandTotal)}`, totalsX, y, { align: 'right' });
-  y += 5;
-
-  doc.setFont('helvetica', 'normal');
-  doc.setTextColor(gray);
-  doc.text('Payment Made:', labelX, y, { align: 'right' });
-  doc.text(`(-) ${formatINR(grandTotal)}`, totalsX, y, { align: 'right' });
-  y += 5;
-
-  doc.setFont('helvetica', 'bold');
-  doc.setTextColor(dark);
-  doc.text('Balance Due:', labelX, y, { align: 'right' });
-  doc.text('₹0.00', totalsX, y, { align: 'right' });
   y += 15;
 
   // ── Footer ──
