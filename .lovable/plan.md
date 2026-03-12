@@ -1,14 +1,26 @@
 
 
-## Update FAQ: Account Closure Answer
+## Plan: Change Plan Box Text from "NFC Tags Included" to "Vehicles Activated"
 
-**File**: `src/data/faqData.ts` — line 187
+### Change in `src/pages/Checkout.tsx`
 
-Replace the current answer string with:
+**Line 408** — Replace the tag/card count text with "Vehicle Activated" phrasing:
 
 ```typescript
-answer: "To close your PayTap account, you must first clear your wallet balance completely.\n\nOnce your balance is zero, go to your Card Settings, scroll down, and select the option to permanently close your account.\n\nPlease note that account closure is permanent and cannot be reversed."
+// Before:
+<p className="text-[10px] text-muted-foreground">{p.tags} {productType === 'sticker' ? 'NFC Tag' : 'Card'}{p.tags > 1 ? 's' : ''} included</p>
+
+// After:
+<p className="text-[10px] text-muted-foreground">{p.tags} Vehicle{p.tags > 1 ? 's' : ''} Activated</p>
 ```
 
-Single line change, no other files affected.
+This will show:
+- Starter (1 tag): **1 Vehicle Activated**
+- Business Basic (2 tags): **2 Vehicles Activated**
+- Business Pro (5 tags): **5 Vehicles Activated**
+- Corporate (10 tags): **10 Vehicles Activated**
+
+| File | Change |
+|------|--------|
+| `src/pages/Checkout.tsx` | Line 408: replace NFC Tag/Card text with "Vehicle(s) Activated" |
 
