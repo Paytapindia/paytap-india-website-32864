@@ -697,24 +697,20 @@ const Checkout = () => {
             <span className="font-medium text-foreground">{plan.name} ({plan.tags} {plan.tags > 1 ? 'units' : 'unit'})</span>
           </div>
           <div className="flex justify-between text-sm">
-            <span className="text-muted-foreground">Activation Fee</span>
-            <span className="font-medium text-foreground">{formatINR(subtotal)}</span>
-          </div>
-          <div className="pl-1 space-y-1">
-            <p className="text-xs text-muted-foreground italic">Which includes:</p>
-            <p className="text-xs text-muted-foreground">• {plan.tags} Contactless NFC Payment Tag{plan.tags > 1 ? 's' : ''} free</p>
-            <p className="text-xs text-muted-foreground">• AMC: {formatINR(getAmcAmount(selectedPlan))}/year</p>
+            <span className="text-muted-foreground">One Time Activation & NFC Installation</span>
+            <span className="font-medium text-foreground">{formatINR(CHECKOUT_BREAKDOWNS[selectedPlan].activationInclGst)}</span>
           </div>
           <div className="flex justify-between text-sm">
-            <span className="text-muted-foreground">GST (18%)</span>
-            <span className="font-medium text-foreground">{formatINR(gstAmount)}</span>
+            <span className="text-muted-foreground">Annual Maintenance Charges (AMC)</span>
+            <span className="font-medium text-foreground">{formatINR(CHECKOUT_BREAKDOWNS[selectedPlan].amcInclGst)}</span>
           </div>
+          <p className="text-[10px] text-muted-foreground italic pl-1">Includes {plan.tags} Contactless NFC Payment Tag{plan.tags > 1 ? 's' : ''}</p>
           <Separator className="bg-border" />
           <div className="flex justify-between items-baseline">
             <span className="text-sm font-semibold text-foreground">Total Payable</span>
             <span className="text-2xl font-bold text-foreground">{formatINR(total)}</span>
           </div>
-          <p className="text-[11px] text-muted-foreground text-right">GST Invoice Provided</p>
+          <p className="text-[11px] text-muted-foreground text-right">Inclusive of 18% GST · Invoice Provided</p>
         </div>
       </div>
 
