@@ -1,36 +1,26 @@
 
 
-## Add KYC Limits FAQ Section
+## Plan: Change Plan Box Text from "NFC Tags Included" to "Vehicles Activated"
 
-**File**: `src/data/faqData.ts`
+### Change in `src/pages/Checkout.tsx`
 
-Add a new FAQ section between "Managing Your Account" and "Fleet & Business Use" focused on KYC requirements and limits.
+**Line 408** — Replace the tag/card count text with "Vehicle Activated" phrasing:
 
-**New Section**: "KYC & Account Limits" with icon `UserCheck`
+```typescript
+// Before:
+<p className="text-[10px] text-muted-foreground">{p.tags} {productType === 'sticker' ? 'NFC Tag' : 'Card'}{p.tags > 1 ? 's' : ''} included</p>
 
-**Questions to add**:
+// After:
+<p className="text-[10px] text-muted-foreground">{p.tags} Vehicle{p.tags > 1 ? 's' : ''} Activated</p>
+```
 
-1. **"What is KYC and why do I need it?"**
-   - KYC (Know Your Customer) is a verification process required for prepaid accounts
-   - With minimum KYC, account is valid for 12 months
-   - Must complete full KYC to continue using the account without issues
-   - Always complete full KYC while you have only one vehicle linked
+This will show:
+- Starter (1 tag): **1 Vehicle Activated**
+- Business Basic (2 tags): **2 Vehicles Activated**
+- Business Pro (5 tags): **5 Vehicles Activated**
+- Corporate (10 tags): **10 Vehicles Activated**
 
-2. **"What are the limits with minimum KYC?"**
-   - Monthly deposit and withdrawal limit: ₹10,000
-   - Complete full KYC before linking additional vehicles
-   - Account valid for 12 months with minimum KYC
-
-3. **"What are the limits after full KYC?"**
-   - Individual accounts: monthly deposit/withdrawal limit increases to ₹2,00,000
-   - Strongly recommended to complete full KYC early to avoid account issues
-
-4. **"How does KYC work for corporate accounts?"**
-   - Corporate accounts go through a complete KYC process
-   - A corporate prepaid business account is provided with no deposit/withdrawal limits at the corporate level
-   - Individual employee-level accounts are created to manage vehicles under the company
-   - Employee accounts follow standard min-KYC and full-KYC limits
-   - Each employee can manage multiple vehicles under them
-
-**Also update**: `src/components/FAQSection.tsx` — add `UserCheck` to the icon imports and `iconMap`.
+| File | Change |
+|------|--------|
+| `src/pages/Checkout.tsx` | Line 408: replace NFC Tag/Card text with "Vehicle(s) Activated" |
 
