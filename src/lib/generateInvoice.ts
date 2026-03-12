@@ -29,13 +29,13 @@ const COMPANY = {
   city: 'Bengaluru Karnataka 560001',
   country: 'India',
   gstin: '29AALCD4626M1Z3',
+  stateCode: '29',
   phone: '9900010964',
   email: 'support@paytap.co.in',
   website: 'www.paytap.co.in',
 };
 
-// Plan breakdowns: AMC + Activation amounts (GST-inclusive)
-// Activation = total - AMC
+// Plan breakdowns: GST-inclusive amounts
 const PLAN_BREAKDOWNS: Record<number, { amcInclGst: number; activationInclGst: number; perUnitActivation: number; vehicles: number }> = {
   999:  { amcInclGst: 300,  activationInclGst: 699,  perUnitActivation: 699,   vehicles: 1 },
   1600: { amcInclGst: 600,  activationInclGst: 1000, perUnitActivation: 500,   vehicles: 2 },
@@ -68,7 +68,10 @@ function formatINR(n: number): string {
   return n.toLocaleString('en-IN', { minimumFractionDigits: 2, maximumFractionDigits: 2 });
 }
 
-// Map state to place of supply code (simplified)
+function round2(n: number): number {
+  return Math.round(n * 100) / 100;
+}
+
 function getPlaceOfSupply(state: string): string {
   const codes: Record<string, string> = {
     'Andhra Pradesh': '37', 'Arunachal Pradesh': '12', 'Assam': '18', 'Bihar': '10',
@@ -85,7 +88,6 @@ function getPlaceOfSupply(state: string): string {
   return `${state} (${codes[state] || '00'})`;
 }
 
-// Logo fetcher with caching
 let logoCached: string | null = null;
 async function getLogoBase64(): Promise<string> {
   if (logoCached) return logoCached;
@@ -108,38 +110,50 @@ export async function generateInvoice(data: InvoiceData): Promise<void> {
   const now = new Date();
   const invoiceNo = `INV-${data.txnid}`;
   const isInterState = data.state !== 'Karnataka';
+  const grandTotal = data.total;
 
   const dark = '#021a42';
   const gray = '#666666';
   const lineColor = '#cccccc';
 
-  const grandTotal = data.total;
-
-  // Get plan breakdown
+  // ── Bottom-Up Calculation ──
   const breakdown = PLAN_BREAKDOWNS[grandTotal];
-  let activationInclGst: number;
-  let amcInclGst: number;
   let perUnitActivation: number;
+  let amcInclGst: number;
   let vehicles: number;
 
   if (breakdown) {
-    activationInclGst = breakdown.activationInclGst;
-    amcInclGst = breakdown.amcInclGst;
     perUnitActivation = breakdown.perUnitActivation;
+    amcInclGst = breakdown.amcInclGst;
     vehicles = breakdown.vehicles;
   } else {
-    // Fallback for custom amounts
     amcInclGst = Math.round(grandTotal * 0.3);
-    activationInclGst = grandTotal - amcInclGst;
     vehicles = data.vehicleCount;
-    perUnitActivation = activationInclGst / vehicles;
+    perUnitActivation = (grandTotal - amcInclGst) / vehicles;
   }
 
-  // Pre-tax amounts (÷1.18)
-  const activationPreTax = +(activationInclGst / 1.18).toFixed(2);
-  const amcPreTax = +(amcInclGst / 1.18).toFixed(2);
-  const subtotalPreTax = +(activationPreTax + amcPreTax).toFixed(2);
-  const gstTotal = +(grandTotal - subtotalPreTax).toFixed(2);
+  // Rate = round(perUnitInclGst / 1.18, 2) — per-unit pre-tax
+  const activationRate = round2(perUnitActivation / 1.18);
+  const amcRate = round2(amcInclGst / 1.18);
+
+  // Amount = Rate × Qty (always exact multiplication)
+  const activationAmount = round2(activationRate * vehicles);
+  const amcAmount = round2(amcRate * 1);
+
+  // Subtotal = sum of line amounts
+  const subtotalPreTax = round2(activationAmount + amcAmount);
+
+  // GST from subtotal
+  let cgst = 0, sgst = 0, igst = 0;
+  if (isInterState) {
+    igst = round2(subtotalPreTax * 0.18);
+  } else {
+    cgst = round2(subtotalPreTax * 0.09);
+    sgst = round2(subtotalPreTax * 0.09);
+  }
+
+  const calculatedTotal = round2(subtotalPreTax + cgst + sgst + igst);
+  const roundOff = round2(grandTotal - calculatedTotal);
 
   let y = margin;
 
@@ -158,7 +172,7 @@ export async function generateInvoice(data: InvoiceData): Promise<void> {
   doc.setFont('helvetica', 'bold');
   doc.setTextColor(dark);
   doc.text(COMPANY.name, margin, y + 12);
-  
+
   doc.setFont('helvetica', 'normal');
   doc.setTextColor(gray);
   doc.setFontSize(8);
@@ -166,10 +180,10 @@ export async function generateInvoice(data: InvoiceData): Promise<void> {
   doc.text(COMPANY.address2, margin, y + 21);
   doc.text(COMPANY.city, margin, y + 25);
   doc.text(COMPANY.country, margin, y + 29);
-  doc.text(`GSTIN ${COMPANY.gstin}`, margin, y + 34);
+  doc.text(`GSTIN: ${COMPANY.gstin} | State Code: ${COMPANY.stateCode}`, margin, y + 34);
   doc.text(COMPANY.phone, margin, y + 38);
 
-  // Right side - TAX INVOICE + contact
+  // Right side - TAX INVOICE
   doc.setFontSize(14);
   doc.setFont('helvetica', 'bold');
   doc.setTextColor(dark);
@@ -203,8 +217,9 @@ export async function generateInvoice(data: InvoiceData): Promise<void> {
   doc.text(`Invoice Date: ${formatDate(now)}`, detailsX, y + 3, { align: 'right' });
   doc.text(`Terms: Due on Receipt`, detailsX, y + 8, { align: 'right' });
   doc.text(`Due Date: ${formatDate(now)}`, detailsX, y + 13, { align: 'right' });
+  doc.text(`Reverse Charge: No`, detailsX, y + 18, { align: 'right' });
 
-  y += 20;
+  y += 25;
 
   // ── Bill To / Ship To ──
   doc.setDrawColor(lineColor);
@@ -242,9 +257,9 @@ export async function generateInvoice(data: InvoiceData): Promise<void> {
   doc.text(`${data.city} ${data.state}`, margin, billY); billY += 4;
   doc.text(`${data.pincode} ${data.state}`, margin, billY); billY += 4;
   if (data.gst) {
-    doc.text(`GSTIN ${data.gst}`, margin, billY); billY += 4;
+    doc.text(`GSTIN: ${data.gst}`, margin, billY); billY += 4;
   } else if (data.pan) {
-    doc.text(`PAN ${data.pan}`, margin, billY); billY += 4;
+    doc.text(`PAN: ${data.pan}`, margin, billY); billY += 4;
   }
 
   const shipX = margin + halfWidth + 5;
@@ -257,10 +272,17 @@ export async function generateInvoice(data: InvoiceData): Promise<void> {
   doc.setFont('helvetica', 'normal');
   doc.setTextColor(gray);
   let shipY = y + 5;
+  if (data.companyName) {
+    doc.text(data.companyName, shipX, shipY); shipY += 4;
+  } else {
+    doc.text(data.name, shipX, shipY); shipY += 4;
+  }
+  doc.text(data.address, shipX, shipY); shipY += 4;
+  doc.text(`${data.city} ${data.state} ${data.pincode}`, shipX, shipY); shipY += 4;
   if (data.gst) {
-    doc.text(`GSTIN ${data.gst}`, shipX, shipY); shipY += 4;
+    doc.text(`GSTIN: ${data.gst}`, shipX, shipY); shipY += 4;
   } else if (data.pan) {
-    doc.text(`PAN ${data.pan}`, shipX, shipY); shipY += 4;
+    doc.text(`PAN: ${data.pan}`, shipX, shipY); shipY += 4;
   }
 
   y = Math.max(billY, shipY) + 6;
@@ -294,29 +316,27 @@ export async function generateInvoice(data: InvoiceData): Promise<void> {
   y += 5;
 
   const gstRate = 18;
-
-  // ── Line Item 1: One Time Activation & NFC Installation Charges ──
   const vehicleLabel = vehicles === 1 ? '1 Vehicle' : `${vehicles} Vehicles`;
-  const activationItemName = `One Time Activation & NFC Installation Charges – ${vehicleLabel}`;
 
+  // ── Line 1: Activation ──
   doc.setFont('helvetica', 'normal');
   doc.setTextColor(gray);
-  doc.text(activationItemName, colX.item, y);
+  doc.text(`PayTap NFC Tag Activation & Installation Charges – ${vehicleLabel}`, colX.item, y);
   doc.text('997159', colX.hsn, y);
   doc.text(String(vehicles), colX.qty, y);
-  doc.text(formatINR(+(perUnitActivation / 1.18).toFixed(2)), colX.rate, y);
+  doc.text(formatINR(activationRate), colX.rate, y);
   doc.text(`${gstRate}%`, colX.pct, y);
-  doc.text(formatINR(activationPreTax), colX.amount, y, { align: 'right' });
+  doc.text(formatINR(activationAmount), colX.amount, y, { align: 'right' });
 
   y += 7;
 
-  // ── Line Item 2: Annual Maintenance Charges (AMC) ──
+  // ── Line 2: AMC ──
   doc.text('Annual Maintenance Charges (AMC)', colX.item, y);
   doc.text('998313', colX.hsn, y);
   doc.text('1', colX.qty, y);
-  doc.text(formatINR(amcPreTax), colX.rate, y);
+  doc.text(formatINR(amcRate), colX.rate, y);
   doc.text(`${gstRate}%`, colX.pct, y);
-  doc.text(formatINR(amcPreTax), colX.amount, y, { align: 'right' });
+  doc.text(formatINR(amcAmount), colX.amount, y, { align: 'right' });
 
   y += 8;
   doc.line(margin, y, pageWidth - margin, y);
@@ -344,16 +364,23 @@ export async function generateInvoice(data: InvoiceData): Promise<void> {
 
   if (isInterState) {
     doc.text(`IGST (18%):`, labelX, y, { align: 'right' });
-    doc.text(formatINR(gstTotal), totalsX, y, { align: 'right' });
+    doc.text(formatINR(igst), totalsX, y, { align: 'right' });
+    y += 5;
   } else {
-    const halfGst = +(gstTotal / 2).toFixed(2);
     doc.text(`CGST (9%):`, labelX, y, { align: 'right' });
-    doc.text(formatINR(halfGst), totalsX, y, { align: 'right' });
+    doc.text(formatINR(cgst), totalsX, y, { align: 'right' });
     y += 5;
     doc.text(`SGST (9%):`, labelX, y, { align: 'right' });
-    doc.text(formatINR(halfGst), totalsX, y, { align: 'right' });
+    doc.text(formatINR(sgst), totalsX, y, { align: 'right' });
+    y += 5;
   }
-  y += 5;
+
+  // Round Off line (only if non-zero)
+  if (Math.abs(roundOff) >= 0.01) {
+    doc.text('Round Off:', labelX, y, { align: 'right' });
+    doc.text((roundOff >= 0 ? '+' : '') + formatINR(roundOff), totalsX, y, { align: 'right' });
+    y += 5;
+  }
 
   doc.setFont('helvetica', 'bold');
   doc.setTextColor(dark);
@@ -373,7 +400,7 @@ export async function generateInvoice(data: InvoiceData): Promise<void> {
   y += 15;
 
   doc.setFontSize(7);
-  doc.text('This is a computer-generated invoice, no signature required.', pageWidth / 2, y, { align: 'center' });
+  doc.text('This is a computer-generated invoice and does not require a physical signature.', pageWidth / 2, y, { align: 'center' });
 
   doc.save(`${invoiceNo}.pdf`);
 }
