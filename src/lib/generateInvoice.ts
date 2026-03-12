@@ -341,6 +341,17 @@ export async function generateInvoice(data: InvoiceData): Promise<void> {
   doc.text(`${gstRate}%`, colX.pct, y);
   doc.text(formatINR(amcAmount), colX.amount, y, { align: 'right' });
 
+  // ── Line 3: Discount (only if applicable) ──
+  if (discountPreTax > 0) {
+    y += 7;
+    doc.text('Discount', colX.item, y);
+    doc.text('—', colX.hsn, y);
+    doc.text('1', colX.qty, y);
+    doc.text(`-${formatINR(discountPreTax)}`, colX.rate, y);
+    doc.text(`${gstRate}%`, colX.pct, y);
+    doc.text(`-${formatINR(discountPreTax)}`, colX.amount, y, { align: 'right' });
+  }
+
   y += 8;
   doc.line(margin, y, pageWidth - margin, y);
   y += 8;
