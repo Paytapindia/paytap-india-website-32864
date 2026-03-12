@@ -126,9 +126,15 @@ const getDriverCards = (planKey: PlanType): number => {
   return 0;
 };
 
+const CHECKOUT_BREAKDOWNS: Record<PlanType, { amcInclGst: number; activationInclGst: number }> = {
+  starter:        { amcInclGst: 300,  activationInclGst: 699 },
+  business_basic: { amcInclGst: 600,  activationInclGst: 1000 },
+  business_pro:   { amcInclGst: 1199, activationInclGst: 2550 },
+  corporate:      { amcInclGst: 2400, activationInclGst: 4599 },
+};
+
 const getAmcAmount = (planKey: PlanType): number => {
-  const amcMap: Record<PlanType, number> = { starter: 300, business_basic: 600, business_pro: 1200, corporate: 2400 };
-  return amcMap[planKey];
+  return CHECKOUT_BREAKDOWNS[planKey].amcInclGst;
 };
 
 const isPremiumPlan = (planKey: PlanType): boolean => {
@@ -691,24 +697,20 @@ const Checkout = () => {
             <span className="font-medium text-foreground">{plan.name} ({plan.tags} {plan.tags > 1 ? 'units' : 'unit'})</span>
           </div>
           <div className="flex justify-between text-sm">
-            <span className="text-muted-foreground">Activation Fee</span>
-            <span className="font-medium text-foreground">{formatINR(subtotal)}</span>
-          </div>
-          <div className="pl-1 space-y-1">
-            <p className="text-xs text-muted-foreground italic">Which includes:</p>
-            <p className="text-xs text-muted-foreground">• {plan.tags} Contactless NFC Payment Tag{plan.tags > 1 ? 's' : ''} free</p>
-            <p className="text-xs text-muted-foreground">• AMC: {formatINR(getAmcAmount(selectedPlan))}/year</p>
+            <span className="text-muted-foreground">One Time Activation & NFC Installation</span>
+            <span className="font-medium text-foreground">{formatINR(CHECKOUT_BREAKDOWNS[selectedPlan].activationInclGst)}</span>
           </div>
           <div className="flex justify-between text-sm">
-            <span className="text-muted-foreground">GST (18%)</span>
-            <span className="font-medium text-foreground">{formatINR(gstAmount)}</span>
+            <span className="text-muted-foreground">Annual Maintenance Charges (AMC)</span>
+            <span className="font-medium text-foreground">{formatINR(CHECKOUT_BREAKDOWNS[selectedPlan].amcInclGst)}</span>
           </div>
+          <p className="text-[10px] text-muted-foreground italic pl-1">Includes {plan.tags} Contactless NFC Payment Tag{plan.tags > 1 ? 's' : ''}</p>
           <Separator className="bg-border" />
           <div className="flex justify-between items-baseline">
             <span className="text-sm font-semibold text-foreground">Total Payable</span>
             <span className="text-2xl font-bold text-foreground">{formatINR(total)}</span>
           </div>
-          <p className="text-[11px] text-muted-foreground text-right">GST Invoice Provided</p>
+          <p className="text-[11px] text-muted-foreground text-right">Inclusive of 18% GST · Invoice Provided</p>
         </div>
       </div>
 

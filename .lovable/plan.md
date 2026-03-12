@@ -1,37 +1,26 @@
 
 
-## Fix: Align Checkout Review with Invoice Breakdowns
+## Plan: Change Plan Box Text from "NFC Tags Included" to "Vehicles Activated"
 
-### Problem
+### Change in `src/pages/Checkout.tsx`
 
-The checkout review (Step 4) currently shows:
-- **Activation Fee** = entire pre-tax amount (total ÷ 1.18) — does not match invoice
-- **AMC** values: business_pro shows ₹1,200 but invoice uses ₹1,199
+**Line 408** — Replace the tag/card count text with "Vehicle Activated" phrasing:
 
-The invoice splits into two GST-inclusive line items (Activation + AMC = Total), but the review page shows a different structure (pre-tax subtotal + GST = Total).
+```typescript
+// Before:
+<p className="text-[10px] text-muted-foreground">{p.tags} {productType === 'sticker' ? 'NFC Tag' : 'Card'}{p.tags > 1 ? 's' : ''} included</p>
 
-### Fix
+// After:
+<p className="text-[10px] text-muted-foreground">{p.tags} Vehicle{p.tags > 1 ? 's' : ''} Activated</p>
+```
 
-Update the Step 4 order summary to show the same two-line breakdown as the invoice, using the same `PLAN_BREAKDOWNS` amounts:
-
-| Plan | Activation (incl GST) | AMC (incl GST) | Total |
-|------|-----------------------|-----------------|-------|
-| Starter | ₹699 | ₹300 | ₹999 |
-| Business Basic | ₹1,000 | ₹600 | ₹1,600 |
-| Business Pro | ₹2,550 | ₹1,199 | ₹3,749 |
-| Corporate | ₹4,599 | ₹2,400 | ₹6,999 |
-
-The review will show:
-- One Time Activation & NFC Installation: ₹X (incl GST)
-- Annual Maintenance Charges (AMC): ₹X (incl GST)
-- Separator
-- Total Payable: ₹X (incl 18% GST)
-
-### Files Modified
+This will show:
+- Starter (1 tag): **1 Vehicle Activated**
+- Business Basic (2 tags): **2 Vehicles Activated**
+- Business Pro (5 tags): **5 Vehicles Activated**
+- Corporate (10 tags): **10 Vehicles Activated**
 
 | File | Change |
 |------|--------|
-| `src/pages/Checkout.tsx` | Update `getAmcAmount` to use 1199 for business_pro; rewrite Step 4 order summary to show Activation + AMC breakdown matching invoice |
-
-No changes to the invoice generator — it's already correct.
+| `src/pages/Checkout.tsx` | Line 408: replace NFC Tag/Card text with "Vehicle(s) Activated" |
 
