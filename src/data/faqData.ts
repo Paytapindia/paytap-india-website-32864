@@ -166,7 +166,17 @@ export const faqSections: FAQSectionData[] = [
       {
         id: "trouble-1",
         question: "What if a payment fails at a petrol pump?",
-        answer: "Sometimes POS machines at fuel stations may experience network issues.\n\nIf this happens:\n\n• Try tapping again\n• Ask the operator to retry the transaction\n• Try a small test transaction\n\nIn most cases the issue is with the merchant machine."
+        answer: "If a tap payment fails at a petrol pump, don't worry — it's almost always a merchant machine issue, not your PayTap tag.\n\nHere's what to do:\n\n• Try tapping again on the same machine\n• Ask the petrol pump attendant to retry the transaction\n• Try a smaller amount like ₹1 as a test transaction\n• If it still fails, ask the attendant to try a different card machine\n\nSome older POS machines at fuel stations haven't been upgraded to support the latest contactless payment limits. This can cause transactions to fail even though your tag is working perfectly fine.\n\nIf the payment is being attempted and you see an error or decline, that itself confirms your NFC tag is communicating with the machine. The issue is on the machine's side, not your tag.\n\nYour balance and account are completely safe — failed transactions do not deduct any money."
+      },
+      {
+        id: "trouble-2",
+        question: "How can I test if my PayTap tag is working?",
+        answer: "You can easily test your PayTap from your dashboard without visiting any merchant.\n\nPayTap provides a prepaid virtual card linked to your account. You can find the card details in your dashboard.\n\nUse those card details to make a small test transaction on any online platform — just like you would with a regular debit or credit card.\n\nIf the online transaction goes through successfully, your PayTap account and card are working perfectly."
+      },
+      {
+        id: "trouble-3",
+        question: "Why do some transactions fail even when the tag is working?",
+        answer: "The PayTap NFC tag does not selectively block or fail transactions. If your tag is tapping and communicating with the machine, it is working.\n\nTransaction failures happen because of limitations on the merchant's POS machine, not your tag. Common reasons include:\n\n• The POS machine is running outdated firmware\n• The machine hasn't been upgraded to support current contactless transaction limits\n• Network connectivity issues at the merchant's end\n\nIf a transaction fails, your balance is completely safe — no money is deducted for failed transactions.\n\nYou can always verify your tag is working by making a test transaction online using your virtual card details from the PayTap dashboard."
       }
     ]
   },
