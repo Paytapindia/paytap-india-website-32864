@@ -8,6 +8,7 @@ import {
   CreditCard,
   ShieldCheck,
   Settings,
+  UserCheck,
   Building2,
   Wrench,
   Headphones,
