@@ -35,12 +35,12 @@ const COMPANY = {
   website: 'www.paytap.co.in',
 };
 
-// Plan breakdowns: GST-inclusive amounts
-const PLAN_BREAKDOWNS: Record<number, { amcInclGst: number; activationInclGst: number; perUnitActivation: number; vehicles: number }> = {
-  999:  { amcInclGst: 300,  activationInclGst: 699,  perUnitActivation: 699,   vehicles: 1 },
-  1600: { amcInclGst: 600,  activationInclGst: 1000, perUnitActivation: 500,   vehicles: 2 },
-  3749: { amcInclGst: 1199, activationInclGst: 2550, perUnitActivation: 510,   vehicles: 5 },
-  6999: { amcInclGst: 2400, activationInclGst: 4599, perUnitActivation: 459.90, vehicles: 10 },
+// Plan breakdowns: GST-inclusive amounts (base price before discount)
+const PLAN_BREAKDOWNS: Record<number, { amcInclGst: number; perUnitActivation: number; vehicles: number; discountInclGst: number }> = {
+  999:  { amcInclGst: 300,  perUnitActivation: 700,  vehicles: 1,  discountInclGst: 1 },
+  1600: { amcInclGst: 300,  perUnitActivation: 650,  vehicles: 2,  discountInclGst: 0 },
+  3749: { amcInclGst: 1250, perUnitActivation: 500,  vehicles: 5,  discountInclGst: 1 },
+  6999: { amcInclGst: 2400, perUnitActivation: 460,  vehicles: 10, discountInclGst: 1 },
 };
 
 function numberToWords(num: number): string {
@@ -121,11 +121,13 @@ export async function generateInvoice(data: InvoiceData): Promise<void> {
   let perUnitActivation: number;
   let amcInclGst: number;
   let vehicles: number;
+  let discountInclGst = 0;
 
   if (breakdown) {
     perUnitActivation = breakdown.perUnitActivation;
     amcInclGst = breakdown.amcInclGst;
     vehicles = breakdown.vehicles;
+    discountInclGst = breakdown.discountInclGst;
   } else {
     amcInclGst = Math.round(grandTotal * 0.3);
     vehicles = data.vehicleCount;
@@ -135,13 +137,14 @@ export async function generateInvoice(data: InvoiceData): Promise<void> {
   // Rate = round(perUnitInclGst / 1.18, 2) — per-unit pre-tax
   const activationRate = round2(perUnitActivation / 1.18);
   const amcRate = round2(amcInclGst / 1.18);
+  const discountPreTax = discountInclGst > 0 ? round2(discountInclGst / 1.18) : 0;
 
   // Amount = Rate × Qty (always exact multiplication)
   const activationAmount = round2(activationRate * vehicles);
   const amcAmount = round2(amcRate * 1);
 
-  // Subtotal = sum of line amounts
-  const subtotalPreTax = round2(activationAmount + amcAmount);
+  // Subtotal = sum of line amounts minus discount
+  const subtotalPreTax = round2(activationAmount + amcAmount - discountPreTax);
 
   // GST from subtotal
   let cgst = 0, sgst = 0, igst = 0;
@@ -337,6 +340,17 @@ export async function generateInvoice(data: InvoiceData): Promise<void> {
   doc.text(formatINR(amcRate), colX.rate, y);
   doc.text(`${gstRate}%`, colX.pct, y);
   doc.text(formatINR(amcAmount), colX.amount, y, { align: 'right' });
+
+  // ── Line 3: Discount (only if applicable) ──
+  if (discountPreTax > 0) {
+    y += 7;
+    doc.text('Discount', colX.item, y);
+    doc.text('—', colX.hsn, y);
+    doc.text('1', colX.qty, y);
+    doc.text(`-${formatINR(discountPreTax)}`, colX.rate, y);
+    doc.text(`${gstRate}%`, colX.pct, y);
+    doc.text(`-${formatINR(discountPreTax)}`, colX.amount, y, { align: 'right' });
+  }
 
   y += 8;
   doc.line(margin, y, pageWidth - margin, y);
