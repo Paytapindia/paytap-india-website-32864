@@ -140,6 +140,34 @@ export const faqSections: FAQSectionData[] = [
     ]
   },
   {
+    id: "kyc",
+    title: "KYC & Account Limits",
+    description: "Understanding verification requirements and transaction limits",
+    icon: "UserCheck",
+    faqs: [
+      {
+        id: "kyc-1",
+        question: "What is KYC and why do I need it?",
+        answer: "KYC stands for Know Your Customer. It is a mandatory verification process required for all prepaid accounts.\n\nWhen you first sign up, your account is activated with minimum KYC, which keeps your account valid for 12 months.\n\nYou are required to complete your full KYC within this period to continue using your account without any issues.\n\nImportant: Always complete your full KYC while you have only one vehicle linked to your account. This ensures your account setup is clean and avoids complications when adding more vehicles later."
+      },
+      {
+        id: "kyc-2",
+        question: "What are the limits with minimum KYC?",
+        answer: "With minimum KYC, your account has the following limits:\n\n• Monthly deposit limit: ₹10,000\n• Monthly withdrawal limit: ₹10,000\n• Account validity: 12 months\n\nThese limits apply to both deposits and withdrawals.\n\nPlease complete your full KYC before linking additional vehicles to your account."
+      },
+      {
+        id: "kyc-3",
+        question: "What are the limits after full KYC?",
+        answer: "Once you complete full KYC for an individual account, your limits increase significantly:\n\n• Monthly deposit limit: ₹2,00,000\n• Monthly withdrawal limit: ₹2,00,000\n\nWe strongly recommend completing full KYC as early as possible to avoid any disruptions to your account or vehicle payments."
+      },
+      {
+        id: "kyc-4",
+        question: "How does KYC work for corporate accounts?",
+        answer: "Corporate accounts go through a complete KYC process at the company level.\n\nOnce verified, a corporate prepaid business account is provided. At the corporate level, there are no deposit or withdrawal limits.\n\nUnder the corporate account, individual employee-level accounts are created. Each employee manages multiple vehicles assigned to them.\n\nHowever, at the employee level, standard KYC limits still apply:\n\n• Minimum KYC: ₹10,000 monthly limit\n• Full KYC: ₹2,00,000 monthly limit\n\nEach employee must complete their own KYC as per the prepaid programme norms."
+      }
+    ]
+  },
+  {
     id: "fleet",
     title: "Fleet & Business Use",
     description: "PayTap for businesses and fleet operators",

@@ -20,6 +20,7 @@ const iconMap: Record<string, React.ReactNode> = {
   CreditCard: <CreditCard size={24} />,
   ShieldCheck: <ShieldCheck size={24} />,
   Settings: <Settings size={24} />,
+  UserCheck: <UserCheck size={24} />,
   Building2: <Building2 size={24} />,
   Wrench: <Wrench size={24} />,
   Headphones: <Headphones size={24} />,
