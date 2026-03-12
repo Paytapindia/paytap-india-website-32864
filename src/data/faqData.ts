@@ -1,200 +1,191 @@
 
-export const generalFAQs = [
-  {
-    id: "general-1",
-    question: "What is Paytap?",
-    answer: "Paytap is a contactless payment tag that enables seamless tap-and-pay experiences for fuel, tolls, metro, parking, and other everyday utility payments. It works using NFC technology and a prepaid wallet."
-  },
-  {
-    id: "general-2",
-    question: "Who can use Paytap?",
-    answer: "Anyone with a vehicle or a recurring need to pay for daily services like fuel, tolls, or parking can use Paytap. It's designed for individuals, fleet operators, gig workers, and businesses alike."
-  },
-  {
-    id: "general-3",
-    question: "Where can I use Paytap?",
-    answer: "You can use your Paytap tag at over 8 lakh+ RuPay-enabled POS terminals across India. This includes fuel stations, toll booths (via FASTag integration), metro stations (NCMC), service centers, parking lots, and partner retail outlets."
-  },
-  {
-    id: "general-4",
-    question: "Is internet required to use Paytap?",
-    answer: "No. Paytap works without the need for an internet connection at the point of sale. The tag uses offline NFC to communicate with supported POS terminals."
-  },
-  {
-    id: "general-5",
-    question: "Is Paytap RBI approved?",
-    answer: "Yes. Paytap operates in partnership with RBI-authorized Prepaid Payment Instrument (PPI) issuers, ensuring full regulatory compliance."
-  }
-];
-
-export const gettingStartedFAQs = [
-  {
-    id: "start-1",
-    question: "How do I get a Paytap tag?",
-    answer: "You can order a Paytap tag directly from our website or mobile app. It will be delivered to your address along with activation instructions."
-  },
-  {
-    id: "start-2",
-    question: "How do I install the tag?",
-    answer: "Stick the tag on your vehicle's windshield (behind the rearview mirror), on your keychain, or phone back. Make sure it is clean, flat, and clearly visible."
-  },
-  {
-    id: "start-3",
-    question: "Do I need an app to use Paytap?",
-    answer: "No app is required to make a payment. However, our companion app helps you manage your wallet, view transactions, track expenses, and load funds."
-  },
-  {
-    id: "start-4",
-    question: "Can I use the same tag for multiple vehicles?",
-    answer: "No. Each tag is linked to a specific wallet/user. For multiple vehicles, we recommend assigning one tag per vehicle."
-  },
-  {
-    id: "start-5",
-    question: "Can I get more than one tag on a single account?",
-    answer: "Yes, you can manage multiple tags under one dashboard for personal or fleet use."
-  },
-  {
-    id: "start-6",
-    question: "How do I load money into my wallet?",
-    answer: "To load money into your Paytap wallet, open the app, go to the \"Wallet\" section, and choose \"Add Money.\" You can add funds using UPI, debit cards, or net banking."
-  }
-];
-
-export const kycFAQs = [
-  {
-    id: "kyc-1",
-    question: "Is KYC mandatory?",
-    answer: "Yes. As per RBI norms, a minimum KYC is required to activate the wallet. Full KYC unlocks higher limits."
-  },
-  {
-    id: "kyc-2",
-    question: "What are the differences between Minimum and Full KYC?",
-    answer: "Minimum KYC: Load up to ₹10,000/month, annual limit ₹1,20,000. Full KYC: Load up to ₹1,00,000 wallet balance with no monthly cap."
-  },
-  {
-    id: "kyc-3",
-    question: "How do I complete KYC?",
-    answer: "KYC can be completed via the app using government-issued ID and mobile OTP verification."
-  },
-  {
-    id: "kyc-4",
-    question: "What happens if I don't complete my KYC?",
-    answer: "Without KYC, you won't be able to access wallet features or make payments using your tag."
-  },
-  {
-    id: "kyc-5",
-    question: "Can I update my KYC info later?",
-    answer: "Yes, users can upgrade from Minimum to Full KYC any time via the app."
-  }
-];
-
-export const walletFAQs = [
-  {
-    id: "wallet-1",
-    question: "How do I load money into my Paytap wallet?",
-    answer: "Funds can be added via UPI, debit card, net banking, or through the Paytap app."
-  },
-  {
-    id: "wallet-2",
-    question: "What are the loading and spending limits?",
-    answer: "As per your KYC level: ₹10,000/month for Minimum KYC, up to ₹1L wallet balance for Full KYC."
-  },
-  {
-    id: "wallet-3",
-    question: "Can I connect my bank account to Paytap?",
-    answer: "No. Paytap is a prepaid wallet, not a bank account. You can add money from your bank via UPI."
-  },
-  {
-    id: "wallet-4",
-    question: "Can I get transaction notifications?",
-    answer: "Yes. You will receive real-time alerts via SMS or the app every time a payment is made."
-  },
-  {
-    id: "wallet-5",
-    question: "Does Paytap work on metro stations?",
-    answer: "Yes, Paytap supports NCMC metro terminals across select Indian cities."
-  }
-];
-
-export const transactionsFAQs = [
-  {
-    id: "trans-1",
-    question: "How can I view my transaction history?",
-    answer: "All transactions are logged in the Paytap app and are accessible via your dashboard."
-  },
-  {
-    id: "trans-2",
-    question: "Can I get a payment receipt?",
-    answer: "Yes. Receipts are auto-generated and available to download or share from the app."
-  },
-  {
-    id: "trans-3",
-    question: "Can I dispute a transaction?",
-    answer: "Yes. Disputes can be raised via the app or by contacting support."
-  },
-  {
-    id: "trans-4",
-    question: "Is there a way to track expenses by vehicle or tag?",
-    answer: "Yes. Each tag can be tracked individually under the dashboard, showing detailed spend logs."
-  }
-];
-
-export const securityFAQs = [
-  {
-    id: "security-1",
-    question: "Is Paytap secure?",
-    answer: "Absolutely. Paytap uses PCI-DSS-compliant systems and 256-bit encryption. Your transactions are tokenized and secure."
-  },
-  {
-    id: "security-2",
-    question: "What if my tag is lost or stolen?",
-    answer: "You can immediately block the tag from your dashboard or by calling our helpline."
-  },
-  {
-    id: "security-3",
-    question: "Can someone misuse my tag?",
-    answer: "Since the wallet is prepaid with a defined limit, exposure is limited. However, we strongly recommend blocking lost tags immediately."
-  }
-];
-
-export const businessFAQs = [
-  {
-    id: "business-1",
-    question: "Can fleet operators use PayTap?",
-    answer: "Yes. We offer bulk tag management, multi-wallet setups, and reporting tools for fleets and logistics operators."
-  },
-  {
-    id: "business-2",
-    question: "How can I manage multiple tags?",
-    answer: "Use our web or mobile dashboard to assign tags to vehicles, monitor spend, and reload wallets."
-  },
-  {
-    id: "business-3",
-    question: "Can I get an expense report per vehicle?",
-    answer: "Yes. Detailed downloadable reports are available by tag, time range, or user."
-  }
-];
-
-export const supportFAQs = [
-  {
-    id: "support-1",
-    question: "What happens if a transaction fails?",
-    answer: "In case of failed transactions, refunds are auto-processed to your wallet within 3-5 working days."
-  },
-  {
-    id: "support-2",
-    question: "How can I contact customer support?",
-    answer: "You can reach us via email at support@paytap.co.in or call us at our helpline number."
-  },
-  {
-    id: "support-3",
-    question: "How do I close my Paytap account?",
-    answer: "You can request closure from your account dashboard. Remaining wallet balance (if any) will be refunded post verification."
-  }
-];
-
 export type FAQ = {
   id: string;
   question: string;
   answer: string;
 };
+
+export type FAQSectionData = {
+  id: string;
+  title: string;
+  description: string;
+  icon: string;
+  faqs: FAQ[];
+};
+
+export const faqSections: FAQSectionData[] = [
+  {
+    id: "understanding",
+    title: "Understanding PayTap",
+    description: "Learn what PayTap is and how it transforms vehicle payments",
+    icon: "Lightbulb",
+    faqs: [
+      {
+        id: "understanding-1",
+        question: "What is PayTap?",
+        answer: "PayTap is a contactless NFC payment tag designed for vehicles.\n\nIt allows vehicles to make payments directly at merchant card machines, such as fuel stations, service centers, and other vehicle-related merchants.\n\nInstead of giving drivers cash or cards, the vehicle itself becomes the payment method.\n\nEvery payment is instantly recorded and visible on the PayTap dashboard, giving complete transparency and control over vehicle expenses."
+      },
+      {
+        id: "understanding-2",
+        question: "Is PayTap similar to FASTag?",
+        answer: "No.\n\nFASTag is designed only for toll payments on highways.\n\nPayTap is designed for everyday vehicle expenses such as fuel, service, car wash, and other payments that normally require cash or cards.\n\nPayTap works by tapping the PayTap NFC tag on a merchant card machine, similar to how contactless cards work."
+      },
+      {
+        id: "understanding-3",
+        question: "How does PayTap work?",
+        answer: "A PayTap transaction typically works like this:\n\n1. The vehicle arrives at a fuel station or merchant.\n2. The merchant enters the payment amount on the POS card machine.\n3. The PayTap NFC tag inside the vehicle is tapped on the card machine.\n4. Payment is processed instantly.\n5. The transaction appears immediately on your PayTap dashboard.\n\nThis eliminates the need for cash, reimbursement, or driver-managed payments."
+      },
+      {
+        id: "understanding-4",
+        question: "Why was PayTap created?",
+        answer: "Managing vehicle expenses using cash or driver cards creates many problems:\n\n• Cash misuse\n• Lack of transparency\n• Delayed expense reporting\n• Driver reimbursements\n\nPayTap solves this by allowing the vehicle itself to handle payments while the owner monitors everything from a single dashboard."
+      }
+    ]
+  },
+  {
+    id: "getting-started",
+    title: "Getting Started",
+    description: "How to get your PayTap tag and start using it",
+    icon: "Rocket",
+    faqs: [
+      {
+        id: "start-1",
+        question: "How do I get a PayTap tag?",
+        answer: "You can subscribe to a PayTap plan and activate your account through the PayTap platform.\n\nOnce your account is verified and activated, PayTap tags are issued for your vehicles.\n\nEach vehicle receives its own PayTap tag linked to your PayTap dashboard."
+      },
+      {
+        id: "start-2",
+        question: "Where should I place my PayTap tag?",
+        answer: "You can place the PayTap tag in either location:\n\n• On the vehicle windshield\n• Inside the vehicle dashboard\n\nBoth locations work with NFC card machines.\n\nIf you prefer additional comfort or safety, you may place the tag inside the dashboard and simply roll down the window when making a payment so the card machine can be brought close to the tag.\n\nThe placement choice depends on your personal comfort and convenience."
+      },
+      {
+        id: "start-3",
+        question: "Do I need a mobile app to use PayTap?",
+        answer: "No.\n\nPayTap payments happen directly through the NFC tag and merchant card machine.\n\nYou only need access to your PayTap dashboard to manage your vehicles, monitor transactions, and control spending."
+      }
+    ]
+  },
+  {
+    id: "payments",
+    title: "Payments & Usage",
+    description: "Where and how to use PayTap for everyday payments",
+    icon: "CreditCard",
+    faqs: [
+      {
+        id: "pay-1",
+        question: "Where can I use PayTap?",
+        answer: "PayTap works anywhere that accepts contactless card payments using NFC-enabled POS machines.\n\nCommon places include:\n\n• Fuel stations\n• Vehicle service centers\n• Car washes\n• Other merchants using card machines"
+      },
+      {
+        id: "pay-2",
+        question: "Do drivers need cash anymore?",
+        answer: "No.\n\nWith PayTap, drivers do not need to carry cash or personal cards for vehicle expenses.\n\nPayments are made directly through the vehicle's PayTap tag.\n\nOwners can monitor every transaction from the PayTap dashboard."
+      }
+    ]
+  },
+  {
+    id: "security",
+    title: "Security & Safety",
+    description: "How PayTap keeps your payments and data safe",
+    icon: "ShieldCheck",
+    faqs: [
+      {
+        id: "sec-1",
+        question: "What if someone taps my PayTap tag from outside the vehicle?",
+        answer: "PayTap transactions can only happen through authorized merchant POS machines.\n\nThese machines are issued by regulated payment providers and are linked to KYC-verified merchants.\n\nRandom phones or devices cannot trigger payments from the PayTap tag.\n\nEvery transaction is digitally recorded and traceable."
+      },
+      {
+        id: "sec-2",
+        question: "Is my bank account linked to PayTap?",
+        answer: "No.\n\nPayTap does not connect directly to your personal bank account.\n\nPayTap operates using a prepaid infrastructure where you load money into your PayTap wallet only when required.\n\nThis ensures your personal bank details and banking credentials remain protected."
+      },
+      {
+        id: "sec-3",
+        question: "How does PayTap keep my payment information safe?",
+        answer: "PayTap uses tokenization technology.\n\nTokenization replaces sensitive card information with secure tokens that cannot be used outside the PayTap system.\n\nThis means your payment details are never exposed.\n\nTokenization is widely considered one of the safest methods for digital payment security."
+      },
+      {
+        id: "sec-4",
+        question: "What if someone still manages to tap my tag?",
+        answer: "Even in a worst-case scenario, PayTap payments go through regulated merchant POS machines that belong to KYC-verified businesses.\n\nEvery transaction creates a complete digital audit trail.\n\nThis allows investigation and recovery in case of unauthorized merchant activity.\n\nAdditionally, PayTap gives users control tools such as:\n\n• Turning contactless payments ON or OFF\n• Setting transaction limits\n• Requiring PIN authentication for high-value payments"
+      },
+      {
+        id: "sec-5",
+        question: "What are the payment limits?",
+        answer: "Contactless transactions can be made up to ₹5,000.\n\nFor transactions above ₹5,000, a secure PIN authentication is required.\n\nThis provides an additional layer of protection."
+      },
+      {
+        id: "sec-6",
+        question: "Can I disable contactless payments?",
+        answer: "Yes.\n\nYou can enable or disable contactless payments anytime through your PayTap dashboard."
+      }
+    ]
+  },
+  {
+    id: "account",
+    title: "Managing Your Account",
+    description: "Control your wallet, limits, and settings",
+    icon: "Settings",
+    faqs: [
+      {
+        id: "acc-1",
+        question: "How do I load money into PayTap?",
+        answer: "You can load money into your PayTap wallet through the dashboard using supported payment methods.\n\nThe PayTap wallet functions as a prepaid balance used for vehicle expenses."
+      },
+      {
+        id: "acc-2",
+        question: "Can I set spending limits?",
+        answer: "Yes.\n\nYou can set transaction limits to control vehicle expenses and prevent misuse."
+      }
+    ]
+  },
+  {
+    id: "fleet",
+    title: "Fleet & Business Use",
+    description: "PayTap for businesses and fleet operators",
+    icon: "Building2",
+    faqs: [
+      {
+        id: "fleet-1",
+        question: "Can I manage multiple vehicles?",
+        answer: "Yes.\n\nPayTap allows you to manage multiple vehicles from a single dashboard.\n\nEach vehicle receives its own PayTap tag."
+      },
+      {
+        id: "fleet-2",
+        question: "Can I track expenses by vehicle?",
+        answer: "Yes.\n\nPayTap provides transaction history and expense tracking for every vehicle."
+      }
+    ]
+  },
+  {
+    id: "troubleshooting",
+    title: "Troubleshooting",
+    description: "Common issues and how to resolve them",
+    icon: "Wrench",
+    faqs: [
+      {
+        id: "trouble-1",
+        question: "What if a payment fails at a petrol pump?",
+        answer: "Sometimes POS machines at fuel stations may experience network issues.\n\nIf this happens:\n\n• Try tapping again\n• Ask the operator to retry the transaction\n• Try a small test transaction\n\nIn most cases the issue is with the merchant machine."
+      }
+    ]
+  },
+  {
+    id: "support",
+    title: "Support & Account Closure",
+    description: "Get help and manage your account",
+    icon: "Headphones",
+    faqs: [
+      {
+        id: "support-1",
+        question: "How can I contact customer support?",
+        answer: "You can reach us via email at support@paytap.co.in or call us at our helpline number."
+      },
+      {
+        id: "support-2",
+        question: "How do I close my PayTap account?",
+        answer: "You can request closure from your account dashboard.\n\nRemaining wallet balance (if any) will be refunded post verification."
+      }
+    ]
+  }
+];
