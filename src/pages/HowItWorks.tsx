@@ -4,7 +4,7 @@ import { motion, useScroll, useTransform, useInView, AnimatePresence } from 'fra
 import { useRef, useState, useEffect, useCallback } from 'react';
 import {
   ChevronDown, ChevronLeft, ChevronRight, X, Check, Shield, Lock, ToggleRight, CreditCard, Fingerprint,
-  UserPlus, Car, Wallet, SlidersHorizontal, Zap, Smile, ArrowRight, HelpCircle,
+  UserPlus, Car, Wallet, SlidersHorizontal, Zap, Smile, ArrowRight, Phone, HelpCircle,
   Bell, FileText, MessageCircle, Receipt, User
 } from 'lucide-react';
 import Navbar from '@/components/Navbar';
