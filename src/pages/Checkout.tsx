@@ -275,20 +275,20 @@ const Checkout = () => {
       const valid = await trigger(fieldsToValidate);
       if (!valid) return;
 
-      // Custom business validation
+  // Custom business validation
       const data = getValues();
       const newFieldErrors: Record<string, string> = {};
       if (!plan.isBusinessPlan) {
         if (!data.pan || !data.pan.trim()) newFieldErrors.pan = "PAN number is required";
-        else if (!panRegex.test(data.pan.trim())) newFieldErrors.pan = "Invalid PAN format (e.g. ABCDE1234F)";
+        else if (!panRegex.test(data.pan.trim().toUpperCase())) newFieldErrors.pan = "Invalid PAN format (e.g. ABCDE1234F)";
       } else {
         if (!data.companyName || !data.companyName.trim()) newFieldErrors.companyName = "Company name is required";
         if (hasGst) {
           if (!data.gst || !data.gst.trim()) newFieldErrors.gst = "GST number is required";
-          else if (!gstRegex.test(data.gst.trim())) newFieldErrors.gst = "GST format should be 15 characters";
+          else if (!gstRegex.test(data.gst.trim().toUpperCase())) newFieldErrors.gst = "GST format should be 15 characters";
         } else {
           if (!data.pan || !data.pan.trim()) newFieldErrors.pan = "PAN number is required";
-          else if (!panRegex.test(data.pan.trim())) newFieldErrors.pan = "Invalid PAN format (e.g. ABCDE1234F)";
+          else if (!panRegex.test(data.pan.trim().toUpperCase())) newFieldErrors.pan = "Invalid PAN format (e.g. ABCDE1234F)";
         }
       }
       setFieldErrors(newFieldErrors);
@@ -609,13 +609,13 @@ const Checkout = () => {
             {hasGst ? (
               <div>
                 <Label htmlFor="gst" className={labelClass}>GST Number</Label>
-                <Input id="gst" {...register("gst")} placeholder="e.g. 22AAAAA0000A1Z5" maxLength={15} className={`${inputClass} uppercase`} />
+                <Input id="gst" {...register("gst", { setValueAs: (v) => v?.toUpperCase() })} placeholder="e.g. 22AAAAA0000A1Z5" maxLength={15} className={`${inputClass} uppercase`} />
                 {fieldErrors.gst && <p className={errorClass}>{fieldErrors.gst}</p>}
               </div>
             ) : (
               <div>
                 <Label htmlFor="pan" className={labelClass}>PAN Number</Label>
-                <Input id="pan" {...register("pan")} placeholder="e.g. ABCDE1234F" maxLength={10} className={`${inputClass} uppercase`} />
+                <Input id="pan" {...register("pan", { setValueAs: (v) => v?.toUpperCase() })} placeholder="e.g. ABCDE1234F" maxLength={10} className={`${inputClass} uppercase`} />
                 {fieldErrors.pan && <p className={errorClass}>{fieldErrors.pan}</p>}
               </div>
             )}
@@ -623,7 +623,7 @@ const Checkout = () => {
         ) : (
           <div>
             <Label htmlFor="pan" className={labelClass}>PAN Number</Label>
-            <Input id="pan" {...register("pan")} placeholder="e.g. ABCDE1234F" maxLength={10} className={`${inputClass} uppercase`} />
+            <Input id="pan" {...register("pan", { setValueAs: (v) => v?.toUpperCase() })} placeholder="e.g. ABCDE1234F" maxLength={10} className={`${inputClass} uppercase`} />
             {fieldErrors.pan && <p className={errorClass}>{fieldErrors.pan}</p>}
           </div>
         )}

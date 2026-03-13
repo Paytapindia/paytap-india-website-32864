@@ -1,24 +1,26 @@
 
 
-## Create New Admin Login
+## Plan: Change Plan Box Text from "NFC Tags Included" to "Vehicles Activated"
 
-**Goal**: Register `support@paytap.co.in` as an admin user with dashboard access.
+### Change in `src/pages/Checkout.tsx`
 
-### Steps
+**Line 408** — Replace the tag/card count text with "Vehicle Activated" phrasing:
 
-1. **Create an edge function** `create-admin-user/index.ts` that:
-   - Uses the service role client to call `supabase.auth.admin.createUser()` with the provided email and password (auto-confirmed)
-   - Inserts a row into `user_roles` with `role = 'admin'` for the new user
-   - Is protected by the `ADMIN_API_KEY` secret (already configured) so only authorized callers can invoke it
-   - Is a one-time-use utility — can be deleted after execution
+```typescript
+// Before:
+<p className="text-[10px] text-muted-foreground">{p.tags} {productType === 'sticker' ? 'NFC Tag' : 'Card'}{p.tags > 1 ? 's' : ''} included</p>
 
-2. **Invoke the function** via `curl_edge_functions` to create the user and assign the admin role in one call.
+// After:
+<p className="text-[10px] text-muted-foreground">{p.tags} Vehicle{p.tags > 1 ? 's' : ''} Activated</p>
+```
 
-3. **Delete the edge function** after successful execution (it's a one-time setup script).
+This will show:
+- Starter (1 tag): **1 Vehicle Activated**
+- Business Basic (2 tags): **2 Vehicles Activated**
+- Business Pro (5 tags): **5 Vehicles Activated**
+- Corporate (10 tags): **10 Vehicles Activated**
 
-### Security Notes
-- Password is set server-side using Supabase Admin API (service role)
-- User is auto-confirmed (no email verification needed for admin accounts)
-- Admin role is assigned in `user_roles` table, checked by the existing `has_role()` function
-- **Recommend changing the password** after first login since it was shared in chat
+| File | Change |
+|------|--------|
+| `src/pages/Checkout.tsx` | Line 408: replace NFC Tag/Card text with "Vehicle(s) Activated" |
 
