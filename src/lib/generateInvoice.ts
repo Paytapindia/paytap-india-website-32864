@@ -280,73 +280,253 @@ export async function generateInvoice(data: InvoiceData): Promise<void> {
 
   y = Math.max(billEndY, shipEndY) + 6;
 
-  // ── Line Items Table ──
-  doc.setDrawColor(lineColor);
-  doc.line(margin, y, pageWidth - margin, y);
+  // ── Line Items Table (GST-compliant format) ──
+  const tableLeft = margin;
+  const tableRight = pageWidth - margin;
+  const tableWidth = tableRight - tableLeft;
 
-  const colX = {
-    item: margin + 1,
-    hsn: margin + 85,
-    qty: margin + 110,
-    rate: margin + 125,
-    pct: margin + 148,
-    amount: pageWidth - margin - 1,
+  // Column positions (left edges)
+  const col = {
+    sr:    tableLeft,
+    hsn:   tableLeft + 10,
+    desc:  tableLeft + 24,
+    uom:   tableLeft + 72,
+    qty:   tableLeft + 82,
+    rate:  tableLeft + 92,
+    gross: tableLeft + 108,
+    dis:   tableLeft + 124,
+    taxable: tableLeft + 134,
+    cgstR: tableLeft + 152,
+    cgstA: tableLeft + 160,
+    sgstR: tableLeft + 170,
+    sgstA: tableLeft + 178,
+  };
+  const colEnd = tableRight;
+
+  // Per-line tax calculations
+  const activationGross = activationAmount;
+  const amcGross = amcAmount;
+  const activationTaxable = activationAmount;
+  const amcTaxable = amcAmount;
+  const discountTaxable = discountPreTax;
+
+  const cgstPct = isInterState ? 0 : 9;
+  const sgstPct = isInterState ? 0 : 9;
+  const igstPct = isInterState ? 18 : 0;
+
+  const activationCgst = round2(activationTaxable * cgstPct / 100);
+  const activationSgst = round2(activationTaxable * sgstPct / 100);
+  const activationIgst = round2(activationTaxable * igstPct / 100);
+
+  const amcCgst = round2(amcTaxable * cgstPct / 100);
+  const amcSgst = round2(amcTaxable * sgstPct / 100);
+  const amcIgst = round2(amcTaxable * igstPct / 100);
+
+  const discountCgst = discountPreTax > 0 ? round2(discountTaxable * cgstPct / 100) : 0;
+  const discountSgst = discountPreTax > 0 ? round2(discountTaxable * sgstPct / 100) : 0;
+  const discountIgst = discountPreTax > 0 ? round2(discountTaxable * igstPct / 100) : 0;
+
+  // Draw table border helper
+  const drawHLine = (atY: number) => {
+    doc.setDrawColor(lineColor);
+    doc.setLineWidth(0.3);
+    doc.line(tableLeft, atY, tableRight, atY);
   };
 
-  y += 5;
-  doc.setFontSize(7.5);
+  const drawVLines = (topY: number, bottomY: number) => {
+    doc.setDrawColor(lineColor);
+    doc.setLineWidth(0.2);
+    const vLines = [col.sr, col.hsn, col.desc, col.uom, col.qty, col.rate, col.gross, col.dis, col.taxable, col.cgstR, col.sgstR, colEnd];
+    // Add IGST column separator if inter-state
+    if (isInterState) {
+      // For inter-state, we repurpose CGST/SGST columns but still draw separators
+    }
+    for (const x of vLines) {
+      doc.line(x, topY, x, bottomY);
+    }
+    // Sub-dividers for CGST (Rate|Amt) and SGST (Rate|Amt)
+    doc.line(col.cgstA, topY, col.cgstA, bottomY);
+    doc.line(col.sgstA, topY, col.sgstA, bottomY);
+  };
+
+  // ── Table Header Row 1 ──
+  drawHLine(y);
+  const headerTop = y;
+  y += 4;
+
+  doc.setFontSize(6);
   doc.setFont('helvetica', 'bold');
   doc.setTextColor(dark);
-  doc.text('Item & Description', colX.item, y);
-  doc.text('HSN/SAC', colX.hsn, y);
-  doc.text('Qty', colX.qty, y);
-  doc.text('Rate', colX.rate, y);
-  doc.text('Tax %', colX.pct, y);
-  doc.text('Amount', colX.amount, y, { align: 'right' });
 
-  y += 3;
-  doc.line(margin, y, pageWidth - margin, y);
-  y += 5;
+  doc.text('Sr.', col.sr + 1, y);
+  doc.text('HSN/SAC', col.hsn + 1, y);
+  doc.text('Description of Service/Goods', col.desc + 1, y);
+  doc.text('UOM', col.uom + 1, y);
+  doc.text('Qty.', col.qty + 1, y);
+  doc.text('Rate', col.rate + 1, y);
+  doc.text('Gross', col.gross + 1, y);
+  doc.text('Dis.', col.dis + 1, y);
+  doc.text('Taxable', col.taxable + 1, y);
 
-  const gstRate = 18;
-  const vehicleLabel = vehicles === 1 ? '1 Vehicle' : `${vehicles} Vehicles`;
-
-  // ── Line 1: Activation ──
-  const itemMaxWidth = colX.hsn - colX.item - 2;
-  doc.setFont('helvetica', 'normal');
-  doc.setTextColor(gray);
-  const activationDesc = `PayTap NFC Tag Activation & Installation Charges – ${vehicleLabel}`;
-  const activationLines: string[] = doc.splitTextToSize(activationDesc, itemMaxWidth);
-  doc.text(activationLines, colX.item, y);
-  doc.text('997159', colX.hsn, y);
-  doc.text(String(vehicles), colX.qty, y);
-  doc.text(formatINR(activationRate), colX.rate, y);
-  doc.text(`${gstRate}%`, colX.pct, y);
-  doc.text(formatINR(activationAmount), colX.amount, y, { align: 'right' });
-
-  y += Math.max(7, activationLines.length * 4 + 3);
-
-  // ── Line 2: AMC ──
-  doc.text('Annual Maintenance Charges (AMC)', colX.item, y);
-  doc.text('998313', colX.hsn, y);
-  doc.text('1', colX.qty, y);
-  doc.text(formatINR(amcRate), colX.rate, y);
-  doc.text(`${gstRate}%`, colX.pct, y);
-  doc.text(formatINR(amcAmount), colX.amount, y, { align: 'right' });
-
-  // ── Line 3: Discount (only if applicable) ──
-  if (discountPreTax > 0) {
-    y += 7;
-    doc.text('Discount', colX.item, y);
-    doc.text('—', colX.hsn, y);
-    doc.text('1', colX.qty, y);
-    doc.text(`-${formatINR(discountPreTax)}`, colX.rate, y);
-    doc.text(`${gstRate}%`, colX.pct, y);
-    doc.text(`-${formatINR(discountPreTax)}`, colX.amount, y, { align: 'right' });
+  if (isInterState) {
+    const igstMid = col.cgstR + (colEnd - col.cgstR) / 2;
+    doc.text('IGST', igstMid, y, { align: 'center' });
+  } else {
+    const cgstMid = col.cgstR + (col.sgstR - col.cgstR) / 2;
+    const sgstMid = col.sgstR + (colEnd - col.sgstR) / 2;
+    doc.text('CGST', cgstMid, y, { align: 'center' });
+    doc.text('SGST', sgstMid, y, { align: 'center' });
   }
 
-  y += 8;
-  doc.line(margin, y, pageWidth - margin, y);
+  y += 3;
+  // Second header line
+  doc.text('No.', col.sr + 1, y);
+  doc.text('', col.hsn + 1, y);
+  doc.text('', col.desc + 1, y);
+  doc.text('', col.uom + 1, y);
+  doc.text('', col.qty + 1, y);
+  doc.text('(₹)', col.rate + 1, y);
+  doc.text('Value', col.gross + 1, y);
+  doc.text('(₹)', col.dis + 1, y);
+  doc.text('Value', col.taxable + 1, y);
+
+  if (isInterState) {
+    doc.text('Rate', col.cgstR + 1, y);
+    doc.text('Amt', col.cgstA + 1, y);
+  } else {
+    doc.text('Rate', col.cgstR + 1, y);
+    doc.text('Amt', col.cgstA + 1, y);
+    doc.text('Rate', col.sgstR + 1, y);
+    doc.text('Amt', col.sgstA + 1, y);
+  }
+
+  y += 2;
+  drawHLine(y);
+
+  const dataStartY = y;
+
+  // ── Helper to draw a data row ──
+  const rowHeight = 6;
+  const drawDataRow = (
+    sr: string, hsn: string, desc: string, uom: string, qty: string,
+    rate: string, gross: string, dis: string, taxable: string,
+    cR: string, cA: string, sR: string, sA: string
+  ) => {
+    y += rowHeight;
+    doc.setFontSize(6);
+    doc.setFont('helvetica', 'normal');
+    doc.setTextColor(dark);
+
+    doc.text(sr, col.sr + 5, y, { align: 'center' });
+    doc.text(hsn, col.hsn + 1, y);
+
+    // Wrap description within column width
+    const descMaxW = col.uom - col.desc - 2;
+    const descLines: string[] = doc.splitTextToSize(desc, descMaxW);
+    doc.text(descLines[0] || '', col.desc + 1, y);
+    if (descLines.length > 1) {
+      for (let i = 1; i < descLines.length; i++) {
+        doc.text(descLines[i], col.desc + 1, y + i * 3);
+      }
+    }
+
+    doc.text(uom, col.uom + 1, y);
+    // Right-align numeric columns
+    doc.text(qty, col.rate - 1, y, { align: 'right' });
+    doc.text(rate, col.gross - 1, y, { align: 'right' });
+    doc.text(gross, col.dis - 1, y, { align: 'right' });
+    doc.text(dis, col.taxable - 1, y, { align: 'right' });
+    doc.text(taxable, col.cgstR - 1, y, { align: 'right' });
+
+    if (isInterState) {
+      doc.text(cR, col.cgstA - 1, y, { align: 'right' });
+      doc.text(cA, colEnd - 1, y, { align: 'right' });
+    } else {
+      doc.text(cR, col.cgstA - 1, y, { align: 'right' });
+      doc.text(cA, col.sgstR - 1, y, { align: 'right' });
+      doc.text(sR, col.sgstA - 1, y, { align: 'right' });
+      doc.text(sA, colEnd - 1, y, { align: 'right' });
+    }
+
+    // If description wrapped, account for extra height
+    if (descLines.length > 1) {
+      y += (descLines.length - 1) * 3;
+    }
+  };
+
+  const vehicleLabel = vehicles === 1 ? '1 Vehicle' : `${vehicles} Vehicles`;
+
+  // Row 1: Activation
+  drawDataRow(
+    '1', '997159',
+    `PayTap NFC Tag Activation & Installation Charges - ${vehicleLabel}`,
+    'Nos.', String(vehicles),
+    formatINR(activationRate), formatINR(activationGross), '-', formatINR(activationTaxable),
+    isInterState ? `${igstPct}%` : `${cgstPct}%`,
+    isInterState ? formatINR(activationIgst) : formatINR(activationCgst),
+    isInterState ? '' : `${sgstPct}%`,
+    isInterState ? '' : formatINR(activationSgst)
+  );
+
+  // Row 2: AMC
+  drawDataRow(
+    '2', '998313',
+    'Annual Maintenance Charges (AMC)',
+    'Nos.', '1',
+    formatINR(amcRate), formatINR(amcGross), '-', formatINR(amcTaxable),
+    isInterState ? `${igstPct}%` : `${cgstPct}%`,
+    isInterState ? formatINR(amcIgst) : formatINR(amcCgst),
+    isInterState ? '' : `${sgstPct}%`,
+    isInterState ? '' : formatINR(amcSgst)
+  );
+
+  // Row 3: Discount (if applicable)
+  if (discountPreTax > 0) {
+    drawDataRow(
+      '3', '-',
+      'Discount',
+      'Nos.', '1',
+      `-${formatINR(discountPreTax)}`, `-${formatINR(discountPreTax)}`, '-', `-${formatINR(discountTaxable)}`,
+      isInterState ? `${igstPct}%` : `${cgstPct}%`,
+      isInterState ? `-${formatINR(discountIgst)}` : `-${formatINR(discountCgst)}`,
+      isInterState ? '' : `${sgstPct}%`,
+      isInterState ? '' : `-${formatINR(discountSgst)}`
+    );
+  }
+
+  // ── Total Row ──
+  y += 2;
+  drawHLine(y);
+  y += 5;
+
+  const totalGross = round2(activationGross + amcGross - (discountPreTax > 0 ? discountPreTax : 0));
+  const totalTaxable = subtotalPreTax;
+  const totalCgst = round2(activationCgst + amcCgst - discountCgst);
+  const totalSgst = round2(activationSgst + amcSgst - discountSgst);
+  const totalIgst = round2(activationIgst + amcIgst - discountIgst);
+
+  doc.setFont('helvetica', 'bold');
+  doc.setTextColor(dark);
+  doc.setFontSize(6);
+  doc.text('Total', col.desc + 1, y);
+  doc.text(formatINR(totalGross), col.dis - 1, y, { align: 'right' });
+  doc.text('-', col.taxable - 1, y, { align: 'right' });
+  doc.text(formatINR(totalTaxable), col.cgstR - 1, y, { align: 'right' });
+
+  if (isInterState) {
+    doc.text(formatINR(totalIgst), colEnd - 1, y, { align: 'right' });
+  } else {
+    doc.text(formatINR(totalCgst), col.sgstR - 1, y, { align: 'right' });
+    doc.text(formatINR(totalSgst), colEnd - 1, y, { align: 'right' });
+  }
+
+  y += 2;
+  drawHLine(y);
+  const tableBottomY = y;
+
+  // Draw all vertical lines spanning the table
+  drawVLines(headerTop, tableBottomY);
+
   y += 8;
 
   // ── Total in Words ──
@@ -355,32 +535,15 @@ export async function generateInvoice(data: InvoiceData): Promise<void> {
   doc.setTextColor(gray);
   const totalWords = numberToWords(grandTotal);
   doc.text(`Total In Words: Indian Rupees ${totalWords} Only`, margin, y);
-  y += 10;
+  y += 8;
 
-  // ── Totals ──
+  // ── Grand Total ──
   const totalsX = pageWidth - margin;
   const labelX = totalsX - 60;
 
   doc.setFont('helvetica', 'normal');
   doc.setTextColor(gray);
   doc.setFontSize(8);
-
-  doc.text('Sub Total:', labelX, y, { align: 'right' });
-  doc.text(formatINR(subtotalPreTax), totalsX, y, { align: 'right' });
-  y += 5;
-
-  if (isInterState) {
-    doc.text(`IGST (18%):`, labelX, y, { align: 'right' });
-    doc.text(formatINR(igst), totalsX, y, { align: 'right' });
-    y += 5;
-  } else {
-    doc.text(`CGST (9%):`, labelX, y, { align: 'right' });
-    doc.text(formatINR(cgst), totalsX, y, { align: 'right' });
-    y += 5;
-    doc.text(`SGST (9%):`, labelX, y, { align: 'right' });
-    doc.text(formatINR(sgst), totalsX, y, { align: 'right' });
-    y += 5;
-  }
 
   // Round Off line (only if non-zero)
   if (Math.abs(roundOff) >= 0.01) {
@@ -391,6 +554,7 @@ export async function generateInvoice(data: InvoiceData): Promise<void> {
 
   doc.setFont('helvetica', 'bold');
   doc.setTextColor(dark);
+  doc.setFontSize(10);
   doc.text('Total:', labelX, y, { align: 'right' });
   doc.text(`₹${formatINR(grandTotal)}`, totalsX, y, { align: 'right' });
   y += 15;
