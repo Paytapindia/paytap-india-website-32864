@@ -609,13 +609,13 @@ const Checkout = () => {
             {hasGst ? (
               <div>
                 <Label htmlFor="gst" className={labelClass}>GST Number</Label>
-                <Input id="gst" {...register("gst")} placeholder="e.g. 22AAAAA0000A1Z5" maxLength={15} className={`${inputClass} uppercase`} />
+                <Input id="gst" {...register("gst", { setValueAs: (v) => v?.toUpperCase() })} placeholder="e.g. 22AAAAA0000A1Z5" maxLength={15} className={`${inputClass} uppercase`} />
                 {fieldErrors.gst && <p className={errorClass}>{fieldErrors.gst}</p>}
               </div>
             ) : (
               <div>
                 <Label htmlFor="pan" className={labelClass}>PAN Number</Label>
-                <Input id="pan" {...register("pan")} placeholder="e.g. ABCDE1234F" maxLength={10} className={`${inputClass} uppercase`} />
+                <Input id="pan" {...register("pan", { setValueAs: (v) => v?.toUpperCase() })} placeholder="e.g. ABCDE1234F" maxLength={10} className={`${inputClass} uppercase`} />
                 {fieldErrors.pan && <p className={errorClass}>{fieldErrors.pan}</p>}
               </div>
             )}
@@ -623,7 +623,7 @@ const Checkout = () => {
         ) : (
           <div>
             <Label htmlFor="pan" className={labelClass}>PAN Number</Label>
-            <Input id="pan" {...register("pan")} placeholder="e.g. ABCDE1234F" maxLength={10} className={`${inputClass} uppercase`} />
+            <Input id="pan" {...register("pan", { setValueAs: (v) => v?.toUpperCase() })} placeholder="e.g. ABCDE1234F" maxLength={10} className={`${inputClass} uppercase`} />
             {fieldErrors.pan && <p className={errorClass}>{fieldErrors.pan}</p>}
           </div>
         )}
