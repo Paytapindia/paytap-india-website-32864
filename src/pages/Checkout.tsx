@@ -275,20 +275,20 @@ const Checkout = () => {
       const valid = await trigger(fieldsToValidate);
       if (!valid) return;
 
-      // Custom business validation
+  // Custom business validation
       const data = getValues();
       const newFieldErrors: Record<string, string> = {};
       if (!plan.isBusinessPlan) {
         if (!data.pan || !data.pan.trim()) newFieldErrors.pan = "PAN number is required";
-        else if (!panRegex.test(data.pan.trim())) newFieldErrors.pan = "Invalid PAN format (e.g. ABCDE1234F)";
+        else if (!panRegex.test(data.pan.trim().toUpperCase())) newFieldErrors.pan = "Invalid PAN format (e.g. ABCDE1234F)";
       } else {
         if (!data.companyName || !data.companyName.trim()) newFieldErrors.companyName = "Company name is required";
         if (hasGst) {
           if (!data.gst || !data.gst.trim()) newFieldErrors.gst = "GST number is required";
-          else if (!gstRegex.test(data.gst.trim())) newFieldErrors.gst = "GST format should be 15 characters";
+          else if (!gstRegex.test(data.gst.trim().toUpperCase())) newFieldErrors.gst = "GST format should be 15 characters";
         } else {
           if (!data.pan || !data.pan.trim()) newFieldErrors.pan = "PAN number is required";
-          else if (!panRegex.test(data.pan.trim())) newFieldErrors.pan = "Invalid PAN format (e.g. ABCDE1234F)";
+          else if (!panRegex.test(data.pan.trim().toUpperCase())) newFieldErrors.pan = "Invalid PAN format (e.g. ABCDE1234F)";
         }
       }
       setFieldErrors(newFieldErrors);
