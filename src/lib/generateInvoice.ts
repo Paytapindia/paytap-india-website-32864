@@ -230,65 +230,55 @@ export async function generateInvoice(data: InvoiceData): Promise<void> {
   y += 5;
 
   const contentWidth = pageWidth - margin * 2;
-  const halfWidth = contentWidth / 2;
+  const columnGap = 8;
+  const columnWidth = (contentWidth - columnGap) / 2;
+  const lineHeight = 4;
 
-  doc.setFontSize(9);
-  doc.setFont('helvetica', 'bold');
-  doc.setTextColor(dark);
-  doc.text('Bill To', margin, y);
+  // Helper: draw wrapped text lines, returns new Y cursor
+  function drawWrapped(text: string, x: number, startY: number, maxWidth: number, font: 'normal' | 'bold' = 'normal', color: string = gray): number {
+    doc.setFont('helvetica', font);
+    doc.setTextColor(color);
+    const lines: string[] = doc.splitTextToSize(text, maxWidth);
+    for (const line of lines) {
+      doc.text(line, x, startY);
+      startY += lineHeight;
+    }
+    return startY;
+  }
 
-  doc.setFontSize(8);
-  doc.setFont('helvetica', 'normal');
-  doc.setTextColor(gray);
-  let billY = y + 5;
-  if (data.companyName) {
+  // Draw one address column, returns final Y
+  function drawAddressBlock(label: string, x: number, startY: number, maxW: number): number {
+    doc.setFontSize(9);
     doc.setFont('helvetica', 'bold');
     doc.setTextColor(dark);
-    doc.text(data.companyName, margin, billY);
-    doc.setFont('helvetica', 'normal');
-    doc.setTextColor(gray);
-    billY += 4;
-  } else {
-    doc.setFont('helvetica', 'bold');
-    doc.setTextColor(dark);
-    doc.text(data.name, margin, billY);
-    doc.setFont('helvetica', 'normal');
-    doc.setTextColor(gray);
-    billY += 4;
-  }
-  doc.text(data.address, margin, billY); billY += 4;
-  doc.text(`${data.city} ${data.state}`, margin, billY); billY += 4;
-  doc.text(`${data.pincode} ${data.state}`, margin, billY); billY += 4;
-  if (data.gst) {
-    doc.text(`GSTIN: ${data.gst}`, margin, billY); billY += 4;
-  } else if (data.pan) {
-    doc.text(`PAN: ${data.pan}`, margin, billY); billY += 4;
+    doc.text(label, x, startY);
+
+    doc.setFontSize(8);
+    let curY = startY + 5;
+
+    const primaryName = data.companyName || data.name;
+    curY = drawWrapped(primaryName, x, curY, maxW, 'bold', dark);
+
+    if (data.address) {
+      curY = drawWrapped(data.address, x, curY, maxW);
+    }
+    const cityLine = [data.city, data.state, data.pincode].filter(Boolean).join(', ');
+    if (cityLine) {
+      curY = drawWrapped(cityLine, x, curY, maxW);
+    }
+    if (data.gst) {
+      curY = drawWrapped(`GSTIN: ${data.gst}`, x, curY, maxW);
+    } else if (data.pan) {
+      curY = drawWrapped(`PAN: ${data.pan}`, x, curY, maxW);
+    }
+    return curY;
   }
 
-  const shipX = margin + halfWidth + 5;
-  doc.setFontSize(9);
-  doc.setFont('helvetica', 'bold');
-  doc.setTextColor(dark);
-  doc.text('Ship To', shipX, y);
+  const billEndY = drawAddressBlock('Bill To', margin, y, columnWidth);
+  const shipX = margin + columnWidth + columnGap;
+  const shipEndY = drawAddressBlock('Ship To', shipX, y, columnWidth);
 
-  doc.setFontSize(8);
-  doc.setFont('helvetica', 'normal');
-  doc.setTextColor(gray);
-  let shipY = y + 5;
-  if (data.companyName) {
-    doc.text(data.companyName, shipX, shipY); shipY += 4;
-  } else {
-    doc.text(data.name, shipX, shipY); shipY += 4;
-  }
-  doc.text(data.address, shipX, shipY); shipY += 4;
-  doc.text(`${data.city} ${data.state} ${data.pincode}`, shipX, shipY); shipY += 4;
-  if (data.gst) {
-    doc.text(`GSTIN: ${data.gst}`, shipX, shipY); shipY += 4;
-  } else if (data.pan) {
-    doc.text(`PAN: ${data.pan}`, shipX, shipY); shipY += 4;
-  }
-
-  y = Math.max(billY, shipY) + 6;
+  y = Math.max(billEndY, shipEndY) + 6;
 
   // ── Line Items Table ──
   doc.setDrawColor(lineColor);
