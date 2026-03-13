@@ -312,16 +312,19 @@ export async function generateInvoice(data: InvoiceData): Promise<void> {
   const vehicleLabel = vehicles === 1 ? '1 Vehicle' : `${vehicles} Vehicles`;
 
   // ── Line 1: Activation ──
+  const itemMaxWidth = colX.hsn - colX.item - 2;
   doc.setFont('helvetica', 'normal');
   doc.setTextColor(gray);
-  doc.text(`PayTap NFC Tag Activation & Installation Charges – ${vehicleLabel}`, colX.item, y);
+  const activationDesc = `PayTap NFC Tag Activation & Installation Charges – ${vehicleLabel}`;
+  const activationLines: string[] = doc.splitTextToSize(activationDesc, itemMaxWidth);
+  doc.text(activationLines, colX.item, y);
   doc.text('997159', colX.hsn, y);
   doc.text(String(vehicles), colX.qty, y);
   doc.text(formatINR(activationRate), colX.rate, y);
   doc.text(`${gstRate}%`, colX.pct, y);
   doc.text(formatINR(activationAmount), colX.amount, y, { align: 'right' });
 
-  y += 7;
+  y += Math.max(7, activationLines.length * 4 + 3);
 
   // ── Line 2: AMC ──
   doc.text('Annual Maintenance Charges (AMC)', colX.item, y);
