@@ -285,21 +285,21 @@ export async function generateInvoice(data: InvoiceData): Promise<void> {
   const tableRight = pageWidth - margin;
   const tableWidth = tableRight - tableLeft;
 
-  // Column positions (left edges)
+  // Column positions (left edges) — widened tax columns to prevent overlap
   const col = {
     sr:    tableLeft,
-    hsn:   tableLeft + 10,
-    desc:  tableLeft + 24,
-    uom:   tableLeft + 72,
-    qty:   tableLeft + 82,
-    rate:  tableLeft + 92,
-    gross: tableLeft + 108,
-    dis:   tableLeft + 124,
-    taxable: tableLeft + 134,
-    cgstR: tableLeft + 152,
-    cgstA: tableLeft + 160,
-    sgstR: tableLeft + 170,
-    sgstA: tableLeft + 178,
+    hsn:   tableLeft + 8,
+    desc:  tableLeft + 22,
+    uom:   tableLeft + 62,
+    qty:   tableLeft + 72,
+    rate:  tableLeft + 80,
+    gross: tableLeft + 94,
+    dis:   tableLeft + 108,
+    taxable: tableLeft + 116,
+    cgstR: tableLeft + 132,
+    cgstA: tableLeft + 141,
+    sgstR: tableLeft + 153,
+    sgstA: tableLeft + 162,
   };
   const colEnd = tableRight;
 
