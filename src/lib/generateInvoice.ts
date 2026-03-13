@@ -103,6 +103,122 @@ async function getLogoBase64(): Promise<string> {
   });
 }
 
+// ── Column schema: width-based layout ──
+// Each column defined by its width in mm. Total must equal tableWidth (180mm for A4 with 15mm margins).
+// For intra-state (CGST+SGST): 4 tax sub-columns
+// For inter-state (IGST): 2 tax sub-columns (wider)
+
+interface ColDef {
+  key: string;
+  width: number;
+  align: 'left' | 'center' | 'right';
+  headerLine1: string;
+  headerLine2: string;
+}
+
+function buildColumns(isInterState: boolean): ColDef[] {
+  if (isInterState) {
+    return [
+      { key: 'sr',       width: 7,   align: 'center', headerLine1: 'Sr.',       headerLine2: 'No.' },
+      { key: 'hsn',      width: 14,  align: 'left',   headerLine1: 'HSN/SAC',   headerLine2: '' },
+      { key: 'desc',     width: 44,  align: 'left',   headerLine1: 'Description', headerLine2: '' },
+      { key: 'uom',      width: 10,  align: 'center', headerLine1: 'UOM',       headerLine2: '' },
+      { key: 'qty',      width: 8,   align: 'right',  headerLine1: 'Qty.',      headerLine2: '' },
+      { key: 'rate',     width: 16,  align: 'right',  headerLine1: 'Rate',      headerLine2: '(₹)' },
+      { key: 'gross',    width: 16,  align: 'right',  headerLine1: 'Gross',     headerLine2: 'Value' },
+      { key: 'dis',      width: 10,  align: 'right',  headerLine1: 'Dis.',      headerLine2: '(₹)' },
+      { key: 'taxable',  width: 18,  align: 'right',  headerLine1: 'Taxable',   headerLine2: 'Value' },
+      { key: 'igstRate', width: 13,  align: 'center', headerLine1: 'IGST',      headerLine2: 'Rate' },
+      { key: 'igstAmt',  width: 24,  align: 'right',  headerLine1: '',          headerLine2: 'Amt' },
+    ];
+  } else {
+    return [
+      { key: 'sr',       width: 7,   align: 'center', headerLine1: 'Sr.',       headerLine2: 'No.' },
+      { key: 'hsn',      width: 14,  align: 'left',   headerLine1: 'HSN/SAC',   headerLine2: '' },
+      { key: 'desc',     width: 40,  align: 'left',   headerLine1: 'Description', headerLine2: '' },
+      { key: 'uom',      width: 10,  align: 'center', headerLine1: 'UOM',       headerLine2: '' },
+      { key: 'qty',      width: 8,   align: 'right',  headerLine1: 'Qty.',      headerLine2: '' },
+      { key: 'rate',     width: 15,  align: 'right',  headerLine1: 'Rate',      headerLine2: '(₹)' },
+      { key: 'gross',    width: 15,  align: 'right',  headerLine1: 'Gross',     headerLine2: 'Value' },
+      { key: 'dis',      width: 10,  align: 'right',  headerLine1: 'Dis.',      headerLine2: '(₹)' },
+      { key: 'taxable',  width: 16,  align: 'right',  headerLine1: 'Taxable',   headerLine2: 'Value' },
+      { key: 'cgstRate', width: 10,  align: 'center', headerLine1: 'CGST',      headerLine2: 'Rate' },
+      { key: 'cgstAmt',  width: 13,  align: 'right',  headerLine1: '',          headerLine2: 'Amt' },
+      { key: 'sgstRate', width: 10,  align: 'center', headerLine1: 'SGST',      headerLine2: 'Rate' },
+      { key: 'sgstAmt',  width: 12,  align: 'right',  headerLine1: '',          headerLine2: 'Amt' },
+    ];
+  }
+}
+
+interface ColLayout {
+  key: string;
+  left: number;
+  width: number;
+  right: number;
+  align: 'left' | 'center' | 'right';
+  headerLine1: string;
+  headerLine2: string;
+}
+
+function computeLayout(columns: ColDef[], tableLeft: number): ColLayout[] {
+  let x = tableLeft;
+  return columns.map(c => {
+    const layout: ColLayout = {
+      key: c.key,
+      left: x,
+      width: c.width,
+      right: x + c.width,
+      align: c.align,
+      headerLine1: c.headerLine1,
+      headerLine2: c.headerLine2,
+    };
+    x += c.width;
+    return layout;
+  });
+}
+
+// Safe cell text renderer — clips/shrinks text to fit within cell
+function drawCell(
+  doc: jsPDF,
+  text: string,
+  col: ColLayout,
+  y: number,
+  options?: { fontSize?: number; fontStyle?: 'normal' | 'bold'; color?: string; padding?: number }
+) {
+  const pad = options?.padding ?? 1.5;
+  const fontSize = options?.fontSize ?? 6;
+  const fontStyle = options?.fontStyle ?? 'normal';
+  const color = options?.color ?? '#021a42';
+
+  doc.setFontSize(fontSize);
+  doc.setFont('helvetica', fontStyle);
+  doc.setTextColor(color);
+
+  const availableWidth = col.width - pad * 2;
+
+  // Check if text fits, shrink font if needed (minimum 4.5pt)
+  let usedFontSize = fontSize;
+  let textWidth = doc.getTextWidth(text);
+  while (textWidth > availableWidth && usedFontSize > 4.5) {
+    usedFontSize -= 0.5;
+    doc.setFontSize(usedFontSize);
+    textWidth = doc.getTextWidth(text);
+  }
+
+  // Compute x position based on alignment
+  let x: number;
+  if (col.align === 'right') {
+    x = col.right - pad;
+  } else if (col.align === 'center') {
+    x = col.left + col.width / 2;
+  } else {
+    x = col.left + pad;
+  }
+
+  const alignOpt: 'left' | 'center' | 'right' = col.align;
+  doc.text(text, x, y, { align: alignOpt });
+}
+
 export async function generateInvoice(data: InvoiceData): Promise<void> {
   const doc = new jsPDF('p', 'mm', 'a4');
   const pageWidth = 210;
@@ -134,19 +250,15 @@ export async function generateInvoice(data: InvoiceData): Promise<void> {
     perUnitActivation = (grandTotal - amcInclGst) / vehicles;
   }
 
-  // Rate = round(perUnitInclGst / 1.18, 2) — per-unit pre-tax
   const activationRate = round2(perUnitActivation / 1.18);
   const amcRate = round2(amcInclGst / 1.18);
   const discountPreTax = discountInclGst > 0 ? round2(discountInclGst / 1.18) : 0;
 
-  // Amount = Rate × Qty (always exact multiplication)
   const activationAmount = round2(activationRate * vehicles);
   const amcAmount = round2(amcRate * 1);
 
-  // Subtotal = sum of line amounts minus discount
   const subtotalPreTax = round2(activationAmount + amcAmount - discountPreTax);
 
-  // GST from subtotal
   let cgst = 0, sgst = 0, igst = 0;
   if (isInterState) {
     igst = round2(subtotalPreTax * 0.18);
@@ -157,6 +269,23 @@ export async function generateInvoice(data: InvoiceData): Promise<void> {
 
   const calculatedTotal = round2(subtotalPreTax + cgst + sgst + igst);
   const roundOff = round2(grandTotal - calculatedTotal);
+
+  const cgstPct = isInterState ? 0 : 9;
+  const sgstPct = isInterState ? 0 : 9;
+  const igstPct = isInterState ? 18 : 0;
+
+  const activationCgst = round2(activationAmount * cgstPct / 100);
+  const activationSgst = round2(activationAmount * sgstPct / 100);
+  const activationIgst = round2(activationAmount * igstPct / 100);
+
+  const amcCgst = round2(amcAmount * cgstPct / 100);
+  const amcSgst = round2(amcAmount * sgstPct / 100);
+  const amcIgst = round2(amcAmount * igstPct / 100);
+
+  const discountTaxable = discountPreTax;
+  const discountCgst = discountPreTax > 0 ? round2(discountTaxable * cgstPct / 100) : 0;
+  const discountSgst = discountPreTax > 0 ? round2(discountTaxable * sgstPct / 100) : 0;
+  const discountIgst = discountPreTax > 0 ? round2(discountTaxable * igstPct / 100) : 0;
 
   let y = margin;
 
@@ -234,7 +363,6 @@ export async function generateInvoice(data: InvoiceData): Promise<void> {
   const columnWidth = (contentWidth - columnGap) / 2;
   const lineHeight = 4;
 
-  // Helper: draw wrapped text lines, returns new Y cursor
   function drawWrapped(text: string, x: number, startY: number, maxWidth: number, font: 'normal' | 'bold' = 'normal', color: string = gray): number {
     doc.setFont('helvetica', font);
     doc.setTextColor(color);
@@ -246,7 +374,6 @@ export async function generateInvoice(data: InvoiceData): Promise<void> {
     return startY;
   }
 
-  // Draw one address column, returns final Y
   function drawAddressBlock(label: string, x: number, startY: number, maxW: number): number {
     doc.setFontSize(9);
     doc.setFont('helvetica', 'bold');
@@ -280,53 +407,15 @@ export async function generateInvoice(data: InvoiceData): Promise<void> {
 
   y = Math.max(billEndY, shipEndY) + 6;
 
-  // ── Line Items Table (GST-compliant format) ──
+  // ═══════════════════════════════════════════════════════
+  // ── LINE ITEMS TABLE (width-based column layout) ──
+  // ═══════════════════════════════════════════════════════
+
   const tableLeft = margin;
   const tableRight = pageWidth - margin;
-  const tableWidth = tableRight - tableLeft;
+  const columns = buildColumns(isInterState);
+  const layout = computeLayout(columns, tableLeft);
 
-  // Column positions (left edges) — widened tax columns to prevent overlap
-  const col = {
-    sr:    tableLeft,
-    hsn:   tableLeft + 8,
-    desc:  tableLeft + 22,
-    uom:   tableLeft + 62,
-    qty:   tableLeft + 72,
-    rate:  tableLeft + 80,
-    gross: tableLeft + 94,
-    dis:   tableLeft + 108,
-    taxable: tableLeft + 116,
-    cgstR: tableLeft + 132,
-    cgstA: tableLeft + 141,
-    sgstR: tableLeft + 153,
-    sgstA: tableLeft + 162,
-  };
-  const colEnd = tableRight;
-
-  // Per-line tax calculations
-  const activationGross = activationAmount;
-  const amcGross = amcAmount;
-  const activationTaxable = activationAmount;
-  const amcTaxable = amcAmount;
-  const discountTaxable = discountPreTax;
-
-  const cgstPct = isInterState ? 0 : 9;
-  const sgstPct = isInterState ? 0 : 9;
-  const igstPct = isInterState ? 18 : 0;
-
-  const activationCgst = round2(activationTaxable * cgstPct / 100);
-  const activationSgst = round2(activationTaxable * sgstPct / 100);
-  const activationIgst = round2(activationTaxable * igstPct / 100);
-
-  const amcCgst = round2(amcTaxable * cgstPct / 100);
-  const amcSgst = round2(amcTaxable * sgstPct / 100);
-  const amcIgst = round2(amcTaxable * igstPct / 100);
-
-  const discountCgst = discountPreTax > 0 ? round2(discountTaxable * cgstPct / 100) : 0;
-  const discountSgst = discountPreTax > 0 ? round2(discountTaxable * sgstPct / 100) : 0;
-  const discountIgst = discountPreTax > 0 ? round2(discountTaxable * igstPct / 100) : 0;
-
-  // Draw table border helper
   const drawHLine = (atY: number) => {
     doc.setDrawColor(lineColor);
     doc.setLineWidth(0.3);
@@ -336,119 +425,95 @@ export async function generateInvoice(data: InvoiceData): Promise<void> {
   const drawVLines = (topY: number, bottomY: number) => {
     doc.setDrawColor(lineColor);
     doc.setLineWidth(0.2);
-    const vLines = [col.sr, col.hsn, col.desc, col.uom, col.qty, col.rate, col.gross, col.dis, col.taxable, col.cgstR, col.sgstR, colEnd];
-    // Add IGST column separator if inter-state
-    if (isInterState) {
-      // For inter-state, we repurpose CGST/SGST columns but still draw separators
+    // Draw left border of each column + right border of last
+    for (const c of layout) {
+      doc.line(c.left, topY, c.left, bottomY);
     }
-    for (const x of vLines) {
-      doc.line(x, topY, x, bottomY);
-    }
-    // Sub-dividers for CGST (Rate|Amt) and SGST (Rate|Amt)
-    doc.line(col.cgstA, topY, col.cgstA, bottomY);
-    doc.line(col.sgstA, topY, col.sgstA, bottomY);
+    doc.line(tableRight, topY, tableRight, bottomY);
   };
 
-  // ── Table Header Row 1 ──
+  // Find column by key
+  const colByKey = (key: string): ColLayout => layout.find(c => c.key === key)!;
+
+  // ── Table Header ──
   drawHLine(y);
   const headerTop = y;
   y += 4;
 
+  // Header line 1 — group headers for tax columns
   doc.setFontSize(6);
   doc.setFont('helvetica', 'bold');
   doc.setTextColor(dark);
 
-  doc.text('Sr.', col.sr + 1, y);
-  doc.text('HSN/SAC', col.hsn + 1, y);
-  doc.text('Description of Service/Goods', col.desc + 1, y);
-  doc.text('UOM', col.uom + 1, y);
-  doc.text('Qty.', col.qty + 1, y);
-  doc.text('Rate', col.rate + 1, y);
-  doc.text('Gross', col.gross + 1, y);
-  doc.text('Dis.', col.dis + 1, y);
-  doc.text('Taxable', col.taxable + 1, y);
-
-  if (isInterState) {
-    const igstMid = col.cgstR + (colEnd - col.cgstR) / 2;
-    doc.text('IGST', igstMid, y, { align: 'center' });
-  } else {
-    const cgstMid = col.cgstR + (col.sgstR - col.cgstR) / 2;
-    const sgstMid = col.sgstR + (colEnd - col.sgstR) / 2;
-    doc.text('CGST', cgstMid, y, { align: 'center' });
-    doc.text('SGST', sgstMid, y, { align: 'center' });
+  for (const c of layout) {
+    if (c.headerLine1) {
+      // For CGST/SGST/IGST group headers, span across rate+amt
+      if (c.key === 'cgstRate') {
+        const amtCol = colByKey('cgstAmt');
+        const midX = c.left + (amtCol.right - c.left) / 2;
+        doc.text('CGST', midX, y, { align: 'center' });
+      } else if (c.key === 'sgstRate') {
+        const amtCol = colByKey('sgstAmt');
+        const midX = c.left + (amtCol.right - c.left) / 2;
+        doc.text('SGST', midX, y, { align: 'center' });
+      } else if (c.key === 'igstRate') {
+        const amtCol = colByKey('igstAmt');
+        const midX = c.left + (amtCol.right - c.left) / 2;
+        doc.text('IGST', midX, y, { align: 'center' });
+      } else if (c.key === 'cgstAmt' || c.key === 'sgstAmt' || c.key === 'igstAmt') {
+        // Skip — handled by the group header above
+      } else {
+        drawCell(doc, c.headerLine1, c, y, { fontStyle: 'bold', color: dark });
+      }
+    }
   }
 
   y += 3;
-  // Second header line
-  doc.text('No.', col.sr + 1, y);
-  doc.text('', col.hsn + 1, y);
-  doc.text('', col.desc + 1, y);
-  doc.text('', col.uom + 1, y);
-  doc.text('', col.qty + 1, y);
-  doc.text('(₹)', col.rate + 1, y);
-  doc.text('Value', col.gross + 1, y);
-  doc.text('(₹)', col.dis + 1, y);
-  doc.text('Value', col.taxable + 1, y);
-
-  if (isInterState) {
-    doc.text('Rate', col.cgstR + 1, y);
-    doc.text('Amt', col.cgstA + 1, y);
-  } else {
-    doc.text('Rate', col.cgstR + 1, y);
-    doc.text('Amt', col.cgstA + 1, y);
-    doc.text('Rate', col.sgstR + 1, y);
-    doc.text('Amt', col.sgstA + 1, y);
+  // Header line 2
+  for (const c of layout) {
+    if (c.headerLine2) {
+      drawCell(doc, c.headerLine2, c, y, { fontStyle: 'bold', color: dark });
+    }
   }
 
   y += 2;
   drawHLine(y);
 
-  const dataStartY = y;
-
-  // ── Helper to draw a data row ──
+  // ── Data Row Helper ──
   const rowHeight = 6;
-  const drawDataRow = (
-    sr: string, hsn: string, desc: string, uom: string, qty: string,
-    rate: string, gross: string, dis: string, taxable: string,
-    cR: string, cA: string, sR: string, sA: string
-  ) => {
+
+  type RowData = Record<string, string>;
+
+  const drawDataRow = (rowData: RowData) => {
     y += rowHeight;
+
+    // Handle description wrapping specially
+    const descCol = colByKey('desc');
+    const descPad = 1.5;
+    const descMaxW = descCol.width - descPad * 2;
+    const descText = rowData['desc'] || '';
     doc.setFontSize(6);
     doc.setFont('helvetica', 'normal');
-    doc.setTextColor(dark);
+    const descLines: string[] = doc.splitTextToSize(descText, descMaxW);
 
-    doc.text(sr, col.sr + 5, y, { align: 'center' });
-    doc.text(hsn, col.hsn + 1, y);
-
-    // Wrap description within column width
-    const descMaxW = col.uom - col.desc - 2;
-    const descLines: string[] = doc.splitTextToSize(desc, descMaxW);
-    doc.text(descLines[0] || '', col.desc + 1, y);
-    if (descLines.length > 1) {
-      for (let i = 1; i < descLines.length; i++) {
-        doc.text(descLines[i], col.desc + 1, y + i * 3);
+    for (const c of layout) {
+      const val = rowData[c.key] || '';
+      if (c.key === 'desc') {
+        // Draw first line
+        doc.setFontSize(6);
+        doc.setFont('helvetica', 'normal');
+        doc.setTextColor(dark);
+        if (descLines[0]) doc.text(descLines[0], c.left + descPad, y);
+        // Draw additional lines below
+        for (let i = 1; i < descLines.length; i++) {
+          doc.text(descLines[i], c.left + descPad, y + i * 3);
+        }
+      } else {
+        drawCell(doc, val, c, y, { color: dark });
       }
     }
 
-    doc.text(uom, col.uom + 1, y);
-    // Right-align numeric columns
-    doc.text(qty, col.rate - 1, y, { align: 'right' });
-    doc.text(rate, col.gross - 1, y, { align: 'right' });
-    doc.text(gross, col.dis - 1, y, { align: 'right' });
-    doc.text(dis, col.taxable - 1, y, { align: 'right' });
-    doc.text(taxable, col.cgstR - 1, y, { align: 'right' });
-
-    if (isInterState) {
-      doc.text(cR, col.cgstA - 1, y, { align: 'right' });
-      doc.text(cA, colEnd - 1, y, { align: 'right' });
-    } else {
-      doc.text(cR, col.cgstA - 1, y, { align: 'right' });
-      doc.text(cA, col.sgstR - 1, y, { align: 'right' });
-      doc.text(sR, col.sgstA - 1, y, { align: 'right' });
-      doc.text(sA, colEnd - 1, y, { align: 'right' });
-    }
-
-    // If description wrapped, account for extra height
+    // Account for wrapped description height
     if (descLines.length > 1) {
       y += (descLines.length - 1) * 3;
     }
@@ -457,41 +522,74 @@ export async function generateInvoice(data: InvoiceData): Promise<void> {
   const vehicleLabel = vehicles === 1 ? '1 Vehicle' : `${vehicles} Vehicles`;
 
   // Row 1: Activation
-  drawDataRow(
-    '1', '997159',
-    `PayTap NFC Tag Activation & Installation Charges - ${vehicleLabel}`,
-    'Nos.', String(vehicles),
-    formatINR(activationRate), formatINR(activationGross), '-', formatINR(activationTaxable),
-    isInterState ? `${igstPct}%` : `${cgstPct}%`,
-    isInterState ? formatINR(activationIgst) : formatINR(activationCgst),
-    isInterState ? '' : `${sgstPct}%`,
-    isInterState ? '' : formatINR(activationSgst)
-  );
+  const row1: RowData = {
+    sr: '1',
+    hsn: '997159',
+    desc: `PayTap NFC Tag Activation & Installation Charges - ${vehicleLabel}`,
+    uom: 'Nos.',
+    qty: String(vehicles),
+    rate: formatINR(activationRate),
+    gross: formatINR(activationAmount),
+    dis: '-',
+    taxable: formatINR(activationAmount),
+  };
+  if (isInterState) {
+    row1.igstRate = `${igstPct}%`;
+    row1.igstAmt = formatINR(activationIgst);
+  } else {
+    row1.cgstRate = `${cgstPct}%`;
+    row1.cgstAmt = formatINR(activationCgst);
+    row1.sgstRate = `${sgstPct}%`;
+    row1.sgstAmt = formatINR(activationSgst);
+  }
+  drawDataRow(row1);
 
   // Row 2: AMC
-  drawDataRow(
-    '2', '998313',
-    'Annual Maintenance Charges (AMC)',
-    'Nos.', '1',
-    formatINR(amcRate), formatINR(amcGross), '-', formatINR(amcTaxable),
-    isInterState ? `${igstPct}%` : `${cgstPct}%`,
-    isInterState ? formatINR(amcIgst) : formatINR(amcCgst),
-    isInterState ? '' : `${sgstPct}%`,
-    isInterState ? '' : formatINR(amcSgst)
-  );
+  const row2: RowData = {
+    sr: '2',
+    hsn: '998313',
+    desc: 'Annual Maintenance Charges (AMC)',
+    uom: 'Nos.',
+    qty: '1',
+    rate: formatINR(amcRate),
+    gross: formatINR(amcAmount),
+    dis: '-',
+    taxable: formatINR(amcAmount),
+  };
+  if (isInterState) {
+    row2.igstRate = `${igstPct}%`;
+    row2.igstAmt = formatINR(amcIgst);
+  } else {
+    row2.cgstRate = `${cgstPct}%`;
+    row2.cgstAmt = formatINR(amcCgst);
+    row2.sgstRate = `${sgstPct}%`;
+    row2.sgstAmt = formatINR(amcSgst);
+  }
+  drawDataRow(row2);
 
   // Row 3: Discount (if applicable)
   if (discountPreTax > 0) {
-    drawDataRow(
-      '3', '-',
-      'Discount',
-      'Nos.', '1',
-      `-${formatINR(discountPreTax)}`, `-${formatINR(discountPreTax)}`, '-', `-${formatINR(discountTaxable)}`,
-      isInterState ? `${igstPct}%` : `${cgstPct}%`,
-      isInterState ? `-${formatINR(discountIgst)}` : `-${formatINR(discountCgst)}`,
-      isInterState ? '' : `${sgstPct}%`,
-      isInterState ? '' : `-${formatINR(discountSgst)}`
-    );
+    const row3: RowData = {
+      sr: '3',
+      hsn: '-',
+      desc: 'Discount',
+      uom: 'Nos.',
+      qty: '1',
+      rate: `-${formatINR(discountPreTax)}`,
+      gross: `-${formatINR(discountPreTax)}`,
+      dis: '-',
+      taxable: `-${formatINR(discountTaxable)}`,
+    };
+    if (isInterState) {
+      row3.igstRate = `${igstPct}%`;
+      row3.igstAmt = `-${formatINR(discountIgst)}`;
+    } else {
+      row3.cgstRate = `${cgstPct}%`;
+      row3.cgstAmt = `-${formatINR(discountCgst)}`;
+      row3.sgstRate = `${sgstPct}%`;
+      row3.sgstAmt = `-${formatINR(discountSgst)}`;
+    }
+    drawDataRow(row3);
   }
 
   // ── Total Row ──
@@ -499,25 +597,23 @@ export async function generateInvoice(data: InvoiceData): Promise<void> {
   drawHLine(y);
   y += 5;
 
-  const totalGross = round2(activationGross + amcGross - (discountPreTax > 0 ? discountPreTax : 0));
+  const totalGross = round2(activationAmount + amcAmount - (discountPreTax > 0 ? discountPreTax : 0));
   const totalTaxable = subtotalPreTax;
   const totalCgst = round2(activationCgst + amcCgst - discountCgst);
   const totalSgst = round2(activationSgst + amcSgst - discountSgst);
   const totalIgst = round2(activationIgst + amcIgst - discountIgst);
 
-  doc.setFont('helvetica', 'bold');
-  doc.setTextColor(dark);
-  doc.setFontSize(6);
-  doc.text('Total', col.desc + 1, y);
-  doc.text(formatINR(totalGross), col.dis - 1, y, { align: 'right' });
-  doc.text('-', col.taxable - 1, y, { align: 'right' });
-  doc.text(formatINR(totalTaxable), col.cgstR - 1, y, { align: 'right' });
+  // Total row using drawCell for consistent alignment
+  drawCell(doc, 'Total', colByKey('desc'), y, { fontStyle: 'bold', color: dark });
+  drawCell(doc, formatINR(totalGross), colByKey('gross'), y, { fontStyle: 'bold', color: dark });
+  drawCell(doc, '-', colByKey('dis'), y, { fontStyle: 'bold', color: dark });
+  drawCell(doc, formatINR(totalTaxable), colByKey('taxable'), y, { fontStyle: 'bold', color: dark });
 
   if (isInterState) {
-    doc.text(formatINR(totalIgst), colEnd - 1, y, { align: 'right' });
+    drawCell(doc, formatINR(totalIgst), colByKey('igstAmt'), y, { fontStyle: 'bold', color: dark });
   } else {
-    doc.text(formatINR(totalCgst), col.sgstR - 1, y, { align: 'right' });
-    doc.text(formatINR(totalSgst), colEnd - 1, y, { align: 'right' });
+    drawCell(doc, formatINR(totalCgst), colByKey('cgstAmt'), y, { fontStyle: 'bold', color: dark });
+    drawCell(doc, formatINR(totalSgst), colByKey('sgstAmt'), y, { fontStyle: 'bold', color: dark });
   }
 
   y += 2;
@@ -545,7 +641,6 @@ export async function generateInvoice(data: InvoiceData): Promise<void> {
   doc.setTextColor(gray);
   doc.setFontSize(8);
 
-  // Round Off line (only if non-zero)
   if (Math.abs(roundOff) >= 0.01) {
     doc.text('Round Off:', labelX, y, { align: 'right' });
     doc.text((roundOff >= 0 ? '+' : '') + formatINR(roundOff), totalsX, y, { align: 'right' });
