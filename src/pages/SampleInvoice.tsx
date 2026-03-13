@@ -73,7 +73,11 @@ const SampleInvoice = () => {
               {p.name} (₹{p.total})
             </Button>
           ))}
-        </div>
+          <Button onClick={handleLongAddressTest} size="lg" variant="destructive" className="gap-2">
+              <FileDown className="w-5 h-5" />
+              Long Address Test
+            </Button>
+          </div>
       </div>
     </div>
   );
