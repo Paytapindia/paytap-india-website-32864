@@ -36,6 +36,31 @@ const SampleInvoice = () => {
     { name: 'Corporate', total: 6999, vehicles: 10 },
   ];
 
+  const handleLongAddressTest = async () => {
+    const subtotal = Math.round(3749 / 1.18);
+    const gstAmount = 3749 - subtotal;
+    await generateInvoice({
+      txnid: 'SAMPLE-LONG-ADDRESS',
+      name: 'Mohammed Abdul Rehman Khan',
+      address: 'Prestige Minera, No.6, 3rd Floor, Main Guard Cross Road, Near Shivaji Nagar Bus Station, Opposite to Commercial Street',
+      city: 'Bengaluru',
+      state: 'Maharashtra',
+      pincode: '560001',
+      phone: '9876543210',
+      email: 'mohammed@longcompanyname.com',
+      companyName: 'Mohammed Abdul Rehman Khan Transportation & Logistics Services Private Limited',
+      gst: '27ABCDE1234F1Z5',
+      productType: 'sticker',
+      planName: 'Business Pro',
+      vehicleCount: 5,
+      quantity: 1,
+      unitPrice: subtotal,
+      subtotal,
+      gstAmount,
+      total: 3749,
+    });
+  };
+
   return (
     <div className="min-h-screen flex items-center justify-center bg-background">
       <div className="text-center space-y-6 p-8">
@@ -48,7 +73,11 @@ const SampleInvoice = () => {
               {p.name} (₹{p.total})
             </Button>
           ))}
-        </div>
+          <Button onClick={handleLongAddressTest} size="lg" variant="destructive" className="gap-2">
+              <FileDown className="w-5 h-5" />
+              Long Address Test
+            </Button>
+          </div>
       </div>
     </div>
   );
