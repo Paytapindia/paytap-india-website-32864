@@ -3,7 +3,7 @@ import { generateInvoice } from "@/lib/generateInvoice";
 import { FileDown } from "lucide-react";
 
 const SampleInvoice = () => {
-  const handleDownload = async (total: number, planName: string, vehicles: number) => {
+  const handleDownload = async (total: number, planName: string, vehicles: number, state = "Karnataka") => {
     const subtotal = Math.round(total / 1.18);
     const gstAmount = total - subtotal;
     await generateInvoice({
@@ -11,7 +11,7 @@ const SampleInvoice = () => {
       name: "Rahul Sharma",
       address: "42, MG Road, Indiranagar",
       city: "Bengaluru",
-      state: "Karnataka",
+      state,
       pincode: "560038",
       phone: "9876543210",
       email: "rahul@example.com",
@@ -61,6 +61,31 @@ const SampleInvoice = () => {
     });
   };
 
+  const handleStressTest = async () => {
+    const subtotal = Math.round(6999 / 1.18);
+    const gstAmount = 6999 - subtotal;
+    await generateInvoice({
+      txnid: 'SAMPLE-STRESS-QA',
+      name: 'Venkatanarasimharajuvaripeta Subramanyam',
+      address: 'Plot No.123/A, 4th Cross, 7th Block, Banashankari Industrial Area Extension, Near BBMP Ward Office, Behind Canara Bank ATM',
+      city: 'Bengaluru',
+      state: 'Tamil Nadu',
+      pincode: '560070',
+      phone: '9876543210',
+      email: 'very.long.email.address@subdomain.longcompanyname.co.in',
+      companyName: 'Venkatanarasimharajuvaripeta Heavy Transport & Cold Chain Logistics Services India Private Limited',
+      gst: '33ABCDE1234F1Z5',
+      productType: 'sticker',
+      planName: 'Corporate',
+      vehicleCount: 10,
+      quantity: 1,
+      unitPrice: subtotal,
+      subtotal,
+      gstAmount,
+      total: 6999,
+    });
+  };
+
   return (
     <div className="min-h-screen flex items-center justify-center bg-background">
       <div className="text-center space-y-6 p-8">
@@ -73,11 +98,27 @@ const SampleInvoice = () => {
               {p.name} (₹{p.total})
             </Button>
           ))}
-          <Button onClick={handleLongAddressTest} size="lg" variant="destructive" className="gap-2">
+        </div>
+        <p className="text-sm font-medium text-muted-foreground mt-4">Inter-State (IGST) Tests</p>
+        <div className="flex flex-wrap gap-3 justify-center">
+          {plans.map((p) => (
+            <Button key={`igst-${p.name}`} onClick={() => handleDownload(p.total, p.name, p.vehicles, "Maharashtra")} size="lg" variant="outline" className="gap-2">
               <FileDown className="w-5 h-5" />
-              Long Address Test
+              {p.name} IGST
             </Button>
-          </div>
+          ))}
+        </div>
+        <p className="text-sm font-medium text-muted-foreground mt-4">Edge Case Tests</p>
+        <div className="flex flex-wrap gap-3 justify-center">
+          <Button onClick={handleLongAddressTest} size="lg" variant="destructive" className="gap-2">
+            <FileDown className="w-5 h-5" />
+            Long Address Test
+          </Button>
+          <Button onClick={handleStressTest} size="lg" variant="secondary" className="gap-2">
+            <FileDown className="w-5 h-5" />
+            QA Stress Test (Max Length)
+          </Button>
+        </div>
       </div>
     </div>
   );
