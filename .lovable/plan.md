@@ -1,11 +1,26 @@
 
 
-## Plan: Activate iOS App Store Button
+## Plan: Change Plan Box Text from "NFC Tags Included" to "Vehicles Activated"
 
-The iOS app is now live. Two changes needed in `src/components/MobileAppSection.tsx`:
+### Change in `src/pages/Checkout.tsx`
 
-1. **Update subtitle** — Change "Launching Soon on iOS" to "Available on iOS & Android"
-2. **Activate iOS button** — Convert the disabled `<div>` (lines 99-106) to an active `<a>` link pointing to `https://apps.apple.com/in/app/paytap-app/id6755413911`, removing `opacity-60` and `cursor-not-allowed`, and adding the same hover style as the Google Play button
+**Line 408** — Replace the tag/card count text with "Vehicle Activated" phrasing:
 
-Single file change, no backend work needed.
+```typescript
+// Before:
+<p className="text-[10px] text-muted-foreground">{p.tags} {productType === 'sticker' ? 'NFC Tag' : 'Card'}{p.tags > 1 ? 's' : ''} included</p>
+
+// After:
+<p className="text-[10px] text-muted-foreground">{p.tags} Vehicle{p.tags > 1 ? 's' : ''} Activated</p>
+```
+
+This will show:
+- Starter (1 tag): **1 Vehicle Activated**
+- Business Basic (2 tags): **2 Vehicles Activated**
+- Business Pro (5 tags): **5 Vehicles Activated**
+- Corporate (10 tags): **10 Vehicles Activated**
+
+| File | Change |
+|------|--------|
+| `src/pages/Checkout.tsx` | Line 408: replace NFC Tag/Card text with "Vehicle(s) Activated" |
 
