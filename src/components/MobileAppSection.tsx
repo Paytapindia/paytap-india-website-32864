@@ -89,21 +89,26 @@ const MobileAppSection = memo(() => {
             Mobile Control Center
           </h3>
           <p className="text-muted-foreground text-xs md:text-sm mb-5">
-            Launching Soon on iOS
+            Available on iOS & Android
           </p>
           <p className="text-foreground/80 text-sm md:text-base max-w-[520px] leading-[1.8] mb-8 md:mb-10">
             Monitor balances, approve transactions, receive alerts, and manage tags or cards — directly from the Paytap mobile app.
           </p>
 
           <div className="flex flex-col sm:flex-row gap-3 md:gap-4">
-            {/* iOS — greyed out */}
-            <div className="flex items-center gap-3 bg-primary text-primary-foreground px-6 py-4 rounded-[14px] opacity-60 cursor-not-allowed min-w-[200px]">
+            {/* iOS — active */}
+            <a
+              href="https://apps.apple.com/in/app/paytap-app/id6755413911"
+              target="_blank"
+              rel="noopener noreferrer"
+              className="flex items-center gap-3 bg-primary text-primary-foreground px-6 py-4 rounded-[14px] hover:opacity-90 transition-opacity min-w-[200px]"
+            >
               <Apple className="w-7 h-7" />
               <div className="text-left">
                 <p className="text-[10px] text-primary-foreground/60">Download on the</p>
                 <p className="text-base font-semibold">App Store</p>
               </div>
-            </div>
+            </a>
 
             {/* Google Play — active */}
             <a
