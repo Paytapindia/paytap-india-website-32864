@@ -387,17 +387,6 @@ const Navbar = memo(() => {
               )}
             </div>
 
-            {/* How It Works - Direct Link */}
-
-
-            {/* Compliance - Direct Link */}
-            <Link 
-              to="/security" 
-              className="block text-base font-medium text-gray-700 hover:text-paytap-dark py-3 px-2 border-b border-gray-100 transition-colors min-h-[48px] flex items-center"
-              onClick={handleNavClick}
-            >
-              {t('nav.compliance')}
-            </Link>
 
             {/* Resources Section */}
             <div className="border-b border-gray-100">
