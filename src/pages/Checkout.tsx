@@ -595,6 +595,12 @@ const Checkout = () => {
       <div className="text-center mb-2">
         <h2 className="text-xl md:text-2xl font-bold text-foreground">Your Details</h2>
         <p className="text-sm text-muted-foreground mt-1">We just need a few basics to get started.</p>
+        {isLookingUp && (
+          <div className="flex items-center justify-center gap-2 mt-3 text-sm text-primary">
+            <Loader2 className="w-4 h-4 animate-spin" />
+            <span>Checking if you've ordered before...</span>
+          </div>
+        )}
       </div>
       <div className="bg-muted/30 rounded-2xl p-5 md:p-8 space-y-5">
         <div>
