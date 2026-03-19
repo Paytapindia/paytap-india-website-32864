@@ -249,19 +249,26 @@ const Navbar = memo(() => {
                         </Link>
                       </NavigationMenuLink>
                     </li>
+                    <li>
+                      <NavigationMenuLink asChild>
+                        <Link
+                          to="/security"
+                          className="block select-none space-y-1 rounded-md p-3 leading-none no-underline outline-none transition-colors hover:bg-accent hover:text-accent-foreground focus:bg-accent focus:text-accent-foreground"
+                        >
+                          <div className="text-sm font-medium leading-none">
+                            {t('nav.compliance')}
+                          </div>
+                          <p className="line-clamp-2 text-sm leading-snug text-muted-foreground">
+                            Security & certifications
+                          </p>
+                        </Link>
+                      </NavigationMenuLink>
+                    </li>
                   </ul>
                 </NavigationMenuContent>
               </NavigationMenuItem>
             </NavigationMenuList>
           </NavigationMenu>
-          
-          {/* Direct Links */}
-          <div className="flex items-center gap-6 ml-14">
-            <Link to="/security" className="text-sm font-medium text-white/80 hover:text-white transition-colors relative group">
-              {t('nav.compliance')}
-              <span className="absolute -bottom-1 left-0 w-0 h-0.5 bg-white transition-all group-hover:w-full"></span>
-            </Link>
-          </div>
         </nav>
       </div>
       
@@ -380,17 +387,6 @@ const Navbar = memo(() => {
               )}
             </div>
 
-            {/* How It Works - Direct Link */}
-
-
-            {/* Compliance - Direct Link */}
-            <Link 
-              to="/security" 
-              className="block text-base font-medium text-gray-700 hover:text-paytap-dark py-3 px-2 border-b border-gray-100 transition-colors min-h-[48px] flex items-center"
-              onClick={handleNavClick}
-            >
-              {t('nav.compliance')}
-            </Link>
 
             {/* Resources Section */}
             <div className="border-b border-gray-100">
@@ -430,6 +426,13 @@ const Navbar = memo(() => {
                     onClick={handleNavClick}
                   >
                     {t('nav.support')}
+                  </Link>
+                  <Link 
+                    to="/security" 
+                    className="block text-sm text-gray-600 hover:text-paytap-dark py-2 px-4 ml-2"
+                    onClick={handleNavClick}
+                  >
+                    {t('nav.compliance')}
                   </Link>
                 </div>
               )}
