@@ -1,12 +1,20 @@
 
 
-## Plan: Simplify Platform Dropdown in Navbar
+## Plan: Update Solution Names in Navbar
 
-Remove "NFC Access Layer" and "Dashboard Controls" from the Platform dropdown, keeping only "Platform Overview" and "Prepaid Infrastructure."
+Rename "Myfleet AI" → "Paytap Myfleet AI" and "ExpensePro" → "Paytap ExpensePro" in both desktop and mobile navigation menus.
 
-### Changes in `src/components/Navbar.tsx`
+### Changes
 
-**Desktop dropdown** (lines ~108-138): Remove the two `<li>` items for NFC Access Layer and Dashboard Controls.
+**`src/components/Navbar.tsx`** — Update the display text in 4 places:
+1. Desktop dropdown: Myfleet AI link text
+2. Desktop dropdown: ExpensePro link text
+3. Mobile menu: Myfleet AI link text
+4. Mobile menu: ExpensePro link text
 
-**Mobile menu** (lines ~260-274): Remove the two corresponding `<Link>` items for NFC Access Layer and Dashboard Controls.
+**`src/i18n/locales/en.json`** — Update translation keys:
+- `nav.myfleetAi`: "Myfleet AI" → "Paytap Myfleet AI"
+- `nav.expensePro`: "ExpensePro" → "Paytap ExpensePro"
+
+Also update `hi.json` and `kn.json` locale files if they contain these keys.
 
