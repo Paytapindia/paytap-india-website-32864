@@ -208,6 +208,8 @@ const Checkout = () => {
   const [orderTxnId, setOrderTxnId] = useState("");
   const [fieldErrors, setFieldErrors] = useState<Record<string, string>>({});
   const [lastFormData, setLastFormData] = useState<CheckoutFormData | null>(null);
+  const [isLookingUp, setIsLookingUp] = useState(false);
+  const [isReturningCustomer, setIsReturningCustomer] = useState(false);
   const { toast } = useToast();
   const navigate = useNavigate();
   const isMobile = useIsMobile();
@@ -267,8 +269,63 @@ const Checkout = () => {
   // ── Step Navigation ──
   const nextStep = async () => {
     if (currentStep === 2) {
-      const valid = await trigger(['name', 'phone', 'email']);
+      const valid = await trigger(['name', 'phone']);
       if (!valid) return;
+
+      // Lookup returning customer
+      setIsLookingUp(true);
+      try {
+        const phone = getValues('phone').trim();
+        const { data, error } = await supabase.functions.invoke('lookup-customer', {
+          body: { phone },
+        });
+
+        if (!error && data?.found && data.customer) {
+          const c = data.customer;
+          // Auto-fill all fields
+          if (c.email) setValue('email', c.email);
+          if (c.address) setValue('address', c.address);
+          if (c.city) {
+            setValue('city', c.city);
+          }
+          if (c.state) {
+            setSelectedState(c.state);
+            setValue('state', c.state);
+          }
+          if (c.pincode) setValue('pincode', c.pincode);
+          if (c.pan) setValue('pan', c.pan);
+          if (c.gst) {
+            setValue('gst', c.gst);
+            setHasGst(true);
+          }
+          if (c.companyName) setValue('companyName', c.companyName);
+          if (c.accountType && c.accountType in PLANS) {
+            setSelectedPlan(c.accountType as PlanType);
+          }
+
+          setIsReturningCustomer(true);
+          toast({
+            title: "Welcome back! 🎉",
+            description: "We've loaded your details from your previous order.",
+          });
+
+          // Validate email field (was not validated yet for returning users)
+          const emailValid = await trigger(['email']);
+          if (emailValid) {
+            // Skip to Step 4 (Review & Pay)
+            setCurrentStep(4);
+            setIsLookingUp(false);
+            return;
+          }
+        }
+      } catch {
+        // Silently continue — lookup is best-effort
+      }
+      setIsLookingUp(false);
+
+      // Still need email validation for non-returning flow
+      const emailValid = await trigger(['email']);
+      if (!emailValid) return;
     }
     if (currentStep === 3) {
       const fieldsToValidate: (keyof CheckoutFormData)[] = ['address', 'state', 'city', 'pincode'];
@@ -538,6 +595,12 @@ const Checkout = () => {
       <div className="text-center mb-2">
         <h2 className="text-xl md:text-2xl font-bold text-foreground">Your Details</h2>
         <p className="text-sm text-muted-foreground mt-1">We just need a few basics to get started.</p>
+        {isLookingUp && (
+          <div className="flex items-center justify-center gap-2 mt-3 text-sm text-primary">
+            <Loader2 className="w-4 h-4 animate-spin" />
+            <span>Checking if you've ordered before...</span>
+          </div>
+        )}
       </div>
       <div className="bg-muted/30 rounded-2xl p-5 md:p-8 space-y-5">
         <div>
@@ -716,7 +779,21 @@ const Checkout = () => {
 
       {/* Customer Details Recap */}
       <div className="bg-muted/30 rounded-2xl p-5 md:p-8 space-y-2.5">
-        <h3 className="text-sm font-semibold text-foreground">Your Details</h3>
+        <div className="flex items-center justify-between">
+          <h3 className="text-sm font-semibold text-foreground">Your Details</h3>
+          {isReturningCustomer && (
+            <button
+              type="button"
+              onClick={() => {
+                setIsReturningCustomer(false);
+                setCurrentStep(3);
+              }}
+              className="text-xs text-primary hover:underline font-medium"
+            >
+              Edit Details
+            </button>
+          )}
+        </div>
         <div className="grid grid-cols-2 gap-x-4 gap-y-2 text-sm">
           <div>
             <span className="text-muted-foreground text-xs">Name</span>
