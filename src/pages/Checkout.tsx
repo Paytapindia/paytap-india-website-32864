@@ -779,7 +779,21 @@ const Checkout = () => {
 
       {/* Customer Details Recap */}
       <div className="bg-muted/30 rounded-2xl p-5 md:p-8 space-y-2.5">
-        <h3 className="text-sm font-semibold text-foreground">Your Details</h3>
+        <div className="flex items-center justify-between">
+          <h3 className="text-sm font-semibold text-foreground">Your Details</h3>
+          {isReturningCustomer && (
+            <button
+              type="button"
+              onClick={() => {
+                setIsReturningCustomer(false);
+                setCurrentStep(3);
+              }}
+              className="text-xs text-primary hover:underline font-medium"
+            >
+              Edit Details
+            </button>
+          )}
+        </div>
         <div className="grid grid-cols-2 gap-x-4 gap-y-2 text-sm">
           <div>
             <span className="text-muted-foreground text-xs">Name</span>
