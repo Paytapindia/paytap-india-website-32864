@@ -401,7 +401,7 @@ const Checkout = () => {
                           {...register("email")}
                           type="email"
                           placeholder="Email Address"
-                          className="h-13 rounded-2xl border-0 bg-secondary text-foreground placeholder:text-muted-foreground/60 text-base px-5 focus-visible:ring-2 focus-visible:ring-primary/20 focus-visible:ring-offset-0"
+                          className="h-[52px] rounded-2xl border-0 bg-secondary text-foreground placeholder:text-muted-foreground/60 text-base px-5 focus-visible:ring-2 focus-visible:ring-primary/20 focus-visible:ring-offset-0"
                         />
                         {errors.email && <p className="text-xs text-destructive mt-1.5 pl-1">{errors.email.message}</p>}
                       </div>
@@ -433,14 +433,14 @@ const Checkout = () => {
                             {...register("gst", { setValueAs: (v) => v?.toUpperCase() })}
                             placeholder="e.g. 22AAAAA0000A1Z5"
                             maxLength={15}
-                            className="h-13 rounded-2xl border-0 bg-secondary text-foreground placeholder:text-muted-foreground/60 text-base px-5 uppercase focus-visible:ring-2 focus-visible:ring-primary/20 focus-visible:ring-offset-0"
+                            className="h-[52px] rounded-2xl border-0 bg-secondary text-foreground placeholder:text-muted-foreground/60 text-base px-5 uppercase focus-visible:ring-2 focus-visible:ring-primary/20 focus-visible:ring-offset-0"
                           />
                         ) : (
                           <Input
                             {...register("pan", { setValueAs: (v) => v?.toUpperCase() })}
                             placeholder="e.g. ABCDE1234F"
                             maxLength={10}
-                            className="h-13 rounded-2xl border-0 bg-secondary text-foreground placeholder:text-muted-foreground/60 text-base px-5 uppercase focus-visible:ring-2 focus-visible:ring-primary/20 focus-visible:ring-offset-0"
+                            className="h-[52px] rounded-2xl border-0 bg-secondary text-foreground placeholder:text-muted-foreground/60 text-base px-5 uppercase focus-visible:ring-2 focus-visible:ring-primary/20 focus-visible:ring-offset-0"
                           />
                         )}
                         {fieldErrors.gst && <p className="text-xs text-destructive mt-1.5 pl-1">{fieldErrors.gst}</p>}
@@ -452,7 +452,7 @@ const Checkout = () => {
                         <Input
                           {...register("companyName")}
                           placeholder="Company Name (optional)"
-                          className="h-13 rounded-2xl border-0 bg-secondary text-foreground placeholder:text-muted-foreground/60 text-base px-5 focus-visible:ring-2 focus-visible:ring-primary/20 focus-visible:ring-offset-0"
+                          className="h-[52px] rounded-2xl border-0 bg-secondary text-foreground placeholder:text-muted-foreground/60 text-base px-5 focus-visible:ring-2 focus-visible:ring-primary/20 focus-visible:ring-offset-0"
                         />
                       </div>
                     </div>
@@ -533,15 +533,15 @@ const Checkout = () => {
 
                     <div className="space-y-2 text-xs text-muted-foreground">
                       <div className="flex items-center gap-2">
-                        <CheckCircle className="w-3.5 h-3.5 text-green-500 flex-shrink-0" />
+                        <CheckCircle className="w-3.5 h-3.5 text-primary flex-shrink-0" />
                         <span>GST included · Invoice provided</span>
                       </div>
                       <div className="flex items-center gap-2">
-                        <CheckCircle className="w-3.5 h-3.5 text-green-500 flex-shrink-0" />
+                        <CheckCircle className="w-3.5 h-3.5 text-primary flex-shrink-0" />
                         <span>No hidden charges</span>
                       </div>
                       <div className="flex items-center gap-2">
-                        <CheckCircle className="w-3.5 h-3.5 text-green-500 flex-shrink-0" />
+                        <CheckCircle className="w-3.5 h-3.5 text-primary flex-shrink-0" />
                         <span>One-time activation fee</span>
                       </div>
                     </div>
@@ -558,7 +558,7 @@ const Checkout = () => {
         <DialogContent className="sm:max-w-md [&>button]:hidden">
           <DialogHeader className="text-center">
             <div className="flex justify-center mb-4">
-              <CheckCircle className="w-16 h-16 text-green-500" />
+              <CheckCircle className="w-16 h-16 text-primary" />
             </div>
             <DialogTitle className="text-xl text-foreground">Payment Completed?</DialogTitle>
             <DialogDescription className="text-muted-foreground mt-2">
@@ -566,7 +566,7 @@ const Checkout = () => {
             </DialogDescription>
           </DialogHeader>
           <div className="space-y-3 mt-4">
-            <Button onClick={handleConfirmPayment} className="w-full h-12 bg-green-600 hover:bg-green-700 text-base font-semibold text-white">
+            <Button onClick={handleConfirmPayment} className="w-full h-12 bg-primary hover:bg-primary/90 text-base font-semibold text-white">
               <Download className="mr-2 h-5 w-5" />
               Yes, Download Invoice
             </Button>
