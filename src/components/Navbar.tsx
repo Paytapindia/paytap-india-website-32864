@@ -192,6 +192,21 @@ const Navbar = memo(() => {
                     <li>
                       <NavigationMenuLink asChild>
                         <Link
+                          to="/how-it-works"
+                          className="block select-none space-y-1 rounded-md p-3 leading-none no-underline outline-none transition-colors hover:bg-accent hover:text-accent-foreground focus:bg-accent focus:text-accent-foreground"
+                        >
+                          <div className="text-sm font-medium leading-none">
+                            {t('nav.howItWorks')}
+                          </div>
+                          <p className="line-clamp-2 text-sm leading-snug text-muted-foreground">
+                            Step-by-step guide
+                          </p>
+                        </Link>
+                      </NavigationMenuLink>
+                    </li>
+                    <li>
+                      <NavigationMenuLink asChild>
+                        <Link
                           to="/faq"
                           className="block select-none space-y-1 rounded-md p-3 leading-none no-underline outline-none transition-colors hover:bg-accent hover:text-accent-foreground focus:bg-accent focus:text-accent-foreground"
                         >
@@ -242,10 +257,6 @@ const Navbar = memo(() => {
           
           {/* Direct Links */}
           <div className="flex items-center gap-6 ml-14">
-            <Link to="/how-it-works" className="text-sm font-medium text-white/80 hover:text-white transition-colors relative group">
-              {t('nav.howItWorks')}
-              <span className="absolute -bottom-1 left-0 w-0 h-0.5 bg-white transition-all group-hover:w-full"></span>
-            </Link>
             <Link to="/security" className="text-sm font-medium text-white/80 hover:text-white transition-colors relative group">
               {t('nav.compliance')}
               <span className="absolute -bottom-1 left-0 w-0 h-0.5 bg-white transition-all group-hover:w-full"></span>
@@ -370,13 +381,7 @@ const Navbar = memo(() => {
             </div>
 
             {/* How It Works - Direct Link */}
-            <Link 
-              to="/how-it-works" 
-              className="block text-base font-medium text-gray-700 hover:text-paytap-dark py-3 px-2 border-b border-gray-100 transition-colors min-h-[48px] flex items-center"
-              onClick={handleNavClick}
-            >
-              {t('nav.howItWorks')}
-            </Link>
+
 
             {/* Compliance - Direct Link */}
             <Link 
@@ -398,6 +403,13 @@ const Navbar = memo(() => {
               </button>
               {expandedMobileSection === 'resources' && (
                 <div className="pb-2 space-y-1">
+                  <Link 
+                    to="/how-it-works" 
+                    className="block text-sm text-gray-600 hover:text-paytap-dark py-2 px-4 ml-2"
+                    onClick={handleNavClick}
+                  >
+                    {t('nav.howItWorks')}
+                  </Link>
                   <Link 
                     to="/faq" 
                     className="block text-sm text-gray-600 hover:text-paytap-dark py-2 px-4 ml-2"
