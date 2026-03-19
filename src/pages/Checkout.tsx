@@ -7,12 +7,13 @@ import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { useToast } from "@/hooks/use-toast";
 import { useNavigate } from "react-router-dom";
-import { Loader2, Check, Lock, Home, CheckCircle, Download, XCircle, Shield, Truck, FileText } from "lucide-react";
+import { Loader2, Check, Lock, Home, CheckCircle, Download, XCircle, Shield, Truck, FileText, ChevronDown, MapPin, Star } from "lucide-react";
 import { generateInvoice, type InvoiceData } from "@/lib/generateInvoice";
 import { Dialog, DialogContent, DialogHeader, DialogTitle, DialogDescription } from "@/components/ui/dialog";
 import { supabase } from "@/integrations/supabase/client";
 import { useIsMobile } from "@/hooks/use-mobile";
 import { motion, AnimatePresence } from "framer-motion";
+import { getStates, getCitiesByState } from "@/data/indianStatesAndCities";
 
 // ── Plan Data ──────────────────────────────────────────────
 type PlanType = 'starter' | 'business_basic' | 'business_pro' | 'corporate';
@@ -74,7 +75,7 @@ const getDriverCards = (planKey: PlanType): number => {
   return 0;
 };
 
-// ── Form Schema (minimal) ─────────────────────────────────
+// ── Form Schema ─────────────────────────────────
 const checkoutSchema = z.object({
   name: z.string().trim().min(1, "Name is required").max(50),
   phone: z.string().regex(/^[6-9]\d{9}$/, "Enter a valid 10-digit mobile number"),
@@ -82,6 +83,10 @@ const checkoutSchema = z.object({
   pan: z.string().optional(),
   gst: z.string().optional(),
   companyName: z.string().optional(),
+  address: z.string().optional(),
+  city: z.string().optional(),
+  state: z.string().optional(),
+  pincode: z.string().optional(),
 });
 
 type CheckoutFormData = z.infer<typeof checkoutSchema>;
@@ -89,6 +94,8 @@ type CheckoutFormData = z.infer<typeof checkoutSchema>;
 const formatINR = (n: number) => '₹' + n.toLocaleString('en-IN');
 const panRegex = /^[A-Z]{5}[0-9]{4}[A-Z]{1}$/i;
 const gstRegex = /^[0-9]{2}[A-Z]{5}[0-9]{4}[A-Z]{1}[1-9A-Z]{1}Z[0-9A-Z]{1}$/i;
+
+const INPUT_CLASS = "h-[52px] rounded-2xl border-0 bg-secondary text-foreground placeholder:text-muted-foreground/60 text-base px-5 focus-visible:ring-2 focus-visible:ring-accent/20 focus-visible:ring-offset-0";
 
 // ── Component ──────────────────────────────────────────────
 const Checkout = () => {
@@ -101,6 +108,7 @@ const Checkout = () => {
   const [lastFormData, setLastFormData] = useState<CheckoutFormData | null>(null);
   const [isLookingUp, setIsLookingUp] = useState(false);
   const [phoneLookedUp, setPhoneLookedUp] = useState("");
+  const [showDelivery, setShowDelivery] = useState(false);
   const { toast } = useToast();
   const navigate = useNavigate();
   const isMobile = useIsMobile();
@@ -121,10 +129,19 @@ const Checkout = () => {
     watch,
   } = useForm<CheckoutFormData>({
     resolver: zodResolver(checkoutSchema),
-    defaultValues: { name: "", phone: "", email: "", pan: "", gst: "", companyName: "" },
+    defaultValues: { name: "", phone: "", email: "", pan: "", gst: "", companyName: "", address: "", city: "", state: "", pincode: "" },
   });
 
   const phoneValue = watch("phone");
+  const nameValue = watch("name");
+  const stateValue = watch("state");
+
+  // Auto-fill company name with full name when PAN is selected
+  useEffect(() => {
+    if (taxIdType === 'pan' && nameValue) {
+      setValue('companyName', nameValue);
+    }
+  }, [nameValue, taxIdType, setValue]);
 
   // ── Analytics ──
   useEffect(() => {
@@ -177,10 +194,10 @@ const Checkout = () => {
       const invoiceData: InvoiceData = {
         txnid: orderTxnId,
         name: lastFormData.name,
-        address: '',
-        city: '',
-        state: '',
-        pincode: '',
+        address: lastFormData.address || '',
+        city: lastFormData.city || '',
+        state: lastFormData.state || '',
+        pincode: lastFormData.pincode || '',
         phone: lastFormData.phone,
         email: lastFormData.email,
         pan: lastFormData.pan,
@@ -207,14 +224,19 @@ const Checkout = () => {
   };
 
   const onSubmit = async (data: CheckoutFormData) => {
-    // Custom validation for GST/PAN
     const newFieldErrors: Record<string, string> = {};
     if (taxIdType === 'gst') {
       if (!data.gst || !data.gst.trim()) newFieldErrors.gst = "GST number is required";
       else if (!gstRegex.test(data.gst.trim().toUpperCase())) newFieldErrors.gst = "Invalid GST format";
+      if (!data.companyName || !data.companyName.trim()) newFieldErrors.companyName = "Company name is required with GST";
     } else {
       if (!data.pan || !data.pan.trim()) newFieldErrors.pan = "PAN number is required";
       else if (!panRegex.test(data.pan.trim().toUpperCase())) newFieldErrors.pan = "Invalid PAN format (e.g. ABCDE1234F)";
+    }
+    if (showDelivery) {
+      if (data.pincode && data.pincode.trim() && !/^\d{6}$/.test(data.pincode.trim())) {
+        newFieldErrors.pincode = "Enter a valid 6-digit pincode";
+      }
     }
     setFieldErrors(newFieldErrors);
     if (Object.keys(newFieldErrors).length > 0) return;
@@ -229,22 +251,23 @@ const Checkout = () => {
     setIsLoading(true);
     try {
       const txnid = `TXN${Date.now()}${Math.random().toString(36).substring(2, 8).toUpperCase()}`;
+      const hasDeliveryDetails = showDelivery && data.address?.trim();
       const { error } = await supabase.from('orders').insert({
         name: data.name.trim(),
         email: data.email.trim().toLowerCase(),
         phone: data.phone.trim(),
-        address: '',
-        city: '',
-        state: '',
-        pincode: '',
+        address: data.address?.trim() || '',
+        city: data.city?.trim() || '',
+        state: data.state?.trim() || '',
+        pincode: data.pincode?.trim() || '',
         product_type: 'sticker',
         quantity: plan.tags,
         amount: total,
         txnid,
         payment_status: 'pending',
-        details_pending: true,
+        details_pending: !hasDeliveryDetails,
         account_type: selectedPlan,
-        pan: data.pan?.trim().toUpperCase() || null,
+        pan: taxIdType === 'pan' ? (data.pan?.trim().toUpperCase() || null) : null,
         gst: taxIdType === 'gst' ? (data.gst?.trim().toUpperCase() || null) : null,
         company_name: data.companyName?.trim() || null,
       } as any);
@@ -264,13 +287,15 @@ const Checkout = () => {
 
   const handlePlanSelect = (key: PlanType) => {
     setSelectedPlan(key);
-    // Smooth scroll to form on mobile
     if (isMobile && formRef.current) {
       setTimeout(() => {
         formRef.current?.scrollIntoView({ behavior: 'smooth', block: 'start' });
       }, 100);
     }
   };
+
+  const states = getStates();
+  const cities = stateValue ? getCitiesByState(stateValue) : [];
 
   // ══════════════════════════════════════════════════════════
   // ── RENDER ──
@@ -282,87 +307,137 @@ const Checkout = () => {
         <title>Checkout – Paytap</title>
       </Helmet>
 
-      <div className="min-h-screen bg-background">
-        {/* ── Top Bar ── */}
-        <div className="border-b border-border/60">
-          <div className="max-w-6xl mx-auto px-4 py-4 flex justify-between items-center">
-            <button onClick={() => navigate("/")} className="flex items-center gap-2 text-muted-foreground hover:text-foreground transition-colors text-sm">
+      <div className="min-h-screen bg-gradient-to-b from-[hsl(var(--secondary))] to-[hsl(var(--background))]">
+        {/* ── Navy Hero Header ── */}
+        <div className="bg-gradient-to-b from-primary via-primary/95 to-transparent pb-16 md:pb-24">
+          {/* Top Bar */}
+          <div className="max-w-5xl mx-auto px-4 py-4 flex justify-between items-center">
+            <button onClick={() => navigate("/")} className="flex items-center gap-2 text-primary-foreground/70 hover:text-primary-foreground transition-colors text-sm">
               <Home className="w-4 h-4" />
               <span className="font-medium">Home</span>
             </button>
-            <div className="flex items-center gap-1.5 text-muted-foreground">
+            <div className="flex items-center gap-1.5 text-primary-foreground/70">
               <Lock className="w-3.5 h-3.5" />
               <span className="text-xs font-medium tracking-wide">Secure Checkout</span>
             </div>
           </div>
+
+          {/* Hero Heading */}
+          <div className="text-center mt-6 md:mt-10 px-4">
+            <motion.h1
+              initial={{ opacity: 0, y: 20 }}
+              animate={{ opacity: 1, y: 0 }}
+              transition={{ duration: 0.6, ease: [0.25, 0.46, 0.45, 0.94] }}
+              className="text-3xl md:text-5xl font-bold text-primary-foreground tracking-tight leading-tight"
+            >
+              Activate Paytap For Your Fleet
+            </motion.h1>
+            <motion.p
+              initial={{ opacity: 0, y: 12 }}
+              animate={{ opacity: 1, y: 0 }}
+              transition={{ duration: 0.6, delay: 0.1, ease: [0.25, 0.46, 0.45, 0.94] }}
+              className="text-primary-foreground/60 mt-3 text-base md:text-lg max-w-xl mx-auto"
+            >
+              Select your plan, enter a few details, and go live in 30 seconds.
+            </motion.p>
+          </div>
         </div>
 
         <form onSubmit={handleSubmit(onSubmit)}>
-          <div className="max-w-6xl mx-auto px-4 py-10 md:py-16">
+          <div className="max-w-5xl mx-auto px-4 -mt-8 md:-mt-12 pb-16">
 
-            {/* ── Hero Heading ── */}
-            <div className="text-center mb-10 md:mb-14">
-              <h1 className="text-3xl md:text-5xl font-bold text-foreground tracking-tight leading-tight">
-                Activate Paytap For Your Fleet
-              </h1>
-              <p className="text-muted-foreground mt-3 text-base md:text-lg max-w-xl mx-auto">
-                Select your plan, enter a few details, and go live in 30 seconds.
-              </p>
-            </div>
+            {/* ── SECTION 1: Plan Selector (List View) ── */}
+            <motion.div
+              initial={{ opacity: 0, y: 24 }}
+              animate={{ opacity: 1, y: 0 }}
+              transition={{ duration: 0.5, delay: 0.2 }}
+              className="rounded-3xl bg-card/80 backdrop-blur-xl shadow-2xl shadow-primary/5 border border-border/40 overflow-hidden mb-8 md:mb-12"
+            >
+              <div className="px-5 md:px-8 py-5 border-b border-border/40">
+                <h2 className="text-sm font-semibold text-muted-foreground uppercase tracking-widest">Choose Your Plan</h2>
+              </div>
+              <div className="divide-y divide-border/30">
+                {(Object.entries(PLANS) as [PlanType, PlanInfo][]).map(([key, p], i) => {
+                  const isSelected = selectedPlan === key;
+                  const driverCards = getDriverCards(key);
+                  return (
+                    <motion.button
+                      key={key}
+                      type="button"
+                      onClick={() => handlePlanSelect(key)}
+                      whileTap={{ scale: 0.99 }}
+                      className={`w-full text-left px-5 md:px-8 py-4 md:py-5 transition-all duration-300 relative group ${
+                        isSelected
+                          ? 'bg-gradient-to-r from-primary/[0.06] via-accent/[0.04] to-transparent'
+                          : 'hover:bg-secondary/60'
+                      }`}
+                    >
+                      {/* Selection glow bar */}
+                      {isSelected && (
+                        <motion.div
+                          layoutId="plan-glow"
+                          className="absolute left-0 top-0 bottom-0 w-1 bg-accent rounded-r-full"
+                          transition={{ type: 'spring', stiffness: 400, damping: 30 }}
+                        />
+                      )}
 
-            {/* ── SECTION 1: Plan Selection ── */}
-            <div className="grid grid-cols-2 md:grid-cols-4 gap-3 md:gap-4 mb-12 md:mb-16">
-              {(Object.entries(PLANS) as [PlanType, PlanInfo][]).map(([key, p]) => {
-                const isSelected = selectedPlan === key;
-                return (
-                  <motion.button
-                    key={key}
-                    type="button"
-                    onClick={() => handlePlanSelect(key)}
-                    whileHover={{ scale: 1.02 }}
-                    whileTap={{ scale: 0.98 }}
-                    animate={isSelected ? { scale: 1.03 } : { scale: 1 }}
-                    transition={{ type: 'spring', stiffness: 400, damping: 25 }}
-                    className={`relative text-center rounded-2xl transition-all duration-200 p-4 md:p-6 ${
-                      isSelected
-                        ? 'bg-card shadow-xl shadow-primary/10 ring-2 ring-primary'
-                        : 'bg-card shadow-sm hover:shadow-md'
-                    }`}
-                  >
-                    {p.recommended && (
-                      <span className="absolute -top-2.5 left-1/2 -translate-x-1/2 px-3 py-0.5 text-[10px] font-semibold bg-primary text-primary-foreground rounded-full whitespace-nowrap">
-                        ⭐ Recommended
-                      </span>
-                    )}
-                    {isSelected && (
-                      <div className="absolute top-3 right-3 w-5 h-5 rounded-full bg-primary flex items-center justify-center">
-                        <Check className="w-3 h-3 text-primary-foreground" />
+                      <div className="flex items-center gap-4 md:gap-6">
+                        {/* Radio circle */}
+                        <div className={`w-5 h-5 rounded-full border-2 flex items-center justify-center flex-shrink-0 transition-all ${
+                          isSelected ? 'border-accent bg-accent' : 'border-muted-foreground/30 group-hover:border-muted-foreground/50'
+                        }`}>
+                          {isSelected && <Check className="w-3 h-3 text-accent-foreground" />}
+                        </div>
+
+                        {/* Plan details */}
+                        <div className="flex-1 min-w-0">
+                          <div className="flex items-center gap-2">
+                            <span className={`font-semibold text-base ${isSelected ? 'text-foreground' : 'text-foreground/80'}`}>
+                              {p.name}
+                            </span>
+                            {p.recommended && (
+                              <span className="inline-flex items-center gap-1 px-2.5 py-0.5 rounded-full text-[10px] font-bold bg-accent/10 text-accent">
+                                <Star className="w-3 h-3 fill-accent" /> POPULAR
+                              </span>
+                            )}
+                            {driverCards > 0 && (
+                              <span className="hidden md:inline-flex px-2 py-0.5 rounded-full text-[10px] font-medium bg-primary/10 text-primary">
+                                +{driverCards} Driver Card{driverCards > 1 ? 's' : ''}
+                              </span>
+                            )}
+                          </div>
+                          <p className="text-sm text-muted-foreground mt-0.5">
+                            {p.tags} vehicle{p.tags > 1 ? 's' : ''} · {p.perVehicle}
+                          </p>
+                        </div>
+
+                        {/* Price */}
+                        <div className="text-right flex-shrink-0">
+                          <span className={`text-xl md:text-2xl font-bold ${isSelected ? 'text-foreground' : 'text-foreground/70'}`}>
+                            {formatINR(p.price)}
+                          </span>
+                          <p className="text-[10px] text-muted-foreground/60 mt-0.5">incl. GST</p>
+                        </div>
                       </div>
-                    )}
-                    <p className="text-sm font-semibold text-foreground mt-1">{p.name}</p>
-                    <p className="text-2xl md:text-3xl font-bold text-foreground mt-2">{formatINR(p.price)}</p>
-                    <p className="text-xs text-muted-foreground mt-1.5">
-                      {p.tags} Vehicle{p.tags > 1 ? 's' : ''}
-                    </p>
-                    <p className="text-[10px] text-muted-foreground/70 mt-1">{p.perVehicle}</p>
-                  </motion.button>
-                );
-              })}
-            </div>
+                    </motion.button>
+                  );
+                })}
+              </div>
+            </motion.div>
 
             {/* ── SECTION 2 + 3: Form + Summary ── */}
-            <div className="grid grid-cols-1 lg:grid-cols-[1fr_340px] gap-8 lg:gap-12">
+            <div className="grid grid-cols-1 lg:grid-cols-[1fr_340px] gap-8 lg:gap-10">
 
               {/* ── Left: Quick Details Form ── */}
               <div ref={formRef}>
-                <AnimatePresence mode="wait">
-                  <motion.div
-                    key="form"
-                    initial={{ opacity: 0, y: 16 }}
-                    animate={{ opacity: 1, y: 0 }}
-                    transition={{ duration: 0.4, ease: [0.25, 0.46, 0.45, 0.94] }}
-                    className="max-w-[480px]"
-                  >
+                <motion.div
+                  initial={{ opacity: 0, y: 20 }}
+                  animate={{ opacity: 1, y: 0 }}
+                  transition={{ duration: 0.5, delay: 0.3 }}
+                  className="rounded-3xl bg-card/80 backdrop-blur-xl shadow-xl shadow-primary/5 border border-border/40 p-6 md:p-8"
+                >
+                  <div className="max-w-[480px]">
+                    <h2 className="text-lg font-bold text-foreground mb-1">Quick Details</h2>
                     <p className="text-xs text-muted-foreground mb-6">
                       We'll use this to activate your Paytap account and generate your invoice.
                     </p>
@@ -373,7 +448,7 @@ const Checkout = () => {
                         <Input
                           {...register("name")}
                           placeholder="Full Name"
-                          className="h-[52px] rounded-2xl border-0 bg-secondary text-foreground placeholder:text-muted-foreground/60 text-base px-5 focus-visible:ring-2 focus-visible:ring-primary/20 focus-visible:ring-offset-0"
+                          className={INPUT_CLASS}
                         />
                         {errors.name && <p className="text-xs text-destructive mt-1.5 pl-1">{errors.name.message}</p>}
                       </div>
@@ -384,12 +459,12 @@ const Checkout = () => {
                           {...register("phone")}
                           placeholder="Mobile Number"
                           onBlur={handlePhoneLookup}
-                          className="h-[52px] rounded-2xl border-0 bg-secondary text-foreground placeholder:text-muted-foreground/60 text-base px-5 focus-visible:ring-2 focus-visible:ring-primary/20 focus-visible:ring-offset-0"
+                          className={INPUT_CLASS}
                         />
                         {isLookingUp && (
                           <div className="flex items-center gap-1.5 mt-1.5 pl-1">
-                            <Loader2 className="w-3 h-3 animate-spin text-primary" />
-                            <span className="text-xs text-primary">Checking...</span>
+                            <Loader2 className="w-3 h-3 animate-spin text-accent" />
+                            <span className="text-xs text-accent">Checking...</span>
                           </div>
                         )}
                         {errors.phone && <p className="text-xs text-destructive mt-1.5 pl-1">{errors.phone.message}</p>}
@@ -401,7 +476,7 @@ const Checkout = () => {
                           {...register("email")}
                           type="email"
                           placeholder="Email Address"
-                          className="h-[52px] rounded-2xl border-0 bg-secondary text-foreground placeholder:text-muted-foreground/60 text-base px-5 focus-visible:ring-2 focus-visible:ring-primary/20 focus-visible:ring-offset-0"
+                          className={INPUT_CLASS}
                         />
                         {errors.email && <p className="text-xs text-destructive mt-1.5 pl-1">{errors.email.message}</p>}
                       </div>
@@ -413,16 +488,21 @@ const Checkout = () => {
                             type="button"
                             onClick={() => setTaxIdType('gst')}
                             className={`px-4 py-1.5 rounded-full text-sm font-medium transition-all ${
-                              taxIdType === 'gst' ? 'bg-primary text-primary-foreground shadow-sm' : 'text-muted-foreground hover:text-foreground'
+                              taxIdType === 'gst' ? 'bg-accent text-accent-foreground shadow-sm' : 'text-muted-foreground hover:text-foreground'
                             }`}
                           >
                             GST Number
                           </button>
                           <button
                             type="button"
-                            onClick={() => setTaxIdType('pan')}
+                            onClick={() => {
+                              setTaxIdType('pan');
+                              // Auto-fill company name with full name
+                              const currentName = getValues('name');
+                              if (currentName) setValue('companyName', currentName);
+                            }}
                             className={`px-4 py-1.5 rounded-full text-sm font-medium transition-all ${
-                              taxIdType === 'pan' ? 'bg-primary text-primary-foreground shadow-sm' : 'text-muted-foreground hover:text-foreground'
+                              taxIdType === 'pan' ? 'bg-accent text-accent-foreground shadow-sm' : 'text-muted-foreground hover:text-foreground'
                             }`}
                           >
                             PAN Number
@@ -433,27 +513,103 @@ const Checkout = () => {
                             {...register("gst", { setValueAs: (v) => v?.toUpperCase() })}
                             placeholder="e.g. 22AAAAA0000A1Z5"
                             maxLength={15}
-                            className="h-[52px] rounded-2xl border-0 bg-secondary text-foreground placeholder:text-muted-foreground/60 text-base px-5 uppercase focus-visible:ring-2 focus-visible:ring-primary/20 focus-visible:ring-offset-0"
+                            className={`${INPUT_CLASS} uppercase`}
                           />
                         ) : (
                           <Input
                             {...register("pan", { setValueAs: (v) => v?.toUpperCase() })}
                             placeholder="e.g. ABCDE1234F"
                             maxLength={10}
-                            className="h-[52px] rounded-2xl border-0 bg-secondary text-foreground placeholder:text-muted-foreground/60 text-base px-5 uppercase focus-visible:ring-2 focus-visible:ring-primary/20 focus-visible:ring-offset-0"
+                            className={`${INPUT_CLASS} uppercase`}
                           />
                         )}
                         {fieldErrors.gst && <p className="text-xs text-destructive mt-1.5 pl-1">{fieldErrors.gst}</p>}
                         {fieldErrors.pan && <p className="text-xs text-destructive mt-1.5 pl-1">{fieldErrors.pan}</p>}
                       </div>
 
-                      {/* Company Name (optional) */}
+                      {/* Company Name */}
                       <div>
-                        <Input
-                          {...register("companyName")}
-                          placeholder="Company Name (optional)"
-                          className="h-[52px] rounded-2xl border-0 bg-secondary text-foreground placeholder:text-muted-foreground/60 text-base px-5 focus-visible:ring-2 focus-visible:ring-primary/20 focus-visible:ring-offset-0"
-                        />
+                        {taxIdType === 'gst' ? (
+                          <>
+                            <Input
+                              {...register("companyName")}
+                              placeholder="Company Name *"
+                              className={INPUT_CLASS}
+                            />
+                            {fieldErrors.companyName && <p className="text-xs text-destructive mt-1.5 pl-1">{fieldErrors.companyName}</p>}
+                          </>
+                        ) : (
+                          <div>
+                            <Input
+                              value={nameValue || ''}
+                              readOnly
+                              tabIndex={-1}
+                              className={`${INPUT_CLASS} opacity-60 cursor-default`}
+                            />
+                            <p className="text-[11px] text-muted-foreground/70 mt-1.5 pl-1">Using your name as billing name</p>
+                          </div>
+                        )}
+                      </div>
+
+                      {/* ── Delivery Address (Collapsible) ── */}
+                      <div className="pt-2">
+                        <button
+                          type="button"
+                          onClick={() => setShowDelivery(!showDelivery)}
+                          className="flex items-center gap-2 text-sm font-medium text-accent hover:text-accent/80 transition-colors"
+                        >
+                          <MapPin className="w-4 h-4" />
+                          <span>{showDelivery ? 'Hide' : 'Add'} Delivery Address</span>
+                          <ChevronDown className={`w-4 h-4 transition-transform duration-200 ${showDelivery ? 'rotate-180' : ''}`} />
+                        </button>
+
+                        <AnimatePresence>
+                          {showDelivery && (
+                            <motion.div
+                              initial={{ opacity: 0, height: 0 }}
+                              animate={{ opacity: 1, height: 'auto' }}
+                              exit={{ opacity: 0, height: 0 }}
+                              transition={{ duration: 0.3, ease: [0.25, 0.46, 0.45, 0.94] }}
+                              className="overflow-hidden"
+                            >
+                              <div className="space-y-3 pt-4">
+                                <Input
+                                  {...register("address")}
+                                  placeholder="Address Line"
+                                  className={INPUT_CLASS}
+                                />
+                                <select
+                                  {...register("state")}
+                                  className={`${INPUT_CLASS} w-full appearance-none cursor-pointer`}
+                                  defaultValue=""
+                                >
+                                  <option value="" disabled>Select State</option>
+                                  {states.map(s => (
+                                    <option key={s} value={s}>{s}</option>
+                                  ))}
+                                </select>
+                                <select
+                                  {...register("city")}
+                                  className={`${INPUT_CLASS} w-full appearance-none cursor-pointer`}
+                                  defaultValue=""
+                                  disabled={!stateValue}
+                                >
+                                  <option value="" disabled>{stateValue ? 'Select City' : 'Select state first'}</option>
+                                  {cities.map(c => (
+                                    <option key={c} value={c}>{c}</option>
+                                  ))}
+                                </select>
+                                <Input
+                                  {...register("pincode")}
+                                  placeholder="Pincode"
+                                  maxLength={6}
+                                  className={INPUT_CLASS}
+                                />
+                                {fieldErrors.pincode && <p className="text-xs text-destructive mt-1.5 pl-1">{fieldErrors.pincode}</p>}
+                              </div>
+                            </motion.div>
+                          )}
+                        </AnimatePresence>
                       </div>
                     </div>
 
@@ -466,7 +622,7 @@ const Checkout = () => {
                       <Button
                         type="submit"
                         disabled={isLoading}
-                        className="w-full h-14 text-base font-semibold bg-accent hover:bg-accent/90 text-accent-foreground rounded-2xl transition-all shadow-lg shadow-accent/20 hover:shadow-xl hover:shadow-accent/30"
+                        className="w-full h-14 text-base font-semibold bg-accent hover:bg-accent/90 text-accent-foreground rounded-2xl transition-all shadow-lg shadow-accent/25 hover:shadow-xl hover:shadow-accent/35"
                       >
                         {isLoading ? (
                           <span className="flex items-center gap-2">
@@ -479,7 +635,6 @@ const Checkout = () => {
                       </Button>
                     </motion.div>
 
-                    {/* Sub-CTA text */}
                     <p className="text-center text-xs text-muted-foreground mt-3">
                       Secure checkout · Takes 30 seconds
                     </p>
@@ -487,61 +642,61 @@ const Checkout = () => {
                     {/* Trust Line */}
                     <div className="flex flex-wrap items-center justify-center gap-4 mt-5 text-xs text-muted-foreground">
                       <span className="flex items-center gap-1.5">
-                        <Lock className="w-3.5 h-3.5 text-primary" /> Secure payments
+                        <Lock className="w-3.5 h-3.5 text-accent" /> Secure payments
                       </span>
                       <span className="flex items-center gap-1.5">
-                        <Shield className="w-3.5 h-3.5 text-primary" /> RBI-aligned system
+                        <Shield className="w-3.5 h-3.5 text-accent" /> RBI-aligned system
                       </span>
                       <span className="flex items-center gap-1.5">
-                        <FileText className="w-3.5 h-3.5 text-primary" /> GST invoice provided
+                        <FileText className="w-3.5 h-3.5 text-accent" /> GST invoice provided
                       </span>
                     </div>
-                  </motion.div>
-                </AnimatePresence>
+                  </div>
+                </motion.div>
               </div>
 
               {/* ── Right: Sticky Summary Panel ── */}
-              <div className={isMobile ? 'mt-4' : ''}>
+              <div className={isMobile ? 'mt-2' : ''}>
                 <div className="lg:sticky lg:top-8">
                   <motion.div
-                    initial={{ opacity: 0, y: 16 }}
+                    initial={{ opacity: 0, y: 20 }}
                     animate={{ opacity: 1, y: 0 }}
-                    transition={{ duration: 0.5, delay: 0.15 }}
-                    className="rounded-2xl bg-card shadow-lg shadow-foreground/5 p-6 md:p-8 space-y-5"
+                    transition={{ duration: 0.5, delay: 0.4 }}
+                    className="rounded-3xl bg-primary text-primary-foreground p-6 md:p-8 space-y-5 shadow-2xl shadow-primary/20"
                   >
-                    <h3 className="text-xs font-semibold text-muted-foreground uppercase tracking-widest">Your Paytap Setup</h3>
+                    <h3 className="text-xs font-semibold text-primary-foreground/50 uppercase tracking-widest">Your Paytap Setup</h3>
 
-                    <div className="space-y-1">
-                      <p className="text-lg font-bold text-foreground">{plan.name}</p>
-                      <p className="text-sm text-muted-foreground">{plan.tags} Paytap Tag{plan.tags > 1 ? 's' : ''}</p>
+                    <div className="space-y-1.5">
+                      <p className="text-xl font-bold">{plan.name}</p>
+                      <p className="text-sm text-primary-foreground/70">{plan.tags} Paytap Tag{plan.tags > 1 ? 's' : ''}</p>
                       {getDriverCards(selectedPlan) > 0 && (
-                        <p className="text-sm text-muted-foreground">{getDriverCards(selectedPlan)} Driver Expense Card{getDriverCards(selectedPlan) > 1 ? 's' : ''}</p>
+                        <p className="text-sm text-primary-foreground/70">{getDriverCards(selectedPlan)} Driver Expense Card{getDriverCards(selectedPlan) > 1 ? 's' : ''}</p>
                       )}
                     </div>
 
-                    <div className="flex items-center gap-2 text-sm text-muted-foreground">
+                    <div className="flex items-center gap-2 text-sm text-primary-foreground/60">
                       <Truck className="w-4 h-4" />
                       <span>Delivery: 3–5 business days</span>
                     </div>
 
-                    <div className="border-t border-border pt-4">
+                    <div className="border-t border-primary-foreground/10 pt-4">
                       <div className="flex justify-between items-baseline">
-                        <span className="text-sm text-muted-foreground">Total</span>
-                        <span className="text-2xl font-bold text-foreground">{formatINR(total)}</span>
+                        <span className="text-sm text-primary-foreground/60">Total</span>
+                        <span className="text-3xl font-bold">{formatINR(total)}</span>
                       </div>
                     </div>
 
-                    <div className="space-y-2 text-xs text-muted-foreground">
+                    <div className="space-y-2.5 text-xs text-primary-foreground/60">
                       <div className="flex items-center gap-2">
-                        <CheckCircle className="w-3.5 h-3.5 text-primary flex-shrink-0" />
+                        <CheckCircle className="w-3.5 h-3.5 text-accent flex-shrink-0" />
                         <span>GST included · Invoice provided</span>
                       </div>
                       <div className="flex items-center gap-2">
-                        <CheckCircle className="w-3.5 h-3.5 text-primary flex-shrink-0" />
+                        <CheckCircle className="w-3.5 h-3.5 text-accent flex-shrink-0" />
                         <span>No hidden charges</span>
                       </div>
                       <div className="flex items-center gap-2">
-                        <CheckCircle className="w-3.5 h-3.5 text-primary flex-shrink-0" />
+                        <CheckCircle className="w-3.5 h-3.5 text-accent flex-shrink-0" />
                         <span>One-time activation fee</span>
                       </div>
                     </div>
@@ -558,7 +713,7 @@ const Checkout = () => {
         <DialogContent className="sm:max-w-md [&>button]:hidden">
           <DialogHeader className="text-center">
             <div className="flex justify-center mb-4">
-              <CheckCircle className="w-16 h-16 text-primary" />
+              <CheckCircle className="w-16 h-16 text-accent" />
             </div>
             <DialogTitle className="text-xl text-foreground">Payment Completed?</DialogTitle>
             <DialogDescription className="text-muted-foreground mt-2">
@@ -566,7 +721,7 @@ const Checkout = () => {
             </DialogDescription>
           </DialogHeader>
           <div className="space-y-3 mt-4">
-            <Button onClick={handleConfirmPayment} className="w-full h-12 bg-primary hover:bg-primary/90 text-base font-semibold text-white">
+            <Button onClick={handleConfirmPayment} className="w-full h-12 bg-accent hover:bg-accent/90 text-base font-semibold text-accent-foreground">
               <Download className="mr-2 h-5 w-5" />
               Yes, Download Invoice
             </Button>
