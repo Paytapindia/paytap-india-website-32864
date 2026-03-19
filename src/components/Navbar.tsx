@@ -303,20 +303,6 @@ const Navbar = memo(() => {
                   >
                     {t('nav.prepaidInfrastructure')}
                   </Link>
-                  <Link 
-                    to="/how-it-works" 
-                    className="block text-sm text-gray-600 hover:text-paytap-dark py-2 px-4 ml-2"
-                    onClick={handleNavClick}
-                  >
-                    {t('nav.nfcAccessLayer')}
-                  </Link>
-                  <Link 
-                    to="/how-it-works" 
-                    className="block text-sm text-gray-600 hover:text-paytap-dark py-2 px-4 ml-2"
-                    onClick={handleNavClick}
-                  >
-                    {t('nav.dashboardControls')}
-                  </Link>
                 </div>
               )}
             </div>
