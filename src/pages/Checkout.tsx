@@ -208,6 +208,8 @@ const Checkout = () => {
   const [orderTxnId, setOrderTxnId] = useState("");
   const [fieldErrors, setFieldErrors] = useState<Record<string, string>>({});
   const [lastFormData, setLastFormData] = useState<CheckoutFormData | null>(null);
+  const [isLookingUp, setIsLookingUp] = useState(false);
+  const [isReturningCustomer, setIsReturningCustomer] = useState(false);
   const { toast } = useToast();
   const navigate = useNavigate();
   const isMobile = useIsMobile();
