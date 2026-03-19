@@ -1,79 +1,63 @@
-import { useState, useEffect } from "react";
+import { useState, useEffect, useRef } from "react";
 import { Helmet } from "react-helmet-async";
 import { useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
 import * as z from "zod";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
-import { Label } from "@/components/ui/label";
-import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
-import { Separator } from "@/components/ui/separator";
 import { useToast } from "@/hooks/use-toast";
-import { getStates, getCitiesByState } from "@/data/indianStatesAndCities";
 import { useNavigate } from "react-router-dom";
-import { Loader2, ShieldCheck, Truck, Home, Package, CheckCircle, Check, Lock, Nfc, CreditCard, Download, XCircle, ArrowLeft, ArrowRight, Shield, Phone, Headphones, Clock, Car, LayoutDashboard, BarChart3, CalendarCheck, TruckIcon, Wallet } from "lucide-react";
+import { Loader2, Check, Lock, Home, CheckCircle, Download, XCircle, Shield, Truck, FileText } from "lucide-react";
 import { generateInvoice, type InvoiceData } from "@/lib/generateInvoice";
 import { Dialog, DialogContent, DialogHeader, DialogTitle, DialogDescription } from "@/components/ui/dialog";
 import { supabase } from "@/integrations/supabase/client";
 import { useIsMobile } from "@/hooks/use-mobile";
 import { motion, AnimatePresence } from "framer-motion";
-import paytapTag from '@/assets/paytap-tag-checkout.png';
-import paytapCard from '@/assets/paytap-card-product.png';
 
 // ── Plan Data ──────────────────────────────────────────────
 type PlanType = 'starter' | 'business_basic' | 'business_pro' | 'corporate';
 
 interface PlanInfo {
   name: string;
-  subtitle: string;
   price: number;
   tags: number;
-  amcYear2: number;
-  features: string[];
   recommended: boolean;
   isBusinessPlan: boolean;
+  perVehicle: string;
 }
 
 const PLANS: Record<PlanType, PlanInfo> = {
   starter: {
     name: 'Starter',
-    subtitle: '',
     price: 999,
     tags: 1,
-    amcYear2: 1200,
-    features: [],
     recommended: false,
     isBusinessPlan: false,
+    perVehicle: '₹999/vehicle',
   },
   business_basic: {
     name: 'Business Basic',
-    subtitle: '',
     price: 1600,
     tags: 2,
-    amcYear2: 1200,
-    features: [],
     recommended: false,
     isBusinessPlan: true,
+    perVehicle: '₹800/vehicle',
   },
   business_pro: {
     name: 'Business Pro',
-    subtitle: '',
     price: 3749,
     tags: 5,
-    amcYear2: 6000,
-    features: [],
     recommended: true,
     isBusinessPlan: true,
+    perVehicle: '₹750/vehicle',
   },
   corporate: {
     name: 'Corporate',
-    subtitle: '',
     price: 6999,
     tags: 10,
-    amcYear2: 12000,
-    features: [],
     recommended: false,
     isBusinessPlan: true,
+    perVehicle: '₹700/vehicle',
   },
 };
 
@@ -84,30 +68,17 @@ const PAYU_PAYMENT_LINKS: Record<PlanType, string> = {
   corporate: "https://u.payu.in/PAYUMN/3IzbYrdCoYZy",
 };
 
-const ACTIVATION_INCLUDES = [
-  { icon: Nfc, label: 'Free Contactless Payment Tag for every vehicle' },
-  { icon: CalendarCheck, label: 'Lifetime Platform Access with instant account activation' },
-  { icon: CreditCard, label: 'Driver Prepaid Expense Card (select plans)' },
-  { icon: BarChart3, label: 'Real-Time Expense Tracking' },
-  { icon: TruckIcon, label: '3–5 Day Delivery' },
-  { icon: Headphones, label: 'Dedicated Support' },
-];
+const getDriverCards = (planKey: PlanType): number => {
+  if (planKey === 'business_pro') return 1;
+  if (planKey === 'corporate') return 2;
+  return 0;
+};
 
-const DASHBOARD_INCLUDES = [
-  { icon: Wallet, label: 'Paytap Prepaid Account' },
-  { icon: LayoutDashboard, label: 'ExpensePro Dashboard' },
-  { icon: Truck, label: 'Myfleet AI Vehicle Operating System' },
-];
-
-// ── Form Schema ────────────────────────────────────────────
+// ── Form Schema (minimal) ─────────────────────────────────
 const checkoutSchema = z.object({
   name: z.string().trim().min(1, "Name is required").max(50),
   phone: z.string().regex(/^[6-9]\d{9}$/, "Enter a valid 10-digit mobile number"),
   email: z.string().email("Enter a valid email address"),
-  address: z.string().trim().min(1, "Address is required").max(200),
-  city: z.string().min(1, "City is required"),
-  state: z.string().min(1, "State is required"),
-  pincode: z.string().regex(/^[1-9][0-9]{5}$/, "Enter a valid 6-digit PIN code"),
   pan: z.string().optional(),
   gst: z.string().optional(),
   companyName: z.string().optional(),
@@ -119,100 +90,21 @@ const formatINR = (n: number) => '₹' + n.toLocaleString('en-IN');
 const panRegex = /^[A-Z]{5}[0-9]{4}[A-Z]{1}$/i;
 const gstRegex = /^[0-9]{2}[A-Z]{5}[0-9]{4}[A-Z]{1}[1-9A-Z]{1}Z[0-9A-Z]{1}$/i;
 
-const getDriverCards = (planKey: PlanType): number => {
-  if (planKey === 'starter' || planKey === 'business_basic') return 0;
-  if (planKey === 'business_pro') return 1;
-  if (planKey === 'corporate') return 2;
-  return 0;
-};
-
-const CHECKOUT_BREAKDOWNS: Record<PlanType, { amcInclGst: number; activationInclGst: number }> = {
-  starter:        { amcInclGst: 300,  activationInclGst: 699 },
-  business_basic: { amcInclGst: 300,  activationInclGst: 1300 },
-  business_pro:   { amcInclGst: 1250, activationInclGst: 2499 },
-  corporate:      { amcInclGst: 2400, activationInclGst: 4599 },
-};
-
-const getAmcAmount = (planKey: PlanType): number => {
-  return CHECKOUT_BREAKDOWNS[planKey].amcInclGst;
-};
-
-const isPremiumPlan = (planKey: PlanType): boolean => {
-  return planKey === 'business_pro' || planKey === 'corporate';
-};
-
-const STEP_LABELS = ['Choose Plan', 'Basic Details', 'Business & Delivery', 'Review & Pay'];
-
-// ── Progress Indicator ─────────────────────────────────────
-const ProgressBar = ({ currentStep }: { currentStep: number }) => (
-  <div className="max-w-2xl mx-auto px-4 py-6">
-    <div className="flex items-center justify-between relative">
-      {/* Line behind dots */}
-      <div className="absolute top-3 left-0 right-0 h-[2px] bg-border" />
-      <div
-        className="absolute top-3 left-0 h-[2px] bg-primary transition-all duration-500"
-        style={{ width: `${((currentStep - 1) / 3) * 100}%` }}
-      />
-      {STEP_LABELS.map((label, i) => {
-        const step = i + 1;
-        const isActive = currentStep >= step;
-        const isCurrent = currentStep === step;
-        return (
-          <div key={label} className="relative flex flex-col items-center z-10">
-            <div
-              className={`w-6 h-6 rounded-full flex items-center justify-center text-xs font-bold transition-all duration-300 ${
-                isActive
-                  ? 'bg-primary text-primary-foreground shadow-md'
-                  : 'bg-muted text-muted-foreground border border-border'
-              } ${isCurrent ? 'ring-4 ring-primary/20' : ''}`}
-            >
-              {isActive && step < currentStep ? <Check className="w-3.5 h-3.5" /> : step}
-            </div>
-            <span className={`text-[10px] md:text-xs mt-1.5 font-medium whitespace-nowrap ${
-              isActive ? 'text-foreground' : 'text-muted-foreground'
-            }`}>
-              {label}
-            </span>
-          </div>
-        );
-      })}
-    </div>
-  </div>
-);
-
-// ── Step Animation Wrapper ─────────────────────────────────
-const StepWrapper = ({ children, stepKey }: { children: React.ReactNode; stepKey: number }) => (
-  <AnimatePresence mode="wait">
-    <motion.div
-      key={stepKey}
-      initial={{ opacity: 0, x: 20 }}
-      animate={{ opacity: 1, x: 0 }}
-      exit={{ opacity: 0, x: -20 }}
-      transition={{ duration: 0.25 }}
-    >
-      {children}
-    </motion.div>
-  </AnimatePresence>
-);
-
 // ── Component ──────────────────────────────────────────────
 const Checkout = () => {
-  const [currentStep, setCurrentStep] = useState(1);
   const [selectedPlan, setSelectedPlan] = useState<PlanType>('business_pro');
-  const [productType, setProductType] = useState<'sticker' | 'card'>('sticker');
-  const [hasGst, setHasGst] = useState(true);
+  const [taxIdType, setTaxIdType] = useState<'gst' | 'pan'>('gst');
   const [isLoading, setIsLoading] = useState(false);
-  const [selectedState, setSelectedState] = useState("");
   const [showConfirmation, setShowConfirmation] = useState(false);
-  const [timeLeft, setTimeLeft] = useState(300);
   const [orderTxnId, setOrderTxnId] = useState("");
   const [fieldErrors, setFieldErrors] = useState<Record<string, string>>({});
   const [lastFormData, setLastFormData] = useState<CheckoutFormData | null>(null);
   const [isLookingUp, setIsLookingUp] = useState(false);
-  const [isReturningCustomer, setIsReturningCustomer] = useState(false);
+  const [phoneLookedUp, setPhoneLookedUp] = useState("");
   const { toast } = useToast();
   const navigate = useNavigate();
   const isMobile = useIsMobile();
+  const formRef = useRef<HTMLDivElement>(null);
 
   const plan = PLANS[selectedPlan];
   const total = plan.price;
@@ -229,11 +121,10 @@ const Checkout = () => {
     watch,
   } = useForm<CheckoutFormData>({
     resolver: zodResolver(checkoutSchema),
-    defaultValues: { name: "", phone: "", email: "", address: "", city: "", state: "", pincode: "", pan: "", gst: "", companyName: "" },
+    defaultValues: { name: "", phone: "", email: "", pan: "", gst: "", companyName: "" },
   });
 
-  // Watch form values for review step
-  const formValues = watch();
+  const phoneValue = watch("phone");
 
   // ── Analytics ──
   useEffect(() => {
@@ -248,148 +139,61 @@ const Checkout = () => {
     }
   }, []);
 
-  // ── 5-minute urgency timer ──
-  useEffect(() => {
-    if (timeLeft <= 0) return;
-    const interval = setInterval(() => {
-      setTimeLeft((prev) => {
-        if (prev <= 1) {
-          clearInterval(interval);
-          toast({ title: "Session expired", description: "Your checkout session has timed out. Please try again.", variant: "destructive" });
-          navigate("/");
-          return 0;
-        }
-        return prev - 1;
+  // ── Returning customer lookup on phone blur ──
+  const handlePhoneLookup = async () => {
+    const phone = getValues('phone')?.trim();
+    if (!phone || !/^[6-9]\d{9}$/.test(phone) || phone === phoneLookedUp) return;
+
+    setIsLookingUp(true);
+    try {
+      const { data, error } = await supabase.functions.invoke('lookup-customer', {
+        body: { phone },
       });
-    }, 1000);
-    return () => clearInterval(interval);
-  }, [timeLeft <= 0, navigate, toast]);
+      setPhoneLookedUp(phone);
 
-
-  // ── Step Navigation ──
-  const nextStep = async () => {
-    if (currentStep === 2) {
-      const valid = await trigger(['name', 'phone']);
-      if (!valid) return;
-
-      // Lookup returning customer
-      setIsLookingUp(true);
-      try {
-        const phone = getValues('phone').trim();
-        const { data, error } = await supabase.functions.invoke('lookup-customer', {
-          body: { phone },
+      if (!error && data?.found && data.customer) {
+        const c = data.customer;
+        if (c.email) setValue('email', c.email);
+        if (c.pan) { setValue('pan', c.pan); setTaxIdType('pan'); }
+        if (c.gst) { setValue('gst', c.gst); setTaxIdType('gst'); }
+        if (c.companyName) setValue('companyName', c.companyName);
+        if (c.accountType && c.accountType in PLANS) {
+          setSelectedPlan(c.accountType as PlanType);
+        }
+        toast({
+          title: "Welcome back! 🎉",
+          description: "We've loaded your details from your previous order.",
         });
-
-        if (!error && data?.found && data.customer) {
-          const c = data.customer;
-          // Auto-fill all fields
-          if (c.email) setValue('email', c.email);
-          if (c.address) setValue('address', c.address);
-          if (c.city) {
-            setValue('city', c.city);
-          }
-          if (c.state) {
-            setSelectedState(c.state);
-            setValue('state', c.state);
-          }
-          if (c.pincode) setValue('pincode', c.pincode);
-          if (c.pan) setValue('pan', c.pan);
-          if (c.gst) {
-            setValue('gst', c.gst);
-            setHasGst(true);
-          }
-          if (c.companyName) setValue('companyName', c.companyName);
-          if (c.accountType && c.accountType in PLANS) {
-            setSelectedPlan(c.accountType as PlanType);
-          }
-
-          setIsReturningCustomer(true);
-          toast({
-            title: "Welcome back! 🎉",
-            description: "We've loaded your details from your previous order.",
-          });
-
-          // Validate email field (was not validated yet for returning users)
-          const emailValid = await trigger(['email']);
-          if (emailValid) {
-            // Skip to Step 4 (Review & Pay)
-            setCurrentStep(4);
-            setIsLookingUp(false);
-            return;
-          }
-        }
-      } catch {
-        // Silently continue — lookup is best-effort
       }
-      setIsLookingUp(false);
-
-      // Still need email validation for non-returning flow
-      const emailValid = await trigger(['email']);
-      if (!emailValid) return;
+    } catch {
+      // silent — lookup is best-effort
     }
-    if (currentStep === 3) {
-      const fieldsToValidate: (keyof CheckoutFormData)[] = ['address', 'state', 'city', 'pincode'];
-      const valid = await trigger(fieldsToValidate);
-      if (!valid) return;
-
-  // Custom business validation
-      const data = getValues();
-      const newFieldErrors: Record<string, string> = {};
-      if (!plan.isBusinessPlan) {
-        if (!data.pan || !data.pan.trim()) newFieldErrors.pan = "PAN number is required";
-        else if (!panRegex.test(data.pan.trim().toUpperCase())) newFieldErrors.pan = "Invalid PAN format (e.g. ABCDE1234F)";
-      } else {
-        if (!data.companyName || !data.companyName.trim()) newFieldErrors.companyName = "Company name is required";
-        if (hasGst) {
-          if (!data.gst || !data.gst.trim()) newFieldErrors.gst = "GST number is required";
-          else if (!gstRegex.test(data.gst.trim().toUpperCase())) newFieldErrors.gst = "GST format should be 15 characters";
-        } else {
-          if (!data.pan || !data.pan.trim()) newFieldErrors.pan = "PAN number is required";
-          else if (!panRegex.test(data.pan.trim().toUpperCase())) newFieldErrors.pan = "Invalid PAN format (e.g. ABCDE1234F)";
-        }
-      }
-      setFieldErrors(newFieldErrors);
-      if (Object.keys(newFieldErrors).length > 0) {
-        toast({ title: "Please check your details", description: Object.values(newFieldErrors)[0], variant: "destructive" });
-        return;
-      }
-    }
-    setCurrentStep((prev) => Math.min(prev + 1, 4));
+    setIsLookingUp(false);
   };
-
-  const prevStep = () => setCurrentStep((prev) => Math.max(prev - 1, 1));
 
   // ── Handlers ──
-  const handleStateChange = (state: string) => {
-    setSelectedState(state);
-    setValue("state", state);
-    setValue("city", "");
-    trigger("state");
-  };
-  const handleCityChange = (city: string) => { setValue("city", city); trigger("city"); };
-
   const handleConfirmPayment = async () => {
     if (lastFormData) {
       const invoiceData: InvoiceData = {
         txnid: orderTxnId,
         name: lastFormData.name,
-        address: lastFormData.address,
-        city: lastFormData.city,
-        state: lastFormData.state,
-        pincode: lastFormData.pincode,
+        address: '',
+        city: '',
+        state: '',
+        pincode: '',
         phone: lastFormData.phone,
         email: lastFormData.email,
         pan: lastFormData.pan,
         gst: lastFormData.gst,
         companyName: lastFormData.companyName,
-        productType,
+        productType: 'sticker',
         planName: plan.name,
         vehicleCount: plan.tags,
         quantity: 1,
         unitPrice: plan.price,
-        subtotal: subtotal,
-        gstAmount: gstAmount,
-        total: total,
+        subtotal,
+        gstAmount,
+        total,
       };
       await generateInvoice(invoiceData);
     }
@@ -399,11 +203,22 @@ const Checkout = () => {
 
   const handleDeclinePayment = async () => {
     await supabase.from('orders').update({ payment_status: 'retry' } as any).eq('txnid', orderTxnId);
-    setTimeLeft(300);
     setShowConfirmation(false);
   };
 
   const onSubmit = async (data: CheckoutFormData) => {
+    // Custom validation for GST/PAN
+    const newFieldErrors: Record<string, string> = {};
+    if (taxIdType === 'gst') {
+      if (!data.gst || !data.gst.trim()) newFieldErrors.gst = "GST number is required";
+      else if (!gstRegex.test(data.gst.trim().toUpperCase())) newFieldErrors.gst = "Invalid GST format";
+    } else {
+      if (!data.pan || !data.pan.trim()) newFieldErrors.pan = "PAN number is required";
+      else if (!panRegex.test(data.pan.trim().toUpperCase())) newFieldErrors.pan = "Invalid PAN format (e.g. ABCDE1234F)";
+    }
+    setFieldErrors(newFieldErrors);
+    if (Object.keys(newFieldErrors).length > 0) return;
+
     if (typeof window !== 'undefined' && window.gtag) {
       window.gtag('event', 'purchase_intent', {
         value: total, currency: 'INR',
@@ -418,20 +233,20 @@ const Checkout = () => {
         name: data.name.trim(),
         email: data.email.trim().toLowerCase(),
         phone: data.phone.trim(),
-        address: data.address.trim(),
-        city: data.city,
-        state: data.state,
-        pincode: data.pincode,
-        product_type: productType === 'sticker' ? 'sticker' : 'card',
+        address: '',
+        city: '',
+        state: '',
+        pincode: '',
+        product_type: 'sticker',
         quantity: plan.tags,
         amount: total,
         txnid,
         payment_status: 'pending',
-        details_pending: false,
+        details_pending: true,
         account_type: selectedPlan,
-        pan: data.pan?.trim() || null,
-        gst: plan.isBusinessPlan ? (data.gst?.trim() || null) : null,
-        company_name: plan.isBusinessPlan ? (data.companyName?.trim() || null) : null,
+        pan: data.pan?.trim().toUpperCase() || null,
+        gst: taxIdType === 'gst' ? (data.gst?.trim().toUpperCase() || null) : null,
+        company_name: data.companyName?.trim() || null,
       } as any);
 
       if (error) throw new Error('Failed to save order');
@@ -447,412 +262,19 @@ const Checkout = () => {
     }
   };
 
-  // ── Input class helper ──
-  const inputClass = "mt-1 rounded-xl border-border bg-background shadow-sm focus:border-primary focus-visible:ring-0 focus-visible:ring-offset-0 h-12 text-base";
-  const labelClass = "text-xs font-medium text-muted-foreground";
-  const errorClass = "text-xs text-destructive mt-1";
+  const handlePlanSelect = (key: PlanType) => {
+    setSelectedPlan(key);
+    // Smooth scroll to form on mobile
+    if (isMobile && formRef.current) {
+      setTimeout(() => {
+        formRef.current?.scrollIntoView({ behavior: 'smooth', block: 'start' });
+      }, 100);
+    }
+  };
 
   // ══════════════════════════════════════════════════════════
-  // ── STEP 1: Plan & Product ──
+  // ── RENDER ──
   // ══════════════════════════════════════════════════════════
-  const renderStep1 = () => (
-    <div className="space-y-6 md:space-y-10">
-      {/* Header */}
-      <div className="text-center space-y-2 md:space-y-3">
-        <h1 className="text-2xl md:text-4xl font-bold text-foreground tracking-tight leading-tight">
-          Activate Smart Payments<br className="hidden md:block" /> For Your Vehicles
-        </h1>
-      </div>
-
-      {/* Choose Your Fleet Size */}
-      <div>
-        <h2 className="text-base font-semibold text-foreground mb-5 md:mb-6">Choose Your Fleet Size</h2>
-        <div className="grid grid-cols-2 md:grid-cols-4 gap-3 md:gap-5">
-          {(Object.entries(PLANS) as [PlanType, PlanInfo][]).map(([key, p]) => {
-            const isSelected = selectedPlan === key;
-            const isRecommended = p.recommended;
-            return (
-              <button
-                key={key}
-                type="button"
-                onClick={() => setSelectedPlan(key)}
-                className={`relative text-center rounded-2xl border-2 transition-all duration-200 bg-card hover:scale-[1.02] ${
-                  isRecommended ? 'p-5 md:p-8 scale-[1.03] shadow-xl shadow-primary/15 border-[3px]' : 'p-4 md:p-6'
-                } ${
-                  isSelected
-                    ? 'border-primary shadow-lg shadow-primary/10'
-                    : isRecommended
-                      ? 'border-primary/50 hover:border-primary'
-                      : 'border-border hover:border-muted-foreground/30'
-                }`}
-              >
-                {isRecommended && (
-                  <span className="absolute -top-3 left-1/2 -translate-x-1/2 px-3 py-0.5 text-[10px] font-semibold bg-primary text-primary-foreground rounded-full whitespace-nowrap">
-                    ⭐ Recommended For Most Fleets
-                  </span>
-                )}
-                <p className="text-sm font-semibold text-foreground">{p.name}</p>
-                <p className={`font-bold text-foreground mt-3 ${isRecommended ? 'text-3xl md:text-4xl' : 'text-2xl md:text-3xl'}`}>{formatINR(p.price)}</p>
-                <p className="text-xs text-muted-foreground mt-2 font-medium">
-                  {p.tags} Vehicle{p.tags > 1 ? 's' : ''} Activated
-                </p>
-                {/* Micro-text nudges */}
-                {key === 'starter' && (
-                  <p className="text-[10px] text-muted-foreground/60 mt-1.5">Best for single vehicle use</p>
-                )}
-                {key === 'business_basic' && (
-                  <div className="mt-2 pt-2 border-t border-border">
-                    <p className="text-[10px] font-semibold text-primary">Best Value</p>
-                    <p className="text-[10px] text-muted-foreground">Only ₹800 per vehicle</p>
-                  </div>
-                )}
-                {isRecommended && (
-                  <div className="mt-2 pt-2 border-t border-border">
-                    <p className="text-[10px] font-semibold text-primary">⭐ Recommended</p>
-                    <p className="text-[10px] text-muted-foreground">Only ₹750 per vehicle</p>
-                  </div>
-                )}
-                {isSelected && (
-                  <div className="absolute top-3 right-3 w-5 h-5 rounded-full bg-primary flex items-center justify-center">
-                    <Check className="w-3 h-3 text-primary-foreground" />
-                  </div>
-                )}
-              </button>
-            );
-          })}
-        </div>
-        <p className="text-xs text-muted-foreground text-center mt-3">Additional vehicles can be added anytime.</p>
-        <p className="text-xs text-muted-foreground text-center mt-1 font-medium">You Pay One Time Activation Fee / Vehicle</p>
-      </div>
-
-      {/* Dynamic Selection Summary */}
-      <div className="rounded-2xl border border-border bg-muted/30 p-4 md:p-6">
-        <div className="flex flex-col sm:flex-row items-start sm:items-center justify-between gap-3">
-          <div>
-            <p className="text-sm font-bold text-foreground">{plan.tags} Vehicle{plan.tags > 1 ? 's' : ''} Activated</p>
-            <p className="text-xs text-muted-foreground mt-0.5">
-              {plan.tags} Contactless Payment Tag{plan.tags > 1 ? 's' : ''}
-              {getDriverCards(selectedPlan) > 0 && ` · ${getDriverCards(selectedPlan)} Driver Expense Card${getDriverCards(selectedPlan) > 1 ? 's' : ''}`}
-            </p>
-          </div>
-          <div className="text-right">
-            <p className="text-lg font-bold text-foreground">Total Today: {formatINR(total)}</p>
-            <p className="text-[10px] text-muted-foreground">Incl. 18% GST · GST Invoice Provided</p>
-          </div>
-        </div>
-      </div>
-
-      {/* What Your Activation Includes */}
-      <div className="rounded-2xl border border-border p-5 md:p-8 bg-card">
-        <h2 className="text-base font-semibold text-foreground mb-4 md:mb-6">What Your Activation Includes</h2>
-        <div className="grid grid-cols-1 sm:grid-cols-2 gap-4 md:gap-5">
-          {ACTIVATION_INCLUDES.map((item) => (
-            <div key={item.label} className="flex items-center gap-3">
-              <div className="w-9 h-9 rounded-lg bg-primary/10 flex items-center justify-center flex-shrink-0">
-                <item.icon className="w-4.5 h-4.5 text-primary" />
-              </div>
-              <span className="text-sm text-foreground">{item.label}</span>
-            </div>
-          ))}
-        </div>
-        <div className="mt-4 md:mt-5 pt-4 md:pt-5 border-t border-border">
-          <p className="text-xs font-semibold text-muted-foreground mb-3">Dashboard Access Includes</p>
-          <div className="grid grid-cols-1 sm:grid-cols-2 gap-4 md:gap-5">
-            {DASHBOARD_INCLUDES.map((item) => (
-              <div key={item.label} className="flex items-center gap-3">
-                <div className="w-9 h-9 rounded-lg bg-primary/10 flex items-center justify-center flex-shrink-0">
-                  <item.icon className="w-4.5 h-4.5 text-primary" />
-                </div>
-                <span className="text-sm text-foreground">{item.label}</span>
-              </div>
-            ))}
-          </div>
-        </div>
-        <div className="mt-5 md:mt-6 pt-4 md:pt-5 border-t border-border text-center space-y-1">
-          <p className="text-sm text-muted-foreground">
-            Control fuel, tolls, and driver expenses across all your vehicles from one central dashboard.
-          </p>
-          <p className="text-xs text-muted-foreground/70">
-            Built for personal vehicles, businesses, and fleet operators across India.
-          </p>
-        </div>
-      </div>
-
-      {/* Trust Microcopy */}
-      <div className="flex flex-col sm:flex-row items-center justify-center gap-3 sm:gap-6 text-xs text-muted-foreground">
-        <span className="flex items-center gap-1.5"><CheckCircle className="w-3.5 h-3.5 text-primary" /> One-time activation</span>
-        <span className="flex items-center gap-1.5"><CheckCircle className="w-3.5 h-3.5 text-primary" /> Secure payments via UPI & cards</span>
-        <span className="flex items-center gap-1.5"><CheckCircle className="w-3.5 h-3.5 text-primary" /> Setup takes less than 2 minutes</span>
-      </div>
-    </div>
-  );
-
-  // ══════════════════════════════════════════════════════════
-  // ── STEP 2: Basic Details ──
-  // ══════════════════════════════════════════════════════════
-  const renderStep2 = () => (
-    <div className="max-w-lg mx-auto space-y-6">
-      <div className="text-center mb-2">
-        <h2 className="text-xl md:text-2xl font-bold text-foreground">Your Details</h2>
-        <p className="text-sm text-muted-foreground mt-1">We just need a few basics to get started.</p>
-        {isLookingUp && (
-          <div className="flex items-center justify-center gap-2 mt-3 text-sm text-primary">
-            <Loader2 className="w-4 h-4 animate-spin" />
-            <span>Checking if you've ordered before...</span>
-          </div>
-        )}
-      </div>
-      <div className="bg-muted/30 rounded-2xl p-5 md:p-8 space-y-5">
-        <div>
-          <Label htmlFor="name" className={labelClass}>Full Name</Label>
-          <Input id="name" {...register("name")} placeholder="Enter your full name" className={inputClass} />
-          {errors.name && <p className={errorClass}>{errors.name.message}</p>}
-        </div>
-        <div>
-          <Label htmlFor="phone" className={labelClass}>Phone Number</Label>
-          <Input id="phone" {...register("phone")} placeholder="10-digit mobile number" className={inputClass} />
-          {errors.phone && <p className={errorClass}>{errors.phone.message}</p>}
-        </div>
-        <div>
-          <Label htmlFor="email" className={labelClass}>Email Address</Label>
-          <Input id="email" type="email" {...register("email")} placeholder="you@email.com" className={inputClass} />
-          {errors.email && <p className={errorClass}>{errors.email.message}</p>}
-        </div>
-      </div>
-    </div>
-  );
-
-  // ══════════════════════════════════════════════════════════
-  // ── STEP 3: Business & Delivery ──
-  // ══════════════════════════════════════════════════════════
-  const renderStep3 = () => (
-    <div className="max-w-lg mx-auto space-y-6">
-      <div className="text-center mb-2">
-        <h2 className="text-xl md:text-2xl font-bold text-foreground">
-          {plan.isBusinessPlan ? 'Business & Delivery' : 'Identity & Delivery'}
-        </h2>
-        <p className="text-sm text-muted-foreground mt-1">Almost there — just a few more details.</p>
-      </div>
-
-      {/* Identity Section */}
-      <div className="bg-muted/30 rounded-2xl p-5 md:p-8 space-y-5">
-        {plan.isBusinessPlan ? (
-          <>
-            <div>
-              <Label htmlFor="companyName" className={labelClass}>Company Name</Label>
-              <Input id="companyName" {...register("companyName")} placeholder="Registered company name" className={inputClass} />
-              {fieldErrors.companyName && <p className={errorClass}>{fieldErrors.companyName}</p>}
-            </div>
-
-            {/* GST Toggle */}
-            <div>
-              <p className="text-xs font-medium text-muted-foreground mb-2">Do you have GST?</p>
-              <div className="inline-flex rounded-full bg-card border border-border p-1">
-                <button
-                  type="button"
-                  onClick={() => setHasGst(true)}
-                  className={`px-4 py-1.5 rounded-full text-sm font-medium transition-all ${
-                    hasGst ? 'bg-primary text-primary-foreground shadow-sm' : 'text-muted-foreground'
-                  }`}
-                >
-                  Yes
-                </button>
-                <button
-                  type="button"
-                  onClick={() => setHasGst(false)}
-                  className={`px-4 py-1.5 rounded-full text-sm font-medium transition-all ${
-                    !hasGst ? 'bg-primary text-primary-foreground shadow-sm' : 'text-muted-foreground'
-                  }`}
-                >
-                  No
-                </button>
-              </div>
-            </div>
-
-            {hasGst ? (
-              <div>
-                <Label htmlFor="gst" className={labelClass}>GST Number</Label>
-                <Input id="gst" {...register("gst", { setValueAs: (v) => v?.toUpperCase() })} placeholder="e.g. 22AAAAA0000A1Z5" maxLength={15} className={`${inputClass} uppercase`} />
-                {fieldErrors.gst && <p className={errorClass}>{fieldErrors.gst}</p>}
-              </div>
-            ) : (
-              <div>
-                <Label htmlFor="pan" className={labelClass}>PAN Number</Label>
-                <Input id="pan" {...register("pan", { setValueAs: (v) => v?.toUpperCase() })} placeholder="e.g. ABCDE1234F" maxLength={10} className={`${inputClass} uppercase`} />
-                {fieldErrors.pan && <p className={errorClass}>{fieldErrors.pan}</p>}
-              </div>
-            )}
-          </>
-        ) : (
-          <div>
-            <Label htmlFor="pan" className={labelClass}>PAN Number</Label>
-            <Input id="pan" {...register("pan", { setValueAs: (v) => v?.toUpperCase() })} placeholder="e.g. ABCDE1234F" maxLength={10} className={`${inputClass} uppercase`} />
-            {fieldErrors.pan && <p className={errorClass}>{fieldErrors.pan}</p>}
-          </div>
-        )}
-      </div>
-
-      {/* Delivery Address */}
-      <div className="bg-muted/30 rounded-2xl p-5 md:p-8 space-y-5">
-        <h3 className="text-sm font-semibold text-foreground flex items-center gap-2">
-          <Package className="w-4 h-4" /> Delivery Address
-        </h3>
-        <div>
-          <Label htmlFor="address" className={labelClass}>Complete Address</Label>
-          <Input id="address" {...register("address")} placeholder="House/Flat No, Street, Landmark" className={inputClass} />
-          {errors.address && <p className={errorClass}>{errors.address.message}</p>}
-        </div>
-        <div className="grid grid-cols-2 gap-3">
-          <div>
-            <Label htmlFor="state" className={labelClass}>State</Label>
-            <Select onValueChange={handleStateChange} value={selectedState}>
-              <SelectTrigger className="mt-1 rounded-xl border-border shadow-sm h-12">
-                <SelectValue placeholder="Select State" />
-              </SelectTrigger>
-              <SelectContent>
-                {getStates().map((s) => <SelectItem key={s} value={s}>{s}</SelectItem>)}
-              </SelectContent>
-            </Select>
-            {errors.state && <p className={errorClass}>{errors.state.message}</p>}
-          </div>
-          <div>
-            <Label htmlFor="city" className={labelClass}>City</Label>
-            <Select onValueChange={handleCityChange} disabled={!selectedState}>
-              <SelectTrigger className="mt-1 rounded-xl border-border shadow-sm h-12">
-                <SelectValue placeholder="Select City" />
-              </SelectTrigger>
-              <SelectContent>
-                {getCitiesByState(selectedState).map((c) => <SelectItem key={c} value={c}>{c}</SelectItem>)}
-              </SelectContent>
-            </Select>
-            {errors.city && <p className={errorClass}>{errors.city.message}</p>}
-          </div>
-        </div>
-        <div>
-          <Label htmlFor="pincode" className={labelClass}>PIN Code</Label>
-          <Input id="pincode" {...register("pincode")} placeholder="6-digit PIN code" className={inputClass} />
-          {errors.pincode && <p className={errorClass}>{errors.pincode.message}</p>}
-        </div>
-      </div>
-    </div>
-  );
-
-  // ══════════════════════════════════════════════════════════
-  // ── STEP 4: Review & Pay ──
-  // ══════════════════════════════════════════════════════════
-  const renderStep4 = () => (
-    <div className="max-w-lg mx-auto space-y-6">
-      <div className="text-center mb-2">
-        <h2 className="text-xl md:text-2xl font-bold text-foreground">Review & Activate</h2>
-        <p className="text-sm text-muted-foreground mt-1">Confirm your details and complete activation.</p>
-      </div>
-
-      {/* Order Summary */}
-      <div className="bg-muted/30 rounded-2xl p-5 md:p-8 space-y-4">
-        <h3 className="text-sm font-semibold text-foreground">You're Activating {plan.name}</h3>
-        <div className="space-y-2.5">
-          <div className="flex justify-between text-sm">
-            <span className="text-muted-foreground">Product</span>
-            <span className="font-medium text-foreground">Paytap Activation Plan</span>
-          </div>
-          <div className="flex justify-between text-sm">
-            <span className="text-muted-foreground">Plan</span>
-            <span className="font-medium text-foreground">{plan.name} ({plan.tags} {plan.tags > 1 ? 'units' : 'unit'})</span>
-          </div>
-          <div className="flex justify-between text-sm">
-            <span className="text-muted-foreground">One Time Activation & NFC Installation</span>
-            <span className="font-medium text-foreground">{formatINR(CHECKOUT_BREAKDOWNS[selectedPlan].activationInclGst)}</span>
-          </div>
-          <div className="flex justify-between text-sm">
-            <span className="text-muted-foreground">Annual Maintenance Charges (AMC)</span>
-            <span className="font-medium text-foreground">{formatINR(CHECKOUT_BREAKDOWNS[selectedPlan].amcInclGst)}</span>
-          </div>
-          <p className="text-[10px] text-muted-foreground italic pl-1">Includes {plan.tags} Contactless NFC Payment Tag{plan.tags > 1 ? 's' : ''}</p>
-          <Separator className="bg-border" />
-          <div className="flex justify-between items-baseline">
-            <span className="text-sm font-semibold text-foreground">Total Payable</span>
-            <span className="text-2xl font-bold text-foreground">{formatINR(total)}</span>
-          </div>
-          <p className="text-[11px] text-muted-foreground text-right">Inclusive of 18% GST · Invoice Provided</p>
-        </div>
-      </div>
-
-      {/* Customer Details Recap */}
-      <div className="bg-muted/30 rounded-2xl p-5 md:p-8 space-y-2.5">
-        <div className="flex items-center justify-between">
-          <h3 className="text-sm font-semibold text-foreground">Your Details</h3>
-          {isReturningCustomer && (
-            <button
-              type="button"
-              onClick={() => {
-                setIsReturningCustomer(false);
-                setCurrentStep(3);
-              }}
-              className="text-xs text-primary hover:underline font-medium"
-            >
-              Edit Details
-            </button>
-          )}
-        </div>
-        <div className="grid grid-cols-2 gap-x-4 gap-y-2 text-sm">
-          <div>
-            <span className="text-muted-foreground text-xs">Name</span>
-            <p className="font-medium text-foreground">{formValues.name}</p>
-          </div>
-          <div>
-            <span className="text-muted-foreground text-xs">Phone</span>
-            <p className="font-medium text-foreground">{formValues.phone}</p>
-          </div>
-          <div>
-            <span className="text-muted-foreground text-xs">Email</span>
-            <p className="font-medium text-foreground">{formValues.email}</p>
-          </div>
-          <div>
-            <span className="text-muted-foreground text-xs">Delivery</span>
-            <p className="font-medium text-foreground text-xs leading-snug">
-              {formValues.address}, {formValues.city}, {formValues.state} - {formValues.pincode}
-            </p>
-          </div>
-        </div>
-      </div>
-
-      {/* Trust Badges */}
-      <div className="flex flex-col sm:flex-row items-center justify-center gap-4 py-4">
-        <div className="flex items-center gap-2 text-sm text-muted-foreground">
-          <Shield className="w-4 h-4 text-primary" />
-          <span>Secure Checkout</span>
-        </div>
-        <div className="flex items-center gap-2 text-sm text-muted-foreground">
-          <Truck className="w-4 h-4 text-primary" />
-          <span>3–5 Day Delivery</span>
-        </div>
-        <div className="flex items-center gap-2 text-sm text-muted-foreground">
-          <Headphones className="w-4 h-4 text-primary" />
-          <span>Dedicated Onboarding</span>
-        </div>
-      </div>
-
-      {/* CTA — Desktop */}
-      <div className="hidden md:block">
-        <Button
-          type="submit"
-          disabled={isLoading}
-          className="w-full h-14 text-base font-semibold bg-accent hover:bg-accent/90 text-accent-foreground rounded-[14px] transition-all hover:-translate-y-0.5 hover:shadow-lg"
-        >
-          {isLoading ? (
-            <><Loader2 className="mr-2 h-5 w-5 animate-spin" /> Processing...</>
-          ) : (
-            `Activate & Pay ${formatINR(total)}`
-          )}
-        </Button>
-      </div>
-
-      <p className="text-center text-xs text-muted-foreground">
-        Built for Indian fleets & enterprises. Secure payment processing.
-      </p>
-    </div>
-  );
-
   return (
     <>
       <Helmet>
@@ -862,115 +284,269 @@ const Checkout = () => {
 
       <div className="min-h-screen bg-background">
         {/* ── Top Bar ── */}
-        <div className="border-b border-border">
-          <div className="max-w-5xl mx-auto px-4 py-4 flex justify-between items-center">
+        <div className="border-b border-border/60">
+          <div className="max-w-6xl mx-auto px-4 py-4 flex justify-between items-center">
             <button onClick={() => navigate("/")} className="flex items-center gap-2 text-muted-foreground hover:text-foreground transition-colors text-sm">
               <Home className="w-4 h-4" />
-              <span>Home</span>
+              <span className="font-medium">Home</span>
             </button>
             <div className="flex items-center gap-1.5 text-muted-foreground">
-              <Lock className="w-4 h-4" />
-              <span className="text-xs font-medium">Secure Checkout</span>
+              <Lock className="w-3.5 h-3.5" />
+              <span className="text-xs font-medium tracking-wide">Secure Checkout</span>
             </div>
           </div>
         </div>
 
-        {/* ── Urgency Timer ── */}
-        <div className="max-w-5xl mx-auto px-4 pt-3">
-          <div className={`flex items-center justify-center gap-2 text-sm font-medium transition-colors ${timeLeft < 60 ? 'text-destructive animate-pulse' : 'text-amber-600'}`}>
-            <Clock className="w-4 h-4" />
-            <span>Complete your order in {String(Math.floor(timeLeft / 60)).padStart(2, '0')}:{String(timeLeft % 60).padStart(2, '0')}</span>
-          </div>
-        </div>
-
-        {/* ── Progress Bar ── */}
-        <ProgressBar currentStep={currentStep} />
-
-        {/* ── Step Content ── */}
         <form onSubmit={handleSubmit(onSubmit)}>
-          <div className="max-w-5xl mx-auto px-4 pb-40 md:pb-24">
-            {currentStep > 1 ? (
-              <div className="grid grid-cols-1 md:grid-cols-[1fr_300px] gap-6">
-                <StepWrapper stepKey={currentStep}>
-                  {currentStep === 2 && renderStep2()}
-                  {currentStep === 3 && renderStep3()}
-                  {currentStep === 4 && renderStep4()}
-                </StepWrapper>
-                {/* Sticky Order Summary Sidebar */}
-                <div className="hidden md:block">
-                  <div className="sticky top-6 rounded-2xl border border-border bg-card p-5 space-y-3">
-                    <h3 className="text-xs font-semibold text-muted-foreground uppercase tracking-wide">Your Fleet Activation</h3>
-                    <Separator className="bg-border" />
-                    <p className="text-sm font-bold text-foreground">{plan.name}</p>
-                    <p className="text-sm text-muted-foreground">{plan.tags} Vehicle{plan.tags > 1 ? 's' : ''} Activated</p>
-                    <p className="text-sm text-muted-foreground">{plan.tags} NFC PayTap Tag{plan.tags > 1 ? 's' : ''}</p>
-                    {getDriverCards(selectedPlan) > 0 && (
-                      <p className="text-sm text-muted-foreground">{getDriverCards(selectedPlan)} Driver Expense Card{getDriverCards(selectedPlan) > 1 ? 's' : ''}</p>
+          <div className="max-w-6xl mx-auto px-4 py-10 md:py-16">
+
+            {/* ── Hero Heading ── */}
+            <div className="text-center mb-10 md:mb-14">
+              <h1 className="text-3xl md:text-5xl font-bold text-foreground tracking-tight leading-tight">
+                Activate Paytap For Your Fleet
+              </h1>
+              <p className="text-muted-foreground mt-3 text-base md:text-lg max-w-xl mx-auto">
+                Select your plan, enter a few details, and go live in 30 seconds.
+              </p>
+            </div>
+
+            {/* ── SECTION 1: Plan Selection ── */}
+            <div className="grid grid-cols-2 md:grid-cols-4 gap-3 md:gap-4 mb-12 md:mb-16">
+              {(Object.entries(PLANS) as [PlanType, PlanInfo][]).map(([key, p]) => {
+                const isSelected = selectedPlan === key;
+                return (
+                  <motion.button
+                    key={key}
+                    type="button"
+                    onClick={() => handlePlanSelect(key)}
+                    whileHover={{ scale: 1.02 }}
+                    whileTap={{ scale: 0.98 }}
+                    animate={isSelected ? { scale: 1.03 } : { scale: 1 }}
+                    transition={{ type: 'spring', stiffness: 400, damping: 25 }}
+                    className={`relative text-center rounded-2xl transition-all duration-200 p-4 md:p-6 ${
+                      isSelected
+                        ? 'bg-card shadow-xl shadow-primary/10 ring-2 ring-primary'
+                        : 'bg-card shadow-sm hover:shadow-md'
+                    }`}
+                  >
+                    {p.recommended && (
+                      <span className="absolute -top-2.5 left-1/2 -translate-x-1/2 px-3 py-0.5 text-[10px] font-semibold bg-primary text-primary-foreground rounded-full whitespace-nowrap">
+                        ⭐ Recommended
+                      </span>
                     )}
-                    {isPremiumPlan(selectedPlan) && (
-                      <div className="space-y-1 mt-2 pt-2 border-t border-border">
-                        <p className="text-[10px] text-primary font-medium">✔ Dedicated Support</p>
-                        <p className="text-[10px] text-primary font-medium">✔ Myfleet AI Vehicle Manager</p>
-                        <p className="text-[10px] text-primary font-medium">✔ ExpensePro Business Expense Management</p>
+                    {isSelected && (
+                      <div className="absolute top-3 right-3 w-5 h-5 rounded-full bg-primary flex items-center justify-center">
+                        <Check className="w-3 h-3 text-primary-foreground" />
                       </div>
                     )}
-                    <Separator className="bg-border" />
-                    <div className="flex justify-between items-baseline">
-                      <span className="text-xs text-muted-foreground">Total</span>
-                      <span className="text-lg font-bold text-foreground">{formatINR(total)}</span>
+                    <p className="text-sm font-semibold text-foreground mt-1">{p.name}</p>
+                    <p className="text-2xl md:text-3xl font-bold text-foreground mt-2">{formatINR(p.price)}</p>
+                    <p className="text-xs text-muted-foreground mt-1.5">
+                      {p.tags} Vehicle{p.tags > 1 ? 's' : ''}
+                    </p>
+                    <p className="text-[10px] text-muted-foreground/70 mt-1">{p.perVehicle}</p>
+                  </motion.button>
+                );
+              })}
+            </div>
+
+            {/* ── SECTION 2 + 3: Form + Summary ── */}
+            <div className="grid grid-cols-1 lg:grid-cols-[1fr_340px] gap-8 lg:gap-12">
+
+              {/* ── Left: Quick Details Form ── */}
+              <div ref={formRef}>
+                <AnimatePresence mode="wait">
+                  <motion.div
+                    key="form"
+                    initial={{ opacity: 0, y: 16 }}
+                    animate={{ opacity: 1, y: 0 }}
+                    transition={{ duration: 0.4, ease: [0.25, 0.46, 0.45, 0.94] }}
+                    className="max-w-[480px]"
+                  >
+                    <p className="text-xs text-muted-foreground mb-6">
+                      We'll use this to activate your Paytap account and generate your invoice.
+                    </p>
+
+                    <div className="space-y-4">
+                      {/* Full Name */}
+                      <div>
+                        <Input
+                          {...register("name")}
+                          placeholder="Full Name"
+                          className="h-13 rounded-2xl border-0 bg-secondary text-foreground placeholder:text-muted-foreground/60 text-base px-5 focus-visible:ring-2 focus-visible:ring-primary/20 focus-visible:ring-offset-0"
+                        />
+                        {errors.name && <p className="text-xs text-destructive mt-1.5 pl-1">{errors.name.message}</p>}
+                      </div>
+
+                      {/* Mobile Number */}
+                      <div>
+                        <Input
+                          {...register("phone")}
+                          placeholder="Mobile Number"
+                          onBlur={handlePhoneLookup}
+                          className="h-13 rounded-2xl border-0 bg-secondary text-foreground placeholder:text-muted-foreground/60 text-base px-5 focus-visible:ring-2 focus-visible:ring-primary/20 focus-visible:ring-offset-0"
+                        />
+                        {isLookingUp && (
+                          <div className="flex items-center gap-1.5 mt-1.5 pl-1">
+                            <Loader2 className="w-3 h-3 animate-spin text-primary" />
+                            <span className="text-xs text-primary">Checking...</span>
+                          </div>
+                        )}
+                        {errors.phone && <p className="text-xs text-destructive mt-1.5 pl-1">{errors.phone.message}</p>}
+                      </div>
+
+                      {/* Email */}
+                      <div>
+                        <Input
+                          {...register("email")}
+                          type="email"
+                          placeholder="Email Address"
+                          className="h-13 rounded-2xl border-0 bg-secondary text-foreground placeholder:text-muted-foreground/60 text-base px-5 focus-visible:ring-2 focus-visible:ring-primary/20 focus-visible:ring-offset-0"
+                        />
+                        {errors.email && <p className="text-xs text-destructive mt-1.5 pl-1">{errors.email.message}</p>}
+                      </div>
+
+                      {/* GST / PAN Toggle */}
+                      <div>
+                        <div className="inline-flex rounded-full bg-secondary p-1 mb-3">
+                          <button
+                            type="button"
+                            onClick={() => setTaxIdType('gst')}
+                            className={`px-4 py-1.5 rounded-full text-sm font-medium transition-all ${
+                              taxIdType === 'gst' ? 'bg-primary text-primary-foreground shadow-sm' : 'text-muted-foreground hover:text-foreground'
+                            }`}
+                          >
+                            GST Number
+                          </button>
+                          <button
+                            type="button"
+                            onClick={() => setTaxIdType('pan')}
+                            className={`px-4 py-1.5 rounded-full text-sm font-medium transition-all ${
+                              taxIdType === 'pan' ? 'bg-primary text-primary-foreground shadow-sm' : 'text-muted-foreground hover:text-foreground'
+                            }`}
+                          >
+                            PAN Number
+                          </button>
+                        </div>
+                        {taxIdType === 'gst' ? (
+                          <Input
+                            {...register("gst", { setValueAs: (v) => v?.toUpperCase() })}
+                            placeholder="e.g. 22AAAAA0000A1Z5"
+                            maxLength={15}
+                            className="h-13 rounded-2xl border-0 bg-secondary text-foreground placeholder:text-muted-foreground/60 text-base px-5 uppercase focus-visible:ring-2 focus-visible:ring-primary/20 focus-visible:ring-offset-0"
+                          />
+                        ) : (
+                          <Input
+                            {...register("pan", { setValueAs: (v) => v?.toUpperCase() })}
+                            placeholder="e.g. ABCDE1234F"
+                            maxLength={10}
+                            className="h-13 rounded-2xl border-0 bg-secondary text-foreground placeholder:text-muted-foreground/60 text-base px-5 uppercase focus-visible:ring-2 focus-visible:ring-primary/20 focus-visible:ring-offset-0"
+                          />
+                        )}
+                        {fieldErrors.gst && <p className="text-xs text-destructive mt-1.5 pl-1">{fieldErrors.gst}</p>}
+                        {fieldErrors.pan && <p className="text-xs text-destructive mt-1.5 pl-1">{fieldErrors.pan}</p>}
+                      </div>
+
+                      {/* Company Name (optional) */}
+                      <div>
+                        <Input
+                          {...register("companyName")}
+                          placeholder="Company Name (optional)"
+                          className="h-13 rounded-2xl border-0 bg-secondary text-foreground placeholder:text-muted-foreground/60 text-base px-5 focus-visible:ring-2 focus-visible:ring-primary/20 focus-visible:ring-offset-0"
+                        />
+                      </div>
                     </div>
-                    <p className="text-[10px] text-muted-foreground">Incl. 18% GST</p>
-                  </div>
-                </div>
-              </div>
-            ) : (
-              <StepWrapper stepKey={currentStep}>
-                {renderStep1()}
-              </StepWrapper>
-            )}
-          </div>
 
-          {/* ── Sticky Bottom Navigation ── */}
-          <div className="fixed bottom-0 left-0 right-0 bg-background border-t border-border shadow-[0_-4px_12px_rgba(0,0,0,0.06)] px-4 py-3 pb-[calc(0.75rem+env(safe-area-inset-bottom))] z-50">
-            <div className="max-w-5xl mx-auto flex flex-col md:flex-row items-center justify-between gap-2 md:gap-3">
-              <div className="w-full md:w-auto flex items-center justify-between md:justify-start gap-3">
-                {/* Back */}
-                {currentStep > 1 ? (
-                  <Button
-                    type="button"
-                    variant="outline"
-                    onClick={prevStep}
-                    className="h-12 px-5 rounded-xl border-border"
-                  >
-                    <ArrowLeft className="w-4 h-4 mr-1" /> Back
-                  </Button>
-                ) : (
-                  <div className="hidden md:block" />
-                )}
-
-                {/* Next / Pay */}
-                {currentStep < 4 ? (
-                  <div className="flex flex-col items-end gap-0.5 flex-1 md:flex-none">
-                    <Button
-                      type="button"
-                      onClick={nextStep}
-                      className="h-14 w-full md:w-auto px-10 rounded-xl bg-primary hover:bg-primary/90 text-primary-foreground font-semibold text-base"
+                    {/* ── CTA Button ── */}
+                    <motion.div
+                      className="mt-8"
+                      whileHover={{ y: -2 }}
+                      transition={{ type: 'spring', stiffness: 400, damping: 20 }}
                     >
-                      {currentStep === 1 ? 'Activate My Fleet' : 'Next'} <ArrowRight className="w-4 h-4 ml-1" />
-                    </Button>
-                    {currentStep === 1 && (
-                      <span className="text-[10px] md:text-[11px] text-muted-foreground">Setup takes less than 2 minutes.</span>
-                    )}
-                  </div>
-                ) : (
-                  <Button
-                    type="submit"
-                    disabled={isLoading}
-                    className="h-12 w-full md:w-auto px-8 rounded-[14px] bg-accent hover:bg-accent/90 text-accent-foreground font-semibold transition-all hover:-translate-y-0.5 hover:shadow-lg"
+                      <Button
+                        type="submit"
+                        disabled={isLoading}
+                        className="w-full h-14 text-base font-semibold bg-accent hover:bg-accent/90 text-accent-foreground rounded-2xl transition-all shadow-lg shadow-accent/20 hover:shadow-xl hover:shadow-accent/30"
+                      >
+                        {isLoading ? (
+                          <span className="flex items-center gap-2">
+                            <Loader2 className="h-5 w-5 animate-spin" />
+                            Securing your checkout…
+                          </span>
+                        ) : (
+                          `Pay ${formatINR(total)} & Go Live →`
+                        )}
+                      </Button>
+                    </motion.div>
+
+                    {/* Sub-CTA text */}
+                    <p className="text-center text-xs text-muted-foreground mt-3">
+                      Secure checkout · Takes 30 seconds
+                    </p>
+
+                    {/* Trust Line */}
+                    <div className="flex flex-wrap items-center justify-center gap-4 mt-5 text-xs text-muted-foreground">
+                      <span className="flex items-center gap-1.5">
+                        <Lock className="w-3.5 h-3.5 text-primary" /> Secure payments
+                      </span>
+                      <span className="flex items-center gap-1.5">
+                        <Shield className="w-3.5 h-3.5 text-primary" /> RBI-aligned system
+                      </span>
+                      <span className="flex items-center gap-1.5">
+                        <FileText className="w-3.5 h-3.5 text-primary" /> GST invoice provided
+                      </span>
+                    </div>
+                  </motion.div>
+                </AnimatePresence>
+              </div>
+
+              {/* ── Right: Sticky Summary Panel ── */}
+              <div className={isMobile ? 'mt-4' : ''}>
+                <div className="lg:sticky lg:top-8">
+                  <motion.div
+                    initial={{ opacity: 0, y: 16 }}
+                    animate={{ opacity: 1, y: 0 }}
+                    transition={{ duration: 0.5, delay: 0.15 }}
+                    className="rounded-2xl bg-card shadow-lg shadow-foreground/5 p-6 md:p-8 space-y-5"
                   >
-                    {isLoading ? <Loader2 className="h-5 w-5 animate-spin" /> : `Activate & Pay ${formatINR(total)}`}
-                  </Button>
-                )}
+                    <h3 className="text-xs font-semibold text-muted-foreground uppercase tracking-widest">Your Paytap Setup</h3>
+
+                    <div className="space-y-1">
+                      <p className="text-lg font-bold text-foreground">{plan.name}</p>
+                      <p className="text-sm text-muted-foreground">{plan.tags} Paytap Tag{plan.tags > 1 ? 's' : ''}</p>
+                      {getDriverCards(selectedPlan) > 0 && (
+                        <p className="text-sm text-muted-foreground">{getDriverCards(selectedPlan)} Driver Expense Card{getDriverCards(selectedPlan) > 1 ? 's' : ''}</p>
+                      )}
+                    </div>
+
+                    <div className="flex items-center gap-2 text-sm text-muted-foreground">
+                      <Truck className="w-4 h-4" />
+                      <span>Delivery: 3–5 business days</span>
+                    </div>
+
+                    <div className="border-t border-border pt-4">
+                      <div className="flex justify-between items-baseline">
+                        <span className="text-sm text-muted-foreground">Total</span>
+                        <span className="text-2xl font-bold text-foreground">{formatINR(total)}</span>
+                      </div>
+                    </div>
+
+                    <div className="space-y-2 text-xs text-muted-foreground">
+                      <div className="flex items-center gap-2">
+                        <CheckCircle className="w-3.5 h-3.5 text-green-500 flex-shrink-0" />
+                        <span>GST included · Invoice provided</span>
+                      </div>
+                      <div className="flex items-center gap-2">
+                        <CheckCircle className="w-3.5 h-3.5 text-green-500 flex-shrink-0" />
+                        <span>No hidden charges</span>
+                      </div>
+                      <div className="flex items-center gap-2">
+                        <CheckCircle className="w-3.5 h-3.5 text-green-500 flex-shrink-0" />
+                        <span>One-time activation fee</span>
+                      </div>
+                    </div>
+                  </motion.div>
+                </div>
               </div>
             </div>
           </div>
