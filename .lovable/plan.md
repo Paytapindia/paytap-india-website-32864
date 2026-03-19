@@ -1,122 +1,54 @@
 
 
-## Plan: Apple-Style Single-Screen Instant Checkout
+## Plan: Premium Apple-Style Checkout Redesign
 
-Replace the current 4-step wizard with a single-screen, frictionless activation flow. The user selects a plan, enters 4-5 fields, and pays — all on one page.
+### Overview
+Complete visual overhaul of the checkout page with three functional additions: conditional company name logic, delivery address section, and a redesigned plan selector.
 
-### Architecture
-
-Complete rewrite of `src/pages/Checkout.tsx`. All existing logic (plan data, PayU links, order insertion, payment confirmation dialog, returning customer lookup, invoice generation) is preserved but reorganized into a single-screen layout.
-
-### Layout (Single Screen)
+### 1. Plan Selector — Interactive List View
+Replace the 4-box grid with a sleek vertical list where each row shows plan name, vehicle count, per-vehicle price, and total. Clicking a row expands/highlights it with a smooth animation. This feels more like Apple's product configuration (think MacBook spec picker).
 
 ```text
 ┌─────────────────────────────────────────────────┐
-│  🔒 Secure Checkout (top bar)                   │
+│  ○  Starter     1 vehicle    ₹999/vehicle  ₹999 │
 ├─────────────────────────────────────────────────┤
-│                                                 │
-│  "Activate Paytap For Your Fleet"               │
-│                                                 │
-│  ┌────┐ ┌────┐ ┌─────────┐ ┌────┐              │
-│  │Star│ │Biz │ │ Biz Pro │ │Corp│  ← Plan cards │
-│  │ ter│ │Basi│ │⭐recomm │ │ ora│    horizontal  │
-│  └────┘ └────┘ └─────────┘ └────┘              │
-│                                                 │
-│  ┌──────────────────────┬──────────────────┐    │
-│  │  Quick Details       │  Your Setup      │    │
-│  │  (max-w-480)         │  (sticky panel)  │    │
-│  │                      │                  │    │
-│  │  Full Name           │  Business Pro    │    │
-│  │  Mobile Number       │  5 Paytap Tags   │    │
-│  │  Email               │  1 Driver Card   │    │
-│  │  GST/PAN toggle      │                  │    │
-│  │  Company (optional)  │  Delivery: 3-5d  │    │
-│  │                      │                  │    │
-│  │  ┌──────────────┐    │  Total: ₹3,749   │    │
-│  │  │Pay ₹3,749 →  │    │  ✔ GST included  │    │
-│  │  └──────────────┘    │  ✔ No hidden fee  │    │
-│  │  🔒 Secure • 30 sec  │                  │    │
-│  │  🏦 RBI-aligned      │                  │    │
-│  └──────────────────────┴──────────────────┘    │
+│  ○  Business    2 vehicles   ₹800/vehicle ₹1600 │
+├─────────────────────────────────────────────────┤
+│  ●  Biz Pro ⭐  5 vehicles   ₹750/vehicle ₹3749 │  ← selected (glow)
+├─────────────────────────────────────────────────┤
+│  ○  Corporate  10 vehicles   ₹700/vehicle ₹6999 │
 └─────────────────────────────────────────────────┘
 ```
 
-Mobile: Summary panel moves below the CTA button.
+Each row: subtle glass-morphism background, selected row gets `ring-2 ring-accent` + navy gradient highlight + scale. Radio-button style selection.
 
-### Design System (Strict Brand Compliance)
+### 2. Visual Overhaul — Premium Energy
+- **Hero section**: Dark navy gradient header (`#021a42` → transparent) with the heading in white, creating a dramatic entrance
+- **Background**: Subtle warm gradient (`#FAFAFA` → `#F5F5F7`) instead of flat white
+- **Plan selector area**: Floating card with soft blur backdrop + shadow depth
+- **Form section**: Contained in a frosted-glass card with subtle border glow
+- **Accent pops**: Pink/coral (`#f6245b`) used for selected states, CTA, and micro-highlights
+- **Trust badges**: Styled as premium pills with icons, arranged horizontally with subtle shimmer
+- **Summary panel**: Navy gradient background with white text for contrast and premium feel
+- **Micro-animations**: Staggered fade-ins, hover lifts, selection ripples via framer-motion
 
-- Background: `#FFFFFF`
-- Input fields: `#F5F5F7` background, no borders, `rounded-2xl`, soft focus glow (`ring-primary/20`)
-- Text: `#111111` (headings), muted for secondary
-- Accent CTA: brand pink/coral (`#f6245b`) — uses existing `bg-accent`
-- Plan cards: soft shadow, `rounded-2xl`, no heavy borders. Selected = `border-primary` + scale
-- Typography: Large bold headings, minimal subtext, clear hierarchy
-- Spacing: generous padding (80px sections, 16-24px elements)
+### 3. Form Logic Changes
 
-### Interactions & Micro-animations
+**Company Name behavior:**
+- When GST is selected → Company Name field becomes **required** (label changes to "Company Name *")
+- When PAN is selected → Company Name auto-fills with the Full Name value, field becomes read-only with a muted style and helper text "Using your name as billing name"
 
-- Plan selection: smooth scale + highlight with `framer-motion`
-- Form section: fade-in + slide-up after plan selection (always visible, but draws attention)
-- CTA button: subtle hover lift + shadow expansion
-- Loading state on pay: "Securing your checkout..." overlay (1-2s)
-- No page transitions, no step progress bars
+**Delivery Address section (collapsible):**
+- Added below Company Name as an expandable section: "Add Delivery Address (optional)"
+- Fields: Address Line, City, State (dropdown from existing `indianStatesAndCities.ts`), Pincode
+- Collapsed by default. If user opens it, data is saved to the order (overrides `details_pending`)
+- If left collapsed, order still saves with `details_pending: true`
 
-### Form Fields (Minimal)
-
-1. Full Name — text input
-2. Mobile Number — 10-digit validation
-3. Email — email validation
-4. GST / PAN toggle — if GST selected, show GST field; else PAN field. Inline regex validation
-5. Company Name — optional, shown for business plans
-
-Microcopy above form: "We'll use this to activate your Paytap account and generate your invoice"
-
-### Returning Customer Flow (Preserved)
-
-After phone number blur/entry, auto-lookup via `lookup-customer` edge function. If found:
-- Auto-fill email, GST/PAN, company name
-- Show "Welcome back" toast
-- User can immediately click Pay
-
-### Payment Flow (Preserved)
-
-1. Validate all fields inline (no reload)
-2. Show loading overlay: "Securing your checkout..."
-3. Insert order to database (existing logic)
-4. Open PayU payment link in new tab
-5. Show payment confirmation dialog (existing)
-
-### Address Handling
-
-Address, city, state, pincode are NOT collected pre-payment (deferred to post-payment or admin follow-up). The order is inserted with `details_pending: true` for shipping info. This dramatically reduces friction.
-
-### Sticky Summary Panel (Desktop)
-
-Right-side sticky panel showing:
-- Selected plan name
-- X Paytap Tags + driver cards
-- Delivery: 3-5 days
-- Total with dynamic amount
-- "GST included" and "No hidden charges" badges
+### 4. Form Schema Update
+- `companyName`: conditionally required when `taxIdType === 'gst'`
+- Add optional fields: `address`, `city`, `state`, `pincode`
+- Validation: pincode 6-digit regex
 
 ### Files Changed
-
-**`src/pages/Checkout.tsx`** — Complete rewrite to single-screen layout while preserving all business logic (plan data, PayU links, order insertion, invoice generation, returning customer lookup, payment confirmation dialog).
-
-### What's Removed
-- 4-step progress bar
-- Step navigation (next/back buttons)
-- Separate pages for details
-- Address/delivery fields (deferred post-payment)
-- Urgency countdown timer
-- Multi-step form validation
-
-### What's Preserved
-- All plan data and pricing
-- PayU payment links
-- Order database insertion
-- Payment confirmation dialog + invoice download
-- Returning customer auto-fill
-- Analytics events (gtag, fbq)
-- SEO meta tags
+**`src/pages/Checkout.tsx`** — Complete visual redesign + form logic additions (company name conditional behavior, delivery address section, list-style plan selector, premium styling)
 
