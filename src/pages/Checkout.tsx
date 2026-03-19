@@ -373,7 +373,7 @@ const Checkout = () => {
                         <Input
                           {...register("name")}
                           placeholder="Full Name"
-                          className="h-13 rounded-2xl border-0 bg-secondary text-foreground placeholder:text-muted-foreground/60 text-base px-5 focus-visible:ring-2 focus-visible:ring-primary/20 focus-visible:ring-offset-0"
+                          className="h-[52px] rounded-2xl border-0 bg-secondary text-foreground placeholder:text-muted-foreground/60 text-base px-5 focus-visible:ring-2 focus-visible:ring-primary/20 focus-visible:ring-offset-0"
                         />
                         {errors.name && <p className="text-xs text-destructive mt-1.5 pl-1">{errors.name.message}</p>}
                       </div>
@@ -384,7 +384,7 @@ const Checkout = () => {
                           {...register("phone")}
                           placeholder="Mobile Number"
                           onBlur={handlePhoneLookup}
-                          className="h-13 rounded-2xl border-0 bg-secondary text-foreground placeholder:text-muted-foreground/60 text-base px-5 focus-visible:ring-2 focus-visible:ring-primary/20 focus-visible:ring-offset-0"
+                          className="h-[52px] rounded-2xl border-0 bg-secondary text-foreground placeholder:text-muted-foreground/60 text-base px-5 focus-visible:ring-2 focus-visible:ring-primary/20 focus-visible:ring-offset-0"
                         />
                         {isLookingUp && (
                           <div className="flex items-center gap-1.5 mt-1.5 pl-1">
