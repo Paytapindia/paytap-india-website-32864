@@ -1,26 +1,21 @@
 
 
-## Plan: Change Plan Box Text from "NFC Tags Included" to "Vehicles Activated"
+## Plan: Move "How It Works" from top nav into Resources dropdown
 
-### Change in `src/pages/Checkout.tsx`
+### Changes in `src/components/Navbar.tsx`
 
-**Line 408** — Replace the tag/card count text with "Vehicle Activated" phrasing:
+**Desktop nav (lines 243-253):**
+- Remove the "How It Works" direct link (lines 245-248)
+- Keep only "Compliance" as a direct link
 
-```typescript
-// Before:
-<p className="text-[10px] text-muted-foreground">{p.tags} {productType === 'sticker' ? 'NFC Tag' : 'Card'}{p.tags > 1 ? 's' : ''} included</p>
+**Desktop Resources dropdown (lines 191-237):**
+- Add "How It Works" as the first item in the Resources dropdown, linking to `/how-it-works` with subtitle "Step-by-step guide"
 
-// After:
-<p className="text-[10px] text-muted-foreground">{p.tags} Vehicle{p.tags > 1 ? 's' : ''} Activated</p>
-```
+**Mobile nav (lines 372-379):**
+- Remove the standalone "How It Works" direct link
 
-This will show:
-- Starter (1 tag): **1 Vehicle Activated**
-- Business Basic (2 tags): **2 Vehicles Activated**
-- Business Pro (5 tags): **5 Vehicles Activated**
-- Corporate (10 tags): **10 Vehicles Activated**
+**Mobile Resources section (lines 399-422):**
+- Add "How It Works" as the first item inside the Resources expandable section
 
-| File | Change |
-|------|--------|
-| `src/pages/Checkout.tsx` | Line 408: replace NFC Tag/Card text with "Vehicle(s) Activated" |
+Single file change: `src/components/Navbar.tsx`
 
