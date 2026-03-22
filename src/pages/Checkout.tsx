@@ -425,11 +425,54 @@ const Checkout = () => {
               </div>
             </motion.div>
 
-            {/* ── SECTION 2 + 3: Form + Summary ── */}
-            <div className="grid grid-cols-1 lg:grid-cols-[1fr_340px] gap-8 lg:gap-10">
+            {/* ── Summary Box (Above Form) ── */}
+            <motion.div
+              initial={{ opacity: 0, y: 20 }}
+              animate={{ opacity: 1, y: 0 }}
+              transition={{ duration: 0.5, delay: 0.25 }}
+              className="max-w-[520px] mx-auto w-full rounded-3xl bg-primary text-primary-foreground p-6 md:p-8 shadow-2xl shadow-primary/20"
+            >
+              <div className="flex items-baseline gap-2 mb-4">
+                <h3 className="text-xl font-bold">{plan.name}</h3>
+                <span className="text-sm font-normal text-primary-foreground/60">(What's Included)</span>
+              </div>
 
-              {/* ── Left: Quick Details Form ── */}
-              <div ref={formRef}>
+              <ul className="space-y-2.5 text-sm text-primary-foreground/80">
+                <li className="flex items-center gap-2">
+                  <CheckCircle className="w-4 h-4 text-accent flex-shrink-0" />
+                  {plan.tags} Paytap Tag{plan.tags > 1 ? 's' : ''} Free
+                </li>
+                {getDriverCards(selectedPlan) > 0 && (
+                  <li className="flex items-center gap-2">
+                    <CheckCircle className="w-4 h-4 text-accent flex-shrink-0" />
+                    {getDriverCards(selectedPlan)} Driver Expense Card{getDriverCards(selectedPlan) > 1 ? 's' : ''}
+                  </li>
+                )}
+                <li className="flex items-center gap-2">
+                  <CheckCircle className="w-4 h-4 text-accent flex-shrink-0" />
+                  Access to Myfleet AI
+                </li>
+                <li className="flex items-center gap-2">
+                  <CheckCircle className="w-4 h-4 text-accent flex-shrink-0" />
+                  Access to ExpensePro
+                </li>
+                <li className="flex items-center gap-2">
+                  <CheckCircle className="w-4 h-4 text-accent flex-shrink-0" />
+                  Instant Account Activation
+                </li>
+              </ul>
+
+              <div className="flex items-center justify-between mt-5 pt-4 border-t border-primary-foreground/10">
+                <div className="flex items-center gap-2 text-xs text-primary-foreground/50">
+                  <Truck className="w-4 h-4" />
+                  <span>Vehicle Tag Delivery: 3–5 Business Days</span>
+                </div>
+                <span className="text-2xl font-bold">{formatINR(total)}</span>
+              </div>
+            </motion.div>
+
+            {/* ── Quick Details Form ── */}
+            <div className="max-w-[520px] mx-auto w-full" ref={formRef}>
                 <motion.div
                   initial={{ opacity: 0, y: 20 }}
                   animate={{ opacity: 1, y: 0 }}
@@ -655,55 +698,7 @@ const Checkout = () => {
                 </motion.div>
               </div>
 
-              {/* ── Right: Sticky Summary Panel ── */}
-              <div className={isMobile ? 'mt-2' : ''}>
-                <div className="lg:sticky lg:top-8">
-                  <motion.div
-                    initial={{ opacity: 0, y: 20 }}
-                    animate={{ opacity: 1, y: 0 }}
-                    transition={{ duration: 0.5, delay: 0.4 }}
-                    className="rounded-3xl bg-primary text-primary-foreground p-6 md:p-8 space-y-5 shadow-2xl shadow-primary/20"
-                  >
-                    <h3 className="text-xs font-semibold text-primary-foreground/50 uppercase tracking-widest">Your Paytap Setup</h3>
 
-                    <div className="space-y-1.5">
-                      <p className="text-xl font-bold">{plan.name}</p>
-                      <p className="text-sm text-primary-foreground/70">{plan.tags} Paytap Tag{plan.tags > 1 ? 's' : ''}</p>
-                      {getDriverCards(selectedPlan) > 0 && (
-                        <p className="text-sm text-primary-foreground/70">{getDriverCards(selectedPlan)} Driver Expense Card{getDriverCards(selectedPlan) > 1 ? 's' : ''}</p>
-                      )}
-                    </div>
-
-                    <div className="flex items-center gap-2 text-sm text-primary-foreground/60">
-                      <Truck className="w-4 h-4" />
-                      <span>Delivery: 3–5 business days</span>
-                    </div>
-
-                    <div className="border-t border-primary-foreground/10 pt-4">
-                      <div className="flex justify-between items-baseline">
-                        <span className="text-sm text-primary-foreground/60">Total</span>
-                        <span className="text-3xl font-bold">{formatINR(total)}</span>
-                      </div>
-                    </div>
-
-                    <div className="space-y-2.5 text-xs text-primary-foreground/60">
-                      <div className="flex items-center gap-2">
-                        <CheckCircle className="w-3.5 h-3.5 text-accent flex-shrink-0" />
-                        <span>GST included · Invoice provided</span>
-                      </div>
-                      <div className="flex items-center gap-2">
-                        <CheckCircle className="w-3.5 h-3.5 text-accent flex-shrink-0" />
-                        <span>No hidden charges</span>
-                      </div>
-                      <div className="flex items-center gap-2">
-                        <CheckCircle className="w-3.5 h-3.5 text-accent flex-shrink-0" />
-                        <span>One-time activation fee</span>
-                      </div>
-                    </div>
-                  </motion.div>
-                </div>
-              </div>
-            </div>
           </div>
         </form>
       </div>
