@@ -330,7 +330,7 @@ const Checkout = () => {
               transition={{ duration: 0.6, ease: [0.25, 0.46, 0.45, 0.94] }}
               className="text-3xl md:text-5xl font-bold text-primary-foreground tracking-tight leading-tight"
             >
-              Activate Paytap For Your Fleet
+              Your Vehicle Payments Shouldn't Be This Complicated
             </motion.h1>
             <motion.p
               initial={{ opacity: 0, y: 12 }}
@@ -338,7 +338,7 @@ const Checkout = () => {
               transition={{ duration: 0.6, delay: 0.1, ease: [0.25, 0.46, 0.45, 0.94] }}
               className="text-primary-foreground/60 mt-3 text-base md:text-lg max-w-xl mx-auto"
             >
-              Select your plan, enter a few details, and go live in 30 seconds.
+              Start collecting payments instantly with Paytap — no more chasing drivers.
             </motion.p>
           </div>
         </div>
@@ -354,7 +354,7 @@ const Checkout = () => {
               className="rounded-3xl bg-card/80 backdrop-blur-xl shadow-2xl shadow-primary/5 border border-border/40 overflow-hidden mb-8 md:mb-12"
             >
               <div className="px-5 md:px-8 py-5 border-b border-border/40">
-                <h2 className="text-sm font-semibold text-muted-foreground uppercase tracking-widest">Choose Your Plan</h2>
+                <h2 className="text-sm font-semibold text-muted-foreground uppercase tracking-widest">Get Lifetime Access</h2>
               </div>
               <div className="divide-y divide-border/30">
                 {(Object.entries(PLANS) as [PlanType, PlanInfo][]).map(([key, p], i) => {
