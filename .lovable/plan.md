@@ -1,28 +1,21 @@
 
 
-## Plan: Reposition Summary Box & Update Its Content
+## Plan: Reorder Featured Articles in Newsroom
 
-### Changes in `src/pages/Checkout.tsx`
+Swap the order of the first two items in the `featuredArticles` array and the `pressArticles` array in `src/pages/Newsroom.tsx`.
 
-**1. Move the "Your Paytap Setup" blue box above "Quick Details"**
-- Currently the summary panel is in the right column (lines 658-705), rendered after the form section
-- Move it inside the left column, directly above the "Quick Details" heading (line 440)
-- On desktop: it appears above the form instead of as a sticky sidebar
-- On mobile: same — summary first, then form below
+### Changes in `src/pages/Newsroom.tsx`
 
-**2. Update summary box content**
-- Next to plan name, add "(What's Included)" label
-- Replace the current bullet list with:
-  - X Paytap Tags Free (dynamic based on plan)
-  - 1 Driver Expense Card
-  - Access to Myfleet AI
-  - Access to ExpensePro
-  - Instant Account Activation
-- Change "Delivery: 3–5 business days" → "Vehicle Tag Delivery: 3–5 Business Days"
+**1. `featuredArticles` array (lines 151-173):**
+- Move "Beyond Personal Payments" (currently 2nd) to **1st position**
+- Move "Contactless Payment Tags" to **2nd position**
+- Move "MyFleet AI" (currently 1st) to **3rd position**
 
-**3. Remove the right-side column layout**
-- Since the summary box moves above the form, remove the two-column `lg:grid-cols-[1fr_340px]` grid
-- Make the form section full-width (max-w still capped at ~480px and centered)
+**2. `pressArticles` array (lines 9-18):**
+- Move the "Beyond Personal Payments" entry (lines 19-27) to 1st position with `featured: true`
+- Move the "MyFleet AI" entry (lines 10-18) to after it
 
-**File:** `src/pages/Checkout.tsx`
+This ensures "Beyond Personal Payments" is the first article users see when landing on the Newsroom page.
+
+**File:** `src/pages/Newsroom.tsx`
 
