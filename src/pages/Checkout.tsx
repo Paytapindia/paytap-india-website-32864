@@ -698,54 +698,6 @@ const Checkout = () => {
                 </motion.div>
               </div>
 
-              {/* ── Right: Sticky Summary Panel ── */}
-              <div className={isMobile ? 'mt-2' : ''}>
-                <div className="lg:sticky lg:top-8">
-                  <motion.div
-                    initial={{ opacity: 0, y: 20 }}
-                    animate={{ opacity: 1, y: 0 }}
-                    transition={{ duration: 0.5, delay: 0.4 }}
-                    className="rounded-3xl bg-primary text-primary-foreground p-6 md:p-8 space-y-5 shadow-2xl shadow-primary/20"
-                  >
-                    <h3 className="text-xs font-semibold text-primary-foreground/50 uppercase tracking-widest">Your Paytap Setup</h3>
-
-                    <div className="space-y-1.5">
-                      <p className="text-xl font-bold">{plan.name}</p>
-                      <p className="text-sm text-primary-foreground/70">{plan.tags} Paytap Tag{plan.tags > 1 ? 's' : ''}</p>
-                      {getDriverCards(selectedPlan) > 0 && (
-                        <p className="text-sm text-primary-foreground/70">{getDriverCards(selectedPlan)} Driver Expense Card{getDriverCards(selectedPlan) > 1 ? 's' : ''}</p>
-                      )}
-                    </div>
-
-                    <div className="flex items-center gap-2 text-sm text-primary-foreground/60">
-                      <Truck className="w-4 h-4" />
-                      <span>Delivery: 3–5 business days</span>
-                    </div>
-
-                    <div className="border-t border-primary-foreground/10 pt-4">
-                      <div className="flex justify-between items-baseline">
-                        <span className="text-sm text-primary-foreground/60">Total</span>
-                        <span className="text-3xl font-bold">{formatINR(total)}</span>
-                      </div>
-                    </div>
-
-                    <div className="space-y-2.5 text-xs text-primary-foreground/60">
-                      <div className="flex items-center gap-2">
-                        <CheckCircle className="w-3.5 h-3.5 text-accent flex-shrink-0" />
-                        <span>GST included · Invoice provided</span>
-                      </div>
-                      <div className="flex items-center gap-2">
-                        <CheckCircle className="w-3.5 h-3.5 text-accent flex-shrink-0" />
-                        <span>No hidden charges</span>
-                      </div>
-                      <div className="flex items-center gap-2">
-                        <CheckCircle className="w-3.5 h-3.5 text-accent flex-shrink-0" />
-                        <span>One-time activation fee</span>
-                      </div>
-                    </div>
-                  </motion.div>
-                </div>
-              </div>
             </div>
           </div>
         </form>
