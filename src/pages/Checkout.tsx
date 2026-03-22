@@ -338,7 +338,7 @@ const Checkout = () => {
               transition={{ duration: 0.6, delay: 0.1, ease: [0.25, 0.46, 0.45, 0.94] }}
               className="text-primary-foreground/60 mt-3 text-base md:text-lg max-w-xl mx-auto"
             >
-              Start collecting payments instantly with Paytap — no more chasing drivers.
+              Manage all vehicle payments instantly with Paytap — no more chasing people
             </motion.p>
           </div>
         </div>
