@@ -330,7 +330,7 @@ const Checkout = () => {
               transition={{ duration: 0.6, ease: [0.25, 0.46, 0.45, 0.94] }}
               className="text-3xl md:text-5xl font-bold text-primary-foreground tracking-tight leading-tight"
             >
-              Activate Paytap For Your Fleet
+              Your Vehicle Payments Shouldn't Be This Complicated
             </motion.h1>
             <motion.p
               initial={{ opacity: 0, y: 12 }}
