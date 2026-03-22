@@ -150,13 +150,6 @@ const pressArticles = [
 // Featured articles for the carousel
 const featuredArticles = [
   {
-    publication: "DailyHunt",
-    url: "https://m.dailyhunt.in/news/india/english/republicnewsindia-epaper-dhfacc36dfce9c4bb68db0e89d033c921b/myfleet+ai+builds+indias+first+vehiclelevel+financial+operating+system+for+fleet+owners-newsid-dhfacc36dfce9c4bb68db0e89d033c921b_09cf84e0dc9811f09fff8ea76b3d216e",
-    headline: "MyFleet AI Builds India's First Vehicle-Level Financial Operating System for Fleet Owners",
-    description: "Drivetap Innovation India introduces MyFleet AI — a unified vehicle-level operating system that lets fleet owners track, control, and manage all vehicle expenses from fuel to tolls through a single dashboard.",
-    date: "March 4, 2026"
-  },
-  {
     publication: "Republic News India Business",
     url: "https://business.republicnewsindia.com/beyond-personal-payments-paytap-debuts-indias-first-rupay-nfc-tag-for-integrated-vehicle-enterprise-management/",
     headline: "Beyond Personal Payments: Paytap Debuts India's First RuPay NFC Tag for Integrated Vehicle Enterprise Management",
@@ -169,6 +162,13 @@ const featuredArticles = [
     headline: "Contactless Payment Tags Get Their Moment in India",
     description: "India's contactless payment revolution gains momentum as NFC tags emerge as a game-changer for businesses. Paytap leads the charge with innovative payment solutions for fleet management and operational expenses.",
     date: "January 24, 2026"
+  },
+  {
+    publication: "DailyHunt",
+    url: "https://m.dailyhunt.in/news/india/english/republicnewsindia-epaper-dhfacc36dfce9c4bb68db0e89d033c921b/myfleet+ai+builds+indias+first+vehiclelevel+financial+operating+system+for+fleet+owners-newsid-dhfacc36dfce9c4bb68db0e89d033c921b_09cf84e0dc9811f09fff8ea76b3d216e",
+    headline: "MyFleet AI Builds India's First Vehicle-Level Financial Operating System for Fleet Owners",
+    description: "Drivetap Innovation India introduces MyFleet AI — a unified vehicle-level operating system that lets fleet owners track, control, and manage all vehicle expenses from fuel to tolls through a single dashboard.",
+    date: "March 4, 2026"
   }
 ];
 
