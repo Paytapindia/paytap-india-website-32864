@@ -233,11 +233,13 @@ const Checkout = () => {
       if (!data.pan || !data.pan.trim()) newFieldErrors.pan = "PAN number is required";
       else if (!panRegex.test(data.pan.trim().toUpperCase())) newFieldErrors.pan = "Invalid PAN format (e.g. ABCDE1234F)";
     }
-    if (showDelivery) {
-      if (data.pincode && data.pincode.trim() && !/^\d{6}$/.test(data.pincode.trim())) {
-        newFieldErrors.pincode = "Enter a valid 6-digit pincode";
-      }
-    }
+    // Delivery address is mandatory
+    if (!data.address || !data.address.trim()) newFieldErrors.address = "Address is required";
+    if (!data.state || !data.state.trim()) newFieldErrors.state = "State is required";
+    if (!data.city || !data.city.trim()) newFieldErrors.city = "City is required";
+    if (!data.pincode || !data.pincode.trim()) newFieldErrors.pincode = "Pincode is required";
+    else if (!/^\d{6}$/.test(data.pincode.trim())) newFieldErrors.pincode = "Enter a valid 6-digit pincode";
+
     setFieldErrors(newFieldErrors);
     if (Object.keys(newFieldErrors).length > 0) return;
 
@@ -251,7 +253,6 @@ const Checkout = () => {
     setIsLoading(true);
     try {
       const txnid = `TXN${Date.now()}${Math.random().toString(36).substring(2, 8).toUpperCase()}`;
-      const hasDeliveryDetails = showDelivery && data.address?.trim();
       const { error } = await supabase.from('orders').insert({
         name: data.name.trim(),
         email: data.email.trim().toLowerCase(),
@@ -265,7 +266,7 @@ const Checkout = () => {
         amount: total,
         txnid,
         payment_status: 'pending',
-        details_pending: !hasDeliveryDetails,
+        details_pending: false,
         account_type: selectedPlan,
         pan: taxIdType === 'pan' ? (data.pan?.trim().toUpperCase() || null) : null,
         gst: taxIdType === 'gst' ? (data.gst?.trim().toUpperCase() || null) : null,
