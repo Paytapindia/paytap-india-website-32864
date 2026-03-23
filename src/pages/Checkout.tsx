@@ -108,7 +108,7 @@ const Checkout = () => {
   const [lastFormData, setLastFormData] = useState<CheckoutFormData | null>(null);
   const [isLookingUp, setIsLookingUp] = useState(false);
   const [phoneLookedUp, setPhoneLookedUp] = useState("");
-  const [showDelivery, setShowDelivery] = useState(false);
+  
   const { toast } = useToast();
   const navigate = useNavigate();
   const isMobile = useIsMobile();
@@ -233,11 +233,13 @@ const Checkout = () => {
       if (!data.pan || !data.pan.trim()) newFieldErrors.pan = "PAN number is required";
       else if (!panRegex.test(data.pan.trim().toUpperCase())) newFieldErrors.pan = "Invalid PAN format (e.g. ABCDE1234F)";
     }
-    if (showDelivery) {
-      if (data.pincode && data.pincode.trim() && !/^\d{6}$/.test(data.pincode.trim())) {
-        newFieldErrors.pincode = "Enter a valid 6-digit pincode";
-      }
-    }
+    // Delivery address is mandatory
+    if (!data.address || !data.address.trim()) newFieldErrors.address = "Address is required";
+    if (!data.state || !data.state.trim()) newFieldErrors.state = "State is required";
+    if (!data.city || !data.city.trim()) newFieldErrors.city = "City is required";
+    if (!data.pincode || !data.pincode.trim()) newFieldErrors.pincode = "Pincode is required";
+    else if (!/^\d{6}$/.test(data.pincode.trim())) newFieldErrors.pincode = "Enter a valid 6-digit pincode";
+
     setFieldErrors(newFieldErrors);
     if (Object.keys(newFieldErrors).length > 0) return;
 
@@ -251,7 +253,6 @@ const Checkout = () => {
     setIsLoading(true);
     try {
       const txnid = `TXN${Date.now()}${Math.random().toString(36).substring(2, 8).toUpperCase()}`;
-      const hasDeliveryDetails = showDelivery && data.address?.trim();
       const { error } = await supabase.from('orders').insert({
         name: data.name.trim(),
         email: data.email.trim().toLowerCase(),
@@ -265,7 +266,7 @@ const Checkout = () => {
         amount: total,
         txnid,
         payment_status: 'pending',
-        details_pending: !hasDeliveryDetails,
+        details_pending: false,
         account_type: selectedPlan,
         pan: taxIdType === 'pan' ? (data.pan?.trim().toUpperCase() || null) : null,
         gst: taxIdType === 'gst' ? (data.gst?.trim().toUpperCase() || null) : null,
@@ -594,65 +595,58 @@ const Checkout = () => {
                         )}
                       </div>
 
-                      {/* ── Delivery Address (Collapsible) ── */}
-                      <div className="pt-2">
-                        <button
-                          type="button"
-                          onClick={() => setShowDelivery(!showDelivery)}
-                          className="flex items-center gap-2 text-sm font-medium text-accent hover:text-accent/80 transition-colors"
-                        >
-                          <MapPin className="w-4 h-4" />
-                          <span>{showDelivery ? 'Hide' : 'Add'} Delivery Address</span>
-                          <ChevronDown className={`w-4 h-4 transition-transform duration-200 ${showDelivery ? 'rotate-180' : ''}`} />
-                        </button>
-
-                        <AnimatePresence>
-                          {showDelivery && (
-                            <motion.div
-                              initial={{ opacity: 0, height: 0 }}
-                              animate={{ opacity: 1, height: 'auto' }}
-                              exit={{ opacity: 0, height: 0 }}
-                              transition={{ duration: 0.3, ease: [0.25, 0.46, 0.45, 0.94] }}
-                              className="overflow-hidden"
+                      {/* ── Delivery Address (Mandatory) ── */}
+                      <div className="pt-4">
+                        <div className="flex items-center gap-2 mb-3">
+                          <MapPin className="w-4 h-4 text-accent" />
+                          <h3 className="text-sm font-semibold text-foreground">Delivery Address</h3>
+                        </div>
+                        <div className="space-y-3">
+                          <div>
+                            <Input
+                              {...register("address")}
+                              placeholder="Address Line *"
+                              className={INPUT_CLASS}
+                            />
+                            {fieldErrors.address && <p className="text-xs text-destructive mt-1.5 pl-1">{fieldErrors.address}</p>}
+                          </div>
+                          <div>
+                            <select
+                              {...register("state")}
+                              className={`${INPUT_CLASS} w-full appearance-none cursor-pointer`}
+                              defaultValue=""
                             >
-                              <div className="space-y-3 pt-4">
-                                <Input
-                                  {...register("address")}
-                                  placeholder="Address Line"
-                                  className={INPUT_CLASS}
-                                />
-                                <select
-                                  {...register("state")}
-                                  className={`${INPUT_CLASS} w-full appearance-none cursor-pointer`}
-                                  defaultValue=""
-                                >
-                                  <option value="" disabled>Select State</option>
-                                  {states.map(s => (
-                                    <option key={s} value={s}>{s}</option>
-                                  ))}
-                                </select>
-                                <select
-                                  {...register("city")}
-                                  className={`${INPUT_CLASS} w-full appearance-none cursor-pointer`}
-                                  defaultValue=""
-                                  disabled={!stateValue}
-                                >
-                                  <option value="" disabled>{stateValue ? 'Select City' : 'Select state first'}</option>
-                                  {cities.map(c => (
-                                    <option key={c} value={c}>{c}</option>
-                                  ))}
-                                </select>
-                                <Input
-                                  {...register("pincode")}
-                                  placeholder="Pincode"
-                                  maxLength={6}
-                                  className={INPUT_CLASS}
-                                />
-                                {fieldErrors.pincode && <p className="text-xs text-destructive mt-1.5 pl-1">{fieldErrors.pincode}</p>}
-                              </div>
-                            </motion.div>
-                          )}
-                        </AnimatePresence>
+                              <option value="" disabled>Select State *</option>
+                              {states.map(s => (
+                                <option key={s} value={s}>{s}</option>
+                              ))}
+                            </select>
+                            {fieldErrors.state && <p className="text-xs text-destructive mt-1.5 pl-1">{fieldErrors.state}</p>}
+                          </div>
+                          <div>
+                            <select
+                              {...register("city")}
+                              className={`${INPUT_CLASS} w-full appearance-none cursor-pointer`}
+                              defaultValue=""
+                              disabled={!stateValue}
+                            >
+                              <option value="" disabled>{stateValue ? 'Select City *' : 'Select state first'}</option>
+                              {cities.map(c => (
+                                <option key={c} value={c}>{c}</option>
+                              ))}
+                            </select>
+                            {fieldErrors.city && <p className="text-xs text-destructive mt-1.5 pl-1">{fieldErrors.city}</p>}
+                          </div>
+                          <div>
+                            <Input
+                              {...register("pincode")}
+                              placeholder="Pincode *"
+                              maxLength={6}
+                              className={INPUT_CLASS}
+                            />
+                            {fieldErrors.pincode && <p className="text-xs text-destructive mt-1.5 pl-1">{fieldErrors.pincode}</p>}
+                          </div>
+                        </div>
                       </div>
                     </div>
 
