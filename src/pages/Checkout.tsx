@@ -108,7 +108,7 @@ const Checkout = () => {
   const [lastFormData, setLastFormData] = useState<CheckoutFormData | null>(null);
   const [isLookingUp, setIsLookingUp] = useState(false);
   const [phoneLookedUp, setPhoneLookedUp] = useState("");
-  const [showDelivery, setShowDelivery] = useState(false);
+  
   const { toast } = useToast();
   const navigate = useNavigate();
   const isMobile = useIsMobile();
