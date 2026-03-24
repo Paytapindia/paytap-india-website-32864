@@ -483,38 +483,38 @@ const Checkout = () => {
                   transition={{ duration: 0.5, delay: 0.3 }}
                   className="rounded-3xl bg-card/80 backdrop-blur-xl shadow-xl shadow-primary/5 border border-border/40 p-6 md:p-8"
                 >
-                  <div className="max-w-[480px]">
+                  <div>
                     <h2 className="text-lg font-bold text-foreground mb-1">Quick Details</h2>
-                    <p className="text-xs text-muted-foreground mb-6">
+                    <p className="text-xs text-muted-foreground mb-4">
                       We'll use this to activate your Paytap account and generate your invoice.
                     </p>
 
-                    <div className="space-y-4">
-                      {/* Full Name */}
-                      <div>
-                        <Input
-                          {...register("name")}
-                          placeholder="Full Name"
-                          className={INPUT_CLASS}
-                        />
-                        {errors.name && <p className="text-xs text-destructive mt-1.5 pl-1">{errors.name.message}</p>}
-                      </div>
-
-                      {/* Mobile Number */}
-                      <div>
-                        <Input
-                          {...register("phone")}
-                          placeholder="Mobile Number"
-                          onBlur={handlePhoneLookup}
-                          className={INPUT_CLASS}
-                        />
-                        {isLookingUp && (
-                          <div className="flex items-center gap-1.5 mt-1.5 pl-1">
-                            <Loader2 className="w-3 h-3 animate-spin text-accent" />
-                            <span className="text-xs text-accent">Checking...</span>
-                          </div>
-                        )}
-                        {errors.phone && <p className="text-xs text-destructive mt-1.5 pl-1">{errors.phone.message}</p>}
+                    <div className="space-y-3">
+                      {/* Name & Phone side by side */}
+                      <div className="grid grid-cols-1 md:grid-cols-2 gap-3">
+                        <div>
+                          <Input
+                            {...register("name")}
+                            placeholder="Full Name"
+                            className={INPUT_CLASS}
+                          />
+                          {errors.name && <p className="text-xs text-destructive mt-1.5 pl-1">{errors.name.message}</p>}
+                        </div>
+                        <div>
+                          <Input
+                            {...register("phone")}
+                            placeholder="Mobile Number"
+                            onBlur={handlePhoneLookup}
+                            className={INPUT_CLASS}
+                          />
+                          {isLookingUp && (
+                            <div className="flex items-center gap-1.5 mt-1.5 pl-1">
+                              <Loader2 className="w-3 h-3 animate-spin text-accent" />
+                              <span className="text-xs text-accent">Checking...</span>
+                            </div>
+                          )}
+                          {errors.phone && <p className="text-xs text-destructive mt-1.5 pl-1">{errors.phone.message}</p>}
+                        </div>
                       </div>
 
                       {/* Email */}
