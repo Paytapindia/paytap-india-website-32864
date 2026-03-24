@@ -434,7 +434,7 @@ const Checkout = () => {
               initial={{ opacity: 0, y: 20 }}
               animate={{ opacity: 1, y: 0 }}
               transition={{ duration: 0.5, delay: 0.25 }}
-              className="w-full rounded-3xl bg-primary text-primary-foreground p-6 md:p-8 shadow-2xl shadow-primary/20"
+              className="w-full h-full flex flex-col justify-between rounded-3xl bg-primary text-primary-foreground p-6 md:p-8 shadow-2xl shadow-primary/20"
             >
               <div className="flex items-baseline gap-2 mb-4">
                 <h3 className="text-xl font-bold">{plan.name}</h3>
@@ -483,38 +483,38 @@ const Checkout = () => {
                   transition={{ duration: 0.5, delay: 0.3 }}
                   className="rounded-3xl bg-card/80 backdrop-blur-xl shadow-xl shadow-primary/5 border border-border/40 p-6 md:p-8"
                 >
-                  <div className="max-w-[480px]">
+                  <div>
                     <h2 className="text-lg font-bold text-foreground mb-1">Quick Details</h2>
-                    <p className="text-xs text-muted-foreground mb-6">
+                    <p className="text-xs text-muted-foreground mb-4">
                       We'll use this to activate your Paytap account and generate your invoice.
                     </p>
 
-                    <div className="space-y-4">
-                      {/* Full Name */}
-                      <div>
-                        <Input
-                          {...register("name")}
-                          placeholder="Full Name"
-                          className={INPUT_CLASS}
-                        />
-                        {errors.name && <p className="text-xs text-destructive mt-1.5 pl-1">{errors.name.message}</p>}
-                      </div>
-
-                      {/* Mobile Number */}
-                      <div>
-                        <Input
-                          {...register("phone")}
-                          placeholder="Mobile Number"
-                          onBlur={handlePhoneLookup}
-                          className={INPUT_CLASS}
-                        />
-                        {isLookingUp && (
-                          <div className="flex items-center gap-1.5 mt-1.5 pl-1">
-                            <Loader2 className="w-3 h-3 animate-spin text-accent" />
-                            <span className="text-xs text-accent">Checking...</span>
-                          </div>
-                        )}
-                        {errors.phone && <p className="text-xs text-destructive mt-1.5 pl-1">{errors.phone.message}</p>}
+                    <div className="space-y-3">
+                      {/* Name & Phone side by side */}
+                      <div className="grid grid-cols-1 md:grid-cols-2 gap-3">
+                        <div>
+                          <Input
+                            {...register("name")}
+                            placeholder="Full Name"
+                            className={INPUT_CLASS}
+                          />
+                          {errors.name && <p className="text-xs text-destructive mt-1.5 pl-1">{errors.name.message}</p>}
+                        </div>
+                        <div>
+                          <Input
+                            {...register("phone")}
+                            placeholder="Mobile Number"
+                            onBlur={handlePhoneLookup}
+                            className={INPUT_CLASS}
+                          />
+                          {isLookingUp && (
+                            <div className="flex items-center gap-1.5 mt-1.5 pl-1">
+                              <Loader2 className="w-3 h-3 animate-spin text-accent" />
+                              <span className="text-xs text-accent">Checking...</span>
+                            </div>
+                          )}
+                          {errors.phone && <p className="text-xs text-destructive mt-1.5 pl-1">{errors.phone.message}</p>}
+                        </div>
                       </div>
 
                       {/* Email */}
@@ -599,55 +599,61 @@ const Checkout = () => {
                       </div>
 
                       {/* ── Delivery Address (Mandatory) ── */}
-                      <div className="pt-4">
+                      <div className="pt-2">
                         <div className="flex items-center gap-2 mb-3">
                           <MapPin className="w-4 h-4 text-accent" />
                           <h3 className="text-sm font-semibold text-foreground">Delivery Address</h3>
                         </div>
                         <div className="space-y-3">
-                          <div>
-                            <Input
-                              {...register("address")}
-                              placeholder="Address Line *"
-                              className={INPUT_CLASS}
-                            />
-                            {fieldErrors.address && <p className="text-xs text-destructive mt-1.5 pl-1">{fieldErrors.address}</p>}
+                          {/* Address & Pincode side by side */}
+                          <div className="grid grid-cols-1 md:grid-cols-2 gap-3">
+                            <div>
+                              <Input
+                                {...register("address")}
+                                placeholder="Address Line *"
+                                className={INPUT_CLASS}
+                              />
+                              {fieldErrors.address && <p className="text-xs text-destructive mt-1.5 pl-1">{fieldErrors.address}</p>}
+                            </div>
+                            <div>
+                              <Input
+                                {...register("pincode")}
+                                placeholder="Pincode *"
+                                maxLength={6}
+                                className={INPUT_CLASS}
+                              />
+                              {fieldErrors.pincode && <p className="text-xs text-destructive mt-1.5 pl-1">{fieldErrors.pincode}</p>}
+                            </div>
                           </div>
-                          <div>
-                            <select
-                              {...register("state")}
-                              className={`${INPUT_CLASS} w-full appearance-none cursor-pointer`}
-                              defaultValue=""
-                            >
-                              <option value="" disabled>Select State *</option>
-                              {states.map(s => (
-                                <option key={s} value={s}>{s}</option>
-                              ))}
-                            </select>
-                            {fieldErrors.state && <p className="text-xs text-destructive mt-1.5 pl-1">{fieldErrors.state}</p>}
-                          </div>
-                          <div>
-                            <select
-                              {...register("city")}
-                              className={`${INPUT_CLASS} w-full appearance-none cursor-pointer`}
-                              defaultValue=""
-                              disabled={!stateValue}
-                            >
-                              <option value="" disabled>{stateValue ? 'Select City *' : 'Select state first'}</option>
-                              {cities.map(c => (
-                                <option key={c} value={c}>{c}</option>
-                              ))}
-                            </select>
-                            {fieldErrors.city && <p className="text-xs text-destructive mt-1.5 pl-1">{fieldErrors.city}</p>}
-                          </div>
-                          <div>
-                            <Input
-                              {...register("pincode")}
-                              placeholder="Pincode *"
-                              maxLength={6}
-                              className={INPUT_CLASS}
-                            />
-                            {fieldErrors.pincode && <p className="text-xs text-destructive mt-1.5 pl-1">{fieldErrors.pincode}</p>}
+                          {/* State & City side by side */}
+                          <div className="grid grid-cols-1 md:grid-cols-2 gap-3">
+                            <div>
+                              <select
+                                {...register("state")}
+                                className={`${INPUT_CLASS} w-full appearance-none cursor-pointer`}
+                                defaultValue=""
+                              >
+                                <option value="" disabled>Select State *</option>
+                                {states.map(s => (
+                                  <option key={s} value={s}>{s}</option>
+                                ))}
+                              </select>
+                              {fieldErrors.state && <p className="text-xs text-destructive mt-1.5 pl-1">{fieldErrors.state}</p>}
+                            </div>
+                            <div>
+                              <select
+                                {...register("city")}
+                                className={`${INPUT_CLASS} w-full appearance-none cursor-pointer`}
+                                defaultValue=""
+                                disabled={!stateValue}
+                              >
+                                <option value="" disabled>{stateValue ? 'Select City *' : 'Select state first'}</option>
+                                {cities.map(c => (
+                                  <option key={c} value={c}>{c}</option>
+                                ))}
+                              </select>
+                              {fieldErrors.city && <p className="text-xs text-destructive mt-1.5 pl-1">{fieldErrors.city}</p>}
+                            </div>
                           </div>
                         </div>
                       </div>
@@ -655,7 +661,7 @@ const Checkout = () => {
 
                     {/* ── CTA Button ── */}
                     <motion.div
-                      className="mt-8"
+                      className="mt-5"
                       whileHover={{ y: -2 }}
                       transition={{ type: 'spring', stiffness: 400, damping: 20 }}
                     >
