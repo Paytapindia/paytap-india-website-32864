@@ -426,15 +426,12 @@ const Checkout = () => {
               </div>
             </motion.div>
 
-            {/* ── Two-Column Grid: Summary + Form ── */}
-            <div className="flex flex-col gap-6 max-w-[520px] mx-auto w-full">
-
-            {/* ── Summary Box ── */}
+            {/* ── Summary Box (Above Form) ── */}
             <motion.div
               initial={{ opacity: 0, y: 20 }}
               animate={{ opacity: 1, y: 0 }}
               transition={{ duration: 0.5, delay: 0.25 }}
-              className="w-full rounded-3xl bg-primary text-primary-foreground p-6 md:p-8 shadow-2xl shadow-primary/20"
+              className="max-w-[520px] mx-auto w-full rounded-3xl bg-primary text-primary-foreground p-6 md:p-8 shadow-2xl shadow-primary/20"
             >
               <div className="flex items-baseline gap-2 mb-4">
                 <h3 className="text-xl font-bold">{plan.name}</h3>
@@ -476,20 +473,21 @@ const Checkout = () => {
             </motion.div>
 
             {/* ── Quick Details Form ── */}
-            <div className="w-full" ref={formRef}>
+            <div className="max-w-[520px] mx-auto w-full" ref={formRef}>
                 <motion.div
                   initial={{ opacity: 0, y: 20 }}
                   animate={{ opacity: 1, y: 0 }}
                   transition={{ duration: 0.5, delay: 0.3 }}
                   className="rounded-3xl bg-card/80 backdrop-blur-xl shadow-xl shadow-primary/5 border border-border/40 p-6 md:p-8"
                 >
-                  <div>
+                  <div className="max-w-[480px]">
                     <h2 className="text-lg font-bold text-foreground mb-1">Quick Details</h2>
-                    <p className="text-xs text-muted-foreground mb-4">
+                    <p className="text-xs text-muted-foreground mb-6">
                       We'll use this to activate your Paytap account and generate your invoice.
                     </p>
 
-                    <div className="space-y-3">
+                    <div className="space-y-4">
+                      {/* Full Name */}
                       <div>
                         <Input
                           {...register("name")}
@@ -498,6 +496,8 @@ const Checkout = () => {
                         />
                         {errors.name && <p className="text-xs text-destructive mt-1.5 pl-1">{errors.name.message}</p>}
                       </div>
+
+                      {/* Mobile Number */}
                       <div>
                         <Input
                           {...register("phone")}
@@ -596,7 +596,7 @@ const Checkout = () => {
                       </div>
 
                       {/* ── Delivery Address (Mandatory) ── */}
-                      <div className="pt-2">
+                      <div className="pt-4">
                         <div className="flex items-center gap-2 mb-3">
                           <MapPin className="w-4 h-4 text-accent" />
                           <h3 className="text-sm font-semibold text-foreground">Delivery Address</h3>
@@ -611,6 +611,33 @@ const Checkout = () => {
                             {fieldErrors.address && <p className="text-xs text-destructive mt-1.5 pl-1">{fieldErrors.address}</p>}
                           </div>
                           <div>
+                            <select
+                              {...register("state")}
+                              className={`${INPUT_CLASS} w-full appearance-none cursor-pointer`}
+                              defaultValue=""
+                            >
+                              <option value="" disabled>Select State *</option>
+                              {states.map(s => (
+                                <option key={s} value={s}>{s}</option>
+                              ))}
+                            </select>
+                            {fieldErrors.state && <p className="text-xs text-destructive mt-1.5 pl-1">{fieldErrors.state}</p>}
+                          </div>
+                          <div>
+                            <select
+                              {...register("city")}
+                              className={`${INPUT_CLASS} w-full appearance-none cursor-pointer`}
+                              defaultValue=""
+                              disabled={!stateValue}
+                            >
+                              <option value="" disabled>{stateValue ? 'Select City *' : 'Select state first'}</option>
+                              {cities.map(c => (
+                                <option key={c} value={c}>{c}</option>
+                              ))}
+                            </select>
+                            {fieldErrors.city && <p className="text-xs text-destructive mt-1.5 pl-1">{fieldErrors.city}</p>}
+                          </div>
+                          <div>
                             <Input
                               {...register("pincode")}
                               placeholder="Pincode *"
@@ -619,40 +646,13 @@ const Checkout = () => {
                             />
                             {fieldErrors.pincode && <p className="text-xs text-destructive mt-1.5 pl-1">{fieldErrors.pincode}</p>}
                           </div>
-                            <div>
-                              <select
-                                {...register("state")}
-                                className={`${INPUT_CLASS} w-full appearance-none cursor-pointer`}
-                                defaultValue=""
-                              >
-                                <option value="" disabled>Select State *</option>
-                                {states.map(s => (
-                                  <option key={s} value={s}>{s}</option>
-                                ))}
-                              </select>
-                              {fieldErrors.state && <p className="text-xs text-destructive mt-1.5 pl-1">{fieldErrors.state}</p>}
-                            </div>
-                            <div>
-                              <select
-                                {...register("city")}
-                                className={`${INPUT_CLASS} w-full appearance-none cursor-pointer`}
-                                defaultValue=""
-                                disabled={!stateValue}
-                              >
-                                <option value="" disabled>{stateValue ? 'Select City *' : 'Select state first'}</option>
-                                {cities.map(c => (
-                                  <option key={c} value={c}>{c}</option>
-                                ))}
-                              </select>
-                              {fieldErrors.city && <p className="text-xs text-destructive mt-1.5 pl-1">{fieldErrors.city}</p>}
-                            </div>
                         </div>
                       </div>
                     </div>
 
                     {/* ── CTA Button ── */}
                     <motion.div
-                      className="mt-5"
+                      className="mt-8"
                       whileHover={{ y: -2 }}
                       transition={{ type: 'spring', stiffness: 400, damping: 20 }}
                     >
@@ -692,7 +692,6 @@ const Checkout = () => {
                 </motion.div>
               </div>
 
-            </div> {/* end grid */}
 
           </div>
         </form>
