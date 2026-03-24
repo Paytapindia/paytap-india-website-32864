@@ -1,22 +1,24 @@
 
 
-## Plan: Two-Column Layout for Quick Details Form
+## Plan: Collapsible Quick Details with Auto-Open on Pay Click
 
 **File:** `src/pages/Checkout.tsx`
 
-### Layout Change
+### Behavior
 
-Convert the single-column stacked form into a **two-column grid on desktop** (`md:grid-cols-2`), stacked on mobile:
+1. **Quick Details section starts collapsed** — only a header bar with "Quick Details" and a chevron arrow is visible
+2. **When user clicks the "Pay" button** and the form is collapsed, instead of submitting, it opens the Quick Details section and shows a message: "Complete these details to process your order"
+3. **When already open**, the Pay button submits normally (runs validation + payment flow)
+4. User can also manually toggle open/close by clicking the header bar
 
-- **Left column**: Name, Mobile, Email, GST/PAN toggle + input, Company Name
-- **Right column**: Delivery Address header + Address, State, City, Pincode
+### Technical Changes
 
-The CTA button and trust line remain full-width below both columns.
+1. **Add state**: `const [formOpen, setFormOpen] = useState(false)`
+2. **Header bar**: Replace the static `<h2>` + `<p>` with a clickable row containing title, subtitle, and a `ChevronDown` icon that rotates when open
+3. **Wrap form content** (the grid + fields) in an `AnimatePresence` + `motion.div` that shows/hides based on `formOpen`
+4. **Add a prompt message**: When `formOpen` is first triggered by the Pay button, show an alert-style line: "Complete these details to process your order" (with an info icon)
+5. **Modify Pay button `onClick`**: Add an `onClick` handler that checks if `formOpen` is false — if so, call `setFormOpen(true)`, scroll to the form, and `return` (prevent form submission). Otherwise let the normal `onSubmit` proceed.
+6. **Move CTA button and trust line outside** the collapsible area so they're always visible
 
-### Technical Details
-
-1. **Line 489**: Change `<div className="space-y-4">` to `<div className="grid grid-cols-1 md:grid-cols-2 gap-6">`
-2. **Wrap lines 490-596** (Name through Company Name) in a `<div className="space-y-4">` — this becomes the left column
-3. **Lines 598-650** (Delivery Address section) already has its own wrapper div — this becomes the right column. Remove the `pt-4` class since the grid gap handles spacing
-4. The CTA button (lines 653+) stays outside the grid, spanning full width
+The Pay button stays visible at all times. The form fields animate in/out smoothly.
 
