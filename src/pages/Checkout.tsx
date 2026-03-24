@@ -476,7 +476,7 @@ const Checkout = () => {
             </motion.div>
 
             {/* ── Quick Details Form ── */}
-            <div className="max-w-[520px] mx-auto w-full" ref={formRef}>
+            <div className="w-full" ref={formRef}>
                 <motion.div
                   initial={{ opacity: 0, y: 20 }}
                   animate={{ opacity: 1, y: 0 }}
