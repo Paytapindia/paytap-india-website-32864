@@ -427,7 +427,7 @@ const Checkout = () => {
             </motion.div>
 
             {/* ── Two-Column Grid: Summary + Form ── */}
-            <div className="grid grid-cols-1 lg:grid-cols-2 gap-6 max-w-[1080px] mx-auto w-full items-start">
+            <div className="flex flex-col gap-6 max-w-[520px] mx-auto w-full">
 
             {/* ── Summary Box ── */}
             <motion.div
