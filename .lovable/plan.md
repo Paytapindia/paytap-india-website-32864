@@ -1,29 +1,15 @@
 
 
-## Plan: Make Delivery Address Mandatory Before Payment
+## Plan: Side-by-Side Layout for Summary Box and Quick Details
 
 ### Changes in `src/pages/Checkout.tsx`
 
-**1. Show delivery fields by default (always visible, not collapsible)**
-- Remove the `showDelivery` toggle button
-- Always render the delivery address fields (Address, State, City, Pincode)
-- Remove the `AnimatePresence` collapse wrapper — fields are always visible
-- Add a section label: "Delivery Address" with a MapPin icon
+**Wrap the summary box and form in a two-column grid on desktop:**
 
-**2. Add validation for all delivery fields**
-- In `onSubmit` (line ~236), validate that `address`, `state`, `city`, and `pincode` are all filled:
-  - Address: required, non-empty
-  - State: required, must be selected
-  - City: required, must be selected
-  - Pincode: required, 6-digit format
-- Show inline error messages for each missing/invalid field
-
-**3. Remove `details_pending` logic**
-- Since delivery is now mandatory, `details_pending` is always `false`
-- Line 254-268: remove the conditional, always set `details_pending: false`
-
-**4. Remove `showDelivery` state variable**
-- Clean up the `useState` for `showDelivery` and all references to it
+- Around the summary box (line 429-473) and the Quick Details form (line 475 onwards), add a container div with `grid grid-cols-1 lg:grid-cols-2 gap-6 max-w-[1080px] mx-auto w-full items-start`
+- Remove `max-w-[520px] mx-auto` from both the summary box and form — the grid will handle sizing
+- On mobile (`< lg`): stacks vertically (summary on top, form below) — same as current
+- On desktop (`lg+`): summary box on the left, Quick Details form on the right, side by side
 
 **File:** `src/pages/Checkout.tsx`
 
