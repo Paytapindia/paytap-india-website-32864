@@ -646,7 +646,6 @@ const Checkout = () => {
                               </select>
                               {fieldErrors.city && <p className="text-xs text-destructive mt-1.5 pl-1">{fieldErrors.city}</p>}
                             </div>
-                          </div>
                         </div>
                       </div>
                     </div>
