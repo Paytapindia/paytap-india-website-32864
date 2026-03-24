@@ -480,7 +480,7 @@ const Checkout = () => {
                   transition={{ duration: 0.5, delay: 0.3 }}
                   className="rounded-3xl bg-card/80 backdrop-blur-xl shadow-xl shadow-primary/5 border border-border/40 p-6 md:p-8"
                 >
-                  <div className="max-w-[480px]">
+                  <div>
                     <h2 className="text-lg font-bold text-foreground mb-1">Quick Details</h2>
                     <p className="text-xs text-muted-foreground mb-6">
                       We'll use this to activate your Paytap account and generate your invoice.
