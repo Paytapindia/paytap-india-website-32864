@@ -695,6 +695,7 @@ const Checkout = () => {
                 </motion.div>
               </div>
 
+            </div> {/* end grid */}
 
           </div>
         </form>
