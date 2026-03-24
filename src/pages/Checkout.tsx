@@ -483,12 +483,37 @@ const Checkout = () => {
                   className="rounded-3xl bg-card/80 backdrop-blur-xl shadow-xl shadow-primary/5 border border-border/40 p-6 md:p-8"
                 >
                   <div>
-                    <h2 className="text-lg font-bold text-foreground mb-1">Quick Details</h2>
-                    <p className="text-xs text-muted-foreground mb-6">
-                      We'll use this to activate your Paytap account and generate your invoice.
-                    </p>
+                    <button
+                      type="button"
+                      onClick={() => setFormOpen(!formOpen)}
+                      className="w-full flex items-center justify-between cursor-pointer"
+                    >
+                      <div>
+                        <h2 className="text-lg font-bold text-foreground mb-0.5 text-left">Quick Details</h2>
+                        <p className="text-xs text-muted-foreground text-left">
+                          We'll use this to activate your Paytap account and generate your invoice.
+                        </p>
+                      </div>
+                      <ChevronDown className={`w-5 h-5 text-muted-foreground transition-transform duration-300 ${formOpen ? 'rotate-180' : ''}`} />
+                    </button>
 
-                    <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+                    <AnimatePresence>
+                      {formOpen && (
+                        <motion.div
+                          initial={{ height: 0, opacity: 0 }}
+                          animate={{ height: 'auto', opacity: 1 }}
+                          exit={{ height: 0, opacity: 0 }}
+                          transition={{ duration: 0.3, ease: 'easeInOut' }}
+                          className="overflow-hidden"
+                        >
+                          {showFormPrompt && (
+                            <div className="flex items-center gap-2 mt-4 p-3 rounded-xl bg-accent/10 border border-accent/20">
+                              <CheckCircle className="w-4 h-4 text-accent shrink-0" />
+                              <p className="text-sm text-accent font-medium">Complete these details to process your order</p>
+                            </div>
+                          )}
+
+                    <div className="grid grid-cols-1 md:grid-cols-2 gap-6 mt-6">
                       {/* Left Column: Personal & Business Info */}
                       <div className="space-y-4">
                         {/* Full Name */}
