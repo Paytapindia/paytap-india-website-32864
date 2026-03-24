@@ -1,24 +1,20 @@
 
 
-## Plan: Equalize Column Sizes and Compact the Form
+## Plan: Use Single-Column Stacked Layout on All Screen Sizes
+
+The iPad view shows all three boxes (plan selector, summary box, quick details form) stacked vertically in a single column — which you prefer. The current code switches to a side-by-side two-column grid on desktop (`lg` breakpoint). This plan reverts to the stacked layout for all screen sizes.
 
 ### Changes in `src/pages/Checkout.tsx`
 
-**1. Make both columns equal width**
-- Change grid from `lg:grid-cols-2` to `lg:grid-cols-[1fr_1fr]` (already equal, but ensure no child constraints break it)
-- Remove `max-w-[480px]` from the form's inner `<div>` (line 486) so the form fills its column fully, matching the summary box width
+**1. Remove the two-column grid wrapper**
+- Line 430: Change `grid grid-cols-1 lg:grid-cols-2 gap-6 max-w-[1080px] mx-auto w-full items-start` to `flex flex-col gap-6 max-w-[520px] mx-auto w-full`
+- This keeps all boxes stacked vertically and centered, matching the iPad view
 
-**2. Make the summary box stretch to match the form height**
-- Add `h-full` to the summary box `motion.div` (line 437) and use `flex flex-col justify-between` so content spreads evenly within the box
+**2. Revert summary box height stretching**
+- Line 437: Remove `h-full flex flex-col justify-between` from the summary box, revert to just natural height so it sizes to its content
 
-**3. Compact the form to reduce its length**
-- Use a 2-column grid for some form fields to reduce vertical height:
-  - **Name** and **Phone** side by side
-  - **State** and **City** side by side  
-  - **Address** and **Pincode** side by side
-- Reduce spacing: change `space-y-4` (line 492) to `space-y-3`
-- Reduce top padding on delivery section: `pt-4` → `pt-2` (line 602)
-- Reduce CTA margin: `mt-8` → `mt-5` (line 658)
+**3. Revert form field layout to single column**
+- Lines 494, 609, 629: Change the `grid grid-cols-1 md:grid-cols-2 gap-3` wrappers back to single-column (`space-y-3` with each field stacked), matching the iPad view where fields are full-width
 
 **File:** `src/pages/Checkout.tsx`
 
