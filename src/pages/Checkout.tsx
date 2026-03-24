@@ -678,6 +678,9 @@ const Checkout = () => {
                         </div>
                       </div>
                     </div>
+                        </motion.div>
+                      )}
+                    </AnimatePresence>
 
                     {/* ── CTA Button ── */}
                     <motion.div
