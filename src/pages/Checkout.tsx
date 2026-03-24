@@ -427,14 +427,14 @@ const Checkout = () => {
             </motion.div>
 
             {/* ── Two-Column Grid: Summary + Form ── */}
-            <div className="grid grid-cols-1 lg:grid-cols-2 gap-6 max-w-[1080px] mx-auto w-full items-start">
+            <div className="flex flex-col gap-6 max-w-[520px] mx-auto w-full">
 
             {/* ── Summary Box ── */}
             <motion.div
               initial={{ opacity: 0, y: 20 }}
               animate={{ opacity: 1, y: 0 }}
               transition={{ duration: 0.5, delay: 0.25 }}
-              className="w-full h-full flex flex-col justify-between rounded-3xl bg-primary text-primary-foreground p-6 md:p-8 shadow-2xl shadow-primary/20"
+              className="w-full rounded-3xl bg-primary text-primary-foreground p-6 md:p-8 shadow-2xl shadow-primary/20"
             >
               <div className="flex items-baseline gap-2 mb-4">
                 <h3 className="text-xl font-bold">{plan.name}</h3>
@@ -490,31 +490,28 @@ const Checkout = () => {
                     </p>
 
                     <div className="space-y-3">
-                      {/* Name & Phone side by side */}
-                      <div className="grid grid-cols-1 md:grid-cols-2 gap-3">
-                        <div>
-                          <Input
-                            {...register("name")}
-                            placeholder="Full Name"
-                            className={INPUT_CLASS}
-                          />
-                          {errors.name && <p className="text-xs text-destructive mt-1.5 pl-1">{errors.name.message}</p>}
-                        </div>
-                        <div>
-                          <Input
-                            {...register("phone")}
-                            placeholder="Mobile Number"
-                            onBlur={handlePhoneLookup}
-                            className={INPUT_CLASS}
-                          />
-                          {isLookingUp && (
-                            <div className="flex items-center gap-1.5 mt-1.5 pl-1">
-                              <Loader2 className="w-3 h-3 animate-spin text-accent" />
-                              <span className="text-xs text-accent">Checking...</span>
-                            </div>
-                          )}
-                          {errors.phone && <p className="text-xs text-destructive mt-1.5 pl-1">{errors.phone.message}</p>}
-                        </div>
+                      <div>
+                        <Input
+                          {...register("name")}
+                          placeholder="Full Name"
+                          className={INPUT_CLASS}
+                        />
+                        {errors.name && <p className="text-xs text-destructive mt-1.5 pl-1">{errors.name.message}</p>}
+                      </div>
+                      <div>
+                        <Input
+                          {...register("phone")}
+                          placeholder="Mobile Number"
+                          onBlur={handlePhoneLookup}
+                          className={INPUT_CLASS}
+                        />
+                        {isLookingUp && (
+                          <div className="flex items-center gap-1.5 mt-1.5 pl-1">
+                            <Loader2 className="w-3 h-3 animate-spin text-accent" />
+                            <span className="text-xs text-accent">Checking...</span>
+                          </div>
+                        )}
+                        {errors.phone && <p className="text-xs text-destructive mt-1.5 pl-1">{errors.phone.message}</p>}
                       </div>
 
                       {/* Email */}
@@ -605,28 +602,23 @@ const Checkout = () => {
                           <h3 className="text-sm font-semibold text-foreground">Delivery Address</h3>
                         </div>
                         <div className="space-y-3">
-                          {/* Address & Pincode side by side */}
-                          <div className="grid grid-cols-1 md:grid-cols-2 gap-3">
-                            <div>
-                              <Input
-                                {...register("address")}
-                                placeholder="Address Line *"
-                                className={INPUT_CLASS}
-                              />
-                              {fieldErrors.address && <p className="text-xs text-destructive mt-1.5 pl-1">{fieldErrors.address}</p>}
-                            </div>
-                            <div>
-                              <Input
-                                {...register("pincode")}
-                                placeholder="Pincode *"
-                                maxLength={6}
-                                className={INPUT_CLASS}
-                              />
-                              {fieldErrors.pincode && <p className="text-xs text-destructive mt-1.5 pl-1">{fieldErrors.pincode}</p>}
-                            </div>
+                          <div>
+                            <Input
+                              {...register("address")}
+                              placeholder="Address Line *"
+                              className={INPUT_CLASS}
+                            />
+                            {fieldErrors.address && <p className="text-xs text-destructive mt-1.5 pl-1">{fieldErrors.address}</p>}
                           </div>
-                          {/* State & City side by side */}
-                          <div className="grid grid-cols-1 md:grid-cols-2 gap-3">
+                          <div>
+                            <Input
+                              {...register("pincode")}
+                              placeholder="Pincode *"
+                              maxLength={6}
+                              className={INPUT_CLASS}
+                            />
+                            {fieldErrors.pincode && <p className="text-xs text-destructive mt-1.5 pl-1">{fieldErrors.pincode}</p>}
+                          </div>
                             <div>
                               <select
                                 {...register("state")}
@@ -654,7 +646,6 @@ const Checkout = () => {
                               </select>
                               {fieldErrors.city && <p className="text-xs text-destructive mt-1.5 pl-1">{fieldErrors.city}</p>}
                             </div>
-                          </div>
                         </div>
                       </div>
                     </div>
