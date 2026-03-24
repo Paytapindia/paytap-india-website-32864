@@ -689,8 +689,19 @@ const Checkout = () => {
                       transition={{ type: 'spring', stiffness: 400, damping: 20 }}
                     >
                       <Button
-                        type="submit"
+                        type={formOpen ? "submit" : "button"}
                         disabled={isLoading}
+                        onClick={(e) => {
+                          if (!formOpen) {
+                            e.preventDefault();
+                            setFormOpen(true);
+                            setShowFormPrompt(true);
+                            setTimeout(() => {
+                              formRef.current?.scrollIntoView({ behavior: 'smooth', block: 'center' });
+                            }, 100);
+                            return;
+                          }
+                        }}
                         className="w-full h-14 text-base font-semibold bg-accent hover:bg-accent/90 text-accent-foreground rounded-2xl transition-all shadow-lg shadow-accent/25 hover:shadow-xl hover:shadow-accent/35"
                       >
                         {isLoading ? (
