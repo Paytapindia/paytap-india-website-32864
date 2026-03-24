@@ -486,9 +486,171 @@ const Checkout = () => {
                       We'll use this to activate your Paytap account and generate your invoice.
                     </p>
 
-                    <div className="space-y-4">
-                      {/* Full Name */}
+                    <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+                      {/* Left Column: Personal & Business Info */}
+                      <div className="space-y-4">
+                        {/* Full Name */}
+                        <div>
+                          <Input
+                            {...register("name")}
+                            placeholder="Full Name"
+                            className={INPUT_CLASS}
+                          />
+                          {errors.name && <p className="text-xs text-destructive mt-1.5 pl-1">{errors.name.message}</p>}
+                        </div>
+
+                        {/* Mobile Number */}
+                        <div>
+                          <Input
+                            {...register("phone")}
+                            placeholder="Mobile Number"
+                            onBlur={handlePhoneLookup}
+                            className={INPUT_CLASS}
+                          />
+                          {isLookingUp && (
+                            <div className="flex items-center gap-1.5 mt-1.5 pl-1">
+                              <Loader2 className="w-3 h-3 animate-spin text-accent" />
+                              <span className="text-xs text-accent">Checking...</span>
+                            </div>
+                          )}
+                          {errors.phone && <p className="text-xs text-destructive mt-1.5 pl-1">{errors.phone.message}</p>}
+                        </div>
+
+                        {/* Email */}
+                        <div>
+                          <Input
+                            {...register("email")}
+                            type="email"
+                            placeholder="Email Address"
+                            className={INPUT_CLASS}
+                          />
+                          {errors.email && <p className="text-xs text-destructive mt-1.5 pl-1">{errors.email.message}</p>}
+                        </div>
+
+                        {/* GST / PAN Toggle */}
+                        <div>
+                          <div className="inline-flex rounded-full bg-secondary p-1 mb-3">
+                            <button
+                              type="button"
+                              onClick={() => setTaxIdType('gst')}
+                              className={`px-4 py-1.5 rounded-full text-sm font-medium transition-all ${
+                                taxIdType === 'gst' ? 'bg-accent text-accent-foreground shadow-sm' : 'text-muted-foreground hover:text-foreground'
+                              }`}
+                            >
+                              GST Number
+                            </button>
+                            <button
+                              type="button"
+                              onClick={() => {
+                                setTaxIdType('pan');
+                                const currentName = getValues('name');
+                                if (currentName) setValue('companyName', currentName);
+                              }}
+                              className={`px-4 py-1.5 rounded-full text-sm font-medium transition-all ${
+                                taxIdType === 'pan' ? 'bg-accent text-accent-foreground shadow-sm' : 'text-muted-foreground hover:text-foreground'
+                              }`}
+                            >
+                              PAN Number
+                            </button>
+                          </div>
+                          {taxIdType === 'gst' ? (
+                            <Input
+                              {...register("gst", { setValueAs: (v) => v?.toUpperCase() })}
+                              placeholder="e.g. 22AAAAA0000A1Z5"
+                              maxLength={15}
+                              className={`${INPUT_CLASS} uppercase`}
+                            />
+                          ) : (
+                            <Input
+                              {...register("pan", { setValueAs: (v) => v?.toUpperCase() })}
+                              placeholder="e.g. ABCDE1234F"
+                              maxLength={10}
+                              className={`${INPUT_CLASS} uppercase`}
+                            />
+                          )}
+                          {fieldErrors.gst && <p className="text-xs text-destructive mt-1.5 pl-1">{fieldErrors.gst}</p>}
+                          {fieldErrors.pan && <p className="text-xs text-destructive mt-1.5 pl-1">{fieldErrors.pan}</p>}
+                        </div>
+
+                        {/* Company Name */}
+                        <div>
+                          {taxIdType === 'gst' ? (
+                            <>
+                              <Input
+                                {...register("companyName")}
+                                placeholder="Company Name *"
+                                className={INPUT_CLASS}
+                              />
+                              {fieldErrors.companyName && <p className="text-xs text-destructive mt-1.5 pl-1">{fieldErrors.companyName}</p>}
+                            </>
+                          ) : (
+                            <div>
+                              <Input
+                                value={nameValue || ''}
+                                readOnly
+                                tabIndex={-1}
+                                className={`${INPUT_CLASS} opacity-60 cursor-default`}
+                              />
+                              <p className="text-[11px] text-muted-foreground/70 mt-1.5 pl-1">Using your name as billing name</p>
+                            </div>
+                          )}
+                        </div>
+                      </div>
+
+                      {/* Right Column: Delivery Address */}
                       <div>
+                        <div className="flex items-center gap-2 mb-3">
+                          <MapPin className="w-4 h-4 text-accent" />
+                          <h3 className="text-sm font-semibold text-foreground">Delivery Address</h3>
+                        </div>
+                        <div className="space-y-3">
+                          <div>
+                            <Input
+                              {...register("address")}
+                              placeholder="Address Line *"
+                              className={INPUT_CLASS}
+                            />
+                            {fieldErrors.address && <p className="text-xs text-destructive mt-1.5 pl-1">{fieldErrors.address}</p>}
+                          </div>
+                          <div>
+                            <select
+                              {...register("state")}
+                              className={`${INPUT_CLASS} w-full appearance-none cursor-pointer`}
+                              defaultValue=""
+                            >
+                              <option value="" disabled>Select State *</option>
+                              {states.map(s => (
+                                <option key={s} value={s}>{s}</option>
+                              ))}
+                            </select>
+                            {fieldErrors.state && <p className="text-xs text-destructive mt-1.5 pl-1">{fieldErrors.state}</p>}
+                          </div>
+                          <div>
+                            <select
+                              {...register("city")}
+                              className={`${INPUT_CLASS} w-full appearance-none cursor-pointer`}
+                              defaultValue=""
+                              disabled={!stateValue}
+                            >
+                              <option value="" disabled>{stateValue ? 'Select City *' : 'Select state first'}</option>
+                              {cities.map(c => (
+                                <option key={c} value={c}>{c}</option>
+                              ))}
+                            </select>
+                            {fieldErrors.city && <p className="text-xs text-destructive mt-1.5 pl-1">{fieldErrors.city}</p>}
+                          </div>
+                          <div>
+                            <Input
+                              {...register("pincode")}
+                              placeholder="Pincode *"
+                              maxLength={6}
+                              className={INPUT_CLASS}
+                            />
+                            {fieldErrors.pincode && <p className="text-xs text-destructive mt-1.5 pl-1">{fieldErrors.pincode}</p>}
+                          </div>
+                        </div>
+                      </div>
+                    </div>
                         <Input
                           {...register("name")}
                           placeholder="Full Name"
