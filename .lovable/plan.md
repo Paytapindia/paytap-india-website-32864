@@ -1,15 +1,24 @@
 
 
-## Plan: Side-by-Side Layout for Summary Box and Quick Details
+## Plan: Equalize Column Sizes and Compact the Form
 
 ### Changes in `src/pages/Checkout.tsx`
 
-**Wrap the summary box and form in a two-column grid on desktop:**
+**1. Make both columns equal width**
+- Change grid from `lg:grid-cols-2` to `lg:grid-cols-[1fr_1fr]` (already equal, but ensure no child constraints break it)
+- Remove `max-w-[480px]` from the form's inner `<div>` (line 486) so the form fills its column fully, matching the summary box width
 
-- Around the summary box (line 429-473) and the Quick Details form (line 475 onwards), add a container div with `grid grid-cols-1 lg:grid-cols-2 gap-6 max-w-[1080px] mx-auto w-full items-start`
-- Remove `max-w-[520px] mx-auto` from both the summary box and form — the grid will handle sizing
-- On mobile (`< lg`): stacks vertically (summary on top, form below) — same as current
-- On desktop (`lg+`): summary box on the left, Quick Details form on the right, side by side
+**2. Make the summary box stretch to match the form height**
+- Add `h-full` to the summary box `motion.div` (line 437) and use `flex flex-col justify-between` so content spreads evenly within the box
+
+**3. Compact the form to reduce its length**
+- Use a 2-column grid for some form fields to reduce vertical height:
+  - **Name** and **Phone** side by side
+  - **State** and **City** side by side  
+  - **Address** and **Pincode** side by side
+- Reduce spacing: change `space-y-4` (line 492) to `space-y-3`
+- Reduce top padding on delivery section: `pt-4` → `pt-2` (line 602)
+- Reduce CTA margin: `mt-8` → `mt-5` (line 658)
 
 **File:** `src/pages/Checkout.tsx`
 
