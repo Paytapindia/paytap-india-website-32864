@@ -426,12 +426,15 @@ const Checkout = () => {
               </div>
             </motion.div>
 
-            {/* ── Summary Box (Above Form) ── */}
+            {/* ── Two-Column Grid: Summary + Form ── */}
+            <div className="grid grid-cols-1 lg:grid-cols-2 gap-6 max-w-[1080px] mx-auto w-full items-start">
+
+            {/* ── Summary Box ── */}
             <motion.div
               initial={{ opacity: 0, y: 20 }}
               animate={{ opacity: 1, y: 0 }}
               transition={{ duration: 0.5, delay: 0.25 }}
-              className="max-w-[520px] mx-auto w-full rounded-3xl bg-primary text-primary-foreground p-6 md:p-8 shadow-2xl shadow-primary/20"
+              className="w-full rounded-3xl bg-primary text-primary-foreground p-6 md:p-8 shadow-2xl shadow-primary/20"
             >
               <div className="flex items-baseline gap-2 mb-4">
                 <h3 className="text-xl font-bold">{plan.name}</h3>
@@ -473,7 +476,7 @@ const Checkout = () => {
             </motion.div>
 
             {/* ── Quick Details Form ── */}
-            <div className="max-w-[520px] mx-auto w-full" ref={formRef}>
+            <div className="w-full" ref={formRef}>
                 <motion.div
                   initial={{ opacity: 0, y: 20 }}
                   animate={{ opacity: 1, y: 0 }}
@@ -692,6 +695,7 @@ const Checkout = () => {
                 </motion.div>
               </div>
 
+            </div> {/* end grid */}
 
           </div>
         </form>
