@@ -1,24 +1,29 @@
 
 
-## Plan: Collapsible Quick Details with Auto-Open on Pay Click
+## Plan: Year-End "Double Value" Offer Banner on Checkout
 
-**File:** `src/pages/Checkout.tsx`
+### What
 
-### Behavior
+Add a prominent offer banner on the checkout page announcing: **"Year-End Offer: Buy any plan & get DOUBLE the value! Offer expires 31st March"**. Update the plan cards to show the doubled tag count as bonus value.
 
-1. **Quick Details section starts collapsed** — only a header bar with "Quick Details" and a chevron arrow is visible
-2. **When user clicks the "Pay" button** and the form is collapsed, instead of submitting, it opens the Quick Details section and shows a message: "Complete these details to process your order"
-3. **When already open**, the Pay button submits normally (runs validation + payment flow)
-4. User can also manually toggle open/close by clicking the header bar
+### Changes in `src/pages/Checkout.tsx`
 
-### Technical Changes
+**1. Add an offer banner above the plan selector**
+- Insert a vibrant banner (gradient background, e.g. accent/orange tones) between the page subtitle and the plan cards
+- Content:
+  - "🎉 Year-End Offer" badge
+  - "Buy Any Plan & Get Double the Value!"
+  - "Offer expires 31st March 2026" in smaller text
+- Pulsing/animated border or glow for attention
 
-1. **Add state**: `const [formOpen, setFormOpen] = useState(false)`
-2. **Header bar**: Replace the static `<h2>` + `<p>` with a clickable row containing title, subtitle, and a `ChevronDown` icon that rotates when open
-3. **Wrap form content** (the grid + fields) in an `AnimatePresence` + `motion.div` that shows/hides based on `formOpen`
-4. **Add a prompt message**: When `formOpen` is first triggered by the Pay button, show an alert-style line: "Complete these details to process your order" (with an info icon)
-5. **Modify Pay button `onClick`**: Add an `onClick` handler that checks if `formOpen` is false — if so, call `setFormOpen(true)`, scroll to the form, and `return` (prevent form submission). Otherwise let the normal `onSubmit` proceed.
-6. **Move CTA button and trust line outside** the collapsible area so they're always visible
+**2. Update plan card display to show bonus**
+- Below each plan's existing tag count, add a line like: "🎁 Bonus: +X extra tags FREE" (matching the plan's original tag count)
+- Example: Starter (1 tag) → shows "+1 extra tag FREE", Business Pro (5 tags) → "+5 extra tags FREE"
+- Style the bonus line in accent/green color to stand out
 
-The Pay button stays visible at all times. The form fields animate in/out smoothly.
+**3. Update the blue summary box**
+- Change the "X Paytap Tags Free" line to show the doubled amount, e.g. "2 Paytap Tags (1 + 1 Bonus)" for Starter
+- Add a "Year-End Bonus" label next to the bonus tags
+
+**File:** `src/pages/Checkout.tsx` only
 
