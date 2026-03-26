@@ -430,6 +430,9 @@ const Checkout = () => {
                           <p className="text-sm text-muted-foreground mt-0.5">
                             {p.tags} vehicle{p.tags > 1 ? 's' : ''} · {p.perVehicle}
                           </p>
+                          <p className="text-xs font-semibold text-green-600 mt-0.5">
+                            🎁 Bonus: +{p.tags} extra tag{p.tags > 1 ? 's' : ''} FREE
+                          </p>
                         </div>
 
                         {/* Price */}
