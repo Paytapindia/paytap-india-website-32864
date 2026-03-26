@@ -349,6 +349,24 @@ const Checkout = () => {
         <form onSubmit={handleSubmit(onSubmit)}>
           <div className="max-w-5xl mx-auto px-4 -mt-8 md:-mt-12 pb-16">
 
+            {/* ── Year-End Offer Banner ── */}
+            <motion.div
+              initial={{ opacity: 0, y: 20 }}
+              animate={{ opacity: 1, y: 0 }}
+              transition={{ duration: 0.5, delay: 0.15 }}
+              className="mb-6 md:mb-8 rounded-3xl bg-gradient-to-r from-accent via-accent/90 to-[hsl(var(--accent)/0.8)] p-5 md:p-6 text-accent-foreground shadow-xl shadow-accent/20 border border-accent/30 relative overflow-hidden"
+            >
+              <div className="absolute inset-0 rounded-3xl border-2 border-accent-foreground/10 animate-pulse pointer-events-none" />
+              <div className="relative flex flex-col md:flex-row md:items-center md:justify-between gap-3">
+                <div>
+                  <span className="inline-block px-3 py-1 rounded-full bg-accent-foreground/20 text-xs font-bold mb-2">🎉 Year-End Offer</span>
+                  <h3 className="text-xl md:text-2xl font-bold">Buy Any Plan & Get Double the Value!</h3>
+                  <p className="text-sm text-accent-foreground/70 mt-1">Offer expires 31st March 2026</p>
+                </div>
+                <div className="text-3xl md:text-4xl font-black whitespace-nowrap">2X Tags</div>
+              </div>
+            </motion.div>
+
             {/* ── SECTION 1: Plan Selector (List View) ── */}
             <motion.div
               initial={{ opacity: 0, y: 24 }}
