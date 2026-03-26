@@ -464,7 +464,11 @@ const Checkout = () => {
               <ul className="space-y-2.5 text-sm text-primary-foreground/80">
                 <li className="flex items-center gap-2">
                   <CheckCircle className="w-4 h-4 text-accent flex-shrink-0" />
-                  {plan.tags} Paytap Tag{plan.tags > 1 ? 's' : ''} Free
+                  {plan.tags * 2} Paytap Tag{plan.tags * 2 > 1 ? 's' : ''} ({plan.tags} + {plan.tags} Bonus)
+                </li>
+                <li className="flex items-center gap-2">
+                  <CheckCircle className="w-4 h-4 text-accent flex-shrink-0" />
+                  <span className="text-accent font-semibold">🎉 Year-End Bonus Applied</span>
                 </li>
                 {getDriverCards(selectedPlan) > 0 && (
                   <li className="flex items-center gap-2">
