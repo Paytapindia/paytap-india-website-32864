@@ -252,6 +252,13 @@ const Checkout = () => {
       });
     }
 
+    // Fire Meta Pixel InitiateCheckout event
+    if (typeof window !== 'undefined' && window.fbq) {
+      window.fbq('track', 'InitiateCheckout', {
+        value: total, currency: 'INR', content_name: plan.name, num_items: plan.tags,
+      });
+    }
+
     setIsLoading(true);
     try {
       const txnid = `TXN${Date.now()}${Math.random().toString(36).substring(2, 8).toUpperCase()}`;
