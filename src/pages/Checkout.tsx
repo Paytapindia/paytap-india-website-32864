@@ -338,22 +338,12 @@ const Checkout = () => {
               initial={{ opacity: 0, y: 20 }}
               animate={{ opacity: 1, y: 0 }}
               transition={{ duration: 0.6, ease: [0.25, 0.46, 0.45, 0.94] }}
-              className="text-2xl sm:text-3xl md:text-[42px] font-semibold text-primary-foreground tracking-[-0.02em] leading-[1.12]"
+              className="text-xl sm:text-3xl md:text-[42px] font-semibold text-primary-foreground tracking-[-0.02em] leading-[1.12]"
             >
               You're Losing Money on Every Vehicle
               <br />
               <span className="text-primary-foreground/80">And You Don't Even Know It</span>
             </motion.h1>
-            <motion.p
-              initial={{ opacity: 0, y: 12 }}
-              animate={{ opacity: 1, y: 0 }}
-              transition={{ duration: 0.6, delay: 0.1, ease: [0.25, 0.46, 0.45, 0.94] }}
-              className="text-primary-foreground/70 mt-5 text-sm md:text-base max-w-lg mx-auto leading-relaxed"
-            >
-              PayTap help tracks and control every rupee your vehicle spend
-              <br className="hidden sm:block" />
-              Fuel, Fastag Recharge, Parking, Service Center, Insurance - everything in one place
-            </motion.p>
           </div>
         </div>
 
@@ -380,7 +370,7 @@ const Checkout = () => {
                       type="button"
                       onClick={() => handlePlanSelect(key)}
                       whileTap={{ scale: 0.99 }}
-                      className={`w-full text-left px-5 md:px-8 py-4 md:py-5 transition-all duration-300 relative group ${
+                      className={`w-full text-left px-4 md:px-8 py-3 md:py-5 transition-all duration-300 relative group ${
                         isSelected
                           ? 'bg-gradient-to-r from-primary/[0.06] via-accent/[0.04] to-transparent'
                           : 'hover:bg-secondary/60'
@@ -427,10 +417,9 @@ const Checkout = () => {
 
                         {/* Price */}
                         <div className="text-right flex-shrink-0">
-                          <span className={`text-xl md:text-2xl font-bold ${isSelected ? 'text-foreground' : 'text-foreground/70'}`}>
+                          <span className={`text-lg md:text-2xl font-bold ${isSelected ? 'text-foreground' : 'text-foreground/70'}`}>
                             {formatINR(p.price)}
                           </span>
-                          <p className="text-[10px] text-muted-foreground/60 mt-0.5">Less than ₹{Math.ceil(p.price / p.tags / 365)}/day per vehicle</p>
                         </div>
                       </div>
                     </motion.button>
@@ -447,7 +436,7 @@ const Checkout = () => {
               initial={{ opacity: 0, y: 20 }}
               animate={{ opacity: 1, y: 0 }}
               transition={{ duration: 0.5, delay: 0.25 }}
-              className="w-full rounded-3xl bg-primary text-primary-foreground p-6 md:p-8 shadow-2xl shadow-primary/20"
+              className="w-full rounded-3xl bg-primary text-primary-foreground p-5 md:p-8 shadow-2xl shadow-primary/20"
             >
               <div className="mb-5">
                 <h3 className="text-xl font-bold">{plan.name}</h3>
@@ -533,7 +522,7 @@ const Checkout = () => {
                   initial={{ opacity: 0, y: 20 }}
                   animate={{ opacity: 1, y: 0 }}
                   transition={{ duration: 0.5, delay: 0.3 }}
-                  className="rounded-3xl bg-card/80 backdrop-blur-xl shadow-xl shadow-primary/5 border border-border/40 p-6 md:p-8"
+                  className="rounded-3xl bg-card/80 backdrop-blur-xl shadow-xl shadow-primary/5 border border-border/40 p-5 md:p-8"
                 >
                   <div>
                     <button
@@ -737,7 +726,7 @@ const Checkout = () => {
 
                     {/* ── CTA Button ── */}
                     <motion.div
-                      className="mt-8"
+                      className="mt-6"
                       whileHover={{ y: -2 }}
                       transition={{ type: 'spring', stiffness: 400, damping: 20 }}
                     >
@@ -768,12 +757,6 @@ const Checkout = () => {
                       </Button>
                     </motion.div>
 
-                    <p className="text-center text-xs text-muted-foreground mt-3">
-                      Takes 30 seconds · No risk · Instant activation
-                    </p>
-                    <p className="text-center text-xs text-amber-500 font-medium mt-1.5">
-                      ⏳ Price increasing soon
-                    </p>
 
                     {/* Trust Line */}
                     <div className="flex flex-wrap items-center justify-center gap-2 sm:gap-4 px-2 mt-5 text-xs text-muted-foreground">
