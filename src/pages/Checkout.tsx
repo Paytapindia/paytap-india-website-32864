@@ -338,7 +338,7 @@ const Checkout = () => {
               initial={{ opacity: 0, y: 20 }}
               animate={{ opacity: 1, y: 0 }}
               transition={{ duration: 0.6, ease: [0.25, 0.46, 0.45, 0.94] }}
-              className="text-2xl sm:text-3xl md:text-[42px] font-semibold text-primary-foreground tracking-[-0.02em] leading-[1.12]"
+              className="text-xl sm:text-3xl md:text-[42px] font-semibold text-primary-foreground tracking-[-0.02em] leading-[1.12]"
             >
               You're Losing Money on Every Vehicle
               <br />
