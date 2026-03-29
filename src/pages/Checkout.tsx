@@ -451,7 +451,7 @@ const Checkout = () => {
                   </div>
                   <div className="flex items-center gap-2 text-accent font-medium pl-6">
                     <ArrowRight className="w-3.5 h-3.5 flex-shrink-0" />
-                    <span>Track every payment live, per vehicle</span>
+                    <span>Dedicated Payment Tag Enabled, per vehicle</span>
                   </div>
                 </div>
 
