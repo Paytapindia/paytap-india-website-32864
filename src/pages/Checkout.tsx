@@ -477,7 +477,7 @@ const Checkout = () => {
                 </li>
               </ul>
 
-              <div className="flex items-center justify-between mt-5 pt-4 border-t border-primary-foreground/10">
+              <div className="flex flex-col sm:flex-row items-start sm:items-center justify-between gap-2 mt-5 pt-4 border-t border-primary-foreground/10">
                 <div className="flex items-center gap-2 text-xs text-primary-foreground/50">
                   <Truck className="w-4 h-4" />
                   <span>Vehicle Tag Delivery: 3–5 Business Days</span>
