@@ -340,7 +340,7 @@ const Checkout = () => {
               transition={{ duration: 0.6, ease: [0.25, 0.46, 0.45, 0.94] }}
               className="text-3xl md:text-5xl font-bold text-primary-foreground tracking-tight leading-tight"
             >
-              Your Vehicle Payments Shouldn't Be This Complicated
+              You're Losing Money on Every Vehicle — You Just Can't See It
             </motion.h1>
             <motion.p
               initial={{ opacity: 0, y: 12 }}
@@ -348,7 +348,7 @@ const Checkout = () => {
               transition={{ duration: 0.6, delay: 0.1, ease: [0.25, 0.46, 0.45, 0.94] }}
               className="text-primary-foreground/60 mt-3 text-base md:text-lg max-w-xl mx-auto"
             >
-              Manage all vehicle payments instantly with Paytap — no more chasing people
+              PayTap tracks and controls every rupee your drivers spend — fuel, tolls, parking, everything.
             </motion.p>
           </div>
         </div>
@@ -364,7 +364,7 @@ const Checkout = () => {
               className="rounded-3xl bg-card/80 backdrop-blur-xl shadow-2xl shadow-primary/5 border border-border/40 overflow-hidden mb-8 md:mb-12"
             >
               <div className="px-5 md:px-8 py-5 border-b border-border/40">
-                <h2 className="text-sm font-semibold text-muted-foreground uppercase tracking-widest">Get Lifetime Access</h2>
+                <h2 className="text-sm font-semibold text-muted-foreground uppercase tracking-widest">Choose Your Fleet Size</h2>
               </div>
               <div className="divide-y divide-border/30">
                 {(Object.entries(PLANS) as [PlanType, PlanInfo][]).map(([key, p], i) => {
@@ -380,7 +380,7 @@ const Checkout = () => {
                         isSelected
                           ? 'bg-gradient-to-r from-primary/[0.06] via-accent/[0.04] to-transparent'
                           : 'hover:bg-secondary/60'
-                      }`}
+                      } ${!isSelected && !p.recommended ? 'opacity-60' : ''}`}
                     >
                       {/* Selection glow bar */}
                       {isSelected && (
@@ -407,7 +407,7 @@ const Checkout = () => {
                             </span>
                             {p.recommended && (
                               <span className="inline-flex items-center gap-1 px-2.5 py-0.5 rounded-full text-[10px] font-bold bg-accent/10 text-accent">
-                                <Star className="w-3 h-3 fill-accent" /> POPULAR
+                                <Star className="w-3 h-3 fill-accent" /> ⭐ Most chosen by fleet owners
                               </span>
                             )}
                             {driverCards > 0 && (
@@ -426,12 +426,15 @@ const Checkout = () => {
                           <span className={`text-xl md:text-2xl font-bold ${isSelected ? 'text-foreground' : 'text-foreground/70'}`}>
                             {formatINR(p.price)}
                           </span>
-                          <p className="text-[10px] text-muted-foreground/60 mt-0.5">incl. GST</p>
+                          <p className="text-[10px] text-muted-foreground/60 mt-0.5">Less than ₹{Math.ceil(p.price / p.tags / 365)}/day per vehicle</p>
                         </div>
                       </div>
                     </motion.button>
                   );
                 })}
+              </div>
+              <div className="px-5 md:px-8 py-3 border-t border-border/40">
+                <p className="text-xs text-muted-foreground/70 text-center">💡 Most fleet owners recover this cost within 7–10 days from reduced leakage</p>
               </div>
             </motion.div>
 
@@ -450,25 +453,23 @@ const Checkout = () => {
               <ul className="space-y-2.5 text-sm text-primary-foreground/80">
                 <li className="flex items-center gap-2">
                   <CheckCircle className="w-4 h-4 text-accent flex-shrink-0" />
-                  {plan.tags} Paytap Tag{plan.tags > 1 ? 's' : ''} Free
-                </li>
-                {getDriverCards(selectedPlan) > 0 && (
-                  <li className="flex items-center gap-2">
-                    <CheckCircle className="w-4 h-4 text-accent flex-shrink-0" />
-                    {getDriverCards(selectedPlan)} Driver Expense Card{getDriverCards(selectedPlan) > 1 ? 's' : ''}
-                  </li>
-                )}
-                <li className="flex items-center gap-2">
-                  <CheckCircle className="w-4 h-4 text-accent flex-shrink-0" />
-                  Access to Myfleet AI
+                  Track every rupee spent per vehicle
                 </li>
                 <li className="flex items-center gap-2">
                   <CheckCircle className="w-4 h-4 text-accent flex-shrink-0" />
-                  Access to ExpensePro
+                  Set strict spending limits for drivers
                 </li>
                 <li className="flex items-center gap-2">
                   <CheckCircle className="w-4 h-4 text-accent flex-shrink-0" />
-                  Instant Account Activation
+                  Eliminate fuel and cash leakage
+                </li>
+                <li className="flex items-center gap-2">
+                  <CheckCircle className="w-4 h-4 text-accent flex-shrink-0" />
+                  No more calling drivers or checking manually
+                </li>
+                <li className="flex items-center gap-2">
+                  <CheckCircle className="w-4 h-4 text-accent flex-shrink-0" />
+                  Instant account activation — go live today
                 </li>
               </ul>
 
@@ -498,7 +499,7 @@ const Checkout = () => {
                       <div>
                         <h2 className="text-lg font-bold text-foreground mb-0.5 text-left">Quick Details</h2>
                         <p className="text-xs text-muted-foreground text-left">
-                          We'll use this to activate your Paytap account and generate your invoice.
+                          Takes 30 seconds — we'll set up your account and ship your tags
                         </p>
                       </div>
                       <ChevronDown className={`w-5 h-5 text-muted-foreground transition-transform duration-300 ${formOpen ? 'rotate-180' : ''}`} />
@@ -717,22 +718,31 @@ const Checkout = () => {
                             Securing your checkout…
                           </span>
                         ) : (
-                          `Pay ${formatINR(total)} & Go Live →`
+                          `Start Controlling My Fleet →`
                         )}
                       </Button>
                     </motion.div>
 
                     <p className="text-center text-xs text-muted-foreground mt-3">
-                      Secure checkout · Takes 30 seconds
+                      Takes 30 seconds · No risk · Instant activation
+                    </p>
+                    <p className="text-center text-xs text-amber-500 font-medium mt-1.5">
+                      ⏳ Price increasing soon
                     </p>
 
                     {/* Trust Line */}
                     <div className="flex flex-wrap items-center justify-center gap-4 mt-5 text-xs text-muted-foreground">
                       <span className="flex items-center gap-1.5">
-                        <Lock className="w-3.5 h-3.5 text-accent" /> Secure payments
+                        <Shield className="w-3.5 h-3.5 text-accent" /> Trusted by 150+ fleet owners
                       </span>
                       <span className="flex items-center gap-1.5">
-                        <Shield className="w-3.5 h-3.5 text-accent" /> RBI-aligned system
+                        <Lock className="w-3.5 h-3.5 text-accent" /> 7-day no-questions-asked refund
+                      </span>
+                      <span className="flex items-center gap-1.5">
+                        <FileText className="w-3.5 h-3.5 text-accent" /> Avg savings: ₹3,000+/vehicle/month
+                      </span>
+                      <span className="flex items-center gap-1.5">
+                        <Lock className="w-3.5 h-3.5 text-accent" /> Secure payments
                       </span>
                       <span className="flex items-center gap-1.5">
                         <FileText className="w-3.5 h-3.5 text-accent" /> GST invoice provided
