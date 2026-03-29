@@ -1,8 +1,9 @@
 
 
-## Plan: Remove "Avg savings" Trust Span
+## Plan: Update Two Copy Strings
 
 **File:** `src/pages/Checkout.tsx`
 
-**Change:** Delete lines 739-741 (the `<span>` containing "Avg savings: ₹3,000+/vehicle/month") from the trust badges div. Keep "Secure payments" and "GST invoice provided".
+1. **Line 725**: Change `Start Controlling My Fleet →` to `Take Control →`
+2. **Line 506**: Change `ship your tags` to `ship your vehicle payment tags`
 
