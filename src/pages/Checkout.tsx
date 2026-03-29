@@ -7,7 +7,7 @@ import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { useToast } from "@/hooks/use-toast";
 import { useNavigate } from "react-router-dom";
-import { Loader2, Check, Lock, Home, CheckCircle, Download, XCircle, Shield, Truck, FileText, ChevronDown, MapPin, Star, ArrowRight, Zap } from "lucide-react";
+import { Loader2, Check, Lock, Home, CheckCircle, Download, XCircle, Shield, Truck, FileText, ChevronDown, MapPin, Star } from "lucide-react";
 import { generateInvoice, type InvoiceData } from "@/lib/generateInvoice";
 import { Dialog, DialogContent, DialogHeader, DialogTitle, DialogDescription } from "@/components/ui/dialog";
 import { supabase } from "@/integrations/supabase/client";
@@ -333,22 +333,28 @@ const Checkout = () => {
           </div>
 
           {/* Hero Heading */}
-          <div className="text-center mt-8 md:mt-14 px-4 max-w-3xl mx-auto">
+          <div className="text-center mt-6 md:mt-10 px-4">
             <motion.h1
               initial={{ opacity: 0, y: 20 }}
               animate={{ opacity: 1, y: 0 }}
               transition={{ duration: 0.6, ease: [0.25, 0.46, 0.45, 0.94] }}
-              className="text-xl sm:text-3xl md:text-[42px] font-semibold text-primary-foreground tracking-[-0.02em] leading-[1.12]"
+              className="text-3xl md:text-5xl font-bold text-primary-foreground tracking-tight leading-tight"
             >
-              You're Losing Money on Every Vehicle
-              <br />
-              <span className="text-primary-foreground/80">And You Don't Even Know It</span>
+              Your Vehicle Payments Shouldn't Be This Complicated
             </motion.h1>
+            <motion.p
+              initial={{ opacity: 0, y: 12 }}
+              animate={{ opacity: 1, y: 0 }}
+              transition={{ duration: 0.6, delay: 0.1, ease: [0.25, 0.46, 0.45, 0.94] }}
+              className="text-primary-foreground/60 mt-3 text-base md:text-lg max-w-xl mx-auto"
+            >
+              Manage all vehicle payments instantly with Paytap — no more chasing people
+            </motion.p>
           </div>
         </div>
 
         <form onSubmit={handleSubmit(onSubmit)}>
-          <div className="max-w-5xl mx-auto px-3 sm:px-4 -mt-8 md:-mt-12 pb-16">
+          <div className="max-w-5xl mx-auto px-4 -mt-8 md:-mt-12 pb-16">
 
             {/* ── SECTION 1: Plan Selector (List View) ── */}
             <motion.div
@@ -358,7 +364,7 @@ const Checkout = () => {
               className="rounded-3xl bg-card/80 backdrop-blur-xl shadow-2xl shadow-primary/5 border border-border/40 overflow-hidden mb-8 md:mb-12"
             >
               <div className="px-5 md:px-8 py-5 border-b border-border/40">
-                <h2 className="text-sm font-semibold text-muted-foreground uppercase tracking-widest"><h2 className="text-sm font-semibold text-muted-foreground uppercase tracking-widest">Activate Your Vehicle</h2></h2>
+                <h2 className="text-sm font-semibold text-muted-foreground uppercase tracking-widest">Get Lifetime Access</h2>
               </div>
               <div className="divide-y divide-border/30">
                 {(Object.entries(PLANS) as [PlanType, PlanInfo][]).map(([key, p], i) => {
@@ -370,11 +376,11 @@ const Checkout = () => {
                       type="button"
                       onClick={() => handlePlanSelect(key)}
                       whileTap={{ scale: 0.99 }}
-                      className={`w-full text-left px-4 md:px-8 py-3 md:py-5 transition-all duration-300 relative group ${
+                      className={`w-full text-left px-5 md:px-8 py-4 md:py-5 transition-all duration-300 relative group ${
                         isSelected
                           ? 'bg-gradient-to-r from-primary/[0.06] via-accent/[0.04] to-transparent'
                           : 'hover:bg-secondary/60'
-                      } ${!isSelected && !p.recommended ? 'opacity-60' : ''}`}
+                      }`}
                     >
                       {/* Selection glow bar */}
                       {isSelected && (
@@ -399,6 +405,11 @@ const Checkout = () => {
                             <span className={`font-semibold text-base ${isSelected ? 'text-foreground' : 'text-foreground/80'}`}>
                               {p.name}
                             </span>
+                            {p.recommended && (
+                              <span className="inline-flex items-center gap-1 px-2.5 py-0.5 rounded-full text-[10px] font-bold bg-accent/10 text-accent">
+                                <Star className="w-3 h-3 fill-accent" /> POPULAR
+                              </span>
+                            )}
                             {driverCards > 0 && (
                               <span className="hidden md:inline-flex px-2 py-0.5 rounded-full text-[10px] font-medium bg-primary/10 text-primary">
                                 +{driverCards} Driver Card{driverCards > 1 ? 's' : ''}
@@ -412,17 +423,15 @@ const Checkout = () => {
 
                         {/* Price */}
                         <div className="text-right flex-shrink-0">
-                          <span className={`text-lg md:text-2xl font-bold ${isSelected ? 'text-foreground' : 'text-foreground/70'}`}>
+                          <span className={`text-xl md:text-2xl font-bold ${isSelected ? 'text-foreground' : 'text-foreground/70'}`}>
                             {formatINR(p.price)}
                           </span>
+                          <p className="text-[10px] text-muted-foreground/60 mt-0.5">incl. GST</p>
                         </div>
                       </div>
                     </motion.button>
                   );
                 })}
-              </div>
-              <div className="px-5 md:px-8 py-3 border-t border-border/40">
-                <p className="text-xs text-muted-foreground/70 text-center">💡 Most fleet owners recover this cost within 7–10 days from reduced leakage</p>
               </div>
             </motion.div>
 
@@ -431,78 +440,39 @@ const Checkout = () => {
               initial={{ opacity: 0, y: 20 }}
               animate={{ opacity: 1, y: 0 }}
               transition={{ duration: 0.5, delay: 0.25 }}
-              className="w-full rounded-3xl bg-primary text-primary-foreground p-5 md:p-8 shadow-2xl shadow-primary/20"
+              className="w-full rounded-3xl bg-primary text-primary-foreground p-6 md:p-8 shadow-2xl shadow-primary/20"
             >
-              <div className="mb-5">
+              <div className="flex items-baseline gap-2 mb-4">
                 <h3 className="text-xl font-bold">{plan.name}</h3>
-                <p className="text-sm text-primary-foreground/60 mt-1">Take Back Control of Your Vehicles</p>
+                <span className="text-sm font-normal text-primary-foreground/60">(What's Included)</span>
               </div>
 
-              <div className="space-y-4 text-sm">
-                <div className="space-y-1">
-                  <div className="flex items-start gap-2 text-primary-foreground/90">
-                    <CheckCircle className="w-4 h-4 mt-0.5 text-primary-foreground/40 flex-shrink-0" />
-                    <span>No more handing over cash, card, or QR screenshots</span>
-                  </div>
-                  <div className="flex items-center gap-2 text-accent font-medium pl-6">
-                    <ArrowRight className="w-3.5 h-3.5 flex-shrink-0" />
-                    <span>Dedicated Payment Tag Enabled, per vehicle</span>
-                  </div>
-                </div>
+              <ul className="space-y-2.5 text-sm text-primary-foreground/80">
+                <li className="flex items-center gap-2">
+                  <CheckCircle className="w-4 h-4 text-accent flex-shrink-0" />
+                  {plan.tags} Paytap Tag{plan.tags > 1 ? 's' : ''} Free
+                </li>
+                {getDriverCards(selectedPlan) > 0 && (
+                  <li className="flex items-center gap-2">
+                    <CheckCircle className="w-4 h-4 text-accent flex-shrink-0" />
+                    {getDriverCards(selectedPlan)} Driver Expense Card{getDriverCards(selectedPlan) > 1 ? 's' : ''}
+                  </li>
+                )}
+                <li className="flex items-center gap-2">
+                  <CheckCircle className="w-4 h-4 text-accent flex-shrink-0" />
+                  Access to Myfleet AI
+                </li>
+                <li className="flex items-center gap-2">
+                  <CheckCircle className="w-4 h-4 text-accent flex-shrink-0" />
+                  Access to ExpensePro
+                </li>
+                <li className="flex items-center gap-2">
+                  <CheckCircle className="w-4 h-4 text-accent flex-shrink-0" />
+                  Instant Account Activation
+                </li>
+              </ul>
 
-                <div className="space-y-1">
-                  <div className="flex items-start gap-2 text-primary-foreground/90">
-                    <CheckCircle className="w-4 h-4 mt-0.5 text-primary-foreground/40 flex-shrink-0" />
-                    <span>Can't check every expense your vehicle makes</span>
-                  </div>
-                  <div className="flex items-center gap-2 text-accent font-medium pl-6">
-                    <ArrowRight className="w-3.5 h-3.5 flex-shrink-0" />
-                    <span>Single dashboard to track all payment</span>
-                  </div>
-                </div>
-
-                <div className="space-y-1">
-                  <div className="flex items-start gap-2 text-primary-foreground/90">
-                    <CheckCircle className="w-4 h-4 mt-0.5 text-primary-foreground/40 flex-shrink-0" />
-                    <span>Small daily expenses quietly add up</span>
-                  </div>
-                  <div className="flex items-center gap-2 text-accent font-medium pl-6">
-                    <ArrowRight className="w-3.5 h-3.5 flex-shrink-0" />
-                    <span>Stop leakage and save every month</span>
-                  </div>
-                </div>
-
-                <div className="space-y-1">
-                  <div className="flex items-start gap-2 text-primary-foreground/90">
-                    <CheckCircle className="w-4 h-4 mt-0.5 text-primary-foreground/40 flex-shrink-0" />
-                    <span>You keep calling drivers for updates</span>
-                  </div>
-                  <div className="flex items-center gap-2 text-accent font-medium pl-6">
-                    <ArrowRight className="w-3.5 h-3.5 flex-shrink-0" />
-                    <span>See everything instantly, no follow-ups</span>
-                  </div>
-                </div>
-
-                <div className="space-y-1">
-                  <div className="flex items-start gap-2 text-primary-foreground/90">
-                    <CheckCircle className="w-4 h-4 mt-0.5 text-primary-foreground/40 flex-shrink-0" />
-                    <span>Expenses feel out of control month to month</span>
-                  </div>
-                  <div className="flex items-center gap-2 text-accent font-medium pl-6">
-                    <ArrowRight className="w-3.5 h-3.5 flex-shrink-0" />
-                    <span>Get full control from day one</span>
-                  </div>
-                </div>
-              </div>
-
-              <div className="text-xs text-primary-foreground/60 text-center mt-4 pt-3 border-t border-primary-foreground/10">
-                <div className="flex items-center justify-center gap-1.5">
-                  <Zap className="w-3.5 h-3.5" />
-                  <span>Most fleet owners recover this cost within the first 7 days</span>
-                </div>
-              </div>
-
-              <div className="flex flex-col sm:flex-row items-start sm:items-center justify-between gap-2 mt-5 pt-4 border-t border-primary-foreground/10">
+              <div className="flex items-center justify-between mt-5 pt-4 border-t border-primary-foreground/10">
                 <div className="flex items-center gap-2 text-xs text-primary-foreground/50">
                   <Truck className="w-4 h-4" />
                   <span>Vehicle Tag Delivery: 3–5 Business Days</span>
@@ -517,7 +487,7 @@ const Checkout = () => {
                   initial={{ opacity: 0, y: 20 }}
                   animate={{ opacity: 1, y: 0 }}
                   transition={{ duration: 0.5, delay: 0.3 }}
-                  className="rounded-3xl bg-card/80 backdrop-blur-xl shadow-xl shadow-primary/5 border border-border/40 p-5 md:p-8"
+                  className="rounded-3xl bg-card/80 backdrop-blur-xl shadow-xl shadow-primary/5 border border-border/40 p-6 md:p-8"
                 >
                   <div>
                     <button
@@ -528,7 +498,7 @@ const Checkout = () => {
                       <div>
                         <h2 className="text-lg font-bold text-foreground mb-0.5 text-left">Quick Details</h2>
                         <p className="text-xs text-muted-foreground text-left">
-                          Takes 30 seconds — we'll set up your account and ship your vehicle payment tags
+                          We'll use this to activate your Paytap account and generate your invoice.
                         </p>
                       </div>
                       <ChevronDown className={`w-5 h-5 text-muted-foreground transition-transform duration-300 ${formOpen ? 'rotate-180' : ''}`} />
@@ -721,7 +691,7 @@ const Checkout = () => {
 
                     {/* ── CTA Button ── */}
                     <motion.div
-                      className="mt-6"
+                      className="mt-8"
                       whileHover={{ y: -2 }}
                       transition={{ type: 'spring', stiffness: 400, damping: 20 }}
                     >
@@ -747,16 +717,22 @@ const Checkout = () => {
                             Securing your checkout…
                           </span>
                         ) : (
-                          `Take Control →`
+                          `Pay ${formatINR(total)} & Go Live →`
                         )}
                       </Button>
                     </motion.div>
 
+                    <p className="text-center text-xs text-muted-foreground mt-3">
+                      Secure checkout · Takes 30 seconds
+                    </p>
 
                     {/* Trust Line */}
-                    <div className="flex flex-wrap items-center justify-center gap-2 sm:gap-4 px-2 mt-5 text-xs text-muted-foreground">
+                    <div className="flex flex-wrap items-center justify-center gap-4 mt-5 text-xs text-muted-foreground">
                       <span className="flex items-center gap-1.5">
                         <Lock className="w-3.5 h-3.5 text-accent" /> Secure payments
+                      </span>
+                      <span className="flex items-center gap-1.5">
+                        <Shield className="w-3.5 h-3.5 text-accent" /> RBI-aligned system
                       </span>
                       <span className="flex items-center gap-1.5">
                         <FileText className="w-3.5 h-3.5 text-accent" /> GST invoice provided
