@@ -417,10 +417,9 @@ const Checkout = () => {
 
                         {/* Price */}
                         <div className="text-right flex-shrink-0">
-                          <span className={`text-xl md:text-2xl font-bold ${isSelected ? 'text-foreground' : 'text-foreground/70'}`}>
+                          <span className={`text-lg md:text-2xl font-bold ${isSelected ? 'text-foreground' : 'text-foreground/70'}`}>
                             {formatINR(p.price)}
                           </span>
-                          <p className="text-[10px] text-muted-foreground/60 mt-0.5">Less than ₹{Math.ceil(p.price / p.tags / 365)}/day per vehicle</p>
                         </div>
                       </div>
                     </motion.button>
