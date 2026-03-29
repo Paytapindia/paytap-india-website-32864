@@ -722,7 +722,7 @@ const Checkout = () => {
                             Securing your checkout…
                           </span>
                         ) : (
-                          `Start Controlling My Fleet →`
+                          `Take Control →`
                         )}
                       </Button>
                     </motion.div>
