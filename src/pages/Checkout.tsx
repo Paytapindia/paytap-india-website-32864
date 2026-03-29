@@ -462,7 +462,7 @@ const Checkout = () => {
                   </div>
                   <div className="flex items-center gap-2 text-accent font-medium pl-6">
                     <ArrowRight className="w-3.5 h-3.5 flex-shrink-0" />
-                    <span>Set limits so overspending isn't possible</span>
+                    <span>Single dashboard to track all payment</span>
                   </div>
                 </div>
 
