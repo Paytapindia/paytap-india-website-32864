@@ -737,9 +737,6 @@ const Checkout = () => {
                     {/* Trust Line */}
                     <div className="flex flex-wrap items-center justify-center gap-2 sm:gap-4 px-2 mt-5 text-xs text-muted-foreground">
                       <span className="flex items-center gap-1.5">
-                        <FileText className="w-3.5 h-3.5 text-accent" /> Avg savings: ₹3,000+/vehicle/month
-                      </span>
-                      <span className="flex items-center gap-1.5">
                         <Lock className="w-3.5 h-3.5 text-accent" /> Secure payments
                       </span>
                       <span className="flex items-center gap-1.5">
