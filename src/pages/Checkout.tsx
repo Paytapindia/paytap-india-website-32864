@@ -358,7 +358,7 @@ const Checkout = () => {
         </div>
 
         <form onSubmit={handleSubmit(onSubmit)}>
-          <div className="max-w-5xl mx-auto px-4 -mt-8 md:-mt-12 pb-16">
+          <div className="max-w-5xl mx-auto px-3 sm:px-4 -mt-8 md:-mt-12 pb-16">
 
             {/* ── SECTION 1: Plan Selector (List View) ── */}
             <motion.div
@@ -477,7 +477,7 @@ const Checkout = () => {
                 </li>
               </ul>
 
-              <div className="flex items-center justify-between mt-5 pt-4 border-t border-primary-foreground/10">
+              <div className="flex flex-col sm:flex-row items-start sm:items-center justify-between gap-2 mt-5 pt-4 border-t border-primary-foreground/10">
                 <div className="flex items-center gap-2 text-xs text-primary-foreground/50">
                   <Truck className="w-4 h-4" />
                   <span>Vehicle Tag Delivery: 3–5 Business Days</span>
@@ -735,13 +735,7 @@ const Checkout = () => {
                     </p>
 
                     {/* Trust Line */}
-                    <div className="flex flex-wrap items-center justify-center gap-4 mt-5 text-xs text-muted-foreground">
-                      <span className="flex items-center gap-1.5">
-                        <Shield className="w-3.5 h-3.5 text-accent" /> Trusted by 150+ fleet owners
-                      </span>
-                      <span className="flex items-center gap-1.5">
-                        <Lock className="w-3.5 h-3.5 text-accent" /> 7-day no-questions-asked refund
-                      </span>
+                    <div className="flex flex-wrap items-center justify-center gap-2 sm:gap-4 px-2 mt-5 text-xs text-muted-foreground">
                       <span className="flex items-center gap-1.5">
                         <FileText className="w-3.5 h-3.5 text-accent" /> Avg savings: ₹3,000+/vehicle/month
                       </span>
