@@ -37,7 +37,7 @@ const PLANS: Record<PlanType, PlanInfo> = {
     perVehicle: '₹999/vehicle',
   },
   business_basic: {
-    name: 'Business Basic',
+    name: 'Basic',
     price: 1600,
     tags: 2,
     recommended: false,
@@ -364,7 +364,7 @@ const Checkout = () => {
               className="rounded-3xl bg-card/80 backdrop-blur-xl shadow-2xl shadow-primary/5 border border-border/40 overflow-hidden mb-8 md:mb-12"
             >
               <div className="px-5 md:px-8 py-5 border-b border-border/40">
-                <h2 className="text-sm font-semibold text-muted-foreground uppercase tracking-widest">Get Lifetime Access</h2>
+                <h2 className="text-sm font-semibold text-muted-foreground uppercase tracking-widest">Activate Your Vehicle</h2>
               </div>
               <div className="divide-y divide-border/30">
                 {(Object.entries(PLANS) as [PlanType, PlanInfo][]).map(([key, p], i) => {
