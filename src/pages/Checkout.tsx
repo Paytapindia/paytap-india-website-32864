@@ -718,7 +718,7 @@ const Checkout = () => {
                             Securing your checkout…
                           </span>
                         ) : (
-                          `Pay ${formatINR(total)} & Go Live →`
+                          `Start Controlling My Fleet →`
                         )}
                       </Button>
                     </motion.div>
