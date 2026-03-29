@@ -1,42 +1,21 @@
 
 
-## Plan: Fix Checkout Hero Typography & Alignment
+## Plan: Remove Trust Lines & Fix Mobile Alignment
 
 **File:** `src/pages/Checkout.tsx`
 
-### Changes (lines 336-353)
+### 1. Remove two trust spans (lines 738-744)
 
-**1. Constrain width & center the text block**
-- Add `max-w-3xl mx-auto` to the wrapper div (line 336)
+Remove these two `<span>` elements from the trust line div:
+- `"Trusted by 150+ fleet owners"` (lines 739-741)
+- `"7-day no-questions-asked refund"` (lines 742-744)
 
-**2. Force clean 2-line headline with explicit line breaks**
-```
-"You're Losing Money on Every Vehicle"
-<br />
-"And You Don't Even Know It"
-```
-- Second line slightly smaller or lighter for hierarchy
+Keep the remaining three: "Avg savings", "Secure payments", "GST invoice provided".
 
-**3. Improve headline typography (line 341)**
-- `font-semibold` instead of `font-bold`
-- `leading-[1.12]` for tighter line height
-- `tracking-[-0.02em]` for slight letter-spacing tightening
-- Sizes: `text-2xl sm:text-3xl md:text-[42px]`
+### 2. Fix mobile alignment
 
-**4. Fix subheading structure (lines 345-352)**
-- Break into two lines with `<br className="hidden sm:block" />`
-- Line 1: `"PayTap tracks and controls every rupee your drivers spend"`
-- Line 2: `"Fuel, tolls, parking — everything in one place."`
-- `mt-5` spacing (up from `mt-3`)
-- `text-sm md:text-base` (slightly smaller)
-- `leading-relaxed`
-- `max-w-lg mx-auto`
-
-**5. Increase top spacing**
-- Change `mt-6 md:mt-10` to `mt-8 md:mt-14` on the wrapper
-
-### Mobile considerations
-- Headline stays 2 lines at `text-2xl` on mobile
-- Subheading wraps naturally at `max-w-lg`
-- No 4-5 line headline overflow
+- **Line 361**: Change `px-4` to `px-3 sm:px-4` for tighter mobile padding
+- **Line 480** (delivery + total row): Add `flex-col sm:flex-row gap-2` so the delivery text and price stack vertically on mobile instead of being squeezed side-by-side
+- **Trust line div (line 738)**: Add `px-2` and change `gap-4` to `gap-2 sm:gap-4` for tighter mobile spacing
+- **Plan cards**: Check the plan selector items have proper mobile padding (already using `px-5 md:px-8`, this is fine)
 
