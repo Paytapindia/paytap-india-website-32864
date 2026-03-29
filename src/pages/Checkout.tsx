@@ -401,7 +401,7 @@ const Checkout = () => {
                             </span>
                             {p.recommended && (
                               <span className="inline-flex items-center gap-1 px-2.5 py-0.5 rounded-full text-[10px] font-bold bg-accent/10 text-accent">
-                                <Star className="w-3 h-3 fill-accent" /> ⭐ Most chosen by fleet owners
+                                <Star className="w-3 h-3 fill-accent" /> ⭐ Most Chosen
                               </span>
                             )}
                             {driverCards > 0 && (
@@ -447,22 +447,22 @@ const Checkout = () => {
                 <div className="space-y-1">
                   <div className="flex items-start gap-2 text-primary-foreground/90">
                     <CheckCircle className="w-4 h-4 mt-0.5 text-primary-foreground/40 flex-shrink-0" />
-                    <span>You send your driver with money — but don't know where it actually goes</span>
+                    <span>No more handing over cash, card, or QR screenshots</span>
                   </div>
                   <div className="flex items-center gap-2 text-accent font-medium pl-6">
                     <ArrowRight className="w-3.5 h-3.5 flex-shrink-0" />
-                    <span>Track every payment live, per vehicle</span>
+                    <span>Dedicated Payment Tag Enabled, per vehicle</span>
                   </div>
                 </div>
 
                 <div className="space-y-1">
                   <div className="flex items-start gap-2 text-primary-foreground/90">
                     <CheckCircle className="w-4 h-4 mt-0.5 text-primary-foreground/40 flex-shrink-0" />
-                    <span>You trust your driver — but can't check every expense</span>
+                    <span>Can't check every expense your vehicle makes</span>
                   </div>
                   <div className="flex items-center gap-2 text-accent font-medium pl-6">
                     <ArrowRight className="w-3.5 h-3.5 flex-shrink-0" />
-                    <span>Set limits so overspending isn't possible</span>
+                    <span>Single dashboard to track all payment</span>
                   </div>
                 </div>
 
