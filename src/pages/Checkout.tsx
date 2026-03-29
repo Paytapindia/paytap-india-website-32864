@@ -453,25 +453,23 @@ const Checkout = () => {
               <ul className="space-y-2.5 text-sm text-primary-foreground/80">
                 <li className="flex items-center gap-2">
                   <CheckCircle className="w-4 h-4 text-accent flex-shrink-0" />
-                  {plan.tags} Paytap Tag{plan.tags > 1 ? 's' : ''} Free
-                </li>
-                {getDriverCards(selectedPlan) > 0 && (
-                  <li className="flex items-center gap-2">
-                    <CheckCircle className="w-4 h-4 text-accent flex-shrink-0" />
-                    {getDriverCards(selectedPlan)} Driver Expense Card{getDriverCards(selectedPlan) > 1 ? 's' : ''}
-                  </li>
-                )}
-                <li className="flex items-center gap-2">
-                  <CheckCircle className="w-4 h-4 text-accent flex-shrink-0" />
-                  Access to Myfleet AI
+                  Track every rupee spent per vehicle
                 </li>
                 <li className="flex items-center gap-2">
                   <CheckCircle className="w-4 h-4 text-accent flex-shrink-0" />
-                  Access to ExpensePro
+                  Set strict spending limits for drivers
                 </li>
                 <li className="flex items-center gap-2">
                   <CheckCircle className="w-4 h-4 text-accent flex-shrink-0" />
-                  Instant Account Activation
+                  Eliminate fuel and cash leakage
+                </li>
+                <li className="flex items-center gap-2">
+                  <CheckCircle className="w-4 h-4 text-accent flex-shrink-0" />
+                  No more calling drivers or checking manually
+                </li>
+                <li className="flex items-center gap-2">
+                  <CheckCircle className="w-4 h-4 text-accent flex-shrink-0" />
+                  Instant account activation — go live today
                 </li>
               </ul>
 
