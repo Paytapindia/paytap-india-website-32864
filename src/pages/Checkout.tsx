@@ -724,16 +724,25 @@ const Checkout = () => {
                     </motion.div>
 
                     <p className="text-center text-xs text-muted-foreground mt-3">
-                      Secure checkout · Takes 30 seconds
+                      Takes 30 seconds · No risk · Instant activation
+                    </p>
+                    <p className="text-center text-xs text-amber-500 font-medium mt-1.5">
+                      ⏳ Price increasing soon
                     </p>
 
                     {/* Trust Line */}
                     <div className="flex flex-wrap items-center justify-center gap-4 mt-5 text-xs text-muted-foreground">
                       <span className="flex items-center gap-1.5">
-                        <Lock className="w-3.5 h-3.5 text-accent" /> Secure payments
+                        <Shield className="w-3.5 h-3.5 text-accent" /> Trusted by 150+ fleet owners
                       </span>
                       <span className="flex items-center gap-1.5">
-                        <Shield className="w-3.5 h-3.5 text-accent" /> RBI-aligned system
+                        <Lock className="w-3.5 h-3.5 text-accent" /> 7-day no-questions-asked refund
+                      </span>
+                      <span className="flex items-center gap-1.5">
+                        <FileText className="w-3.5 h-3.5 text-accent" /> Avg savings: ₹3,000+/vehicle/month
+                      </span>
+                      <span className="flex items-center gap-1.5">
+                        <Lock className="w-3.5 h-3.5 text-accent" /> Secure payments
                       </span>
                       <span className="flex items-center gap-1.5">
                         <FileText className="w-3.5 h-3.5 text-accent" /> GST invoice provided
