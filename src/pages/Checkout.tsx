@@ -757,12 +757,6 @@ const Checkout = () => {
                       </Button>
                     </motion.div>
 
-                    <p className="text-center text-xs text-muted-foreground mt-3">
-                      Takes 30 seconds · No risk · Instant activation
-                    </p>
-                    <p className="text-center text-xs text-amber-500 font-medium mt-1.5">
-                      ⏳ Price increasing soon
-                    </p>
 
                     {/* Trust Line */}
                     <div className="flex flex-wrap items-center justify-center gap-2 sm:gap-4 px-2 mt-5 text-xs text-muted-foreground">
