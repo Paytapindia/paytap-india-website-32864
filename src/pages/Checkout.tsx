@@ -726,7 +726,7 @@ const Checkout = () => {
 
                     {/* ── CTA Button ── */}
                     <motion.div
-                      className="mt-8"
+                      className="mt-6"
                       whileHover={{ y: -2 }}
                       transition={{ type: 'spring', stiffness: 400, damping: 20 }}
                     >
