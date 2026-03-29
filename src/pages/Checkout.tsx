@@ -399,11 +399,6 @@ const Checkout = () => {
                             <span className={`font-semibold text-base ${isSelected ? 'text-foreground' : 'text-foreground/80'}`}>
                               {p.name}
                             </span>
-                            {p.recommended && (
-                              <span className="inline-flex items-center gap-1 px-2.5 py-0.5 rounded-full text-[10px] font-bold bg-accent/10 text-accent">
-                                <Star className="w-3 h-3 fill-accent" /> ⭐ Most Chosen
-                              </span>
-                            )}
                             {driverCards > 0 && (
                               <span className="hidden md:inline-flex px-2 py-0.5 rounded-full text-[10px] font-medium bg-primary/10 text-primary">
                                 +{driverCards} Driver Card{driverCards > 1 ? 's' : ''}
