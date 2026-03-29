@@ -358,7 +358,7 @@ const Checkout = () => {
         </div>
 
         <form onSubmit={handleSubmit(onSubmit)}>
-          <div className="max-w-5xl mx-auto px-4 -mt-8 md:-mt-12 pb-16">
+          <div className="max-w-5xl mx-auto px-3 sm:px-4 -mt-8 md:-mt-12 pb-16">
 
             {/* ── SECTION 1: Plan Selector (List View) ── */}
             <motion.div
