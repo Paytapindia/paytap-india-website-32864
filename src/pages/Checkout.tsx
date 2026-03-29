@@ -499,7 +499,7 @@ const Checkout = () => {
                       <div>
                         <h2 className="text-lg font-bold text-foreground mb-0.5 text-left">Quick Details</h2>
                         <p className="text-xs text-muted-foreground text-left">
-                          We'll use this to activate your Paytap account and generate your invoice.
+                          Takes 30 seconds — we'll set up your account and ship your tags
                         </p>
                       </div>
                       <ChevronDown className={`w-5 h-5 text-muted-foreground transition-transform duration-300 ${formOpen ? 'rotate-180' : ''}`} />
