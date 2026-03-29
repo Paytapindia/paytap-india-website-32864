@@ -458,7 +458,7 @@ const Checkout = () => {
                 <div className="space-y-1">
                   <div className="flex items-start gap-2 text-primary-foreground/90">
                     <CheckCircle className="w-4 h-4 mt-0.5 text-primary-foreground/40 flex-shrink-0" />
-                    <span>You trust your driver — but can't check every expense</span>
+                    <span>Can't check every expense your vehicle makes</span>
                   </div>
                   <div className="flex items-center gap-2 text-accent font-medium pl-6">
                     <ArrowRight className="w-3.5 h-3.5 flex-shrink-0" />
