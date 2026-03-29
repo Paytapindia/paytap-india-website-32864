@@ -1,33 +1,40 @@
 
 
-## Plan: Fix Meta Pixel Event Detection
+## Plan: Install Google Tag Manager and GA4
 
-### Problem Analysis
+The user wants to add two new tracking scripts from the screenshots:
+1. **Google Tag Manager** (GTM-P5NSDGRN)
+2. **Google Analytics 4** (G-EG7NBT85R6)
 
-The Meta Pixel base code (lines 56-68 in `index.html`) is correctly installed and fires `PageView` on initial load. However, there are issues that may prevent Meta Events Manager from detecting events:
+### Current State
+- `index.html` already has Google Ads gtag.js (`AW-17870924773`) on lines 7-14
+- Meta Pixel is on lines 56-68
+- The existing gtag.js setup only configs `AW-17870924773`
 
-1. **SPA PageView tracking is production-only** — the `ScrollToTop` component checks `window.location.hostname === 'paytap.co.in'` before firing `fbq('track', 'PageView')` on route changes. This is correct for production but prevents Meta's test tools from seeing events on preview domains.
+### Changes in `index.html`
 
-2. **Missing `InitiateCheckout` event** on the Checkout page — only `AddToCart` is fired when landing on checkout. No `InitiateCheckout` is fired when the user clicks "Pay".
+**1. Add GTM script in `<head>` (after line 7, before the existing gtag.js)**
+```html
+<!-- Google Tag Manager -->
+<script>(function(w,d,s,l,i){w[l]=w[l]||[];w[l].push({'gtm.start':
+new Date().getTime(),event:'gtm.js'});var f=d.getElementsByTagName(s)[0],
+j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=
+'https://www.googletagmanager.com/gtm.js?id='+i+dl;f.parentNode.insertBefore(j,f);
+})(window,document,'script','dataLayer','GTM-P5NSDGRN');</script>
+<!-- End Google Tag Manager -->
+```
 
-3. **Missing `Lead` event** — no lead tracking when users submit the contact form.
+**2. Add GA4 config to existing gtag.js block (line 13)**
+Add `gtag('config', 'G-EG7NBT85R6');` right after the existing `gtag('config', 'AW-17870924773');` line. This shares the same gtag.js loader — no need for a second script tag.
 
-### Proposed Changes
+**3. Add GTM noscript in `<body>` (line 321, right after `<body>`)**
+```html
+<!-- Google Tag Manager (noscript) -->
+<noscript><iframe src="https://www.googletagmanager.com/ns.html?id=GTM-P5NSDGRN"
+height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
+<!-- End Google Tag Manager (noscript) -->
+```
 
-**File: `src/pages/Checkout.tsx`**
-- Add `fbq('track', 'InitiateCheckout', ...)` when the user clicks "Proceed to Pay" and the form is valid (right before redirecting to PayU)
-
-**File: `src/components/ContactFormModal.tsx`**
-- Add `fbq('track', 'Lead')` on successful form submission
-
-**File: `src/components/ScrollToTop.tsx`**
-- Keep production-only check for `gtag` (Google Ads costs money per click)
-- **Remove** the production-only check for `fbq('track', 'PageView')` so Meta can detect events on any domain during testing — Meta Pixel doesn't incur costs from test events
-
-### No changes to `index.html`
-The base pixel code is already correctly placed inside `<head>`. No modifications needed there.
-
-### Technical Notes
-- Meta's Event Setup Tool and Test Events feature require events to fire on the domain being tested — removing the hostname check for `fbq` allows Meta to verify events on preview/test URLs
-- The `noscript` fallback (line 322-325) is correctly placed in `<body>`
+### File
+- `index.html` — 3 insertions, no deletions
 
