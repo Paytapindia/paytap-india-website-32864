@@ -380,7 +380,7 @@ const Checkout = () => {
                         isSelected
                           ? 'bg-gradient-to-r from-primary/[0.06] via-accent/[0.04] to-transparent'
                           : 'hover:bg-secondary/60'
-                      }`}
+                      } ${!isSelected && !p.recommended ? 'opacity-60' : ''}`}
                     >
                       {/* Selection glow bar */}
                       {isSelected && (
