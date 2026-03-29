@@ -1,40 +1,46 @@
 
 
-## Plan: Install Google Tag Manager and GA4
+## Plan: High-Converting Checkout Page Rewrite
 
-The user wants to add two new tracking scripts from the screenshots:
-1. **Google Tag Manager** (GTM-P5NSDGRN)
-2. **Google Analytics 4** (G-EG7NBT85R6)
+### Overview
+Rewrite the checkout page copy and structure to follow a sales-page-meets-checkout pattern. Focus on emotional triggers, ROI clarity, reduced decision fatigue, and a frictionless CTA.
 
-### Current State
-- `index.html` already has Google Ads gtag.js (`AW-17870924773`) on lines 7-14
-- Meta Pixel is on lines 56-68
-- The existing gtag.js setup only configs `AW-17870924773`
+### Changes (all in `src/pages/Checkout.tsx`)
 
-### Changes in `index.html`
+**1. Hero Headline & Subtitle (lines 337-352)**
+- Headline: `"You're Losing Money on Every Vehicle — You Just Can't See It"`
+- Subtitle: `"PayTap tracks and controls every rupee your drivers spend — fuel, tolls, parking, everything."`
 
-**1. Add GTM script in `<head>` (after line 7, before the existing gtag.js)**
-```html
-<!-- Google Tag Manager -->
-<script>(function(w,d,s,l,i){w[l]=w[l]||[];w[l].push({'gtm.start':
-new Date().getTime(),event:'gtm.js'});var f=d.getElementsByTagName(s)[0],
-j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=
-'https://www.googletagmanager.com/gtm.js?id='+i+dl;f.parentNode.insertBefore(j,f);
-})(window,document,'script','dataLayer','GTM-P5NSDGRN');</script>
-<!-- End Google Tag Manager -->
-```
+**2. Plan Selector Section (lines 366-436)**
+- Change section header from `"Get Lifetime Access"` to `"Choose Your Fleet Size"`
+- Add `"⭐ Most chosen by fleet owners"` label on Business Pro (already has POPULAR, enhance the label text)
+- Visually de-emphasize Starter and Business Basic (reduce opacity to `opacity-70` when not selected)
+- Add micro-copy under each price: `"Less than ₹X/day per vehicle"` (calculated per plan)
+- Add ROI line below the plan list: `"Most fleet owners recover this cost within 7–10 days from reduced leakage"`
 
-**2. Add GA4 config to existing gtag.js block (line 13)**
-Add `gtag('config', 'G-EG7NBT85R6');` right after the existing `gtag('config', 'AW-17870924773');` line. This shares the same gtag.js loader — no need for a second script tag.
+**3. Summary Box — Outcome-Driven Bullets (lines 438-482)**
+- Replace feature-list bullets with outcome-driven copy:
+  - `"Track every rupee spent per vehicle"` (replaces Tags line)
+  - `"Set strict spending limits for drivers"` (replaces Driver Card line)
+  - `"Eliminate fuel and cash leakage"` (replaces Myfleet AI line)
+  - `"No more calling drivers or checking manually"` (replaces ExpensePro line)
+  - `"Instant account activation — go live today"` (replaces Instant Activation line)
+- Keep the total price and delivery time at bottom
 
-**3. Add GTM noscript in `<body>` (line 321, right after `<body>`)**
-```html
-<!-- Google Tag Manager (noscript) -->
-<noscript><iframe src="https://www.googletagmanager.com/ns.html?id=GTM-P5NSDGRN"
-height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
-<!-- End Google Tag Manager (noscript) -->
-```
+**4. CTA Button & Surrounding Copy (lines 692-740)**
+- Button text: `"Start Controlling My Fleet →"` (replaces `"Pay ₹X & Go Live →"`)
+- Subtext below CTA: `"Takes 30 seconds · No risk · Instant activation"`
+- Add urgency line: `"⏳ Price increasing soon"` (small amber text below subtext)
+- Add risk reversal: `"7-day no-questions-asked refund"` as a trust badge
+- Update trust signals:
+  - `"Trusted by 150+ fleet owners"`
+  - `"Avg savings: ₹3,000+ per vehicle/month"`
+  - Keep `"Secure payments"` and `"GST invoice provided"`
 
-### File
-- `index.html` — 3 insertions, no deletions
+**5. Quick Details Header (line 499)**
+- Keep collapsible behavior unchanged
+- Update subtitle to: `"Takes 30 seconds — we'll set up your account and ship your tags"`
+
+### No structural/layout changes
+All changes are copy-only within existing components. No new components, no layout shifts, no database changes.
 
