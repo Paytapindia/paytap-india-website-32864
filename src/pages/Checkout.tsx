@@ -449,33 +449,74 @@ const Checkout = () => {
               transition={{ duration: 0.5, delay: 0.25 }}
               className="w-full rounded-3xl bg-primary text-primary-foreground p-6 md:p-8 shadow-2xl shadow-primary/20"
             >
-              <div className="flex items-baseline gap-2 mb-4">
+              <div className="mb-5">
                 <h3 className="text-xl font-bold">{plan.name}</h3>
-                <span className="text-sm font-normal text-primary-foreground/60">(What's Included)</span>
+                <p className="text-sm text-primary-foreground/60 mt-1">Take Back Control of Your Vehicles</p>
               </div>
 
-              <ul className="space-y-2.5 text-sm text-primary-foreground/80">
-                <li className="flex items-center gap-2">
-                  <CheckCircle className="w-4 h-4 text-accent flex-shrink-0" />
-                  Track every rupee spent per vehicle
-                </li>
-                <li className="flex items-center gap-2">
-                  <CheckCircle className="w-4 h-4 text-accent flex-shrink-0" />
-                  Set strict spending limits for drivers
-                </li>
-                <li className="flex items-center gap-2">
-                  <CheckCircle className="w-4 h-4 text-accent flex-shrink-0" />
-                  Eliminate fuel and cash leakage
-                </li>
-                <li className="flex items-center gap-2">
-                  <CheckCircle className="w-4 h-4 text-accent flex-shrink-0" />
-                  No more calling drivers or checking manually
-                </li>
-                <li className="flex items-center gap-2">
-                  <CheckCircle className="w-4 h-4 text-accent flex-shrink-0" />
-                  Instant account activation — go live today
-                </li>
-              </ul>
+              <div className="space-y-4 text-sm">
+                <div className="space-y-1">
+                  <div className="flex items-start gap-2 text-primary-foreground/90">
+                    <CheckCircle className="w-4 h-4 mt-0.5 text-primary-foreground/40 flex-shrink-0" />
+                    <span>You send your driver with money — but don't know where it actually goes</span>
+                  </div>
+                  <div className="flex items-center gap-2 text-accent font-medium pl-6">
+                    <ArrowRight className="w-3.5 h-3.5 flex-shrink-0" />
+                    <span>Track every payment live, per vehicle</span>
+                  </div>
+                </div>
+
+                <div className="space-y-1">
+                  <div className="flex items-start gap-2 text-primary-foreground/90">
+                    <CheckCircle className="w-4 h-4 mt-0.5 text-primary-foreground/40 flex-shrink-0" />
+                    <span>You trust your driver — but can't check every expense</span>
+                  </div>
+                  <div className="flex items-center gap-2 text-accent font-medium pl-6">
+                    <ArrowRight className="w-3.5 h-3.5 flex-shrink-0" />
+                    <span>Set limits so overspending isn't possible</span>
+                  </div>
+                </div>
+
+                <div className="space-y-1">
+                  <div className="flex items-start gap-2 text-primary-foreground/90">
+                    <CheckCircle className="w-4 h-4 mt-0.5 text-primary-foreground/40 flex-shrink-0" />
+                    <span>Small daily expenses quietly add up</span>
+                  </div>
+                  <div className="flex items-center gap-2 text-accent font-medium pl-6">
+                    <ArrowRight className="w-3.5 h-3.5 flex-shrink-0" />
+                    <span>Stop leakage and save every month</span>
+                  </div>
+                </div>
+
+                <div className="space-y-1">
+                  <div className="flex items-start gap-2 text-primary-foreground/90">
+                    <CheckCircle className="w-4 h-4 mt-0.5 text-primary-foreground/40 flex-shrink-0" />
+                    <span>You keep calling drivers for updates</span>
+                  </div>
+                  <div className="flex items-center gap-2 text-accent font-medium pl-6">
+                    <ArrowRight className="w-3.5 h-3.5 flex-shrink-0" />
+                    <span>See everything instantly, no follow-ups</span>
+                  </div>
+                </div>
+
+                <div className="space-y-1">
+                  <div className="flex items-start gap-2 text-primary-foreground/90">
+                    <CheckCircle className="w-4 h-4 mt-0.5 text-primary-foreground/40 flex-shrink-0" />
+                    <span>Expenses feel out of control month to month</span>
+                  </div>
+                  <div className="flex items-center gap-2 text-accent font-medium pl-6">
+                    <ArrowRight className="w-3.5 h-3.5 flex-shrink-0" />
+                    <span>Get full control from day one</span>
+                  </div>
+                </div>
+              </div>
+
+              <div className="text-xs text-primary-foreground/60 text-center mt-4 pt-3 border-t border-primary-foreground/10">
+                <div className="flex items-center justify-center gap-1.5">
+                  <Zap className="w-3.5 h-3.5" />
+                  <span>Most fleet owners recover this cost within the first 7 days</span>
+                </div>
+              </div>
 
               <div className="flex flex-col sm:flex-row items-start sm:items-center justify-between gap-2 mt-5 pt-4 border-t border-primary-foreground/10">
                 <div className="flex items-center gap-2 text-xs text-primary-foreground/50">
