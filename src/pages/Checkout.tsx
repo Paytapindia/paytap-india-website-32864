@@ -37,7 +37,7 @@ const PLANS: Record<PlanType, PlanInfo> = {
     perVehicle: '₹999/vehicle',
   },
   business_basic: {
-    name: 'Business Basic',
+    name: 'Basic',
     price: 1600,
     tags: 2,
     recommended: false,
