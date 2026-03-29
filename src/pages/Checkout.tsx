@@ -370,7 +370,7 @@ const Checkout = () => {
                       type="button"
                       onClick={() => handlePlanSelect(key)}
                       whileTap={{ scale: 0.99 }}
-                      className={`w-full text-left px-5 md:px-8 py-4 md:py-5 transition-all duration-300 relative group ${
+                      className={`w-full text-left px-4 md:px-8 py-3 md:py-5 transition-all duration-300 relative group ${
                         isSelected
                           ? 'bg-gradient-to-r from-primary/[0.06] via-accent/[0.04] to-transparent'
                           : 'hover:bg-secondary/60'
