@@ -7,7 +7,7 @@ import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { useToast } from "@/hooks/use-toast";
 import { useNavigate } from "react-router-dom";
-import { Loader2, Check, Lock, Home, CheckCircle, Download, XCircle, Shield, Truck, FileText, ChevronDown, MapPin, Star } from "lucide-react";
+import { Loader2, Check, Lock, Home, CheckCircle, Download, XCircle, Shield, Truck, FileText, ChevronDown, MapPin, Star, ArrowRight, Zap } from "lucide-react";
 import { generateInvoice, type InvoiceData } from "@/lib/generateInvoice";
 import { Dialog, DialogContent, DialogHeader, DialogTitle, DialogDescription } from "@/components/ui/dialog";
 import { supabase } from "@/integrations/supabase/client";
