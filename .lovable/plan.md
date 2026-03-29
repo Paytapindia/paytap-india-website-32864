@@ -1,43 +1,28 @@
 
 
-## Plan: Redesign Blue Box Copy with Problem→Solution Format
+## Plan: Remove Copy & Fix Mobile Alignment
 
-**File:** `src/pages/Checkout.tsx` (lines 452-478)
+**File:** `src/pages/Checkout.tsx`
 
-### Changes
-
-**1. Replace header (lines 452-455)**
-- Change from `{plan.name} (What's Included)` to `{plan.name}` with subtitle `"Take Back Control of Your Vehicles"`
-
-**2. Replace bullet list (lines 457-478)**
-
-Replace the 5 generic feature bullets with problem→solution pairs using this structure:
-
+### 1. Remove "Less than ₹X/day per vehicle" from all 4 plans (line 433)
+Delete this line inside the plan selector map:
 ```
-✔ You send your driver with money — but don't know where it actually goes
-→ Track every payment live, per vehicle
-
-✔ You trust your driver — but can't check every expense
-→ Set limits so overspending isn't possible
-
-✔ Small daily expenses quietly add up
-→ Stop leakage and save every month
-
-✔ You keep calling drivers for updates
-→ See everything instantly, no follow-ups
-
-✔ Expenses feel out of control month to month
-→ Get full control from day one
+<p className="text-[10px] text-muted-foreground/60 mt-0.5">Less than ₹{Math.ceil(p.price / p.tags / 365)}/day per vehicle</p>
 ```
 
-Each pair: problem line in `text-primary-foreground/90` with a check icon, solution line in `text-accent font-medium` with an arrow icon, separated by `space-y-3` between pairs.
+### 2. Remove hero subtitle paragraph (lines 347-356)
+Delete the entire `<motion.p>` block containing "PayTap help tracks and control…" and the "Fuel, Fastag Recharge…" text.
 
-**3. Add strong closing line before the delivery/total row**
-- `"Most fleet owners recover this cost within the first 7 days"` — centered, slightly smaller, with a ⚡ icon
+### 3. Remove the text below "Take Control" button (lines 771-776)
+Delete these two `<p>` elements:
+- `"Takes 30 seconds · No risk · Instant activation"`
+- `"⏳ Price increasing soon"`
 
-### Design details
-- Problem lines: `CheckCircle` icon, normal weight
-- Solution lines: `ArrowRight` icon, `text-accent`, `font-medium`, slightly indented (`pl-6`)
-- Each pair wrapped in a div with `space-y-1`, pairs separated by `space-y-4`
-- Closing line: `text-xs text-primary-foreground/60 text-center mt-4 pt-3 border-t border-primary-foreground/10`
+### 4. Fix mobile alignment issues
+- **Hero heading (line 341)**: Reduce mobile font from `text-2xl` to `text-xl` to prevent oversized text
+- **Plan selector items (line 383)**: Tighten mobile padding from `px-5` to `px-4` and `py-4` to `py-3`
+- **Plan price (line 430)**: Reduce mobile size from `text-xl` to `text-lg`
+- **Summary box (line 450)**: Reduce mobile padding from `p-6` to `p-5`
+- **Form container (line 536)**: Reduce mobile padding from `p-6` to `p-5`
+- **CTA button area (line 740)**: Reduce `mt-8` to `mt-6`
 
