@@ -350,9 +350,9 @@ const Checkout = () => {
               transition={{ duration: 0.6, delay: 0.1, ease: [0.25, 0.46, 0.45, 0.94] }}
               className="text-primary-foreground/70 mt-5 text-sm md:text-base max-w-lg mx-auto leading-relaxed"
             >
-              PayTap tracks and controls every rupee your drivers spend
+              PayTap help tracks and control every rupee your vehicle spend
               <br className="hidden sm:block" />
-              Fuel, tolls, parking — everything in one place.
+              Fuel, Fastag Recharge, Parking, Service Center, Insurance - everything in one place
             </motion.p>
           </div>
         </div>
