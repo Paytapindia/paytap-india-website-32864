@@ -407,7 +407,7 @@ const Checkout = () => {
                             </span>
                             {p.recommended && (
                               <span className="inline-flex items-center gap-1 px-2.5 py-0.5 rounded-full text-[10px] font-bold bg-accent/10 text-accent">
-                                <Star className="w-3 h-3 fill-accent" /> POPULAR
+                                <Star className="w-3 h-3 fill-accent" /> ⭐ Most chosen by fleet owners
                               </span>
                             )}
                             {driverCards > 0 && (
