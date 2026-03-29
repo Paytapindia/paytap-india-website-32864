@@ -333,22 +333,26 @@ const Checkout = () => {
           </div>
 
           {/* Hero Heading */}
-          <div className="text-center mt-6 md:mt-10 px-4">
+          <div className="text-center mt-8 md:mt-14 px-4 max-w-3xl mx-auto">
             <motion.h1
               initial={{ opacity: 0, y: 20 }}
               animate={{ opacity: 1, y: 0 }}
               transition={{ duration: 0.6, ease: [0.25, 0.46, 0.45, 0.94] }}
-              className="text-3xl md:text-5xl font-bold text-primary-foreground tracking-tight leading-tight"
+              className="text-2xl sm:text-3xl md:text-[42px] font-semibold text-primary-foreground tracking-[-0.02em] leading-[1.12]"
             >
-              You're Losing Money on Every Vehicle — You Just Can't See It
+              You're Losing Money on Every Vehicle
+              <br />
+              <span className="text-primary-foreground/80">And You Don't Even Know It</span>
             </motion.h1>
             <motion.p
               initial={{ opacity: 0, y: 12 }}
               animate={{ opacity: 1, y: 0 }}
               transition={{ duration: 0.6, delay: 0.1, ease: [0.25, 0.46, 0.45, 0.94] }}
-              className="text-primary-foreground/60 mt-3 text-base md:text-lg max-w-xl mx-auto"
+              className="text-primary-foreground/70 mt-5 text-sm md:text-base max-w-lg mx-auto leading-relaxed"
             >
-              PayTap tracks and controls every rupee your drivers spend — fuel, tolls, parking, everything.
+              PayTap tracks and controls every rupee your drivers spend
+              <br className="hidden sm:block" />
+              Fuel, tolls, parking — everything in one place.
             </motion.p>
           </div>
         </div>
