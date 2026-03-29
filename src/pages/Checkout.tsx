@@ -433,6 +433,9 @@ const Checkout = () => {
                   );
                 })}
               </div>
+              <div className="px-5 md:px-8 py-3 border-t border-border/40">
+                <p className="text-xs text-muted-foreground/70 text-center">💡 Most fleet owners recover this cost within 7–10 days from reduced leakage</p>
+              </div>
             </motion.div>
 
             {/* ── Summary Box (Above Form) ── */}
