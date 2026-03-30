@@ -11,7 +11,7 @@ const badges = [
 
 const ComplianceBadgeBar = memo(() => {
   return (
-    <section className="w-full bg-secondary/50 border-y border-border/50 py-8 md:py-14 px-6">
+    <section className="w-full bg-[#021a42] py-8 md:py-14 px-6">
       <div className="max-w-6xl mx-auto">
         {/* Headline */}
         <h2 className="text-lg md:text-2xl font-medium text-foreground text-center mb-6 md:mb-8">
