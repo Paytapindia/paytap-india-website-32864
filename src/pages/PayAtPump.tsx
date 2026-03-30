@@ -339,7 +339,7 @@ const PayAtPump = memo(() => {
               size="lg"
               className="bg-paytap-coral hover:bg-paytap-coral/90 text-white font-bold text-lg px-8 py-6 h-auto rounded-xl"
             >
-              Activate Now — ₹499
+              Activate Now — ₹699
             </Button>
             <p className="text-sm text-white/60 mt-4">
               Free shipping • Activate in 1 minute • No hidden fees
