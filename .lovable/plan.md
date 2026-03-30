@@ -1,16 +1,18 @@
 
 
-## Plan: Update Checkout Headline and Subline
+## Plan: Update ComplianceBadgeBar to Navy Background with White Text
 
-**File:** `src/pages/Checkout.tsx`
+**File:** `src/components/ComplianceBadgeBar.tsx`
 
 ### Changes
 
-1. **Replace headline** from the two-line "You're Losing Money on Every Vehicle / You Just Can't See It" to:
-   > "Your Drivers Know Where the Money Goes. But You Don't"
+Update the section styling from the current light `bg-secondary/50` to brand navy `bg-[#021a42]` with all text and icons in white:
 
-2. **Replace subline** from "Manage all vehicle payments instantly with Paytap" to:
-   > "Track every rupee. Control every payment with Paytap."
+1. Section: `bg-secondary/50 border-y border-border/50` → `bg-[#021a42]`
+2. Headline: `text-foreground` → `text-white`
+3. Icons: `text-primary` → `text-white`
+4. Badge labels: `text-muted-foreground` → `text-white/80`
+5. Disclaimer: `text-muted-foreground/70` → `text-white/60`
 
-Single file edit — update the heading and paragraph text in the hero section.
+Single file, 3 class string replacements.
 
