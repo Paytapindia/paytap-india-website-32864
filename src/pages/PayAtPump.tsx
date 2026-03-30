@@ -31,19 +31,19 @@ const PayAtPump = memo(() => {
     // Track CTA click for funnel analysis
     if (typeof window !== 'undefined' && window.gtag) {
       window.gtag('event', 'begin_checkout', {
-        'value': 699,
+        'value': 999,
         'currency': 'INR',
         'items': [{
           'item_id': 'paytap-nfc-tag',
           'item_name': 'Paytap NFC Fuel Payment Tag',
-          'price': 699
+          'price': 999
         }]
       });
     }
 
     if (typeof window !== 'undefined' && window.fbq) {
       window.fbq('track', 'InitiateCheckout', {
-        value: 699,
+        value: 999,
         currency: 'INR',
         content_ids: ['paytap-nfc-tag']
       });
@@ -64,7 +64,7 @@ const PayAtPump = memo(() => {
     "image": "https://paytap.co.in/images/pay-at-pump-hero.png",
     "offers": {
       "@type": "Offer",
-      "price": "699",
+      "price": "999",
       "priceCurrency": "INR",
       "availability": "https://schema.org/InStock",
       "url": "https://paytap.co.in/pay-at-pump"
@@ -94,7 +94,7 @@ const PayAtPump = memo(() => {
     <>
       <Helmet>
         <title>Pay at Pump | Tap, Fuel & Go with Paytap NFC Tags</title>
-        <meta name="description" content="No cards, no cash, no delay. Pay for fuel with a single tap of your Paytap NFC tag. Works at 8L+ terminals across India. ₹699 one-time." />
+        <meta name="description" content="No cards, no cash, no delay. Pay for fuel with a single tap of your Paytap NFC tag. Works at 8L+ terminals across India. ₹999 one-time." />
         <link rel="canonical" href="https://paytap.co.in/pay-at-pump" />
         
         {/* Open Graph for Discovery */}
@@ -163,7 +163,7 @@ const PayAtPump = memo(() => {
                 size="lg"
                 className="bg-paytap-coral hover:bg-paytap-coral/90 text-white font-bold text-lg px-8 py-6 h-auto rounded-xl shadow-lg hover:shadow-xl transition-all duration-300 mb-8"
               >
-                Activate Now — ₹699
+Activate Now — ₹999
               </Button>
 
               {/* Trust Badges */}
@@ -339,7 +339,7 @@ const PayAtPump = memo(() => {
               size="lg"
               className="bg-paytap-coral hover:bg-paytap-coral/90 text-white font-bold text-lg px-8 py-6 h-auto rounded-xl"
             >
-              Activate Now — ₹699
+              Activate Now — ₹999
             </Button>
             <p className="text-sm text-white/60 mt-4">
               Free shipping • Activate in 1 minute • No hidden fees
@@ -364,7 +364,7 @@ const PayAtPump = memo(() => {
             onClick={handleActivate}
             className="w-full bg-paytap-coral hover:bg-paytap-coral/90 text-white font-bold py-4 h-auto rounded-xl"
           >
-            Get Your Tag — ₹699
+            Get Your Tag — ₹999
           </Button>
         </div>
 

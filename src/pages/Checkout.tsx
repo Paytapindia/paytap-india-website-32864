@@ -16,7 +16,7 @@ import { motion, AnimatePresence } from "framer-motion";
 import { getStates, getCitiesByState } from "@/data/indianStatesAndCities";
 
 // ── Plan Data ──────────────────────────────────────────────
-type PlanType = 'starter' | 'business_pro' | 'corporate';
+type PlanType = 'starter' | 'business_basic' | 'business_pro' | 'corporate';
 
 interface PlanInfo {
   name: string;
@@ -30,11 +30,19 @@ interface PlanInfo {
 const PLANS: Record<PlanType, PlanInfo> = {
   starter: {
     name: 'Trial Pack',
-    price: 699,
+    price: 999,
     tags: 1,
     recommended: false,
     isBusinessPlan: false,
-    perVehicle: '₹699/vehicle',
+    perVehicle: '₹999/vehicle',
+  },
+  business_basic: {
+    name: 'Business Basic',
+    price: 1600,
+    tags: 2,
+    recommended: false,
+    isBusinessPlan: false,
+    perVehicle: '₹800/vehicle',
   },
   business_pro: {
     name: 'Business Pro',
@@ -56,6 +64,7 @@ const PLANS: Record<PlanType, PlanInfo> = {
 
 const PAYU_PAYMENT_LINKS: Record<PlanType, string> = {
   starter: "https://u.payu.in/PAYUMN/Xr1SVwoifsmy",
+  business_basic: "https://u.payu.in/PAYUMN/rJAyWInVMJLz",
   business_pro: "https://u.payu.in/PAYUMN/WrwSHz2KWQ2u",
   corporate: "https://u.payu.in/PAYUMN/3IzbYrdCoYZy",
 };
