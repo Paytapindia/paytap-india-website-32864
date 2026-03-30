@@ -26,6 +26,7 @@ const Navbar = memo(() => {
   const [isMenuOpen, setIsMenuOpen] = useState(false);
   const [isScrolled, setIsScrolled] = useState(false);
   const [expandedMobileSection, setExpandedMobileSection] = useState<string | null>(null);
+  const [isLoginDialogOpen, setIsLoginDialogOpen] = useState(false);
   const ticking = useRef(false);
 
   useEffect(() => {
