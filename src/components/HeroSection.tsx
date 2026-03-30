@@ -11,7 +11,7 @@ const HeroSection = memo(() => {
 
   return (
     <section
-      className="relative pt-28 md:pt-36 lg:pt-[140px] pb-12 md:pb-24 lg:pb-32 px-8 md:px-12 min-h-screen flex items-center"
+      className="relative pt-28 md:pt-36 lg:pt-[140px] pb-12 md:pb-24 lg:pb-32 px-6 md:px-12 min-h-screen flex items-center"
       style={{
         background: 'radial-gradient(ellipse at 60% 40%, #ffffff 0%, hsl(var(--secondary)) 100%)',
       }}
@@ -19,12 +19,12 @@ const HeroSection = memo(() => {
       <div className="max-w-7xl mx-auto w-full relative z-10">
         <div className="grid grid-cols-1 lg:grid-cols-2 gap-10 lg:gap-20 items-center">
           {/* Left Column — Text Stack */}
-          <div className="text-center lg:text-left px-2 sm:px-0">
-            <h1 className="text-[26px] sm:text-4xl md:text-5xl lg:text-6xl xl:text-7xl font-semibold text-foreground leading-[1.12] sm:leading-[1.08] tracking-[-0.035em] mb-6 md:mb-8 max-w-[300px] sm:max-w-[400px] md:max-w-[600px] mx-auto lg:mx-0 text-balance">
+          <div className="text-center lg:text-left">
+            <h1 className="text-3xl sm:text-4xl md:text-5xl lg:text-6xl xl:text-7xl font-semibold text-foreground leading-[1.06] tracking-[-0.035em] mb-6 md:mb-8 max-w-[600px] mx-auto lg:mx-0 text-balance">
               Control How Money Moves Across Your Operations
             </h1>
 
-            <p className="text-muted-foreground text-base md:text-lg leading-[1.6] max-w-[280px] sm:max-w-[420px] md:max-w-[520px] mb-9 mx-auto lg:mx-0">
+            <p className="text-muted-foreground text-base md:text-lg leading-[1.8] max-w-[520px] mb-9 mx-auto lg:mx-0">
               PayTap lets your vehicles make payments — while you control every transaction from a single dashboard.
             </p>
 
