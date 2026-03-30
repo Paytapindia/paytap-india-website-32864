@@ -11,7 +11,7 @@ const HeroSection = memo(() => {
 
   return (
     <section
-      className="relative pt-28 md:pt-36 lg:pt-[140px] pb-12 md:pb-24 lg:pb-32 px-6 md:px-12 min-h-screen flex items-center"
+      className="relative pt-28 md:pt-36 lg:pt-[140px] pb-12 md:pb-24 lg:pb-32 px-8 md:px-12 min-h-screen flex items-center"
       style={{
         background: 'radial-gradient(ellipse at 60% 40%, #ffffff 0%, hsl(var(--secondary)) 100%)',
       }}
