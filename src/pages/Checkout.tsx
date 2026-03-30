@@ -16,7 +16,7 @@ import { motion, AnimatePresence } from "framer-motion";
 import { getStates, getCitiesByState } from "@/data/indianStatesAndCities";
 
 // ── Plan Data ──────────────────────────────────────────────
-type PlanType = 'starter' | 'business_basic' | 'business_pro' | 'corporate';
+type PlanType = 'starter' | 'business_pro' | 'corporate';
 
 interface PlanInfo {
   name: string;
@@ -29,20 +29,12 @@ interface PlanInfo {
 
 const PLANS: Record<PlanType, PlanInfo> = {
   starter: {
-    name: 'Starter',
-    price: 999,
+    name: 'Trial Pack',
+    price: 499,
     tags: 1,
     recommended: false,
     isBusinessPlan: false,
-    perVehicle: '₹999/vehicle',
-  },
-  business_basic: {
-    name: 'Basic',
-    price: 1600,
-    tags: 2,
-    recommended: false,
-    isBusinessPlan: true,
-    perVehicle: '₹800/vehicle',
+    perVehicle: '₹499/vehicle',
   },
   business_pro: {
     name: 'Business Pro',
@@ -63,8 +55,7 @@ const PLANS: Record<PlanType, PlanInfo> = {
 };
 
 const PAYU_PAYMENT_LINKS: Record<PlanType, string> = {
-  starter: "https://u.payu.in/PAYUMN/irvSRzjqTMEv",
-  business_basic: "https://u.payu.in/PAYUMN/rJAyWInVMJLz",
+  starter: "https://u.payu.in/PAYUMN/DI0n94uVwFBB",
   business_pro: "https://u.payu.in/PAYUMN/WrwSHz2KWQ2u",
   corporate: "https://u.payu.in/PAYUMN/3IzbYrdCoYZy",
 };
@@ -459,12 +450,20 @@ const Checkout = () => {
                   </li>
                 )}
                 <li className="flex items-center gap-2">
-                  <CheckCircle className="w-4 h-4 text-accent flex-shrink-0" />
-                  Access to Myfleet AI
+                  {selectedPlan === 'starter' ? (
+                    <XCircle className="w-4 h-4 text-red-400 flex-shrink-0" />
+                  ) : (
+                    <CheckCircle className="w-4 h-4 text-accent flex-shrink-0" />
+                  )}
+                  {selectedPlan === 'starter' ? 'No Access to Myfleet AI' : 'Access to Myfleet AI'}
                 </li>
                 <li className="flex items-center gap-2">
-                  <CheckCircle className="w-4 h-4 text-accent flex-shrink-0" />
-                  Access to ExpensePro
+                  {selectedPlan === 'starter' ? (
+                    <XCircle className="w-4 h-4 text-red-400 flex-shrink-0" />
+                  ) : (
+                    <CheckCircle className="w-4 h-4 text-accent flex-shrink-0" />
+                  )}
+                  {selectedPlan === 'starter' ? 'No Access to ExpensePro' : 'Access to ExpensePro'}
                 </li>
                 <li className="flex items-center gap-2">
                   <CheckCircle className="w-4 h-4 text-accent flex-shrink-0" />
