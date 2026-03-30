@@ -24,7 +24,7 @@ const HeroSection = memo(() => {
               Control How Money Moves Across Your Operations
             </h1>
 
-            <p className="text-muted-foreground text-base md:text-lg leading-[1.8] max-w-[520px] mb-9 mx-auto lg:mx-0">
+            <p className="text-muted-foreground text-base md:text-lg leading-[1.6] max-w-[280px] sm:max-w-[420px] md:max-w-[520px] mb-9 mx-auto lg:mx-0">
               PayTap lets your vehicles make payments — while you control every transaction from a single dashboard.
             </p>
 
