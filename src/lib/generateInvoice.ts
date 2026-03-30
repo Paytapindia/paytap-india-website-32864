@@ -37,6 +37,7 @@ const COMPANY = {
 
 // Plan breakdowns: GST-inclusive amounts (base price before discount)
 const PLAN_BREAKDOWNS: Record<number, { amcInclGst: number; perUnitActivation: number; vehicles: number; discountInclGst: number }> = {
+  499:  { amcInclGst: 150,  perUnitActivation: 350,  vehicles: 1,  discountInclGst: 1 },
   999:  { amcInclGst: 300,  perUnitActivation: 700,  vehicles: 1,  discountInclGst: 1 },
   1600: { amcInclGst: 300,  perUnitActivation: 650,  vehicles: 2,  discountInclGst: 0 },
   3749: { amcInclGst: 1250, perUnitActivation: 500,  vehicles: 5,  discountInclGst: 1 },
