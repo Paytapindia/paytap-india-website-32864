@@ -16,7 +16,7 @@ import { motion, AnimatePresence } from "framer-motion";
 import { getStates, getCitiesByState } from "@/data/indianStatesAndCities";
 
 // ── Plan Data ──────────────────────────────────────────────
-type PlanType = 'starter' | 'business_basic' | 'business_pro' | 'corporate';
+type PlanType = 'starter' | 'business_pro' | 'corporate';
 
 interface PlanInfo {
   name: string;
