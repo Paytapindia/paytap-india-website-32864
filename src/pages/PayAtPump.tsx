@@ -163,7 +163,7 @@ const PayAtPump = memo(() => {
                 size="lg"
                 className="bg-paytap-coral hover:bg-paytap-coral/90 text-white font-bold text-lg px-8 py-6 h-auto rounded-xl shadow-lg hover:shadow-xl transition-all duration-300 mb-8"
               >
-                Activate Now — ₹699
+Activate Now — ₹999
               </Button>
 
               {/* Trust Badges */}
