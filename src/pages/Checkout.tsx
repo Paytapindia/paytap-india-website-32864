@@ -337,7 +337,7 @@ const Checkout = () => {
               initial={{ opacity: 0, y: 12 }}
               animate={{ opacity: 1, y: 0 }}
               transition={{ duration: 0.6, delay: 0.1, ease: [0.25, 0.46, 0.45, 0.94] }}
-              className="text-primary-foreground/60 mt-3 text-base md:text-lg max-w-xl mx-auto"
+              className="text-primary-foreground/60 mt-3 text-base md:text-lg max-w-xl mx-auto text-balance"
             >
               Track every rupee. Control every payment with Paytap.
             </motion.p>
