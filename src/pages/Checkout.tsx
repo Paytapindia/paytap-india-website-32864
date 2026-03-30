@@ -463,6 +463,12 @@ const Checkout = () => {
                 </li>
               </ul>
 
+              {selectedPlan === 'starter' && (
+                <p className="text-xs text-primary-foreground/50 italic mt-3">
+                  Most owners upgrade to Business Pro within 2 weeks.
+                </p>
+              )}
+
               <div className="flex items-center justify-between mt-5 pt-4 border-t border-primary-foreground/10">
                 <div className="flex items-center gap-2 text-xs text-primary-foreground/50">
                   <Truck className="w-4 h-4" />
