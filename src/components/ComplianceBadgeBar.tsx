@@ -22,8 +22,8 @@ const ComplianceBadgeBar = memo(() => {
         <div className="flex flex-wrap justify-center gap-4 md:gap-12 lg:gap-16 mb-6 md:mb-8">
           {badges.map((badge, index) => (
             <div key={index} className="flex flex-col items-center gap-1.5 md:gap-2">
-              <badge.icon className="w-6 h-6 md:w-8 md:h-8 text-primary" />
-              <span className="text-[10px] md:text-sm text-muted-foreground font-medium text-center">
+              <badge.icon className="w-6 h-6 md:w-8 md:h-8 text-white" />
+              <span className="text-[10px] md:text-sm text-white/80 font-medium text-center">
                 {badge.label}
               </span>
             </div>
