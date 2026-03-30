@@ -1,18 +1,18 @@
 
 
-## Plan: Update ComplianceBadgeBar to Navy Background with White Text
+## Plan: Fix Mobile Text Alignment on Checkout Hero
 
-**File:** `src/components/ComplianceBadgeBar.tsx`
+**File:** `src/pages/Checkout.tsx`
 
-### Changes
+### Changes (line 332)
 
-Update the section styling from the current light `bg-secondary/50` to brand navy `bg-[#021a42]` with all text and icons in white:
+Update the h1 className:
+- Reduce mobile font size from `text-3xl` to `text-2xl` for better wrapping on 390px screens
+- Add `text-balance` to ensure balanced line breaks
 
-1. Section: `bg-secondary/50 border-y border-border/50` → `bg-[#021a42]`
-2. Headline: `text-foreground` → `text-white`
-3. Icons: `text-primary` → `text-white`
-4. Badge labels: `text-muted-foreground` → `text-white/80`
-5. Disclaimer: `text-muted-foreground/70` → `text-white/60`
+```
+text-2xl md:text-5xl font-bold text-primary-foreground tracking-tight leading-tight text-balance
+```
 
-Single file, 3 class string replacements.
+Single class change, one line.
 
