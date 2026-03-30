@@ -1,10 +1,16 @@
 import { Link } from "react-router-dom";
 import { useState, useEffect, useRef, useCallback, memo } from "react";
-import { Menu, X, ChevronDown } from "lucide-react";
+import { Menu, X, ChevronDown, LogIn, Building2 } from "lucide-react";
 import { useTranslation } from "react-i18next";
 import LanguageSelector from "@/components/LanguageSelector";
 import { Button } from "@/components/ui/button";
 import paytapLogo from "@/assets/paytap-logo-navbar.png";
+import {
+  Dialog,
+  DialogContent,
+  DialogHeader,
+  DialogTitle,
+} from "@/components/ui/dialog";
 
 import {
   NavigationMenu,
