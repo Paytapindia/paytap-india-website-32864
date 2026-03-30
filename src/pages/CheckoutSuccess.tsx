@@ -79,7 +79,7 @@ const CheckoutSuccess = () => {
       // Also fire standard purchase event for GA4
       window.gtag('event', 'purchase', {
         'transaction_id': transactionId,
-        'value': parseFloat(payuData.amount || '499'),
+        'value': parseFloat(payuData.amount || '699'),
         'currency': 'INR',
         'items': [{
           'item_id': payuData.productinfo || 'paytap-tag',
