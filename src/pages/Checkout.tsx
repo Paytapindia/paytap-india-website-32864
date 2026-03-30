@@ -329,7 +329,7 @@ const Checkout = () => {
               initial={{ opacity: 0, y: 20 }}
               animate={{ opacity: 1, y: 0 }}
               transition={{ duration: 0.6, ease: [0.25, 0.46, 0.45, 0.94] }}
-              className="text-3xl md:text-5xl font-bold text-primary-foreground tracking-tight leading-tight"
+              className="text-2xl md:text-5xl font-bold text-primary-foreground tracking-tight leading-tight text-balance"
             >
               Your Drivers Know Where the Money Goes. But You Don't
             </motion.h1>
