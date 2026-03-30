@@ -19,7 +19,7 @@ const HeroSection = memo(() => {
       <div className="max-w-7xl mx-auto w-full relative z-10">
         <div className="grid grid-cols-1 lg:grid-cols-2 gap-10 lg:gap-20 items-center">
           {/* Left Column — Text Stack */}
-          <div className="text-center lg:text-left">
+          <div className="text-center lg:text-left px-2 sm:px-0">
             <h1 className="text-3xl sm:text-4xl md:text-5xl lg:text-6xl xl:text-7xl font-semibold text-foreground leading-[1.06] tracking-[-0.035em] mb-6 md:mb-8 max-w-[600px] mx-auto lg:mx-0 text-balance">
               Control How Money Moves Across Your Operations
             </h1>
