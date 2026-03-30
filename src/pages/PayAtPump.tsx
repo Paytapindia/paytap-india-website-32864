@@ -43,7 +43,7 @@ const PayAtPump = memo(() => {
 
     if (typeof window !== 'undefined' && window.fbq) {
       window.fbq('track', 'InitiateCheckout', {
-        value: 499,
+        value: 699,
         currency: 'INR',
         content_ids: ['paytap-nfc-tag']
       });
