@@ -364,7 +364,7 @@ Activate Now — ₹999
             onClick={handleActivate}
             className="w-full bg-paytap-coral hover:bg-paytap-coral/90 text-white font-bold py-4 h-auto rounded-xl"
           >
-            Get Your Tag — ₹699
+            Get Your Tag — ₹999
           </Button>
         </div>
 

@@ -30,7 +30,8 @@ const SampleInvoice = () => {
   };
 
   const plans = [
-    { name: 'Trial Pack', total: 699, vehicles: 1 },
+    { name: 'Trial Pack', total: 999, vehicles: 1 },
+    { name: 'Business Basic', total: 1600, vehicles: 2 },
     { name: 'Business Basic', total: 1600, vehicles: 2 },
     { name: 'Business Pro', total: 3749, vehicles: 5 },
     { name: 'Corporate', total: 6999, vehicles: 10 },
