@@ -1,18 +1,25 @@
 
 
-## Plan: Update ComplianceBadgeBar to Navy Background with White Text
+## Plan: Fix Hero Section Mobile Text Alignment & Readability
 
-**File:** `src/components/ComplianceBadgeBar.tsx`
+**File:** `src/components/HeroSection.tsx`
 
 ### Changes
 
-Update the section styling from the current light `bg-secondary/50` to brand navy `bg-[#021a42]` with all text and icons in white:
+**1. Heading (line 23)** — Tighten mobile font size, constrain width, improve line height:
+- Change `text-3xl` → `text-[26px]` for tighter mobile sizing
+- Add `max-w-[300px] sm:max-w-[400px]` alongside existing `max-w-[600px]` breakpoints to prevent awkward line breaks on small screens
+- Adjust leading from `leading-[1.06]` → `leading-[1.12] sm:leading-[1.08]` for better mobile spacing
 
-1. Section: `bg-secondary/50 border-y border-border/50` → `bg-[#021a42]`
-2. Headline: `text-foreground` → `text-white`
-3. Icons: `text-primary` → `text-white`
-4. Badge labels: `text-muted-foreground` → `text-white/80`
-5. Disclaimer: `text-muted-foreground/70` → `text-white/60`
+**2. Subtext (line 27)** — Reduce width and improve readability on mobile:
+- Change `max-w-[520px]` → `max-w-[280px] sm:max-w-[420px] md:max-w-[520px]`
+- Adjust line height: `leading-[1.8]` → `leading-[1.6]`
 
-Single file, 3 class string replacements.
+**3. Container padding (line 22)** — Add horizontal padding for mobile breathing room:
+- Add `px-2 sm:px-0` to the text column wrapper
+
+**4. Section padding (line 14)** — Ensure consistent side padding:
+- Change `px-6 md:px-12` → `px-8 md:px-12` for slightly more mobile side margin
+
+These are class-level tweaks only — no structural changes.
 
