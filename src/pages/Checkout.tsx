@@ -331,7 +331,7 @@ const Checkout = () => {
               transition={{ duration: 0.6, ease: [0.25, 0.46, 0.45, 0.94] }}
               className="text-3xl md:text-5xl font-bold text-primary-foreground tracking-tight leading-tight"
             >
-              You're Losing Money on Every Vehicle<br />You Just Can't See It
+              Your Drivers Know Where the Money Goes. But You Don't
             </motion.h1>
             <motion.p
               initial={{ opacity: 0, y: 12 }}
@@ -339,7 +339,7 @@ const Checkout = () => {
               transition={{ duration: 0.6, delay: 0.1, ease: [0.25, 0.46, 0.45, 0.94] }}
               className="text-primary-foreground/60 mt-3 text-base md:text-lg max-w-xl mx-auto"
             >
-              Manage all vehicle payments instantly with Paytap
+              Track every rupee. Control every payment with Paytap.
             </motion.p>
           </div>
         </div>
