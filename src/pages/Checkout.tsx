@@ -408,7 +408,7 @@ const Checkout = () => {
                             )}
                           </div>
                           <p className="text-sm text-muted-foreground mt-0.5">
-                            {p.tags} vehicle{p.tags > 1 ? 's' : ''} · {p.perVehicle}
+                            {p.tags} vehicle{p.tags > 1 ? 's' : ''}
                           </p>
                         </div>
 
