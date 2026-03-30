@@ -14,7 +14,7 @@ const ComplianceBadgeBar = memo(() => {
     <section className="w-full bg-[#021a42] py-8 md:py-14 px-6">
       <div className="max-w-6xl mx-auto">
         {/* Headline */}
-        <h2 className="text-lg md:text-2xl font-medium text-foreground text-center mb-6 md:mb-8">
+        <h2 className="text-lg md:text-2xl font-medium text-white text-center mb-6 md:mb-8">
           Trusted. Secure. Regulated.
         </h2>
 
