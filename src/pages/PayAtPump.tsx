@@ -94,7 +94,7 @@ const PayAtPump = memo(() => {
     <>
       <Helmet>
         <title>Pay at Pump | Tap, Fuel & Go with Paytap NFC Tags</title>
-        <meta name="description" content="No cards, no cash, no delay. Pay for fuel with a single tap of your Paytap NFC tag. Works at 8L+ terminals across India. ₹699 one-time." />
+        <meta name="description" content="No cards, no cash, no delay. Pay for fuel with a single tap of your Paytap NFC tag. Works at 8L+ terminals across India. ₹999 one-time." />
         <link rel="canonical" href="https://paytap.co.in/pay-at-pump" />
         
         {/* Open Graph for Discovery */}
