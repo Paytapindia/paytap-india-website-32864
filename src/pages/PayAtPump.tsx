@@ -64,7 +64,7 @@ const PayAtPump = memo(() => {
     "image": "https://paytap.co.in/images/pay-at-pump-hero.png",
     "offers": {
       "@type": "Offer",
-      "price": "699",
+      "price": "999",
       "priceCurrency": "INR",
       "availability": "https://schema.org/InStock",
       "url": "https://paytap.co.in/pay-at-pump"
