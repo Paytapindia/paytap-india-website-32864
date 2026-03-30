@@ -53,7 +53,7 @@ serve(async (req) => {
 
     // Calculate amount server-side
     const PRODUCT_PRICES: Record<string, number> = {
-      sticker: 499,
+      sticker: 699,
       card: 999
     };
 

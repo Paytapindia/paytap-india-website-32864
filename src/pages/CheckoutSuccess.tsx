@@ -61,7 +61,7 @@ const CheckoutSuccess = () => {
       // Conversion event with inline user_data for Enhanced Conversions (2026 cookieless attribution)
       window.gtag('event', 'conversion', {
         'send_to': 'AW-17870924773/REPLACE_WITH_LABEL',  // TODO: Replace with actual Conversion Label from Google Ads
-        'value': parseFloat(payuData.amount || '499'),
+        'value': parseFloat(payuData.amount || '699'),
         'currency': 'INR',
         'transaction_id': transactionId,
         'user_data': orderData ? {
@@ -79,7 +79,7 @@ const CheckoutSuccess = () => {
       // Also fire standard purchase event for GA4
       window.gtag('event', 'purchase', {
         'transaction_id': transactionId,
-        'value': parseFloat(payuData.amount || '499'),
+        'value': parseFloat(payuData.amount || '699'),
         'currency': 'INR',
         'items': [{
           'item_id': payuData.productinfo || 'paytap-tag',
@@ -92,7 +92,7 @@ const CheckoutSuccess = () => {
     // Fire Meta Pixel Purchase Event
     if (typeof window !== 'undefined' && window.fbq && payuData.status === 'success') {
       window.fbq('track', 'Purchase', {
-        value: parseFloat(payuData.amount || '499'),
+        value: parseFloat(payuData.amount || '699'),
         currency: 'INR',
         content_ids: [payuData.productinfo || 'paytap-tag'],
         content_type: 'product'
