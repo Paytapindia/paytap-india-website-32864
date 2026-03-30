@@ -252,7 +252,7 @@ const Navbar = memo(() => {
       <div className="flex items-center space-x-3 md:space-x-4">
         <LanguageSelector />
                 <Button
-                  onClick={() => window.open("https://dashboard.paytap.co.in/login", "_blank")}
+                  onClick={() => setIsLoginDialogOpen(true)}
                   className="hidden md:inline-flex bg-white/10 hover:bg-white/15 text-white/80 hover:text-white px-3.5 py-1.5 rounded-md text-xs font-medium transition-colors duration-200 min-h-[36px] border border-white/10"
                 >
                   {t('nav.platformLogin')}
