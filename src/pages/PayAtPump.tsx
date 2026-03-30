@@ -31,12 +31,12 @@ const PayAtPump = memo(() => {
     // Track CTA click for funnel analysis
     if (typeof window !== 'undefined' && window.gtag) {
       window.gtag('event', 'begin_checkout', {
-        'value': 699,
+        'value': 999,
         'currency': 'INR',
         'items': [{
           'item_id': 'paytap-nfc-tag',
           'item_name': 'Paytap NFC Fuel Payment Tag',
-          'price': 699
+          'price': 999
         }]
       });
     }
