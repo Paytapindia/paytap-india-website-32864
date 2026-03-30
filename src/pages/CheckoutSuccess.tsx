@@ -61,7 +61,7 @@ const CheckoutSuccess = () => {
       // Conversion event with inline user_data for Enhanced Conversions (2026 cookieless attribution)
       window.gtag('event', 'conversion', {
         'send_to': 'AW-17870924773/REPLACE_WITH_LABEL',  // TODO: Replace with actual Conversion Label from Google Ads
-        'value': parseFloat(payuData.amount || '499'),
+        'value': parseFloat(payuData.amount || '699'),
         'currency': 'INR',
         'transaction_id': transactionId,
         'user_data': orderData ? {
