@@ -1,10 +1,16 @@
 import { Link } from "react-router-dom";
 import { useState, useEffect, useRef, useCallback, memo } from "react";
-import { Menu, X, ChevronDown } from "lucide-react";
+import { Menu, X, ChevronDown, LogIn, Building2 } from "lucide-react";
 import { useTranslation } from "react-i18next";
 import LanguageSelector from "@/components/LanguageSelector";
 import { Button } from "@/components/ui/button";
 import paytapLogo from "@/assets/paytap-logo-navbar.png";
+import {
+  Dialog,
+  DialogContent,
+  DialogHeader,
+  DialogTitle,
+} from "@/components/ui/dialog";
 
 import {
   NavigationMenu,
@@ -20,6 +26,7 @@ const Navbar = memo(() => {
   const [isMenuOpen, setIsMenuOpen] = useState(false);
   const [isScrolled, setIsScrolled] = useState(false);
   const [expandedMobileSection, setExpandedMobileSection] = useState<string | null>(null);
+  const [isLoginDialogOpen, setIsLoginDialogOpen] = useState(false);
   const ticking = useRef(false);
 
   useEffect(() => {
@@ -245,7 +252,7 @@ const Navbar = memo(() => {
       <div className="flex items-center space-x-3 md:space-x-4">
         <LanguageSelector />
                 <Button
-                  onClick={() => window.open("https://dashboard.paytap.co.in/login", "_blank")}
+                  onClick={() => setIsLoginDialogOpen(true)}
                   className="hidden md:inline-flex bg-white/10 hover:bg-white/15 text-white/80 hover:text-white px-3.5 py-1.5 rounded-md text-xs font-medium transition-colors duration-200 min-h-[36px] border border-white/10"
                 >
                   {t('nav.platformLogin')}
@@ -254,7 +261,7 @@ const Navbar = memo(() => {
         {/* Mobile menu button */}
         {/* Mobile Login Button - next to hamburger */}
         <Button
-          onClick={() => window.open("https://dashboard.paytap.co.in/login", "_blank")}
+          onClick={() => setIsLoginDialogOpen(true)}
           className="md:hidden bg-paytap-light hover:bg-paytap-light/90 text-white px-3 py-1.5 rounded-md text-xs font-medium transition-colors duration-200 min-h-[36px]"
         >
           Login
@@ -398,7 +405,7 @@ const Navbar = memo(() => {
             <div className="mt-3">
               <Button
                 onClick={() => {
-                  window.open("https://dashboard.paytap.co.in/login", "_blank");
+                  setIsLoginDialogOpen(true);
                   handleNavClick();
                 }}
                 className="w-full mt-3 bg-paytap-light hover:bg-paytap-light/90 text-white py-3 rounded-md font-medium transition-colors duration-200 min-h-[48px]"
@@ -410,6 +417,43 @@ const Navbar = memo(() => {
           </div>
         </div>
       )}
+
+      {/* Login Type Selection Dialog */}
+      <Dialog open={isLoginDialogOpen} onOpenChange={setIsLoginDialogOpen}>
+        <DialogContent className="sm:max-w-[380px] rounded-xl">
+          <DialogHeader>
+            <DialogTitle className="text-center text-lg font-semibold">Choose Login Type</DialogTitle>
+          </DialogHeader>
+          <div className="flex flex-col gap-3 mt-2">
+            <button
+              onClick={() => {
+                window.open("https://dashboard.paytap.co.in/login", "_blank");
+                setIsLoginDialogOpen(false);
+              }}
+              className="flex items-center gap-3 w-full p-4 rounded-lg bg-paytap-light hover:bg-paytap-light/90 text-white transition-colors"
+            >
+              <LogIn className="w-5 h-5 shrink-0" />
+              <div className="text-left">
+                <div className="font-semibold text-sm">Account Login</div>
+                <div className="text-xs text-white/70">Paytap Dashboard</div>
+              </div>
+            </button>
+            <button
+              onClick={() => {
+                window.open("https://dashboard.myfleetai.in/login", "_blank");
+                setIsLoginDialogOpen(false);
+              }}
+              className="flex items-center gap-3 w-full p-4 rounded-lg border border-border hover:bg-accent text-foreground transition-colors"
+            >
+              <Building2 className="w-5 h-5 shrink-0" />
+              <div className="text-left">
+                <div className="font-semibold text-sm">Business Login</div>
+                <div className="text-xs text-muted-foreground">MyFleet AI Dashboard</div>
+              </div>
+            </button>
+          </div>
+        </DialogContent>
+      </Dialog>
     </header>
   );
 });
