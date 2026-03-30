@@ -405,7 +405,7 @@ const Navbar = memo(() => {
             <div className="mt-3">
               <Button
                 onClick={() => {
-                  window.open("https://dashboard.paytap.co.in/login", "_blank");
+                  setIsLoginDialogOpen(true);
                   handleNavClick();
                 }}
                 className="w-full mt-3 bg-paytap-light hover:bg-paytap-light/90 text-white py-3 rounded-md font-medium transition-colors duration-200 min-h-[48px]"
@@ -417,6 +417,43 @@ const Navbar = memo(() => {
           </div>
         </div>
       )}
+
+      {/* Login Type Selection Dialog */}
+      <Dialog open={isLoginDialogOpen} onOpenChange={setIsLoginDialogOpen}>
+        <DialogContent className="sm:max-w-[380px] rounded-xl">
+          <DialogHeader>
+            <DialogTitle className="text-center text-lg font-semibold">Choose Login Type</DialogTitle>
+          </DialogHeader>
+          <div className="flex flex-col gap-3 mt-2">
+            <button
+              onClick={() => {
+                window.open("https://dashboard.paytap.co.in/login", "_blank");
+                setIsLoginDialogOpen(false);
+              }}
+              className="flex items-center gap-3 w-full p-4 rounded-lg bg-paytap-light hover:bg-paytap-light/90 text-white transition-colors"
+            >
+              <LogIn className="w-5 h-5 shrink-0" />
+              <div className="text-left">
+                <div className="font-semibold text-sm">Account Login</div>
+                <div className="text-xs text-white/70">Paytap Dashboard</div>
+              </div>
+            </button>
+            <button
+              onClick={() => {
+                window.open("https://dashboard.myfleetai.in/login", "_blank");
+                setIsLoginDialogOpen(false);
+              }}
+              className="flex items-center gap-3 w-full p-4 rounded-lg border border-border hover:bg-accent text-foreground transition-colors"
+            >
+              <Building2 className="w-5 h-5 shrink-0" />
+              <div className="text-left">
+                <div className="font-semibold text-sm">Business Login</div>
+                <div className="text-xs text-muted-foreground">MyFleet AI Dashboard</div>
+              </div>
+            </button>
+          </div>
+        </DialogContent>
+      </Dialog>
     </header>
   );
 });
