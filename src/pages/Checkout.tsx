@@ -450,12 +450,20 @@ const Checkout = () => {
                   </li>
                 )}
                 <li className="flex items-center gap-2">
-                  <CheckCircle className="w-4 h-4 text-accent flex-shrink-0" />
-                  Access to Myfleet AI
+                  {selectedPlan === 'starter' ? (
+                    <XCircle className="w-4 h-4 text-red-400 flex-shrink-0" />
+                  ) : (
+                    <CheckCircle className="w-4 h-4 text-accent flex-shrink-0" />
+                  )}
+                  {selectedPlan === 'starter' ? 'No Access to Myfleet AI' : 'Access to Myfleet AI'}
                 </li>
                 <li className="flex items-center gap-2">
-                  <CheckCircle className="w-4 h-4 text-accent flex-shrink-0" />
-                  Access to ExpensePro
+                  {selectedPlan === 'starter' ? (
+                    <XCircle className="w-4 h-4 text-red-400 flex-shrink-0" />
+                  ) : (
+                    <CheckCircle className="w-4 h-4 text-accent flex-shrink-0" />
+                  )}
+                  {selectedPlan === 'starter' ? 'No Access to ExpensePro' : 'Access to ExpensePro'}
                 </li>
                 <li className="flex items-center gap-2">
                   <CheckCircle className="w-4 h-4 text-accent flex-shrink-0" />
