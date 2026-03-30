@@ -1,31 +1,25 @@
 
 
-## Plan: Update Trial Pack to ₹999 and Add Business Basic ₹1,600
+## Plan: Add Login Type Popup to Platform Login Button
 
-### Files to change
+### What changes
 
-**1. `src/pages/Checkout.tsx`**
-- **Line 19**: Update PlanType to include `business_basic`: `'starter' | 'business_basic' | 'business_pro' | 'corporate'`
-- **Lines 31-37**: Update Trial Pack price from `699` to `999`, perVehicle to `'₹999/vehicle'`
-- **After line 38**: Insert new `business_basic` plan: `{ name: 'Business Basic', price: 1600, tags: 2, recommended: false, isBusinessPlan: false, perVehicle: '₹800/vehicle' }`
-- **Line 58**: Update starter link to new one (or keep same), add `business_basic: "https://u.payu.in/PAYUMN/rJAyWInVMJLz"`
-- **Line 64**: Add `if (planKey === 'business_basic') return 0;` for driver cards logic
-- Update plan selector UI to render 4 plans instead of 3
+Replace the direct `window.open` on the "Platform Login" button (both desktop and mobile) with a dialog popup offering two choices:
 
-**2. `src/lib/generateInvoice.ts`**
-- Update `699` breakdown entry to `999`: new breakdown for ₹999 (Activation ₹700 + AMC ₹300 - Discount ₹1 = ₹999)
-- Verify `1600` breakdown already exists (it should from before)
+- **Account Login** → opens `https://dashboard.paytap.co.in/login` in new tab
+- **Business Login** → opens `https://dashboard.myfleetai.in/login` in new tab
 
-**3. `supabase/functions/create-payment/index.ts`**
-- Line 56: Update `sticker: 699` → `sticker: 999`
+### File: `src/components/Navbar.tsx`
 
-**4. `src/pages/SampleInvoice.tsx`**
-- Update Trial Pack total from `699` to `999`
-- Verify Business Basic entry exists at `1600`
+1. Import `Dialog, DialogContent, DialogHeader, DialogTitle` from `@/components/ui/dialog`
+2. Add state: `const [isLoginDialogOpen, setIsLoginDialogOpen] = useState(false)`
+3. Replace `onClick` on desktop button (line 248) and mobile button (line 257) to open the dialog instead of redirecting
+4. Add a `<Dialog>` at the end of the component with:
+   - Title: "Choose Login Type"
+   - Two styled buttons stacked vertically:
+     - **Account Login** (brand pink `bg-paytap-light`) — subtitle "Paytap Dashboard" — opens `https://dashboard.paytap.co.in/login`
+     - **Business Login** (outline style) — subtitle "MyFleet AI Dashboard" — opens `https://dashboard.myfleetai.in/login`
+   - Both buttons close the dialog after click
 
-**5. `src/pages/PayAtPump.tsx`**
-- Update ₹699 references to ₹999
-
-**6. `src/pages/CheckoutSuccess.tsx`**
-- Update fallback `'699'` values to `'999'`
+Single file change only.
 
