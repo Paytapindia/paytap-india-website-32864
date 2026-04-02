@@ -1,5 +1,5 @@
 import { memo } from "react";
-import { ArrowRight, Wifi, BarChart3, CreditCard } from "lucide-react";
+import { ArrowRight, Wifi, BarChart3, CreditCard, Truck, Users } from "lucide-react";
 import { useTranslation } from "react-i18next";
 import { useNavigate } from "react-router-dom";
 import { motion } from "framer-motion";
@@ -51,7 +51,7 @@ const HeroSection = memo(() => {
 
           {/* Right Column — Card + Floating UI Elements */}
           <div className="flex items-center justify-center lg:justify-end">
-            <div className="relative mb-16 sm:mb-0">
+            <div className="relative mb-16 sm:mb-0 flex flex-col items-center gap-6">
               {/* Floating element: NFC Tap Detected */}
               <motion.div
                 initial={{ opacity: 0, y: 10 }}
@@ -174,6 +174,44 @@ const HeroSection = memo(() => {
                   </div>
                 </div>
               </div>
+
+              {/* Laptop Dashboard Mockup */}
+              <motion.div
+                initial={{ opacity: 0, y: 20 }}
+                animate={{ opacity: 1, y: 0 }}
+                transition={{ delay: 1.5, duration: 0.6 }}
+                className="hidden sm:block w-[320px] md:w-[400px]"
+              >
+                {/* Screen */}
+                <div className="bg-[#0f172a] rounded-t-lg border-[3px] border-gray-700 p-3 md:p-4">
+                  {/* Header bar */}
+                  <div className="flex items-center gap-2 mb-3 pb-2 border-b border-white/10">
+                    <div className="w-2 h-2 rounded-full bg-green-500 animate-pulse" />
+                    <span className="text-[10px] md:text-xs font-medium text-white/90">PayTap Business Dashboard</span>
+                  </div>
+                  {/* Stats */}
+                  <div className="grid grid-cols-3 gap-2">
+                    <div className="bg-white/5 rounded-lg p-2 md:p-3 text-center">
+                      <Truck className="w-4 h-4 text-primary mx-auto mb-1" />
+                      <div className="text-white text-sm md:text-base font-bold">10</div>
+                      <div className="text-white/50 text-[8px] md:text-[10px]">Vehicles</div>
+                    </div>
+                    <div className="bg-white/5 rounded-lg p-2 md:p-3 text-center">
+                      <BarChart3 className="w-4 h-4 text-green-400 mx-auto mb-1" />
+                      <div className="text-green-400 text-sm md:text-base font-bold">+₹50,000</div>
+                      <div className="text-white/50 text-[8px] md:text-[10px]">Profit/Loss</div>
+                    </div>
+                    <div className="bg-white/5 rounded-lg p-2 md:p-3 text-center">
+                      <Users className="w-4 h-4 text-accent mx-auto mb-1" />
+                      <div className="text-white text-sm md:text-base font-bold">5</div>
+                      <div className="text-white/50 text-[8px] md:text-[10px]">Teams</div>
+                    </div>
+                  </div>
+                </div>
+                {/* Laptop base */}
+                <div className="h-2 bg-gray-600 rounded-b-lg mx-6" />
+                <div className="h-1 bg-gray-500 rounded-b mx-10" />
+              </motion.div>
             </div>
           </div>
         </div>
