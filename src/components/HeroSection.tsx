@@ -112,37 +112,43 @@ const HeroSection = memo(() => {
                 initial={{ opacity: 0, y: 15 }}
                 animate={{ opacity: 1, y: 0 }}
                 transition={{ delay: 1.5, duration: 0.6 }}
-                className="absolute -bottom-20 -right-4 sm:-bottom-16 sm:-right-20 z-20 w-[180px] sm:w-[220px] md:w-[260px]"
+                className="absolute -bottom-16 -right-2 sm:-bottom-12 sm:-right-16 z-20 w-[150px] sm:w-[180px] md:w-[210px]"
               >
                 {/* Monitor screen */}
-                <div className="bg-[#0f172a] rounded-t-lg border-2 border-gray-600 p-2 sm:p-2.5 md:p-3">
+                <div className="bg-white rounded-t-lg border-2 border-gray-300 p-1.5 sm:p-2 md:p-2.5 shadow-md">
                   {/* Header */}
-                  <div className="flex items-center gap-1.5 mb-2 pb-1.5 border-b border-white/10">
+                  <div className="flex items-center gap-1.5 mb-1.5 pb-1 border-b border-gray-200">
                     <div className="w-1.5 h-1.5 rounded-full bg-green-500 animate-pulse" />
-                    <span className="text-[8px] sm:text-[9px] md:text-[10px] font-medium text-white/90">Business Dashboard</span>
+                    <span className="text-[7px] sm:text-[8px] md:text-[9px] font-medium text-gray-700">Business Dashboard</span>
                   </div>
-                  {/* KPI Row */}
-                  <div className="grid grid-cols-3 gap-1 sm:gap-1.5">
-                    <div className="bg-white/5 rounded-md p-1.5 sm:p-2 text-center">
-                      <Truck className="w-3 h-3 sm:w-3.5 sm:h-3.5 text-primary mx-auto mb-0.5" />
-                      <div className="text-white text-[10px] sm:text-xs md:text-sm font-bold">10</div>
-                      <div className="text-white/50 text-[6px] sm:text-[7px] md:text-[8px]">Vehicles</div>
+                  {/* KPI List */}
+                  <div className="space-y-1">
+                    <div className="flex items-center justify-between bg-gray-50 rounded px-1.5 py-1">
+                      <div className="flex items-center gap-1">
+                        <Truck className="w-2.5 h-2.5 sm:w-3 sm:h-3 text-primary" />
+                        <span className="text-[7px] sm:text-[8px] text-gray-500">Vehicles</span>
+                      </div>
+                      <span className="text-[8px] sm:text-[9px] md:text-[10px] font-bold text-gray-900">10</span>
                     </div>
-                    <div className="bg-white/5 rounded-md p-1.5 sm:p-2 text-center">
-                      <BarChart3 className="w-3 h-3 sm:w-3.5 sm:h-3.5 text-green-400 mx-auto mb-0.5" />
-                      <div className="text-green-400 text-[10px] sm:text-xs md:text-sm font-bold">+₹50K</div>
-                      <div className="text-white/50 text-[6px] sm:text-[7px] md:text-[8px]">Profit/Loss</div>
+                    <div className="flex items-center justify-between bg-gray-50 rounded px-1.5 py-1">
+                      <div className="flex items-center gap-1">
+                        <BarChart3 className="w-2.5 h-2.5 sm:w-3 sm:h-3 text-green-500" />
+                        <span className="text-[7px] sm:text-[8px] text-gray-500">Profit/Loss</span>
+                      </div>
+                      <span className="text-[8px] sm:text-[9px] md:text-[10px] font-bold text-green-500">+₹50K</span>
                     </div>
-                    <div className="bg-white/5 rounded-md p-1.5 sm:p-2 text-center">
-                      <Users className="w-3 h-3 sm:w-3.5 sm:h-3.5 text-accent mx-auto mb-0.5" />
-                      <div className="text-white text-[10px] sm:text-xs md:text-sm font-bold">5</div>
-                      <div className="text-white/50 text-[6px] sm:text-[7px] md:text-[8px]">Teams</div>
+                    <div className="flex items-center justify-between bg-gray-50 rounded px-1.5 py-1">
+                      <div className="flex items-center gap-1">
+                        <Users className="w-2.5 h-2.5 sm:w-3 sm:h-3 text-accent" />
+                        <span className="text-[7px] sm:text-[8px] text-gray-500">Teams</span>
+                      </div>
+                      <span className="text-[8px] sm:text-[9px] md:text-[10px] font-bold text-gray-900">5</span>
                     </div>
                   </div>
                 </div>
                 {/* Monitor stand */}
-                <div className="h-1.5 bg-gray-600 rounded-b mx-4 sm:mx-6" />
-                <div className="h-1 bg-gray-500 rounded-b mx-8 sm:mx-10" />
+                <div className="h-1.5 bg-gray-400 rounded-b mx-5 sm:mx-7" />
+                <div className="h-1 bg-gray-300 rounded-b mx-8 sm:mx-10" />
               </motion.div>
 
               {/* Main Card */}
