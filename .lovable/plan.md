@@ -1,31 +1,23 @@
 
 
-## Plan: Reposition Dashboard as Monitor Screen Overlapping Card
+## Plan: Refine Business Dashboard Monitor in Hero
 
-### What changes
+### File: `src/components/HeroSection.tsx` (lines 110-146)
 
-Remove the current laptop mockup that sits below the card and replace it with a compact **monitor-style dashboard** positioned at the bottom-right corner of the PayTap card, slightly overlapping it — like a floating monitor screen peeking out from behind the card.
+### Changes
 
-### File: `src/components/HeroSection.tsx`
+1. **Reduce size** — Scale down the monitor to feel like a compact laptop screen:
+   - `w-[150px] sm:w-[180px] md:w-[210px]` (from 180/220/260)
+   - Tighter padding: `p-1.5 sm:p-2 md:p-2.5`
 
-1. **Remove the standalone laptop mockup** (lines 178-214) — the full `motion.div` block with screen + base
+2. **White background** — Change screen from `bg-[#0f172a]` to `bg-white`, border from `border-gray-600` to `border-gray-300`
 
-2. **Add a new monitor-style dashboard element** as an `absolute` positioned `motion.div` inside the existing relative container (alongside the other floating elements), placed at the bottom-right of the card:
-   - Position: `absolute -bottom-16 -right-12 sm:-bottom-12 sm:-right-20 z-20`
-   - Styled as a mini monitor: dark background (`#0f172a`), rounded-lg top, thin bezel border, with a small stand/base below
-   - Compact size: `w-[180px] sm:w-[220px] md:w-[260px]`
-   - Inside the "screen":
-     - Thin header bar: green dot + "Business Dashboard" label
-     - 3 KPI cards in a row: Vehicles (10), Profit/Loss (+₹50,000 in green), Teams (5)
-   - Monitor stand: thin centered rectangle below the screen
-   - Animated in with `motion.div` delay 1.5s
-   - Visible on all screen sizes (with tighter sizing on mobile)
+3. **Update text/icon colors** for white background:
+   - Header text: `text-gray-700` (was `text-white/90`), border: `border-gray-200` (was `border-white/10`)
+   - KPI cards: `bg-gray-50` background, value text `text-gray-900`, label text `text-gray-500`
+   - Profit/Loss stays `text-green-500`
 
-3. **Adjust the existing transaction notification floating element** (lines 91-108) position slightly to avoid overlap with the new monitor
+4. **Switch KPIs to list view** — Replace the `grid grid-cols-3` with a vertical stack (`space-y-1`), each row as a horizontal flex with icon + label on left, value on right — more compact and readable at small size
 
-4. **Remove `flex-col gap-6`** from the right column wrapper and revert to the original single-card centered layout since the dashboard is now an overlay, not a stacked element
-
-### Visual result
-
-The PayTap card stays as the hero visual, with the business dashboard appearing as a small monitor screen overlapping the card's bottom-right corner — similar to the other floating UI chips but larger and styled as a screen. This creates a cohesive, layered composition.
+5. **Adjust stand colors** to lighter gray (`bg-gray-400`, `bg-gray-300`) to match the white aesthetic
 
