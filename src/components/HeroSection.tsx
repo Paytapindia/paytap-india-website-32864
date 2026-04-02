@@ -51,7 +51,7 @@ const HeroSection = memo(() => {
 
           {/* Right Column — Card + Floating UI Elements */}
           <div className="flex items-center justify-center lg:justify-end">
-            <div className="relative mb-16 sm:mb-0 flex flex-col items-center gap-6">
+            <div className="relative mb-16 sm:mb-0">
               {/* Floating element: NFC Tap Detected */}
               <motion.div
                 initial={{ opacity: 0, y: 10 }}
@@ -93,7 +93,7 @@ const HeroSection = memo(() => {
                 initial={{ opacity: 0, y: 10 }}
                 animate={{ opacity: 1, y: 0 }}
                 transition={{ delay: 1.2, duration: 0.5 }}
-                className="absolute -bottom-14 -right-0 sm:-bottom-4 sm:-right-14 z-20"
+                className="absolute -top-14 -right-0 sm:-top-6 sm:-right-14 z-20"
               >
                 <div
                   className="bg-card/90 backdrop-blur-sm px-2.5 py-1.5 sm:px-4 sm:py-2.5 rounded-xl border border-border/50 flex items-center gap-2"
@@ -105,6 +105,44 @@ const HeroSection = memo(() => {
                     <span className="text-[9px] sm:text-[10px] text-muted-foreground">KA-01-AB-1234</span>
                   </div>
                 </div>
+              </motion.div>
+
+              {/* Floating Monitor Dashboard — bottom-right of card */}
+              <motion.div
+                initial={{ opacity: 0, y: 15 }}
+                animate={{ opacity: 1, y: 0 }}
+                transition={{ delay: 1.5, duration: 0.6 }}
+                className="absolute -bottom-20 -right-4 sm:-bottom-16 sm:-right-20 z-20 w-[180px] sm:w-[220px] md:w-[260px]"
+              >
+                {/* Monitor screen */}
+                <div className="bg-[#0f172a] rounded-t-lg border-2 border-gray-600 p-2 sm:p-2.5 md:p-3">
+                  {/* Header */}
+                  <div className="flex items-center gap-1.5 mb-2 pb-1.5 border-b border-white/10">
+                    <div className="w-1.5 h-1.5 rounded-full bg-green-500 animate-pulse" />
+                    <span className="text-[8px] sm:text-[9px] md:text-[10px] font-medium text-white/90">Business Dashboard</span>
+                  </div>
+                  {/* KPI Row */}
+                  <div className="grid grid-cols-3 gap-1 sm:gap-1.5">
+                    <div className="bg-white/5 rounded-md p-1.5 sm:p-2 text-center">
+                      <Truck className="w-3 h-3 sm:w-3.5 sm:h-3.5 text-primary mx-auto mb-0.5" />
+                      <div className="text-white text-[10px] sm:text-xs md:text-sm font-bold">10</div>
+                      <div className="text-white/50 text-[6px] sm:text-[7px] md:text-[8px]">Vehicles</div>
+                    </div>
+                    <div className="bg-white/5 rounded-md p-1.5 sm:p-2 text-center">
+                      <BarChart3 className="w-3 h-3 sm:w-3.5 sm:h-3.5 text-green-400 mx-auto mb-0.5" />
+                      <div className="text-green-400 text-[10px] sm:text-xs md:text-sm font-bold">+₹50K</div>
+                      <div className="text-white/50 text-[6px] sm:text-[7px] md:text-[8px]">Profit/Loss</div>
+                    </div>
+                    <div className="bg-white/5 rounded-md p-1.5 sm:p-2 text-center">
+                      <Users className="w-3 h-3 sm:w-3.5 sm:h-3.5 text-accent mx-auto mb-0.5" />
+                      <div className="text-white text-[10px] sm:text-xs md:text-sm font-bold">5</div>
+                      <div className="text-white/50 text-[6px] sm:text-[7px] md:text-[8px]">Teams</div>
+                    </div>
+                  </div>
+                </div>
+                {/* Monitor stand */}
+                <div className="h-1.5 bg-gray-600 rounded-b mx-4 sm:mx-6" />
+                <div className="h-1 bg-gray-500 rounded-b mx-8 sm:mx-10" />
               </motion.div>
 
               {/* Main Card */}
@@ -174,44 +212,6 @@ const HeroSection = memo(() => {
                   </div>
                 </div>
               </div>
-
-              {/* Laptop Dashboard Mockup */}
-              <motion.div
-                initial={{ opacity: 0, y: 20 }}
-                animate={{ opacity: 1, y: 0 }}
-                transition={{ delay: 1.5, duration: 0.6 }}
-                className="hidden sm:block w-[320px] md:w-[400px]"
-              >
-                {/* Screen */}
-                <div className="bg-[#0f172a] rounded-t-lg border-[3px] border-gray-700 p-3 md:p-4">
-                  {/* Header bar */}
-                  <div className="flex items-center gap-2 mb-3 pb-2 border-b border-white/10">
-                    <div className="w-2 h-2 rounded-full bg-green-500 animate-pulse" />
-                    <span className="text-[10px] md:text-xs font-medium text-white/90">PayTap Business Dashboard</span>
-                  </div>
-                  {/* Stats */}
-                  <div className="grid grid-cols-3 gap-2">
-                    <div className="bg-white/5 rounded-lg p-2 md:p-3 text-center">
-                      <Truck className="w-4 h-4 text-primary mx-auto mb-1" />
-                      <div className="text-white text-sm md:text-base font-bold">10</div>
-                      <div className="text-white/50 text-[8px] md:text-[10px]">Vehicles</div>
-                    </div>
-                    <div className="bg-white/5 rounded-lg p-2 md:p-3 text-center">
-                      <BarChart3 className="w-4 h-4 text-green-400 mx-auto mb-1" />
-                      <div className="text-green-400 text-sm md:text-base font-bold">+₹50,000</div>
-                      <div className="text-white/50 text-[8px] md:text-[10px]">Profit/Loss</div>
-                    </div>
-                    <div className="bg-white/5 rounded-lg p-2 md:p-3 text-center">
-                      <Users className="w-4 h-4 text-accent mx-auto mb-1" />
-                      <div className="text-white text-sm md:text-base font-bold">5</div>
-                      <div className="text-white/50 text-[8px] md:text-[10px]">Teams</div>
-                    </div>
-                  </div>
-                </div>
-                {/* Laptop base */}
-                <div className="h-2 bg-gray-600 rounded-b-lg mx-6" />
-                <div className="h-1 bg-gray-500 rounded-b mx-10" />
-              </motion.div>
             </div>
           </div>
         </div>
