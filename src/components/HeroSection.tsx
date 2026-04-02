@@ -1,5 +1,5 @@
 import { memo } from "react";
-import { ArrowRight, Wifi, BarChart3, CreditCard } from "lucide-react";
+import { ArrowRight, Wifi, BarChart3, CreditCard, Truck, Users } from "lucide-react";
 import { useTranslation } from "react-i18next";
 import { useNavigate } from "react-router-dom";
 import { motion } from "framer-motion";
