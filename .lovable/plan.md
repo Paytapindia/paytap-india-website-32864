@@ -1,34 +1,31 @@
 
 
-## Plan: Add Laptop Dashboard Screen Next to Card in Hero
+## Plan: Reposition Dashboard as Monitor Screen Overlapping Card
 
-### What it does
+### What changes
 
-Add a programmatic laptop mockup below/beside the PayTap card in the right column of the hero section, showing a mini "Business Dashboard" UI with:
-- **Vehicles: 10** 
-- **Profit/Loss: +₹50,000** (green)
-- **Teams: 5**
+Remove the current laptop mockup that sits below the card and replace it with a compact **monitor-style dashboard** positioned at the bottom-right corner of the PayTap card, slightly overlapping it — like a floating monitor screen peeking out from behind the card.
 
 ### File: `src/components/HeroSection.tsx`
 
-1. **Import** `Truck, Users` from lucide-react (already have `BarChart3`)
+1. **Remove the standalone laptop mockup** (lines 178-214) — the full `motion.div` block with screen + base
 
-2. **After the card's closing `</div>` (around line 170)**, add a laptop mockup element:
-   - A container styled as a laptop: rounded-lg dark background (`#0f172a`) with a bezel border, and a small "base" bar beneath it
-   - Hidden on mobile (`hidden sm:block`), positioned below the card with some margin
-   - Inside the "screen": a mini dashboard layout with:
-     - Header bar: "PayTap Business Dashboard" with a green dot
-     - Three stat cards in a row:
-       - 🚛 Vehicles: **10** 
-       - 📈 Profit/Loss: **+₹50,000** (green text)
-       - 👥 Teams: **5**
-   - Animate in with `motion.div` (delay: 1.5s)
+2. **Add a new monitor-style dashboard element** as an `absolute` positioned `motion.div` inside the existing relative container (alongside the other floating elements), placed at the bottom-right of the card:
+   - Position: `absolute -bottom-16 -right-12 sm:-bottom-12 sm:-right-20 z-20`
+   - Styled as a mini monitor: dark background (`#0f172a`), rounded-lg top, thin bezel border, with a small stand/base below
+   - Compact size: `w-[180px] sm:w-[220px] md:w-[260px]`
+   - Inside the "screen":
+     - Thin header bar: green dot + "Business Dashboard" label
+     - 3 KPI cards in a row: Vehicles (10), Profit/Loss (+₹50,000 in green), Teams (5)
+   - Monitor stand: thin centered rectangle below the screen
+   - Animated in with `motion.div` delay 1.5s
+   - Visible on all screen sizes (with tighter sizing on mobile)
 
-3. **Adjust the right column wrapper** to stack the card and laptop vertically with `flex-col` and appropriate gap
+3. **Adjust the existing transaction notification floating element** (lines 91-108) position slightly to avoid overlap with the new monitor
 
-### Visual approach
+4. **Remove `flex-col gap-6`** from the right column wrapper and revert to the original single-card centered layout since the dashboard is now an overlay, not a stacked element
 
-The laptop will be a CSS-only mockup (no images needed) — a rounded rectangle with a darker "screen" area containing the dashboard stats, and a thin trapezoid base beneath. This matches the existing programmatic/engineered aesthetic of the hero section.
+### Visual result
 
-On mobile, the laptop will be hidden to avoid overcrowding (the floating UI elements already fill the space). On tablet/desktop (sm+), it appears below the card.
+The PayTap card stays as the hero visual, with the business dashboard appearing as a small monitor screen overlapping the card's bottom-right corner — similar to the other floating UI chips but larger and styled as a screen. This creates a cohesive, layered composition.
 
