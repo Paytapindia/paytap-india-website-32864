@@ -1,75 +1,39 @@
 
 
-## Plan: Add Charts, AI Card, and Floating Elements to Our Products Section
+## Plan: Move Charts, AI Card, and Stat Card Inside the Laptop Screen
 
 ### File: `src/components/OurProductsSection.tsx`
 
-Complete enhancement of this component. The laptop mockup stays as-is. Below and around it, we add the new elements.
+### Concept
 
-### New Elements
+Instead of the charts and floating cards sitting separately below the laptop, everything will be rendered **inside** the laptop screen as part of the `DashboardMockup` component. The laptop screen will become a scrollable dashboard that includes the existing metrics + fleet overview at the top, and the three charts + AI insight + savings stat below.
 
-**1. Three Chart Cards (Below Laptop, Horizontal Row)**
+### Changes
 
-Using Recharts (already available via `src/components/ui/chart.tsx`):
+**1. Expand `DashboardMockup` to include charts and insights inside it**
 
-- **Profit vs Loss** — Line chart with navy (Revenue) and red (Expenses) lines, 6 months of sample data
-- **Vehicle Utilization** — Bar chart showing Active vs Idle vehicles across categories
-- **Expense Breakdown** — Pie/donut chart with Fuel, Maintenance, Tolls, Misc segments
+After the Fleet Overview section (line 77), add:
+- A row with the AI insight and Savings stat as small inline cards (not floating/absolute)
+- A 3-column grid of mini charts (Profit vs Loss, Vehicle Utilization, Expense Breakdown) using the same recharts components but scaled down to fit inside the laptop
+- A small "Ask Paytap" button in the bottom-right corner of the dashboard
 
-Each in a white card with subtle shadow, title, and the chart. Grid: `grid-cols-1 md:grid-cols-3`. Charts use smooth entry animation via CSS.
+All styled with the dashboard's internal `text-[10px]` scale to look natural inside the screen.
 
-**2. Floating AI Manager Card (Right Side)**
+**2. Remove the external charts + floating elements section (lines 165-255)**
 
-Glassmorphism card positioned absolute on desktop (top-right of chart area):
-- Title: "Paytap AI" with a sparkle/bot icon
-- Sample insight text: "Your fuel expenses increased 12% this week. 2 vehicles are underperforming."
-- Backdrop blur, rounded corners, subtle shadow
-- Gentle floating animation via CSS keyframes
+Delete everything from the `{/* Charts + floating elements */}` div — the chart grid, floating AI card, floating stat card, mobile floating cards, and chatbot button. All of this now lives inside the laptop screen.
 
-**3. Floating Stat Card (Left Side)**
+**3. Remove the standalone `ChartCard`, `AICard`, `StatCard` components (lines 83-125)**
 
-Small card positioned absolute on desktop (left of chart area):
-- "₹38K Saved This Month" with a trending-up icon
-- Same glassmorphism style
-- Balances the AI card visually
+These are no longer needed as separate components. The chart rendering moves inline into `DashboardMockup`.
 
-**4. Chatbot Button (Bottom Right Corner)**
+**4. Remove the fixed `aspect-[16/10]` on the laptop screen (line 155)**
 
-Floating circular button at bottom-right of the section:
-- Chat icon (MessageCircle from lucide)
-- "Ask Paytap" label on hover
-- Smooth scale animation on hover
+Change to `min-h-[300px] md:min-h-[400px]` so the screen can accommodate the additional dashboard content without being cropped.
 
-### Layout Structure
+### Result
 
-```text
-┌──────────────────────────────────┐
-│        Paytap for Business       │
-│   Vehicle Payment & Management   │
-│                                  │
-│      ┌──── Laptop Mockup ────┐   │
-│      │   Dashboard Content   │   │
-│      └───────────────────────┘   │
-│                                  │
-│  ┌─────────── relative ────────┐ │
-│  │ [Stat]                [AI]  │ │
-│  │                             │ │
-│  │ [Chart1] [Chart2] [Chart3]  │ │
-│  │                      [Chat] │ │
-│  └─────────────────────────────┘ │
-└──────────────────────────────────┘
-```
+The laptop screen becomes a rich, scrollable dashboard preview showing metrics, fleet data, charts, AI insights, and a chat button — all contained within the laptop frame. Nothing sits outside the laptop.
 
-On mobile: charts stack vertically, floating cards become inline above/below charts, chatbot button stays fixed.
-
-### Imports Needed
-
-- `LineChart, Line, BarChart, Bar, PieChart, Pie, Cell, XAxis, YAxis, Tooltip, ResponsiveContainer` from `recharts`
-- `MessageCircle, TrendingUp, Sparkles` from `lucide-react`
-
-### CSS Animations
-
-Add a subtle `@keyframes float` animation inline for the AI card (translateY oscillation over 3s).
-
-### Single file change, no other files affected.
+### Single file, one rewrite.
 
