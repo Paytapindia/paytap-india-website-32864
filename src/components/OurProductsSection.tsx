@@ -1,104 +1,108 @@
 import { memo } from "react";
-import { ArrowRight } from "lucide-react";
-import paytapIconTp from "@/assets/paytap-icon-tp.png";
-import myfleetIcon from "@/assets/myfleet-ai-icon.png";
-import { useTranslation } from "react-i18next";
-import { Link } from "react-router-dom";
 
-const products = [
-  {
-    id: 1,
-    name: "MyFleet AI",
-    description: "Automated spend control and reconciliation for fleets. Real-time tracking, route optimization, and intelligent fuel management — all in one platform.",
-    image: myfleetIcon,
-    link: "https://www.myfleetai.in",
-    cta: "Explore MyFleet AI",
-  },
-  {
-    id: 2,
-    name: "ExpensePro",
-    description: "Real-time expense tracking and reimbursement workflows. Automate approvals, enforce policies, and gain full visibility into corporate spending.",
-    image: paytapIconTp,
-    link: "https://expensepro.in/",
-    cta: "Explore ExpensePro",
-  },
-];
+const DashboardMockup = memo(() => (
+  <div className="bg-white rounded-md w-full h-full flex flex-col overflow-hidden text-[10px] md:text-xs">
+    {/* Header bar */}
+    <div className="flex items-center justify-between px-3 md:px-4 py-2 border-b border-gray-100">
+      <div className="flex items-center gap-2">
+        <div className="w-2 h-2 rounded-full bg-green-500" />
+        <span className="font-semibold text-primary text-[10px] md:text-xs">Paytap for Business</span>
+      </div>
+      <div className="flex items-center gap-1.5">
+        <div className="w-5 h-1.5 rounded bg-gray-200" />
+        <div className="w-5 h-5 rounded-full bg-gray-100" />
+      </div>
+    </div>
+
+    {/* Metrics row */}
+    <div className="grid grid-cols-4 gap-2 md:gap-3 px-3 md:px-4 py-3 md:py-4">
+      {[
+        { label: "Total Vehicles", value: "128", color: "text-primary" },
+        { label: "Active Cards", value: "94", color: "text-green-600" },
+        { label: "Monthly Spend", value: "₹4.2L", color: "text-primary" },
+        { label: "Savings", value: "₹38K", color: "text-green-600" },
+      ].map((m) => (
+        <div key={m.label} className="bg-gray-50 rounded-md p-2 md:p-3 text-center">
+          <p className="text-[8px] md:text-[10px] text-gray-500 mb-0.5">{m.label}</p>
+          <p className={`font-bold text-xs md:text-sm ${m.color}`}>{m.value}</p>
+        </div>
+      ))}
+    </div>
+
+    {/* Vehicle cards */}
+    <div className="px-3 md:px-4 pb-3 flex-1">
+      <p className="text-[9px] md:text-[10px] font-semibold text-gray-500 uppercase tracking-wider mb-2">Fleet Overview</p>
+      <div className="space-y-1.5 md:space-y-2">
+        {[
+          { reg: "KA 01 AB 1234", status: "Active", spend: "₹12,400", statusColor: "bg-green-500" },
+          { reg: "MH 02 CD 5678", status: "Active", spend: "₹9,800", statusColor: "bg-green-500" },
+          { reg: "DL 03 EF 9012", status: "Idle", spend: "₹3,200", statusColor: "bg-yellow-500" },
+        ].map((v) => (
+          <div key={v.reg} className="flex items-center justify-between bg-gray-50 rounded px-2 md:px-3 py-1.5 md:py-2">
+            <div className="flex items-center gap-2">
+              <div className={`w-1.5 h-1.5 rounded-full ${v.statusColor}`} />
+              <span className="font-medium text-gray-800">{v.reg}</span>
+            </div>
+            <div className="flex items-center gap-3">
+              <span className="text-gray-500">{v.status}</span>
+              <span className="font-medium text-primary">{v.spend}</span>
+            </div>
+          </div>
+        ))}
+      </div>
+    </div>
+  </div>
+));
+DashboardMockup.displayName = "DashboardMockup";
 
 const OurProductsSection = memo(() => {
-  const { t } = useTranslation();
-
   return (
-    <section id="our-products" className="py-20 md:py-32 px-6 md:px-12 bg-muted/50">
-      <div className="max-w-6xl mx-auto">
-        {/* Section header */}
-        <div className="text-center mb-16 md:mb-24">
-          <h2 className="text-3xl md:text-5xl font-bold text-primary tracking-tight mb-3 md:mb-4">
-            Our Platform Ecosystem
+    <section id="our-products" className="py-24 md:py-36 px-6 md:px-12 bg-muted/30">
+      <div className="max-w-5xl mx-auto">
+        {/* Header */}
+        <div className="text-center mb-12 md:mb-20">
+          <h2 className="text-3xl md:text-5xl font-bold text-primary tracking-tight mb-3">
+            Paytap for Business
           </h2>
-          <p className="text-muted-foreground text-sm md:text-lg max-w-2xl mx-auto">
-            {t('ourProducts.subtitle')}
+          <p className="text-muted-foreground text-sm md:text-lg max-w-xl mx-auto">
+            Vehicle Payment & Management System
           </p>
         </div>
 
-        {/* Products grid */}
-        <div className="grid grid-cols-1 md:grid-cols-2 gap-6 md:gap-10">
-          {products.map((product) => {
-            const isExternal = product.link.startsWith('http');
-            const isInternal = product.link.startsWith('/');
+        {/* Laptop mockup */}
+        <div
+          className="mx-auto max-w-3xl group"
+          style={{ perspective: "1200px" }}
+        >
+          <div
+            className="transition-transform duration-700 ease-out group-hover:translate-y-[-4px]"
+            style={{ transform: "rotateX(4deg)" }}
+          >
+            {/* Screen */}
+            <div className="bg-[#1a1a2e] rounded-t-xl p-[6px] md:p-2 shadow-2xl">
+              {/* Camera dot */}
+              <div className="flex justify-center mb-1">
+                <div className="w-1.5 h-1.5 rounded-full bg-gray-600" />
+              </div>
+              {/* Screen content */}
+              <div className="rounded-sm overflow-hidden aspect-[16/10] bg-white">
+                <DashboardMockup />
+              </div>
+            </div>
 
-            const cardContent = (
-              <>
-                {/* Icon */}
-                <div className="w-14 h-14 md:w-16 md:h-16 rounded-2xl flex items-center justify-center mb-5 md:mb-7 shadow-md overflow-hidden bg-white">
-                  <img src={product.image} alt={product.name} className="w-10 h-10 md:w-11 md:h-11 object-contain" />
-                </div>
+            {/* Hinge / Bottom chin */}
+            <div className="mx-auto w-[90%] h-3 md:h-4 bg-[#2a2a3e] rounded-b-lg" />
+            <div className="mx-auto w-[40%] h-1 bg-[#3a3a4e] rounded-b-md" />
+          </div>
 
-                {/* Product name */}
-                <h3 className="text-xl md:text-3xl font-bold text-primary mb-3 md:mb-5 tracking-tight">
-                  {product.name}
-                </h3>
-
-                {/* Description */}
-                <p className="text-foreground/80 text-sm md:text-base leading-relaxed mb-6 md:mb-8">
-                  {product.description}
-                </p>
-
-                {/* CTA */}
-                <div className="flex items-center text-primary font-semibold text-sm md:text-base group-hover:gap-2 transition-all">
-                  <span>{product.cta}</span>
-                  <ArrowRight className="w-4 h-4 ml-1.5 group-hover:translate-x-1 transition-transform" />
-                </div>
-              </>
-            );
-
-            const cardClassName = "group text-left bg-background border border-primary/[0.08] rounded-2xl p-6 md:p-12 shadow-sm hover:shadow-lg hover:border-primary/[0.15] hover:-translate-y-0.5 transition-all duration-300";
-
-            if (isInternal) {
-              return (
-                <Link key={product.id} to={product.link} className={cardClassName}>
-                  {cardContent}
-                </Link>
-              );
-            }
-
-            return (
-              <a
-                key={product.id}
-                href={product.link}
-                target={isExternal ? "_blank" : undefined}
-                rel={isExternal ? "noopener noreferrer" : undefined}
-                className={cardClassName}
-              >
-                {cardContent}
-              </a>
-            );
-          })}
+          {/* Shadow */}
+          <div className="mx-auto w-[70%] h-4 mt-2 bg-black/[0.08] rounded-full blur-xl" />
         </div>
       </div>
     </section>
   );
 });
 
-OurProductsSection.displayName = 'OurProductsSection';
+OurProductsSection.displayName = "OurProductsSection";
 
 export default OurProductsSection;
