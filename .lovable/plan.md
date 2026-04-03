@@ -1,22 +1,29 @@
 
 
-## Plan: Add Time to Date Display in Admin Panel
+## Plan: Replace "NFC Tap Detected" with "AI Manager"
 
-### Changes
+### File: `src/components/HeroSection.tsx`
 
-Update the date format from `'MMM d, yyyy'` to `'MMM d, yyyy, hh:mm a'` in three files:
+**Lines ~68-78** — Replace the NFC floating element:
 
-**1. `src/pages/admin/AdminLeads.tsx` (line 83)**
-Change: `format(new Date(lead.created_at), 'MMM d, yyyy')` → `format(new Date(lead.created_at), 'MMM d, yyyy, hh:mm a')`
+- Remove the green pulse dot and `Wifi` icon
+- Add `Sparkles` icon from lucide-react (AI icon)
+- Change text from "NFC Tap Detected" to "AI Manager"
 
-**2. `src/pages/admin/AdminOrders.tsx` (line 168)**
-Change: `format(new Date(order.created_at), 'MMM d, yyyy')` → `format(new Date(order.created_at), 'MMM d, yyyy, hh:mm a')`
+Change:
+```tsx
+<div className="w-1.5 h-1.5 sm:w-2 sm:h-2 rounded-full bg-green-500 animate-pulse" />
+<Wifi className="w-3 h-3 sm:w-4 sm:h-4 text-primary" />
+<span className="...">NFC Tap Detected</span>
+```
 
-**3. `src/pages/admin/AdminUsers.tsx` (line 83)**
-Change: `format(new Date(user.created_at), 'MMM d, yyyy')` → `format(new Date(user.created_at), 'MMM d, yyyy, hh:mm a')`
+To:
+```tsx
+<Sparkles className="w-3 h-3 sm:w-4 sm:h-4 text-primary" />
+<span className="...">AI Manager</span>
+```
 
-### Result
-Dates will display like: **Apr 3, 2026, 02:45 PM** instead of just **Apr 3, 2026**.
+Also update imports: replace `Wifi` with `Sparkles` (remove `Wifi` if unused elsewhere).
 
-Three files, one-line change each.
+Single file, two small edits.
 
