@@ -1,22 +1,22 @@
 
 
-## Plan: Style AMC Text to Match Trust Icons Row
+## Plan: Replace MyFleet & ExpensePro with "Business Management Dashboard" in Solutions Nav
 
-### File: `src/pages/Checkout.tsx` (lines 764-767)
+### File: `src/components/Navbar.tsx`
 
-### Change
+### Changes
 
-Replace the standalone highlighted `<p>` tag with a `<span>` inside the existing trust icons flex container, matching the exact same styling (`text-xs text-muted-foreground`, icon `w-3.5 h-3.5 text-accent`). Use the `Wrench` icon (service icon) from lucide-react.
+**1. Desktop Solutions dropdown (lines 122-158)**
+Replace the two list items (MyFleet AI + ExpensePro) with a single item:
+- Label: "Business Management Dashboard"
+- Subtitle: "Manage your business operations"
+- Links to: `https://dashboard.myfleetai.in/login` (opens in new tab)
 
-**Delete lines 764-767** (the closing `</div>` and the `<p>` block), and **add a new span inside the trust flex container** (before the closing `</div>` on line 764):
+**2. Mobile Solutions section (lines 331-355)**
+Replace the "Ecosystem" header and two links (MyFleet + ExpensePro) with a single link:
+- Label: "Business Management Dashboard"
+- Same destination: `https://dashboard.myfleetai.in/login`
+- Remove the "Ecosystem" sub-header since there's only one item now
 
-```tsx
-<span className="flex items-center gap-1.5">
-  <Wrench className="w-3.5 h-3.5 text-accent" /> ₹249/Year/Vehicle AMC Included
-</span>
-```
-
-Also ensure `Wrench` is imported from `lucide-react` at the top.
-
-Single file, two edits (import + content).
+Two sections updated in one file.
 
