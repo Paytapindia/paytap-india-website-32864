@@ -1,21 +1,33 @@
 
 
-## Plan: Remove All MyFleet AI References from Newsroom and Press
+## Plan: Move "Try for Free" Button Next to Trial Pack Name
 
-### Files to edit
+### File: `src/pages/Checkout.tsx`
 
-**1. `src/pages/Newsroom.tsx`**
+### Changes
 
-- **pressArticles array (lines 19-27)**: Remove the MyFleet AI article entry (DailyHunt, March 4, 2026, "MyFleet AI Builds India's First Vehicle-Level Financial Operating System for Fleet Owners")
-- **featuredArticles array (lines 166-172)**: Remove the third featured article about MyFleet AI
+**1. Remove the button from the price column (lines 430-441)**
+Delete the `{key === 'starter' && (...)}` block from inside the price `<div>`.
 
-**2. `src/components/PressSection.tsx`**
+**2. Add the button next to the plan name (after line 417)**
+Insert inside the `flex items-center gap-2` div (line 404), after the driver cards badge:
 
-- **pressArticles array (lines 8-9)**: Remove the first entry `{ publication: "DailyHunt (MyFleet AI)", url: "..." }` 
-- **featuredArticles array (lines 47-53)**: Remove the third featured article about MyFleet AI
+```tsx
+{key === 'starter' && (
+  <button
+    type="button"
+    onClick={(e) => {
+      e.stopPropagation();
+      window.open('https://dashboard.myfleetai.in/login', '_blank');
+    }}
+    className="inline-flex items-center px-2.5 py-0.5 text-[10px] font-semibold rounded-full bg-green-500/10 text-green-600 hover:bg-green-500/20 transition-colors"
+  >
+    Click here for Free Access →
+  </button>
+)}
+```
 
-### What stays
-All RuPay NFC Tag and Contactless Payment articles remain unchanged. Only entries explicitly about "MyFleet AI" are removed.
+The button uses the same sizing/style as the other badges (POPULAR, Driver Cards) so it sits inline naturally.
 
-### Two files, four deletions total.
+Single file, two edits.
 
