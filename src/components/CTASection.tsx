@@ -36,6 +36,12 @@ const CTASection = memo(() => {
           <span>✓ Built for compliance and scale</span>
         </div>
       </div>
+
+      <PhoneGateDialog
+        open={showPhoneGate}
+        onOpenChange={setShowPhoneGate}
+        onProceed={() => navigate('/checkout')}
+      />
     </section>
   );
 });
