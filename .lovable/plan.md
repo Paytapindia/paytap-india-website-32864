@@ -1,46 +1,21 @@
 
 
-## Plan: Replace Ecosystem Section with Premium Laptop Dashboard Showcase
+## Plan: Remove All MyFleet AI References from Newsroom and Press
 
-### Overview
+### Files to edit
 
-Remove the MyFleet AI and ExpensePro product cards from `OurProductsSection` and replace the entire section with a premium laptop mockup displaying a Paytap for Business dashboard screenshot.
+**1. `src/pages/Newsroom.tsx`**
 
-### File: `src/components/OurProductsSection.tsx`
+- **pressArticles array (lines 19-27)**: Remove the MyFleet AI article entry (DailyHunt, March 4, 2026, "MyFleet AI Builds India's First Vehicle-Level Financial Operating System for Fleet Owners")
+- **featuredArticles array (lines 166-172)**: Remove the third featured article about MyFleet AI
 
-Complete rewrite of this component:
+**2. `src/components/PressSection.tsx`**
 
-**Header:**
-- Title: "Paytap for Business"
-- Subtitle: "Vehicle Payment & Management System"
-- Centered, clean typography
+- **pressArticles array (lines 8-9)**: Remove the first entry `{ publication: "DailyHunt (MyFleet AI)", url: "..." }` 
+- **featuredArticles array (lines 47-53)**: Remove the third featured article about MyFleet AI
 
-**Laptop Mockup (CSS-only, no image dependency):**
-- MacBook-style frame built with divs: thin dark bezel, rounded corners, bottom chin/hinge
-- Slight 3D perspective transform (`perspective + rotateX`) for angled view
-- Soft drop shadow for floating effect
-- Optional very slow hover animation (subtle Y translate)
+### What stays
+All RuPay NFC Tag and Contactless Payment articles remain unchanged. Only entries explicitly about "MyFleet AI" are removed.
 
-**Inside the laptop screen:**
-- A programmatic dashboard UI (similar approach to the Hero's monitor mockup but larger/fuller):
-  - "Paytap for Business" header bar with green status dot
-  - Fleet overview metrics row (Total Vehicles, Active Cards, Monthly Spend, Savings)
-  - Vehicle cards grid showing sample entries (registration, status, last transaction)
-  - Clean white background, uses brand colors
-- No mention of MyFleet AI or ExpensePro anywhere
-
-**Section styling:**
-- Background: `bg-muted/30` or subtle light gradient
-- Generous padding: `py-24 md:py-36`
-- Everything centered, max-width container
-- No clutter, no floating elements, no extra UI
-
-### Removed
-- `myfleet-ai-icon.png` import
-- `paytap-icon-tp.png` import
-- All product card grid code
-- Products array
-
-### No other files need changes
-The component is already lazy-loaded in `Index.tsx` and the import path stays the same.
+### Two files, four deletions total.
 
