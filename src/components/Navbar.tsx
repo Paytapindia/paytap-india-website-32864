@@ -312,26 +312,14 @@ const Navbar = memo(() => {
               </button>
               {expandedMobileSection === 'solutions' && (
                 <div className="pb-2 space-y-1">
-                  <div className="border-t border-gray-100 mt-2 pt-2 mx-4">
-                    <span className="text-xs text-gray-400 uppercase tracking-wide">Ecosystem</span>
-                  </div>
                   <a 
-                    href="https://www.myfleetai.in" 
+                    href="https://dashboard.myfleetai.in/login" 
                     target="_blank"
                     rel="noopener noreferrer"
                     className="block text-sm text-gray-600 hover:text-paytap-dark py-2 px-4 ml-2"
                     onClick={handleNavClick}
                   >
-                    {t('nav.myfleetAi')}
-                  </a>
-                  <a 
-                    href="https://expensepro.in/" 
-                    target="_blank"
-                    rel="noopener noreferrer"
-                    className="block text-sm text-gray-600 hover:text-paytap-dark py-2 px-4 ml-2"
-                    onClick={handleNavClick}
-                  >
-                    {t('nav.expensePro')}
+                    Business Management Dashboard
                   </a>
                 </div>
               )}
