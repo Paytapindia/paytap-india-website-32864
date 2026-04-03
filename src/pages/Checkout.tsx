@@ -7,7 +7,7 @@ import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { useToast } from "@/hooks/use-toast";
 import { useNavigate } from "react-router-dom";
-import { Loader2, Check, Lock, Home, CheckCircle, Download, XCircle, Shield, Truck, FileText, ChevronDown, MapPin, Star } from "lucide-react";
+import { Loader2, Check, Lock, Home, CheckCircle, Download, XCircle, Shield, Truck, FileText, ChevronDown, MapPin, Star, Wrench } from "lucide-react";
 import { generateInvoice, type InvoiceData } from "@/lib/generateInvoice";
 import { Dialog, DialogContent, DialogHeader, DialogTitle, DialogDescription } from "@/components/ui/dialog";
 import { supabase } from "@/integrations/supabase/client";
@@ -761,10 +761,10 @@ const Checkout = () => {
                       <span className="flex items-center gap-1.5">
                         <FileText className="w-3.5 h-3.5 text-accent" /> GST invoice provided
                       </span>
+                      <span className="flex items-center gap-1.5">
+                        <Wrench className="w-3.5 h-3.5 text-accent" /> ₹249/Year/Vehicle AMC Included
+                      </span>
                     </div>
-                    <p className="text-center text-sm font-semibold text-accent mt-3">
-                      ₹249/Year/Vehicle AMC Included
-                    </p>
                   </div>
                 </motion.div>
               </div>
