@@ -1,21 +1,22 @@
 
 
-## Plan: Make Language Globe Icon White on Mobile
+## Plan: Add Time to Date Display in Admin Panel
 
-### File: `src/components/LanguageSelector.tsx`
+### Changes
 
-**Line 36** — Add `text-white` to the Button className:
+Update the date format from `'MMM d, yyyy'` to `'MMM d, yyyy, hh:mm a'` in three files:
 
-Change:
-```tsx
-className="h-9 w-9 p-0 hover:bg-gray-100"
-```
-To:
-```tsx
-className="h-9 w-9 p-0 hover:bg-white/10 text-white"
-```
+**1. `src/pages/admin/AdminLeads.tsx` (line 83)**
+Change: `format(new Date(lead.created_at), 'MMM d, yyyy')` → `format(new Date(lead.created_at), 'MMM d, yyyy, hh:mm a')`
 
-This makes the Globe icon white (visible on the dark navbar) and also fixes the hover background to be subtle on dark backgrounds instead of gray.
+**2. `src/pages/admin/AdminOrders.tsx` (line 168)**
+Change: `format(new Date(order.created_at), 'MMM d, yyyy')` → `format(new Date(order.created_at), 'MMM d, yyyy, hh:mm a')`
 
-Single line change, one file.
+**3. `src/pages/admin/AdminUsers.tsx` (line 83)**
+Change: `format(new Date(user.created_at), 'MMM d, yyyy')` → `format(new Date(user.created_at), 'MMM d, yyyy, hh:mm a')`
+
+### Result
+Dates will display like: **Apr 3, 2026, 02:45 PM** instead of just **Apr 3, 2026**.
+
+Three files, one-line change each.
 
