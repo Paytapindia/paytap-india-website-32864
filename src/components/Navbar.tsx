@@ -460,7 +460,7 @@ const Navbar = memo(() => {
               <Building2 className="w-5 h-5 shrink-0" />
               <div className="text-left">
                 <div className="font-semibold text-sm">Business Login</div>
-                <div className="text-xs text-muted-foreground"><div className="text-xs text-muted-foreground">Vehicle Management Dashboard (Free Sign-Up)</div></div>
+                <div className="text-xs text-muted-foreground">Management Dashboard</div>
               </div>
             </button>
           </div>
