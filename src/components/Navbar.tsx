@@ -330,13 +330,22 @@ const Navbar = memo(() => {
               {expandedMobileSection === 'solutions' && (
                 <div className="pb-2 space-y-1">
                   <a 
-                    href="https://dashboard.myfleetai.in/login" 
+                    href="https://dashboard.paytap.co.in/login" 
                     target="_blank"
                     rel="noopener noreferrer"
                     className="block text-sm text-gray-600 hover:text-paytap-dark py-2 px-4 ml-2"
                     onClick={handleNavClick}
                   >
-                    Business Management Dashboard
+                    Paytap Vehicle Payment System
+                  </a>
+                  <a 
+                    href="https://dashboard.myfleetai.in/" 
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    className="block text-sm text-gray-600 hover:text-paytap-dark py-2 px-4 ml-2"
+                    onClick={handleNavClick}
+                  >
+                    Paytap Vehicle Management System
                   </a>
                 </div>
               )}
