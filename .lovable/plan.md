@@ -1,23 +1,34 @@
 
 
-## Plan: Refine Business Dashboard Monitor in Hero
+## Plan: Phone Capture Gate for Checkout + "Try for Free" on Trial Pack
 
-### File: `src/components/HeroSection.tsx` (lines 110-146)
+### What it does
 
-### Changes
+1. **Phone number popup before checkout**: When user clicks "Activate Paytap Platform" (in HeroSection or CTASection), a Dialog appears asking for their phone number. Only after entering a valid 10-digit number and clicking "Proceed", the lead is saved to the `leads` table and the user is navigated to `/checkout`.
 
-1. **Reduce size** — Scale down the monitor to feel like a compact laptop screen:
-   - `w-[150px] sm:w-[180px] md:w-[210px]` (from 180/220/260)
-   - Tighter padding: `p-1.5 sm:p-2 md:p-2.5`
+2. **"Try for Free" button on Trial Pack**: In the checkout plan list, the Trial Pack row gets an additional "Try for Free" button that opens `https://dashboard.myfleetai.in/login` in a new tab (instead of proceeding to payment).
 
-2. **White background** — Change screen from `bg-[#0f172a]` to `bg-white`, border from `border-gray-600` to `border-gray-300`
+---
 
-3. **Update text/icon colors** for white background:
-   - Header text: `text-gray-700` (was `text-white/90`), border: `border-gray-200` (was `border-white/10`)
-   - KPI cards: `bg-gray-50` background, value text `text-gray-900`, label text `text-gray-500`
-   - Profit/Loss stays `text-green-500`
+### Files to change
 
-4. **Switch KPIs to list view** — Replace the `grid grid-cols-3` with a vertical stack (`space-y-1`), each row as a horizontal flex with icon + label on left, value on right — more compact and readable at small size
+**1. New component: `src/components/PhoneGateDialog.tsx`**
+- A reusable Dialog component with:
+  - Phone number input (same validation as LoginPopup: 10-digit Indian mobile)
+  - "Proceed" button (disabled until valid phone entered)
+  - On submit: save lead to `leads` table (source: `"checkout_gate"`), then call `onProceed()` callback
+- Props: `open`, `onOpenChange`, `onProceed`
 
-5. **Adjust stand colors** to lighter gray (`bg-gray-400`, `bg-gray-300`) to match the white aesthetic
+**2. `src/components/CTASection.tsx`**
+- Import `PhoneGateDialog` and add state for dialog open/close
+- On "Activate Paytap Platform" click → open dialog instead of navigating
+- On dialog proceed → `navigate('/checkout')`
+
+**3. `src/components/HeroSection.tsx`**
+- Same pattern: import `PhoneGateDialog`, open dialog on button click, navigate on proceed
+
+**4. `src/pages/Checkout.tsx` (lines ~370-435)**
+- In the Trial Pack plan row, add a "Try for Free" button next to the price
+- Clicking it opens `https://dashboard.myfleetai.in/login` in a new tab
+- Only shown for the `starter` plan key
 
