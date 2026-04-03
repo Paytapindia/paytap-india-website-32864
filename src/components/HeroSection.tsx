@@ -1,5 +1,5 @@
 import { memo, useState } from "react";
-import { ArrowRight, Wifi, BarChart3, CreditCard, Truck, Users } from "lucide-react";
+import { ArrowRight, Sparkles, BarChart3, CreditCard, Truck, Users } from "lucide-react";
 import { useTranslation } from "react-i18next";
 import { useNavigate } from "react-router-dom";
 import { motion } from "framer-motion";
@@ -70,9 +70,8 @@ const HeroSection = memo(() => {
                   className="bg-card/90 backdrop-blur-sm px-2.5 py-1.5 sm:px-4 sm:py-2.5 rounded-xl border border-border/50 flex items-center gap-2"
                   style={{ boxShadow: '0 8px 24px rgba(0,0,0,0.06)' }}
                 >
-                  <div className="w-1.5 h-1.5 sm:w-2 sm:h-2 rounded-full bg-green-500 animate-pulse" />
-                  <Wifi className="w-3 h-3 sm:w-4 sm:h-4 text-primary" />
-                  <span className="text-[10px] sm:text-xs font-medium text-foreground whitespace-nowrap">NFC Tap Detected</span>
+                  <Sparkles className="w-3 h-3 sm:w-4 sm:h-4 text-primary" />
+                   <span className="text-[10px] sm:text-xs font-medium text-foreground whitespace-nowrap">AI Manager</span>
                 </div>
               </motion.div>
 
