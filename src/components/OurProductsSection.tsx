@@ -179,6 +179,9 @@ const OurProductsSection = memo(() => (
         <p className="text-muted-foreground text-sm md:text-lg max-w-xl mx-auto">
           Vehicle Payment & Management System
         </p>
+        <p className="text-muted-foreground/70 text-xs md:text-sm max-w-md mx-auto mt-2 italic">
+          "Manage Your Vehicles Like You Manage Your Business."
+        </p>
       </div>
 
       {/* Laptop mockup */}
