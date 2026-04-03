@@ -180,7 +180,7 @@ const OurProductsSection = memo(() => (
           Vehicle Payment & Management System
         </p>
         <p className="text-muted-foreground/70 text-xs md:text-sm max-w-md mx-auto mt-2 italic">
-          "Manage Your Vehicles Like You Manage Your Business."
+          "Turn Every Vehicle Into an Accountable Asset."
         </p>
       </div>
 
