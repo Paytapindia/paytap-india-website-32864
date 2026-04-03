@@ -80,7 +80,7 @@ const AdminUsers = () => {
                   <TableCell>{user.company_name}</TableCell>
                   <TableCell className="text-muted-foreground">{user.contact_mobile}</TableCell>
                   <TableCell className="hidden md:table-cell text-muted-foreground">{user.gst_no || '—'}</TableCell>
-                  <TableCell className="text-muted-foreground text-xs">{format(new Date(user.created_at), 'MMM d, yyyy')}</TableCell>
+                  <TableCell className="text-muted-foreground text-xs"><TableCell className="text-muted-foreground text-xs">{format(new Date(user.created_at), 'MMM d, yyyy, hh:mm a')}</TableCell></TableCell>
                 </TableRow>
               ))}
             </TableBody>

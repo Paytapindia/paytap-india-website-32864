@@ -80,7 +80,7 @@ const AdminLeads = () => {
                   <TableCell>
                     <span className="px-2 py-0.5 rounded-full text-xs bg-muted text-muted-foreground">{lead.source || 'website'}</span>
                   </TableCell>
-                  <TableCell className="text-muted-foreground text-xs">{format(new Date(lead.created_at), 'MMM d, yyyy')}</TableCell>
+                  <TableCell className="text-muted-foreground text-xs">{format(new Date(lead.created_at), 'MMM d, yyyy, hh:mm a')}</TableCell>
                 </TableRow>
               ))}
             </TableBody>
