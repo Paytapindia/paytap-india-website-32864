@@ -491,12 +491,17 @@ const Checkout = () => {
                 </p>
               )}
 
-              <div className="flex items-center justify-between mt-5 pt-4 border-t border-primary-foreground/10">
-                <div className="flex items-center gap-2 text-xs text-primary-foreground/50">
-                  <Truck className="w-4 h-4" />
-                  <span>Vehicle Tag Delivery: 3–5 Business Days</span>
+              <div className="flex flex-col gap-1.5 mt-5 pt-4 border-t border-primary-foreground/10">
+                <div className="flex items-center justify-between">
+                  <div className="flex items-center gap-2 text-xs text-primary-foreground/50">
+                    <Truck className="w-4 h-4" />
+                    <span>Vehicle Tag Delivery: 3–5 Business Days</span>
+                  </div>
+                  <span className="text-2xl font-bold">{formatINR(total)}</span>
                 </div>
-                <span className="text-2xl font-bold">{formatINR(total)}</span>
+                <p className="text-xs text-primary-foreground/70">
+                  You are paying one time Activation Fee
+                </p>
               </div>
             </motion.div>
 
