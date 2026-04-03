@@ -244,6 +244,11 @@ const Navbar = memo(() => {
                   </ul>
                 </NavigationMenuContent>
               </NavigationMenuItem>
+              <NavigationMenuItem>
+                <Link to="/checkout" className="text-sm font-medium text-white/80 hover:text-white transition-colors px-3 py-2">
+                  Pricing
+                </Link>
+              </NavigationMenuItem>
             </NavigationMenuList>
           </NavigationMenu>
         </nav>
