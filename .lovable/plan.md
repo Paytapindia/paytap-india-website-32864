@@ -1,18 +1,21 @@
 
 
-## Plan: Add Tagline Below "Vehicle Payment & Management System"
+## Plan: Make Language Globe Icon White on Mobile
 
-### File: `src/components/OurProductsSection.tsx`
+### File: `src/components/LanguageSelector.tsx`
 
-### Change
+**Line 36** — Add `text-white` to the Button className:
 
-Add a new `<p>` tag after line 181 (after the "Vehicle Payment & Management System" subtitle):
-
+Change:
 ```tsx
-<p className="text-muted-foreground/70 text-xs md:text-sm max-w-md mx-auto mt-2 italic">
-  "Manage Your Vehicles Like You Manage Your Business."
-</p>
+className="h-9 w-9 p-0 hover:bg-gray-100"
+```
+To:
+```tsx
+className="h-9 w-9 p-0 hover:bg-white/10 text-white"
 ```
 
-Single line addition, one file.
+This makes the Globe icon white (visible on the dark navbar) and also fixes the hover background to be subtle on dark backgrounds instead of gray.
+
+Single line change, one file.
 
