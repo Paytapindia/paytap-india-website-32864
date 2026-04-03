@@ -33,7 +33,7 @@ const LanguageSelector = () => {
         <Button
           variant="ghost"
           size="sm"
-          className="h-9 w-9 p-0 hover:bg-gray-100"
+          className="h-9 w-9 p-0 hover:bg-white/10 text-white"
           aria-label="Select Language"
         >
           <Globe className="h-4 w-4" />
