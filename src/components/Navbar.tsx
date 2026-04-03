@@ -244,6 +244,11 @@ const Navbar = memo(() => {
                   </ul>
                 </NavigationMenuContent>
               </NavigationMenuItem>
+              <NavigationMenuItem>
+                <Link to="/checkout" className="text-sm font-medium text-white/80 hover:text-white transition-colors px-3 py-2">
+                  Pricing
+                </Link>
+              </NavigationMenuItem>
             </NavigationMenuList>
           </NavigationMenu>
         </nav>
@@ -399,6 +404,13 @@ const Navbar = memo(() => {
                   </Link>
                 </div>
               )}
+            </div>
+
+            {/* Pricing Link */}
+            <div className="border-b border-gray-100">
+              <Link to="/checkout" className="block py-3 px-2 text-base font-medium text-gray-700" onClick={handleNavClick}>
+                Pricing
+              </Link>
             </div>
 
             {/* Platform Login Button */}
