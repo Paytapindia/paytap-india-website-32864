@@ -415,6 +415,18 @@ const Checkout = () => {
                                 +{driverCards} Driver Card{driverCards > 1 ? 's' : ''}
                               </span>
                             )}
+                            {key === 'starter' && (
+                              <button
+                                type="button"
+                                onClick={(e) => {
+                                  e.stopPropagation();
+                                  window.open('https://dashboard.myfleetai.in/login', '_blank');
+                                }}
+                                className="inline-flex items-center px-2.5 py-0.5 text-[10px] font-semibold rounded-full bg-green-500/10 text-green-600 hover:bg-green-500/20 transition-colors"
+                              >
+                                Click here for Free Access →
+                              </button>
+                            )}
                           </div>
                           <p className="text-sm text-muted-foreground mt-0.5">
                             {p.tags} vehicle{p.tags > 1 ? 's' : ''}
