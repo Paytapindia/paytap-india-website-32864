@@ -165,7 +165,7 @@ const AdminOrders = () => {
                       <option value="success">success</option>
                     </select>
                   </TableCell>
-                  <TableCell className="hidden md:table-cell text-muted-foreground text-xs">{format(new Date(order.created_at), 'MMM d, yyyy')}</TableCell>
+                  <TableCell className="hidden md:table-cell text-muted-foreground text-xs"><TableCell className="hidden md:table-cell text-muted-foreground text-xs">{format(new Date(order.created_at), 'MMM d, yyyy, hh:mm a')}</TableCell></TableCell>
                   <TableCell>
                     <div className="flex gap-1">
                       <Button variant="ghost" size="sm" onClick={() => setSelectedOrder(order)}>
