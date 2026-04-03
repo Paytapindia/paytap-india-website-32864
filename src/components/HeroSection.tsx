@@ -1,13 +1,15 @@
-import { memo } from "react";
+import { memo, useState } from "react";
 import { ArrowRight, Wifi, BarChart3, CreditCard, Truck, Users } from "lucide-react";
 import { useTranslation } from "react-i18next";
 import { useNavigate } from "react-router-dom";
 import { motion } from "framer-motion";
 import paytapCardLogo from "@/assets/paytap-card-logo.png";
+import PhoneGateDialog from "@/components/PhoneGateDialog";
 
 const HeroSection = memo(() => {
   const { t } = useTranslation();
   const navigate = useNavigate();
+  const [showPhoneGate, setShowPhoneGate] = useState(false);
 
   return (
     <section
@@ -31,7 +33,7 @@ const HeroSection = memo(() => {
             {/* CTA Button */}
             <div className="flex justify-center lg:justify-start mb-4">
               <button
-                onClick={() => navigate('/checkout')}
+                onClick={() => setShowPhoneGate(true)}
                 className="inline-flex items-center gap-3 text-accent-foreground px-10 py-5 rounded-[14px] text-lg md:text-xl font-semibold transition-all duration-300 group bg-accent hover:brightness-95"
                 style={{
                   boxShadow: '0 12px 36px rgba(246,36,91,0.28)',
@@ -47,6 +49,11 @@ const HeroSection = memo(() => {
               Works for personal vehicles, businesses, and fleet operators across India.
             </p>
 
+            <PhoneGateDialog
+              open={showPhoneGate}
+              onOpenChange={setShowPhoneGate}
+              onProceed={() => navigate('/checkout')}
+            />
           </div>
 
           {/* Right Column — Card + Floating UI Elements */}

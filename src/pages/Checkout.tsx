@@ -422,11 +422,23 @@ const Checkout = () => {
                         </div>
 
                         {/* Price */}
-                        <div className="text-right flex-shrink-0">
+                        <div className="text-right flex-shrink-0 flex flex-col items-end gap-1">
                           <span className={`text-xl md:text-2xl font-bold ${isSelected ? 'text-foreground' : 'text-foreground/70'}`}>
                             {formatINR(p.price)}
                           </span>
                           <p className="text-[10px] text-muted-foreground/60 mt-0.5">incl. GST</p>
+                          {key === 'starter' && (
+                            <button
+                              type="button"
+                              onClick={(e) => {
+                                e.stopPropagation();
+                                window.open('https://dashboard.myfleetai.in/login', '_blank');
+                              }}
+                              className="mt-1 px-3 py-1 text-xs font-semibold rounded-full bg-green-500/10 text-green-600 hover:bg-green-500/20 transition-colors"
+                            >
+                              Try for Free →
+                            </button>
+                          )}
                         </div>
                       </div>
                     </motion.button>
