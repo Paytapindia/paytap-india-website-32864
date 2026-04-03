@@ -462,7 +462,7 @@ const Checkout = () => {
               <ul className="space-y-2.5 text-sm text-primary-foreground/80">
                 <li className="flex items-center gap-2">
                   <CheckCircle className="w-4 h-4 text-accent flex-shrink-0" />
-                  {plan.tags} Paytap Tag{plan.tags > 1 ? 's' : ''} Free
+                  {plan.tags} Paytap Payment Tag{plan.tags > 1 ? 's' : ''} (Free)
                 </li>
                 {getDriverCards(selectedPlan) > 0 && (
                   <li className="flex items-center gap-2">
@@ -472,15 +472,15 @@ const Checkout = () => {
                 )}
                 <li className="flex items-center gap-2">
                   <CheckCircle className="w-4 h-4 text-accent flex-shrink-0" />
-                  Access to Myfleet AI
-                </li>
-                <li className="flex items-center gap-2">
-                  <CheckCircle className="w-4 h-4 text-accent flex-shrink-0" />
-                  Access to ExpensePro
+                  Access to {plan.name}
                 </li>
                 <li className="flex items-center gap-2">
                   <CheckCircle className="w-4 h-4 text-accent flex-shrink-0" />
                   Instant Account Activation
+                </li>
+                <li className="flex items-center gap-2">
+                  <CheckCircle className="w-4 h-4 text-accent flex-shrink-0" />
+                  Dedicated Support
                 </li>
               </ul>
 
