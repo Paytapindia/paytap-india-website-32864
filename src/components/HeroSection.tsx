@@ -1,13 +1,15 @@
-import { memo } from "react";
+import { memo, useState } from "react";
 import { ArrowRight, Wifi, BarChart3, CreditCard, Truck, Users } from "lucide-react";
 import { useTranslation } from "react-i18next";
 import { useNavigate } from "react-router-dom";
 import { motion } from "framer-motion";
 import paytapCardLogo from "@/assets/paytap-card-logo.png";
+import PhoneGateDialog from "@/components/PhoneGateDialog";
 
 const HeroSection = memo(() => {
   const { t } = useTranslation();
   const navigate = useNavigate();
+  const [showPhoneGate, setShowPhoneGate] = useState(false);
 
   return (
     <section
