@@ -123,16 +123,33 @@ const Navbar = memo(() => {
                     <li>
                       <NavigationMenuLink asChild>
                         <a
-                          href="https://dashboard.myfleetai.in/login"
+                          href="https://dashboard.paytap.co.in/login"
                           target="_blank"
                           rel="noopener noreferrer"
                           className="block select-none space-y-1 rounded-md p-3 leading-none no-underline outline-none transition-colors hover:bg-accent hover:text-accent-foreground focus:bg-accent focus:text-accent-foreground"
                         >
                           <div className="text-sm font-medium leading-none">
-                            Business Management Dashboard
+                            Paytap Vehicle Payment System
                           </div>
                           <p className="line-clamp-2 text-sm leading-snug text-muted-foreground">
-                            Manage your business operations
+                            Payment & billing platform
+                          </p>
+                        </a>
+                      </NavigationMenuLink>
+                    </li>
+                    <li>
+                      <NavigationMenuLink asChild>
+                        <a
+                          href="https://dashboard.myfleetai.in/"
+                          target="_blank"
+                          rel="noopener noreferrer"
+                          className="block select-none space-y-1 rounded-md p-3 leading-none no-underline outline-none transition-colors hover:bg-accent hover:text-accent-foreground focus:bg-accent focus:text-accent-foreground"
+                        >
+                          <div className="text-sm font-medium leading-none">
+                            Paytap Vehicle Management System
+                          </div>
+                          <p className="line-clamp-2 text-sm leading-snug text-muted-foreground">
+                            Fleet & vehicle management
                           </p>
                         </a>
                       </NavigationMenuLink>
@@ -313,13 +330,22 @@ const Navbar = memo(() => {
               {expandedMobileSection === 'solutions' && (
                 <div className="pb-2 space-y-1">
                   <a 
-                    href="https://dashboard.myfleetai.in/login" 
+                    href="https://dashboard.paytap.co.in/login" 
                     target="_blank"
                     rel="noopener noreferrer"
                     className="block text-sm text-gray-600 hover:text-paytap-dark py-2 px-4 ml-2"
                     onClick={handleNavClick}
                   >
-                    Business Management Dashboard
+                    Paytap Vehicle Payment System
+                  </a>
+                  <a 
+                    href="https://dashboard.myfleetai.in/" 
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    className="block text-sm text-gray-600 hover:text-paytap-dark py-2 px-4 ml-2"
+                    onClick={handleNavClick}
+                  >
+                    Paytap Vehicle Management System
                   </a>
                 </div>
               )}
