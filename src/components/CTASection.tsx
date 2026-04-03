@@ -1,17 +1,15 @@
 
-import { memo } from "react";
+import { memo, useState } from "react";
 import { Button } from "@/components/ui/button";
 import { ArrowRight } from "lucide-react";
 import { useTranslation } from "react-i18next";
 import { useNavigate } from "react-router-dom";
+import PhoneGateDialog from "@/components/PhoneGateDialog";
 
 const CTASection = memo(() => {
   const { t } = useTranslation();
-  
   const navigate = useNavigate();
-  const handleRedirect = () => {
-    navigate('/checkout');
-  };
+  const [showPhoneGate, setShowPhoneGate] = useState(false);
   
   return (
     <section id="cta" className="py-16 md:py-32 px-6 md:px-12 bg-paytap-navy text-white">
