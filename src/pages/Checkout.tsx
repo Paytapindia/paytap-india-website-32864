@@ -484,14 +484,6 @@ const Checkout = () => {
                 </li>
               </ul>
 
-              <div className="mt-4 space-y-1.5">
-                <p className="text-sm font-semibold text-accent">
-                  ₹249/Year/Vehicle AMC Included
-                </p>
-                <p className="text-xs text-primary-foreground/70">
-                  You are paying one time Activation Fee
-                </p>
-              </div>
 
               {selectedPlan === 'starter' && (
                 <p className="text-xs text-primary-foreground/50 italic mt-3">
