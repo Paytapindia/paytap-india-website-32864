@@ -406,6 +406,13 @@ const Navbar = memo(() => {
               )}
             </div>
 
+            {/* Pricing Link */}
+            <div className="border-b border-gray-100">
+              <Link to="/checkout" className="block py-3 px-2 text-base font-medium text-gray-700" onClick={handleNavClick}>
+                Pricing
+              </Link>
+            </div>
+
             {/* Platform Login Button */}
             <div className="mt-3">
               <Button
