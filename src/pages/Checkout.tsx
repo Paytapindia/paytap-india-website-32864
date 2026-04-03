@@ -761,10 +761,10 @@ const Checkout = () => {
                       <span className="flex items-center gap-1.5">
                         <FileText className="w-3.5 h-3.5 text-accent" /> GST invoice provided
                       </span>
+                      <span className="flex items-center gap-1.5">
+                        <Wrench className="w-3.5 h-3.5 text-accent" /> ₹249/Year/Vehicle AMC Included
+                      </span>
                     </div>
-                    <p className="text-center text-sm font-semibold text-accent mt-3">
-                      ₹249/Year/Vehicle AMC Included
-                    </p>
                   </div>
                 </motion.div>
               </div>
