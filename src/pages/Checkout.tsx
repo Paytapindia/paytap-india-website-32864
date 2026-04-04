@@ -519,7 +519,7 @@ const Checkout = () => {
                     <Truck className="w-4 h-4" />
                     <span>Vehicle Tag Delivery: 3–5 Business Days</span>
                   </div>
-                  <span className="text-2xl font-bold">{formatINR(total)}</span>
+                  <span className="text-2xl font-bold">{total === 0 ? 'Free' : formatINR(total)}</span>
                 </div>
                 <p className="text-xs text-primary-foreground/70">
                   You are paying one time Activation Fee
