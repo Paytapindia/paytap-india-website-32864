@@ -317,10 +317,12 @@ const Checkout = () => {
 
   const handlePlanSelect = (key: PlanType) => {
     setSelectedPlan(key);
-    if (isMobile && formRef.current) {
-      setTimeout(() => {
-        formRef.current?.scrollIntoView({ behavior: 'smooth', block: 'start' });
-      }, 100);
+    setTimeout(() => {
+      formRef.current?.scrollIntoView({ behavior: 'smooth', block: 'start' });
+    }, 100);
+    if (key !== 'starter') {
+      setFormOpen(true);
+      setShowFormPrompt(true);
     }
   };
 
@@ -435,18 +437,6 @@ const Checkout = () => {
                                 +{driverCards} Driver Card{driverCards > 1 ? 's' : ''}
                               </span>
                             )}
-                            {key === 'starter' && (
-                              <button
-                                type="button"
-                                onClick={(e) => {
-                                  e.stopPropagation();
-                                  window.open('https://dashboard.myfleetai.in/login', '_blank');
-                                }}
-                                className="inline-flex items-center px-2.5 py-0.5 text-[10px] font-semibold rounded-full bg-green-500/10 text-green-600 hover:bg-green-500/20 transition-colors"
-                              >
-                                Click here for Free Access →
-                              </button>
-                            )}
                           </div>
                           <p className="text-sm text-muted-foreground mt-0.5">
                             {p.tags} vehicle{p.tags > 1 ? 's' : ''}
@@ -528,7 +518,7 @@ const Checkout = () => {
             </motion.div>
 
             {/* ── Quick Details Form ── */}
-            <div className="w-full" ref={formRef}>
+            <div className="w-full mt-8" ref={formRef}>
                 <motion.div
                   initial={{ opacity: 0, y: 20 }}
                   animate={{ opacity: 1, y: 0 }}
@@ -536,204 +526,208 @@ const Checkout = () => {
                   className="rounded-3xl bg-card/80 backdrop-blur-xl shadow-xl shadow-primary/5 border border-border/40 p-6 md:p-8"
                 >
                   <div>
-                    <button
-                      type="button"
-                      onClick={() => setFormOpen(!formOpen)}
-                      className="w-full flex items-center justify-between cursor-pointer"
-                    >
-                      <div>
-                        <h2 className="text-lg font-bold text-foreground mb-0.5 text-left">Quick Details</h2>
-                        <p className="text-xs text-muted-foreground text-left">
-                          We'll use this to activate your Paytap account and generate your invoice.
-                        </p>
-                      </div>
-                      <ChevronDown className={`w-5 h-5 text-muted-foreground transition-transform duration-300 ${formOpen ? 'rotate-180' : ''}`} />
-                    </button>
-
-                    <AnimatePresence>
-                      {formOpen && (
-                        <motion.div
-                          initial={{ height: 0, opacity: 0 }}
-                          animate={{ height: 'auto', opacity: 1 }}
-                          exit={{ height: 0, opacity: 0 }}
-                          transition={{ duration: 0.3, ease: 'easeInOut' }}
-                          className="overflow-hidden"
+                    {selectedPlan !== 'starter' && (
+                      <>
+                        <button
+                          type="button"
+                          onClick={() => setFormOpen(!formOpen)}
+                          className="w-full flex items-center justify-between cursor-pointer"
                         >
-                          {showFormPrompt && (
-                            <div className="flex items-center gap-2 mt-4 p-3 rounded-xl bg-accent/10 border border-accent/20">
-                              <CheckCircle className="w-4 h-4 text-accent shrink-0" />
-                              <p className="text-sm text-accent font-medium">Complete these details to process your order</p>
-                            </div>
-                          )}
-
-                    <div className="grid grid-cols-1 md:grid-cols-2 gap-6 mt-6">
-                      {/* Left Column: Personal & Business Info */}
-                      <div className="space-y-4">
-                        {/* Full Name */}
-                        <div>
-                          <Input
-                            {...register("name")}
-                            placeholder="Full Name"
-                            className={INPUT_CLASS}
-                          />
-                          {errors.name && <p className="text-xs text-destructive mt-1.5 pl-1">{errors.name.message}</p>}
-                        </div>
-
-                        {/* Mobile Number */}
-                        <div>
-                          <Input
-                            {...register("phone")}
-                            placeholder="Mobile Number"
-                            onBlur={handlePhoneLookup}
-                            className={INPUT_CLASS}
-                          />
-                          {isLookingUp && (
-                            <div className="flex items-center gap-1.5 mt-1.5 pl-1">
-                              <Loader2 className="w-3 h-3 animate-spin text-accent" />
-                              <span className="text-xs text-accent">Checking...</span>
-                            </div>
-                          )}
-                          {errors.phone && <p className="text-xs text-destructive mt-1.5 pl-1">{errors.phone.message}</p>}
-                        </div>
-
-                        {/* Email */}
-                        <div>
-                          <Input
-                            {...register("email")}
-                            type="email"
-                            placeholder="Email Address"
-                            className={INPUT_CLASS}
-                          />
-                          {errors.email && <p className="text-xs text-destructive mt-1.5 pl-1">{errors.email.message}</p>}
-                        </div>
-
-                        {/* GST / PAN Toggle */}
-                        <div>
-                          <div className="inline-flex rounded-full bg-secondary p-1 mb-3">
-                            <button
-                              type="button"
-                              onClick={() => setTaxIdType('gst')}
-                              className={`px-4 py-1.5 rounded-full text-sm font-medium transition-all ${
-                                taxIdType === 'gst' ? 'bg-accent text-accent-foreground shadow-sm' : 'text-muted-foreground hover:text-foreground'
-                              }`}
-                            >
-                              GST Number
-                            </button>
-                            <button
-                              type="button"
-                              onClick={() => {
-                                setTaxIdType('pan');
-                                const currentName = getValues('name');
-                                if (currentName) setValue('companyName', currentName);
-                              }}
-                              className={`px-4 py-1.5 rounded-full text-sm font-medium transition-all ${
-                                taxIdType === 'pan' ? 'bg-accent text-accent-foreground shadow-sm' : 'text-muted-foreground hover:text-foreground'
-                              }`}
-                            >
-                              PAN Number
-                            </button>
-                          </div>
-                          {taxIdType === 'gst' ? (
-                            <Input
-                              {...register("gst", { setValueAs: (v) => v?.toUpperCase() })}
-                              placeholder="e.g. 22AAAAA0000A1Z5"
-                              maxLength={15}
-                              className={`${INPUT_CLASS} uppercase`}
-                            />
-                          ) : (
-                            <Input
-                              {...register("pan", { setValueAs: (v) => v?.toUpperCase() })}
-                              placeholder="e.g. ABCDE1234F"
-                              maxLength={10}
-                              className={`${INPUT_CLASS} uppercase`}
-                            />
-                          )}
-                          {fieldErrors.gst && <p className="text-xs text-destructive mt-1.5 pl-1">{fieldErrors.gst}</p>}
-                          {fieldErrors.pan && <p className="text-xs text-destructive mt-1.5 pl-1">{fieldErrors.pan}</p>}
-                        </div>
-
-                        {/* Company Name */}
-                        <div>
-                          {taxIdType === 'gst' ? (
-                            <>
-                              <Input
-                                {...register("companyName")}
-                                placeholder="Company Name *"
-                                className={INPUT_CLASS}
-                              />
-                              {fieldErrors.companyName && <p className="text-xs text-destructive mt-1.5 pl-1">{fieldErrors.companyName}</p>}
-                            </>
-                          ) : (
-                            <div>
-                              <Input
-                                value={nameValue || ''}
-                                readOnly
-                                tabIndex={-1}
-                                className={`${INPUT_CLASS} opacity-60 cursor-default`}
-                              />
-                              <p className="text-[11px] text-muted-foreground/70 mt-1.5 pl-1">Using your name as billing name</p>
-                            </div>
-                          )}
-                        </div>
-                      </div>
-
-                      {/* Right Column: Delivery Address */}
-                      <div>
-                        <div className="flex items-center gap-2 mb-3">
-                          <MapPin className="w-4 h-4 text-accent" />
-                          <h3 className="text-sm font-semibold text-foreground">Delivery Address</h3>
-                        </div>
-                        <div className="space-y-3">
                           <div>
-                            <Input
-                              {...register("address")}
-                              placeholder="Address Line *"
-                              className={INPUT_CLASS}
-                            />
-                            {fieldErrors.address && <p className="text-xs text-destructive mt-1.5 pl-1">{fieldErrors.address}</p>}
+                            <h2 className="text-lg font-bold text-foreground mb-0.5 text-left">Quick Details</h2>
+                            <p className="text-xs text-muted-foreground text-left">
+                              We'll use this to activate your Paytap account and generate your invoice.
+                            </p>
                           </div>
-                          <div>
-                            <select
-                              {...register("state")}
-                              className={`${INPUT_CLASS} w-full appearance-none cursor-pointer`}
-                              defaultValue=""
+                          <ChevronDown className={`w-5 h-5 text-muted-foreground transition-transform duration-300 ${formOpen ? 'rotate-180' : ''}`} />
+                        </button>
+
+                        <AnimatePresence>
+                          {formOpen && (
+                            <motion.div
+                              initial={{ height: 0, opacity: 0 }}
+                              animate={{ height: 'auto', opacity: 1 }}
+                              exit={{ height: 0, opacity: 0 }}
+                              transition={{ duration: 0.3, ease: 'easeInOut' }}
+                              className="overflow-hidden"
                             >
-                              <option value="" disabled>Select State *</option>
-                              {states.map(s => (
-                                <option key={s} value={s}>{s}</option>
-                              ))}
-                            </select>
-                            {fieldErrors.state && <p className="text-xs text-destructive mt-1.5 pl-1">{fieldErrors.state}</p>}
-                          </div>
-                          <div>
-                            <select
-                              {...register("city")}
-                              className={`${INPUT_CLASS} w-full appearance-none cursor-pointer`}
-                              defaultValue=""
-                              disabled={!stateValue}
-                            >
-                              <option value="" disabled>{stateValue ? 'Select City *' : 'Select state first'}</option>
-                              {cities.map(c => (
-                                <option key={c} value={c}>{c}</option>
-                              ))}
-                            </select>
-                            {fieldErrors.city && <p className="text-xs text-destructive mt-1.5 pl-1">{fieldErrors.city}</p>}
-                          </div>
-                          <div>
-                            <Input
-                              {...register("pincode")}
-                              placeholder="Pincode *"
-                              maxLength={6}
-                              className={INPUT_CLASS}
-                            />
-                            {fieldErrors.pincode && <p className="text-xs text-destructive mt-1.5 pl-1">{fieldErrors.pincode}</p>}
-                          </div>
-                        </div>
-                      </div>
-                    </div>
-                        </motion.div>
-                      )}
-                    </AnimatePresence>
+                              {showFormPrompt && (
+                                <div className="flex items-center gap-2 mt-4 p-3 rounded-xl bg-accent/10 border border-accent/20">
+                                  <CheckCircle className="w-4 h-4 text-accent shrink-0" />
+                                  <p className="text-sm text-accent font-medium">Complete these details to process your order</p>
+                                </div>
+                              )}
+
+                              <div className="grid grid-cols-1 md:grid-cols-2 gap-6 mt-6">
+                                {/* Left Column: Personal & Business Info */}
+                                <div className="space-y-4">
+                                  {/* Full Name */}
+                                  <div>
+                                    <Input
+                                      {...register("name")}
+                                      placeholder="Full Name"
+                                      className={INPUT_CLASS}
+                                    />
+                                    {errors.name && <p className="text-xs text-destructive mt-1.5 pl-1">{errors.name.message}</p>}
+                                  </div>
+
+                                  {/* Mobile Number */}
+                                  <div>
+                                    <Input
+                                      {...register("phone")}
+                                      placeholder="Mobile Number"
+                                      onBlur={handlePhoneLookup}
+                                      className={INPUT_CLASS}
+                                    />
+                                    {isLookingUp && (
+                                      <div className="flex items-center gap-1.5 mt-1.5 pl-1">
+                                        <Loader2 className="w-3 h-3 animate-spin text-accent" />
+                                        <span className="text-xs text-accent">Checking...</span>
+                                      </div>
+                                    )}
+                                    {errors.phone && <p className="text-xs text-destructive mt-1.5 pl-1">{errors.phone.message}</p>}
+                                  </div>
+
+                                  {/* Email */}
+                                  <div>
+                                    <Input
+                                      {...register("email")}
+                                      type="email"
+                                      placeholder="Email Address"
+                                      className={INPUT_CLASS}
+                                    />
+                                    {errors.email && <p className="text-xs text-destructive mt-1.5 pl-1">{errors.email.message}</p>}
+                                  </div>
+
+                                  {/* GST / PAN Toggle */}
+                                  <div>
+                                    <div className="inline-flex rounded-full bg-secondary p-1 mb-3">
+                                      <button
+                                        type="button"
+                                        onClick={() => setTaxIdType('gst')}
+                                        className={`px-4 py-1.5 rounded-full text-sm font-medium transition-all ${
+                                          taxIdType === 'gst' ? 'bg-accent text-accent-foreground shadow-sm' : 'text-muted-foreground hover:text-foreground'
+                                        }`}
+                                      >
+                                        GST Number
+                                      </button>
+                                      <button
+                                        type="button"
+                                        onClick={() => {
+                                          setTaxIdType('pan');
+                                          const currentName = getValues('name');
+                                          if (currentName) setValue('companyName', currentName);
+                                        }}
+                                        className={`px-4 py-1.5 rounded-full text-sm font-medium transition-all ${
+                                          taxIdType === 'pan' ? 'bg-accent text-accent-foreground shadow-sm' : 'text-muted-foreground hover:text-foreground'
+                                        }`}
+                                      >
+                                        PAN Number
+                                      </button>
+                                    </div>
+                                    {taxIdType === 'gst' ? (
+                                      <Input
+                                        {...register("gst", { setValueAs: (v) => v?.toUpperCase() })}
+                                        placeholder="e.g. 22AAAAA0000A1Z5"
+                                        maxLength={15}
+                                        className={`${INPUT_CLASS} uppercase`}
+                                      />
+                                    ) : (
+                                      <Input
+                                        {...register("pan", { setValueAs: (v) => v?.toUpperCase() })}
+                                        placeholder="e.g. ABCDE1234F"
+                                        maxLength={10}
+                                        className={`${INPUT_CLASS} uppercase`}
+                                      />
+                                    )}
+                                    {fieldErrors.gst && <p className="text-xs text-destructive mt-1.5 pl-1">{fieldErrors.gst}</p>}
+                                    {fieldErrors.pan && <p className="text-xs text-destructive mt-1.5 pl-1">{fieldErrors.pan}</p>}
+                                  </div>
+
+                                  {/* Company Name */}
+                                  <div>
+                                    {taxIdType === 'gst' ? (
+                                      <>
+                                        <Input
+                                          {...register("companyName")}
+                                          placeholder="Company Name *"
+                                          className={INPUT_CLASS}
+                                        />
+                                        {fieldErrors.companyName && <p className="text-xs text-destructive mt-1.5 pl-1">{fieldErrors.companyName}</p>}
+                                      </>
+                                    ) : (
+                                      <div>
+                                        <Input
+                                          value={nameValue || ''}
+                                          readOnly
+                                          tabIndex={-1}
+                                          className={`${INPUT_CLASS} opacity-60 cursor-default`}
+                                        />
+                                        <p className="text-[11px] text-muted-foreground/70 mt-1.5 pl-1">Using your name as billing name</p>
+                                      </div>
+                                    )}
+                                  </div>
+                                </div>
+
+                                {/* Right Column: Delivery Address */}
+                                <div>
+                                  <div className="flex items-center gap-2 mb-3">
+                                    <MapPin className="w-4 h-4 text-accent" />
+                                    <h3 className="text-sm font-semibold text-foreground">Delivery Address</h3>
+                                  </div>
+                                  <div className="space-y-3">
+                                    <div>
+                                      <Input
+                                        {...register("address")}
+                                        placeholder="Address Line *"
+                                        className={INPUT_CLASS}
+                                      />
+                                      {fieldErrors.address && <p className="text-xs text-destructive mt-1.5 pl-1">{fieldErrors.address}</p>}
+                                    </div>
+                                    <div>
+                                      <select
+                                        {...register("state")}
+                                        className={`${INPUT_CLASS} w-full appearance-none cursor-pointer`}
+                                        defaultValue=""
+                                      >
+                                        <option value="" disabled>Select State *</option>
+                                        {states.map(s => (
+                                          <option key={s} value={s}>{s}</option>
+                                        ))}
+                                      </select>
+                                      {fieldErrors.state && <p className="text-xs text-destructive mt-1.5 pl-1">{fieldErrors.state}</p>}
+                                    </div>
+                                    <div>
+                                      <select
+                                        {...register("city")}
+                                        className={`${INPUT_CLASS} w-full appearance-none cursor-pointer`}
+                                        defaultValue=""
+                                        disabled={!stateValue}
+                                      >
+                                        <option value="" disabled>{stateValue ? 'Select City *' : 'Select state first'}</option>
+                                        {cities.map(c => (
+                                          <option key={c} value={c}>{c}</option>
+                                        ))}
+                                      </select>
+                                      {fieldErrors.city && <p className="text-xs text-destructive mt-1.5 pl-1">{fieldErrors.city}</p>}
+                                    </div>
+                                    <div>
+                                      <Input
+                                        {...register("pincode")}
+                                        placeholder="Pincode *"
+                                        maxLength={6}
+                                        className={INPUT_CLASS}
+                                      />
+                                      {fieldErrors.pincode && <p className="text-xs text-destructive mt-1.5 pl-1">{fieldErrors.pincode}</p>}
+                                    </div>
+                                  </div>
+                                </div>
+                              </div>
+                            </motion.div>
+                          )}
+                        </AnimatePresence>
+                      </>
+                    )}
 
                     {/* ── CTA Button ── */}
                     <motion.div
@@ -741,35 +735,60 @@ const Checkout = () => {
                       whileHover={{ y: -2 }}
                       transition={{ type: 'spring', stiffness: 400, damping: 20 }}
                     >
-                      <Button
-                        type={formOpen ? "submit" : "button"}
-                        disabled={isLoading}
-                        onClick={(e) => {
-                          if (!formOpen) {
-                            e.preventDefault();
-                            setFormOpen(true);
-                            setShowFormPrompt(true);
-                            setTimeout(() => {
-                              formRef.current?.scrollIntoView({ behavior: 'smooth', block: 'center' });
-                            }, 100);
-                            return;
-                          }
-                        }}
-                        className="w-full h-14 text-base font-semibold bg-accent hover:bg-accent/90 text-accent-foreground rounded-2xl transition-all shadow-lg shadow-accent/25 hover:shadow-xl hover:shadow-accent/35"
-                      >
-                        {isLoading ? (
-                          <span className="flex items-center gap-2">
-                            <Loader2 className="h-5 w-5 animate-spin" />
-                            Securing your checkout…
-                          </span>
-                        ) : (
-                          `Pay ${formatINR(total)} & Go Live →`
-                        )}
-                      </Button>
+                      {selectedPlan === 'starter' ? (
+                        <Button
+                          type="button"
+                          disabled={isLoading}
+                          onClick={async () => {
+                            setIsLoading(true);
+                            try {
+                              window.location.href = 'https://dashboard.myfleetai.in/';
+                            } catch {
+                              setIsLoading(false);
+                            }
+                          }}
+                          className="w-full h-14 text-base font-semibold bg-accent hover:bg-accent/90 text-accent-foreground rounded-2xl transition-all shadow-lg shadow-accent/25 hover:shadow-xl hover:shadow-accent/35"
+                        >
+                          {isLoading ? (
+                            <span className="flex items-center gap-2">
+                              <Loader2 className="h-5 w-5 animate-spin" />
+                              Redirecting…
+                            </span>
+                          ) : (
+                            'Activate Free Trial →'
+                          )}
+                        </Button>
+                      ) : (
+                        <Button
+                          type={formOpen ? "submit" : "button"}
+                          disabled={isLoading}
+                          onClick={(e) => {
+                            if (!formOpen) {
+                              e.preventDefault();
+                              setFormOpen(true);
+                              setShowFormPrompt(true);
+                              setTimeout(() => {
+                                formRef.current?.scrollIntoView({ behavior: 'smooth', block: 'center' });
+                              }, 100);
+                              return;
+                            }
+                          }}
+                          className="w-full h-14 text-base font-semibold bg-accent hover:bg-accent/90 text-accent-foreground rounded-2xl transition-all shadow-lg shadow-accent/25 hover:shadow-xl hover:shadow-accent/35"
+                        >
+                          {isLoading ? (
+                            <span className="flex items-center gap-2">
+                              <Loader2 className="h-5 w-5 animate-spin" />
+                              Securing your checkout…
+                            </span>
+                          ) : (
+                            `Pay ${formatINR(total)} & Go Live →`
+                          )}
+                        </Button>
+                      )}
                     </motion.div>
 
                     <p className="text-center text-xs text-muted-foreground mt-3">
-                      Secure checkout · Takes 30 seconds
+                      {selectedPlan === 'starter' ? 'Free access · No payment required' : 'Secure checkout · Takes 30 seconds'}
                     </p>
 
                     {/* Trust Line */}
