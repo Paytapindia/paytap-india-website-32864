@@ -31,7 +31,7 @@ const HeroSection = memo(() => {
             {/* CTA Button */}
             <div className="flex justify-center lg:justify-start mb-4">
               <button
-                onClick={() => setShowPhoneGate(true)}
+                onClick={() => navigate('/checkout')}
                 className="inline-flex items-center gap-3 text-accent-foreground px-10 py-5 rounded-[14px] text-lg md:text-xl font-semibold transition-all duration-300 group bg-accent hover:brightness-95"
                 style={{
                   boxShadow: '0 12px 36px rgba(246,36,91,0.28)',
