@@ -8,7 +8,6 @@ import { useNavigate } from "react-router-dom";
 const CTASection = memo(() => {
   const { t } = useTranslation();
   const navigate = useNavigate();
-  const [showPhoneGate, setShowPhoneGate] = useState(false);
   
   return (
     <section id="cta" className="py-16 md:py-32 px-6 md:px-12 bg-paytap-navy text-white">
