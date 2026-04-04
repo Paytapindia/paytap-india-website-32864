@@ -1,15 +1,13 @@
 
-import { memo, useState } from "react";
+import { memo } from "react";
 import { Button } from "@/components/ui/button";
 import { ArrowRight } from "lucide-react";
 import { useTranslation } from "react-i18next";
 import { useNavigate } from "react-router-dom";
-import PhoneGateDialog from "@/components/PhoneGateDialog";
 
 const CTASection = memo(() => {
   const { t } = useTranslation();
   const navigate = useNavigate();
-  const [showPhoneGate, setShowPhoneGate] = useState(false);
   
   return (
     <section id="cta" className="py-16 md:py-32 px-6 md:px-12 bg-paytap-navy text-white">
@@ -24,7 +22,7 @@ const CTASection = memo(() => {
         <Button 
           size="lg"
           className="bg-white text-paytap-navy hover:bg-gray-100 px-6 md:px-10 py-5 md:py-6 text-base md:text-lg font-medium rounded-xl shadow-lg transition-all duration-300 group"
-          onClick={() => setShowPhoneGate(true)}
+          onClick={() => navigate('/checkout')}
         >
           Activate Paytap Platform
           <ArrowRight className="ml-2 w-4 h-4 md:w-5 md:h-5 group-hover:translate-x-1 transition-transform" />
@@ -37,11 +35,6 @@ const CTASection = memo(() => {
         </div>
       </div>
 
-      <PhoneGateDialog
-        open={showPhoneGate}
-        onOpenChange={setShowPhoneGate}
-        onProceed={() => navigate('/checkout')}
-      />
     </section>
   );
 });

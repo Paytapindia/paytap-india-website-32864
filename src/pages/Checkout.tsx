@@ -30,11 +30,11 @@ interface PlanInfo {
 const PLANS: Record<PlanType, PlanInfo> = {
   starter: {
     name: 'Trial Pack',
-    price: 999,
+    price: 0,
     tags: 1,
     recommended: false,
     isBusinessPlan: false,
-    perVehicle: '₹999/vehicle',
+    perVehicle: 'Free',
   },
   business_basic: {
     name: 'Business Basic',
@@ -227,6 +227,8 @@ const Checkout = () => {
 
   const onSubmit = async (data: CheckoutFormData) => {
     const newFieldErrors: Record<string, string> = {};
+    
+    // Tax ID validation
     if (taxIdType === 'gst') {
       if (!data.gst || !data.gst.trim()) newFieldErrors.gst = "GST number is required";
       else if (!gstRegex.test(data.gst.trim().toUpperCase())) newFieldErrors.gst = "Invalid GST format";
@@ -235,12 +237,15 @@ const Checkout = () => {
       if (!data.pan || !data.pan.trim()) newFieldErrors.pan = "PAN number is required";
       else if (!panRegex.test(data.pan.trim().toUpperCase())) newFieldErrors.pan = "Invalid PAN format (e.g. ABCDE1234F)";
     }
-    // Delivery address is mandatory
-    if (!data.address || !data.address.trim()) newFieldErrors.address = "Address is required";
-    if (!data.state || !data.state.trim()) newFieldErrors.state = "State is required";
-    if (!data.city || !data.city.trim()) newFieldErrors.city = "City is required";
-    if (!data.pincode || !data.pincode.trim()) newFieldErrors.pincode = "Pincode is required";
-    else if (!/^\d{6}$/.test(data.pincode.trim())) newFieldErrors.pincode = "Enter a valid 6-digit pincode";
+    
+    // Delivery address is mandatory only for paid plans
+    if (selectedPlan !== 'starter') {
+      if (!data.address || !data.address.trim()) newFieldErrors.address = "Address is required";
+      if (!data.state || !data.state.trim()) newFieldErrors.state = "State is required";
+      if (!data.city || !data.city.trim()) newFieldErrors.city = "City is required";
+      if (!data.pincode || !data.pincode.trim()) newFieldErrors.pincode = "Pincode is required";
+      else if (!/^\d{6}$/.test(data.pincode.trim())) newFieldErrors.pincode = "Enter a valid 6-digit pincode";
+    }
 
     setFieldErrors(newFieldErrors);
     if (Object.keys(newFieldErrors).length > 0) return;
@@ -262,6 +267,21 @@ const Checkout = () => {
     setIsLoading(true);
     try {
       const txnid = `TXN${Date.now()}${Math.random().toString(36).substring(2, 8).toUpperCase()}`;
+      
+      // Free trial — skip payment, save lead, redirect to dashboard
+      if (selectedPlan === 'starter') {
+        // Save as lead instead of order (RLS won't allow amount=0 on orders)
+        await supabase.from('leads').insert({
+          phone: data.phone.trim(),
+          email: data.email.trim().toLowerCase(),
+          name: data.name.trim(),
+          source: 'checkout_gate',
+        });
+        
+        window.location.href = 'https://dashboard.myfleetai.in/';
+        return;
+      }
+
       const { error } = await supabase.from('orders').insert({
         name: data.name.trim(),
         email: data.email.trim().toLowerCase(),
@@ -436,7 +456,7 @@ const Checkout = () => {
                         {/* Price */}
                         <div className="text-right flex-shrink-0 flex flex-col items-end gap-1">
                           <span className={`text-xl md:text-2xl font-bold ${isSelected ? 'text-foreground' : 'text-foreground/70'}`}>
-                            {formatINR(p.price)}
+                            {p.price === 0 ? 'Free' : formatINR(p.price)}
                           </span>
                           <p className="text-[10px] text-muted-foreground/60 mt-0.5">incl. GST</p>
                         </div>
@@ -460,10 +480,12 @@ const Checkout = () => {
               </div>
 
               <ul className="space-y-2.5 text-sm text-primary-foreground/80">
+              {selectedPlan !== 'starter' && (
                 <li className="flex items-center gap-2">
                   <CheckCircle className="w-4 h-4 text-accent flex-shrink-0" />
                   {plan.tags} Paytap Payment Tag{plan.tags > 1 ? 's' : ''} (Free)
                 </li>
+              )}
                 {getDriverCards(selectedPlan) > 0 && (
                   <li className="flex items-center gap-2">
                     <CheckCircle className="w-4 h-4 text-accent flex-shrink-0" />
@@ -497,7 +519,7 @@ const Checkout = () => {
                     <Truck className="w-4 h-4" />
                     <span>Vehicle Tag Delivery: 3–5 Business Days</span>
                   </div>
-                  <span className="text-2xl font-bold">{formatINR(total)}</span>
+                  <span className="text-2xl font-bold">{total === 0 ? 'Free' : formatINR(total)}</span>
                 </div>
                 <p className="text-xs text-primary-foreground/70">
                   You are paying one time Activation Fee
