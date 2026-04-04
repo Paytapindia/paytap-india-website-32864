@@ -1,10 +1,9 @@
 
-import { memo, useState } from "react";
+import { memo } from "react";
 import { Button } from "@/components/ui/button";
 import { ArrowRight } from "lucide-react";
 import { useTranslation } from "react-i18next";
 import { useNavigate } from "react-router-dom";
-import PhoneGateDialog from "@/components/PhoneGateDialog";
 
 const CTASection = memo(() => {
   const { t } = useTranslation();
