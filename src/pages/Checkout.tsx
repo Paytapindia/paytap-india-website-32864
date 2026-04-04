@@ -227,6 +227,8 @@ const Checkout = () => {
 
   const onSubmit = async (data: CheckoutFormData) => {
     const newFieldErrors: Record<string, string> = {};
+    
+    // Tax ID validation
     if (taxIdType === 'gst') {
       if (!data.gst || !data.gst.trim()) newFieldErrors.gst = "GST number is required";
       else if (!gstRegex.test(data.gst.trim().toUpperCase())) newFieldErrors.gst = "Invalid GST format";
@@ -235,12 +237,15 @@ const Checkout = () => {
       if (!data.pan || !data.pan.trim()) newFieldErrors.pan = "PAN number is required";
       else if (!panRegex.test(data.pan.trim().toUpperCase())) newFieldErrors.pan = "Invalid PAN format (e.g. ABCDE1234F)";
     }
-    // Delivery address is mandatory
-    if (!data.address || !data.address.trim()) newFieldErrors.address = "Address is required";
-    if (!data.state || !data.state.trim()) newFieldErrors.state = "State is required";
-    if (!data.city || !data.city.trim()) newFieldErrors.city = "City is required";
-    if (!data.pincode || !data.pincode.trim()) newFieldErrors.pincode = "Pincode is required";
-    else if (!/^\d{6}$/.test(data.pincode.trim())) newFieldErrors.pincode = "Enter a valid 6-digit pincode";
+    
+    // Delivery address is mandatory only for paid plans
+    if (selectedPlan !== 'starter') {
+      if (!data.address || !data.address.trim()) newFieldErrors.address = "Address is required";
+      if (!data.state || !data.state.trim()) newFieldErrors.state = "State is required";
+      if (!data.city || !data.city.trim()) newFieldErrors.city = "City is required";
+      if (!data.pincode || !data.pincode.trim()) newFieldErrors.pincode = "Pincode is required";
+      else if (!/^\d{6}$/.test(data.pincode.trim())) newFieldErrors.pincode = "Enter a valid 6-digit pincode";
+    }
 
     setFieldErrors(newFieldErrors);
     if (Object.keys(newFieldErrors).length > 0) return;
