@@ -1,33 +1,41 @@
 
 
-## Plan: Remove Phone Gate, Make Trial Pack Free, and Redirect to Dashboard
+## Plan: Trial Pack Skip Form + Auto-Scroll on Plan Select + Remove Green Badge
 
-### Changes across 3 files
+### File: `src/pages/Checkout.tsx`
 
-**1. `src/components/HeroSection.tsx`** — Remove phone gate, navigate directly to `/checkout`
-- Remove `useState` for `showPhoneGate`
-- Remove `PhoneGateDialog` import and component
-- Change button `onClick` from `setShowPhoneGate(true)` to `navigate('/checkout')`
+### Changes
 
-**2. `src/components/CTASection.tsx`** — Same removal
-- Remove `useState` for `showPhoneGate`
-- Remove `PhoneGateDialog` import and component
-- Change button `onClick` from `setShowPhoneGate(true)` to `navigate('/checkout')`
+**1. Remove "Click here for Free Access →" green badge (lines 438-449)**
+Delete the entire `{key === 'starter' && (...)}` block that renders the green button.
 
-**3. `src/pages/Checkout.tsx`** — Three changes:
+**2. Auto-scroll to Quick Details on any plan select (lines 318-325)**
+Update `handlePlanSelect` to always scroll to `formRef` (not just on mobile), and also auto-open the form:
+```tsx
+const handlePlanSelect = (key: PlanType) => {
+  setSelectedPlan(key);
+  setTimeout(() => {
+    formRef.current?.scrollIntoView({ behavior: 'smooth', block: 'start' });
+  }, 100);
+  if (key !== 'starter') {
+    setFormOpen(true);
+    setShowFormPrompt(true);
+  }
+};
+```
 
-a) **Trial Pack price to ₹0**: Change `starter.price` from `999` to `0`, update `perVehicle` to `'Free'`
+**3. For Trial Pack, skip the form entirely — show only the CTA button**
+- When `selectedPlan === 'starter'`, hide the "Quick Details" collapsible header and form fields entirely. Only show the "Pay ₹0 & Go Live →" button (which already redirects to dashboard).
+- Wrap the Quick Details section (lines 538-736) in a condition: `{selectedPlan !== 'starter' && (...)}`
+- For starter plan, the CTA button should be `type="button"` with a direct `onClick` that saves the lead (no form validation needed) and redirects to dashboard.
+- Update the CTA button logic: if `selectedPlan === 'starter'`, clicking it calls the free trial redirect directly without opening the form.
 
-b) **Remove "Paytap Payment Tag (Free)" from blue summary box** (line ~463-466): Hide the payment tag line item when `selectedPlan === 'starter'`
+**4. Update CTA button text for starter**
+Show "Activate Free Trial →" instead of "Pay ₹0 & Go Live →" when starter is selected.
 
-c) **Trial Pack submit behavior**: When `selectedPlan === 'starter'`, skip address validation, skip PayU payment link, skip order insert with payment, and instead redirect directly to `https://dashboard.myfleetai.in/` (save lead to orders table with `payment_status: 'free_trial'` and no address required)
-
-### Technical Details
-
-- In the `onSubmit` handler, add an early return path for `starter` plan that:
-  - Skips address field validation
-  - Saves order with `amount: 0` and `payment_status: 'free_trial'`
-  - Redirects via `window.location.href = 'https://dashboard.myfleetai.in/'`
-- The blue summary box conditionally hides the tag line for starter plan
-- Price display will show `₹0` / "Free" for Trial Pack
+### Result
+- Selecting any plan auto-scrolls to the details/CTA area
+- Trial Pack: no form fields shown, just a button that redirects to dashboard
+- Paid plans: form opens and works as before
+- Green "Click here for Free Access" badge removed
 
