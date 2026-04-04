@@ -30,11 +30,11 @@ interface PlanInfo {
 const PLANS: Record<PlanType, PlanInfo> = {
   starter: {
     name: 'Trial Pack',
-    price: 999,
+    price: 0,
     tags: 1,
     recommended: false,
     isBusinessPlan: false,
-    perVehicle: '₹999/vehicle',
+    perVehicle: 'Free',
   },
   business_basic: {
     name: 'Business Basic',
