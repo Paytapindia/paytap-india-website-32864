@@ -460,10 +460,12 @@ const Checkout = () => {
               </div>
 
               <ul className="space-y-2.5 text-sm text-primary-foreground/80">
+              {selectedPlan !== 'starter' && (
                 <li className="flex items-center gap-2">
                   <CheckCircle className="w-4 h-4 text-accent flex-shrink-0" />
                   {plan.tags} Paytap Payment Tag{plan.tags > 1 ? 's' : ''} (Free)
                 </li>
+              )}
                 {getDriverCards(selectedPlan) > 0 && (
                   <li className="flex items-center gap-2">
                     <CheckCircle className="w-4 h-4 text-accent flex-shrink-0" />
