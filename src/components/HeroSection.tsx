@@ -1,10 +1,9 @@
-import { memo, useState } from "react";
+import { memo } from "react";
 import { ArrowRight, Sparkles, BarChart3, CreditCard, Truck, Users } from "lucide-react";
 import { useTranslation } from "react-i18next";
 import { useNavigate } from "react-router-dom";
 import { motion } from "framer-motion";
 import paytapCardLogo from "@/assets/paytap-card-logo.png";
-import PhoneGateDialog from "@/components/PhoneGateDialog";
 
 const HeroSection = memo(() => {
   const { t } = useTranslation();
