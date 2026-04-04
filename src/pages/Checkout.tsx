@@ -267,6 +267,21 @@ const Checkout = () => {
     setIsLoading(true);
     try {
       const txnid = `TXN${Date.now()}${Math.random().toString(36).substring(2, 8).toUpperCase()}`;
+      
+      // Free trial — skip payment, save lead, redirect to dashboard
+      if (selectedPlan === 'starter') {
+        // Save as lead instead of order (RLS won't allow amount=0 on orders)
+        await supabase.from('leads').insert({
+          phone: data.phone.trim(),
+          email: data.email.trim().toLowerCase(),
+          name: data.name.trim(),
+          source: 'checkout_gate',
+        });
+        
+        window.location.href = 'https://dashboard.myfleetai.in/';
+        return;
+      }
+
       const { error } = await supabase.from('orders').insert({
         name: data.name.trim(),
         email: data.email.trim().toLowerCase(),
