@@ -317,10 +317,12 @@ const Checkout = () => {
 
   const handlePlanSelect = (key: PlanType) => {
     setSelectedPlan(key);
-    if (isMobile && formRef.current) {
-      setTimeout(() => {
-        formRef.current?.scrollIntoView({ behavior: 'smooth', block: 'start' });
-      }, 100);
+    setTimeout(() => {
+      formRef.current?.scrollIntoView({ behavior: 'smooth', block: 'start' });
+    }, 100);
+    if (key !== 'starter') {
+      setFormOpen(true);
+      setShowFormPrompt(true);
     }
   };
 
