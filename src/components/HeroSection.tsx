@@ -8,7 +8,6 @@ import paytapCardLogo from "@/assets/paytap-card-logo.png";
 const HeroSection = memo(() => {
   const { t } = useTranslation();
   const navigate = useNavigate();
-  const [showPhoneGate, setShowPhoneGate] = useState(false);
 
   return (
     <section
