@@ -35,11 +35,6 @@ const CTASection = memo(() => {
         </div>
       </div>
 
-      <PhoneGateDialog
-        open={showPhoneGate}
-        onOpenChange={setShowPhoneGate}
-        onProceed={() => navigate('/checkout')}
-      />
     </section>
   );
 });

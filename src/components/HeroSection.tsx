@@ -47,11 +47,6 @@ const HeroSection = memo(() => {
               Works for personal vehicles, businesses, and fleet operators across India.
             </p>
 
-            <PhoneGateDialog
-              open={showPhoneGate}
-              onOpenChange={setShowPhoneGate}
-              onProceed={() => navigate('/checkout')}
-            />
           </div>
 
           {/* Right Column — Card + Floating UI Elements */}
