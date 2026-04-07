@@ -1,21 +1,13 @@
 
 
-## Plan: Update Blue Summary Box Text
+## Plan: Move Trial Pack Messages Below Vehicle Tag Delivery + Update Text
 
 ### File: `src/pages/Checkout.tsx`
 
-### Changes
+**1. Remove the current starter italic block (lines 500-509)** — delete entirely.
 
-**1. Line 515** — Change activation fee text:
-```
-"You are paying one time Activation Fee"
-```
-→
-```
-"You are paying one time Account Activation Fee"
-```
+**2. After the delivery section (after line 521, below "You are paying one time Account Activation Fee")**, add the starter-only messages:
 
-**2. Lines 500-504** — Replace the starter-only italic text block with two new lines visible for starter plan:
 ```tsx
 {selectedPlan === 'starter' && (
   <div className="mt-3 space-y-1">
@@ -23,11 +15,11 @@
       Most owners upgrade to Business Pro within 2 days
     </p>
     <p className="text-xs text-primary-foreground/50 italic">
-      Contact Support to get the Vehicle Payment Tag at ₹699
+      Create Account & Contact Support to Get the Vehicle Payment Tag at Discount Price
     </p>
   </div>
 )}
 ```
 
-Three small text edits, one file.
+This moves the two lines below the "Vehicle Tag Delivery" row and updates the second line's text. Single file, two small edits.
 
