@@ -7,7 +7,7 @@ import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { useToast } from "@/hooks/use-toast";
 import { useNavigate } from "react-router-dom";
-import { Loader2, Check, Lock, Home, CheckCircle, Download, XCircle, Shield, Truck, FileText, ChevronDown, MapPin, Star, Wrench } from "lucide-react";
+import { Loader2, Check, Lock, Home, CheckCircle, Download, XCircle, Shield, Truck, FileText, ChevronDown, MapPin, Star, Wrench, ShieldCheck, Gift, TrendingUp } from "lucide-react";
 import { generateInvoice, type InvoiceData } from "@/lib/generateInvoice";
 import { Dialog, DialogContent, DialogHeader, DialogTitle, DialogDescription } from "@/components/ui/dialog";
 import { supabase } from "@/integrations/supabase/client";
@@ -482,30 +482,30 @@ const Checkout = () => {
 
               <div className="flex flex-col gap-1.5 mt-5 pt-4 border-t border-primary-foreground/10">
                 <div className="flex items-center justify-between">
-                  <div className="flex items-center gap-2 text-xs text-primary-foreground/50">
-                    <Truck className="w-4 h-4" />
+                  <div className="flex items-center gap-2 text-xs text-green-400">
+                    <Truck className="w-4 h-4 shrink-0" />
                     <span>Vehicle Tag Delivery: 3–5 Business Days</span>
                   </div>
                   <span className="text-2xl font-bold">{formatINR(total)}</span>
                 </div>
                 <div className="mt-1 pl-1 space-y-2.5">
                   <div className="flex items-start gap-2">
-                    <span className="mt-1.5 w-1.5 h-1.5 rounded-full bg-primary-foreground/40 shrink-0" />
-                    <p className="text-xs text-primary-foreground/70 leading-relaxed">
+                    <ShieldCheck className="w-4 h-4 text-green-400 shrink-0 mt-0.5" />
+                    <p className="text-xs text-green-400 leading-relaxed">
                       You are paying one time Account Activation Fee
                     </p>
                   </div>
                   {selectedPlan === 'starter' && (
                     <>
                       <div className="flex items-start gap-2">
-                        <span className="mt-1.5 w-1.5 h-1.5 rounded-full bg-primary-foreground/40 shrink-0" />
-                        <p className="text-xs text-primary-foreground/70 leading-relaxed">
+                        <Gift className="w-4 h-4 text-green-400 shrink-0 mt-0.5" />
+                        <p className="text-xs text-green-400 leading-relaxed">
                           Get ₹300 Cash Back On First Order
                         </p>
                       </div>
                       <div className="flex items-start gap-2">
-                        <span className="mt-1.5 w-1.5 h-1.5 rounded-full bg-primary-foreground/40 shrink-0" />
-                        <p className="text-xs text-primary-foreground/60 italic leading-relaxed">
+                        <TrendingUp className="w-4 h-4 text-green-400 shrink-0 mt-0.5" />
+                        <p className="text-xs text-green-400 leading-relaxed">
                           Most owners upgrade to Business Pro within 2 days
                         </p>
                       </div>
