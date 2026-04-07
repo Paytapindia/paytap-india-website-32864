@@ -30,11 +30,11 @@ interface PlanInfo {
 const PLANS: Record<PlanType, PlanInfo> = {
   starter: {
     name: 'Trial Pack',
-    price: 0,
+    price: 999,
     tags: 1,
     recommended: false,
     isBusinessPlan: false,
-    perVehicle: 'Free',
+    perVehicle: '₹999/vehicle',
   },
   business_basic: {
     name: 'Business Basic',
@@ -239,13 +239,11 @@ const Checkout = () => {
     }
     
     // Delivery address is mandatory only for paid plans
-    if (selectedPlan !== 'starter') {
-      if (!data.address || !data.address.trim()) newFieldErrors.address = "Address is required";
-      if (!data.state || !data.state.trim()) newFieldErrors.state = "State is required";
-      if (!data.city || !data.city.trim()) newFieldErrors.city = "City is required";
-      if (!data.pincode || !data.pincode.trim()) newFieldErrors.pincode = "Pincode is required";
-      else if (!/^\d{6}$/.test(data.pincode.trim())) newFieldErrors.pincode = "Enter a valid 6-digit pincode";
-    }
+    if (!data.address || !data.address.trim()) newFieldErrors.address = "Address is required";
+    if (!data.state || !data.state.trim()) newFieldErrors.state = "State is required";
+    if (!data.city || !data.city.trim()) newFieldErrors.city = "City is required";
+    if (!data.pincode || !data.pincode.trim()) newFieldErrors.pincode = "Pincode is required";
+    else if (!/^\d{6}$/.test(data.pincode.trim())) newFieldErrors.pincode = "Enter a valid 6-digit pincode";
 
     setFieldErrors(newFieldErrors);
     if (Object.keys(newFieldErrors).length > 0) return;
@@ -268,19 +266,6 @@ const Checkout = () => {
     try {
       const txnid = `TXN${Date.now()}${Math.random().toString(36).substring(2, 8).toUpperCase()}`;
       
-      // Free trial — skip payment, save lead, redirect to dashboard
-      if (selectedPlan === 'starter') {
-        // Save as lead instead of order (RLS won't allow amount=0 on orders)
-        await supabase.from('leads').insert({
-          phone: data.phone.trim(),
-          email: data.email.trim().toLowerCase(),
-          name: data.name.trim(),
-          source: 'checkout_gate',
-        });
-        
-        window.location.href = 'https://dashboard.myfleetai.in/';
-        return;
-      }
 
       const { error } = await supabase.from('orders').insert({
         name: data.name.trim(),
@@ -320,10 +305,8 @@ const Checkout = () => {
     setTimeout(() => {
       formRef.current?.scrollIntoView({ behavior: 'smooth', block: 'start' });
     }, 100);
-    if (key !== 'starter') {
-      setFormOpen(true);
-      setShowFormPrompt(true);
-    }
+    setFormOpen(true);
+    setShowFormPrompt(true);
   };
 
   const states = getStates();
@@ -446,7 +429,7 @@ const Checkout = () => {
                         {/* Price */}
                         <div className="text-right flex-shrink-0 flex flex-col items-end gap-1">
                           <span className={`text-xl md:text-2xl font-bold ${isSelected ? 'text-foreground' : 'text-foreground/70'}`}>
-                            {p.price === 0 ? 'Free' : formatINR(p.price)}
+                            {formatINR(p.price)}
                           </span>
                           <p className="text-[10px] text-muted-foreground/60 mt-0.5">incl. GST</p>
                         </div>
@@ -504,7 +487,7 @@ const Checkout = () => {
                     <Truck className="w-4 h-4" />
                     <span>Vehicle Tag Delivery: 3–5 Business Days</span>
                   </div>
-                  <span className="text-2xl font-bold">{total === 0 ? 'Free' : formatINR(total)}</span>
+                  <span className="text-2xl font-bold">{formatINR(total)}</span>
                 </div>
                 <div className="mt-1 pl-1 space-y-2.5">
                   <div className="flex items-start gap-2">
@@ -514,20 +497,12 @@ const Checkout = () => {
                     </p>
                   </div>
                   {selectedPlan === 'starter' && (
-                    <>
-                      <div className="flex items-start gap-2">
-                        <span className="mt-1.5 w-1.5 h-1.5 rounded-full bg-primary-foreground/40 shrink-0" />
-                        <p className="text-xs text-primary-foreground/60 italic leading-relaxed">
-                          Most owners upgrade to Business Pro within 2 days
-                        </p>
-                      </div>
-                      <div className="flex items-start gap-2">
-                        <span className="mt-1.5 w-1.5 h-1.5 rounded-full bg-primary-foreground/40 shrink-0" />
-                        <p className="text-xs text-primary-foreground/60 italic leading-relaxed">
-                          Create Account & Contact Support to Get the Vehicle Payment Tag at Discount Price
-                        </p>
-                      </div>
-                    </>
+                    <div className="flex items-start gap-2">
+                      <span className="mt-1.5 w-1.5 h-1.5 rounded-full bg-primary-foreground/40 shrink-0" />
+                      <p className="text-xs text-primary-foreground/60 italic leading-relaxed">
+                        Most owners upgrade to Business Pro within 2 days
+                      </p>
+                    </div>
                   )}
                 </div>
               </div>
@@ -542,7 +517,7 @@ const Checkout = () => {
                   className="rounded-3xl bg-card/80 backdrop-blur-xl shadow-xl shadow-primary/5 border border-border/40 p-6 md:p-8"
                 >
                   <div>
-                    {selectedPlan !== 'starter' && (
+                    {(
                       <>
                         <button
                           type="button"
@@ -751,30 +726,6 @@ const Checkout = () => {
                       whileHover={{ y: -2 }}
                       transition={{ type: 'spring', stiffness: 400, damping: 20 }}
                     >
-                      {selectedPlan === 'starter' ? (
-                        <Button
-                          type="button"
-                          disabled={isLoading}
-                          onClick={async () => {
-                            setIsLoading(true);
-                            try {
-                              window.location.href = 'https://dashboard.myfleetai.in/';
-                            } catch {
-                              setIsLoading(false);
-                            }
-                          }}
-                          className="w-full h-14 text-base font-semibold bg-accent hover:bg-accent/90 text-accent-foreground rounded-2xl transition-all shadow-lg shadow-accent/25 hover:shadow-xl hover:shadow-accent/35"
-                        >
-                          {isLoading ? (
-                            <span className="flex items-center gap-2">
-                              <Loader2 className="h-5 w-5 animate-spin" />
-                              Redirecting…
-                            </span>
-                          ) : (
-                            'Activate Free Trial →'
-                          )}
-                        </Button>
-                      ) : (
                         <Button
                           type={formOpen ? "submit" : "button"}
                           disabled={isLoading}
@@ -800,11 +751,10 @@ const Checkout = () => {
                             `Pay ${formatINR(total)} & Go Live →`
                           )}
                         </Button>
-                      )}
                     </motion.div>
 
                     <p className="text-center text-xs text-muted-foreground mt-3">
-                      {selectedPlan === 'starter' ? 'Free access · No payment required' : 'Secure checkout · Takes 30 seconds'}
+                      Secure checkout · Takes 30 seconds
                     </p>
 
                     {/* Trust Line */}
