@@ -509,16 +509,22 @@ const Checkout = () => {
                 <p className="text-xs text-primary-foreground/70">
                   You are paying one time Account Activation Fee
                 </p>
-                {selectedPlan === 'starter' && (
-                  <div className="mt-3 space-y-1">
-                    <p className="text-xs text-primary-foreground/50 italic">
-                      Most owners upgrade to Business Pro within 2 days
-                    </p>
-                    <p className="text-xs text-primary-foreground/50 italic">
-                      Create Account & Contact Support to Get the Vehicle Payment Tag at Discount Price
-                    </p>
-                  </div>
-                )}
+{selectedPlan === 'starter' && (
+  <div className="mt-4 pl-1 space-y-2">
+    <div className="flex items-start gap-2">
+      <span className="mt-1 w-1.5 h-1.5 rounded-full bg-primary-foreground/40 shrink-0" />
+      <p className="text-xs text-primary-foreground/60 italic leading-relaxed">
+        Most owners upgrade to Business Pro within 2 days
+      </p>
+    </div>
+    <div className="flex items-start gap-2">
+      <span className="mt-1 w-1.5 h-1.5 rounded-full bg-primary-foreground/40 shrink-0" />
+      <p className="text-xs text-primary-foreground/60 italic leading-relaxed">
+        Create Account & Contact Support to Get the Vehicle Payment Tag at Discount Price
+      </p>
+    </div>
+  </div>
+)}
               </div>
             </motion.div>
 
