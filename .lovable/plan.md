@@ -1,36 +1,50 @@
 
 
-## Plan: Side-by-Side Layout for Desktop Checkout
-
-### Overview
-On desktop (md+), place the Plan Selector (white box) and Summary Box (blue box) side by side in a two-column grid. The Quick Details form moves below both, spanning full width. Mobile stays unchanged (stacked).
+## Plan: Uniform Green Text with Icons for All Four Points
 
 ### File: `src/pages/Checkout.tsx`
 
-**1. Wrap Plan Selector + Summary Box in a desktop grid (around lines 364-517)**
+**Lines 483-514** — Replace the delivery/points section with a consistent format: all four lines use Lucide icons, green text (`text-green-400`), same `text-xs` size, no italic.
 
-Add a container div around both sections:
 ```tsx
-<div className="grid grid-cols-1 md:grid-cols-2 gap-6 md:gap-8 items-start">
-  {/* Plan Selector (white box) - left column */}
-  <motion.div ... className="rounded-3xl bg-card/80 ... mb-0">
-    ...
-  </motion.div>
-
-  {/* Summary Box (blue box) - right column */}
-  <motion.div ... className="w-full rounded-3xl bg-primary ... md:sticky md:top-8">
-    ...
-  </motion.div>
+<div className="flex flex-col gap-1.5 mt-5 pt-4 border-t border-primary-foreground/10">
+  <div className="flex items-center justify-between">
+    <div className="flex items-center gap-2 text-xs text-green-400">
+      <Truck className="w-4 h-4 shrink-0" />
+      <span>Vehicle Tag Delivery: 3–5 Business Days</span>
+    </div>
+    <span className="text-2xl font-bold">{formatINR(total)}</span>
+  </div>
+  <div className="mt-1 pl-1 space-y-2.5">
+    <div className="flex items-start gap-2">
+      <ShieldCheck className="w-4 h-4 text-green-400 shrink-0 mt-0.5" />
+      <p className="text-xs text-green-400 leading-relaxed">
+        You are paying one time Account Activation Fee
+      </p>
+    </div>
+    {selectedPlan === 'starter' && (
+      <>
+        <div className="flex items-start gap-2">
+          <Gift className="w-4 h-4 text-green-400 shrink-0 mt-0.5" />
+          <p className="text-xs text-green-400 leading-relaxed">
+            Get ₹300 Cash Back On First Order
+          </p>
+        </div>
+        <div className="flex items-start gap-2">
+          <TrendingUp className="w-4 h-4 text-green-400 shrink-0 mt-0.5" />
+          <p className="text-xs text-green-400 leading-relaxed">
+            Most owners upgrade to Business Pro within 2 days
+          </p>
+        </div>
+      </>
+    )}
+  </div>
 </div>
 ```
 
-**2. Remove `mb-8 md:mb-12` from Plan Selector** — spacing is now handled by grid gap.
-
-**3. Add `md:sticky md:top-8` to the blue Summary Box** — so it stays visible as user scrolls through plans on the left.
-
-**4. Quick Details form stays below as-is** — it already spans full width. Just update `mt-8` to `mt-8 md:mt-10` for breathing room.
+**Add imports** — Add `ShieldCheck`, `Gift`, `TrendingUp` to the lucide-react import at the top of the file.
 
 ### Result
-- **Desktop**: Left = plan cards (white), Right = summary (blue, sticky). Below both = Quick Details form.
-- **Mobile**: No change — everything stacks vertically as before.
+- All four lines: green text, same size, no italic, each with a distinct icon (Truck, ShieldCheck, Gift, TrendingUp)
+- Bullet dots replaced with meaningful icons
 
