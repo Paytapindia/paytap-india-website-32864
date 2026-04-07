@@ -516,9 +516,10 @@ const Checkout = () => {
                 </div>
               </div>
             </motion.div>
+            </div>
 
             {/* ── Quick Details Form ── */}
-            <div className="w-full mt-8" ref={formRef}>
+            <div className="w-full mt-8 md:mt-10" ref={formRef}>
                 <motion.div
                   initial={{ opacity: 0, y: 20 }}
                   animate={{ opacity: 1, y: 0 }}
