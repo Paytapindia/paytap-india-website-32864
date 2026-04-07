@@ -497,12 +497,20 @@ const Checkout = () => {
                     </p>
                   </div>
                   {selectedPlan === 'starter' && (
-                    <div className="flex items-start gap-2">
-                      <span className="mt-1.5 w-1.5 h-1.5 rounded-full bg-primary-foreground/40 shrink-0" />
-                      <p className="text-xs text-primary-foreground/60 italic leading-relaxed">
-                        Most owners upgrade to Business Pro within 2 days
-                      </p>
-                    </div>
+                    <>
+                      <div className="flex items-start gap-2">
+                        <span className="mt-1.5 w-1.5 h-1.5 rounded-full bg-primary-foreground/40 shrink-0" />
+                        <p className="text-xs text-primary-foreground/70 leading-relaxed">
+                          Get ₹300 Cash Back On First Order
+                        </p>
+                      </div>
+                      <div className="flex items-start gap-2">
+                        <span className="mt-1.5 w-1.5 h-1.5 rounded-full bg-primary-foreground/40 shrink-0" />
+                        <p className="text-xs text-primary-foreground/60 italic leading-relaxed">
+                          Most owners upgrade to Business Pro within 2 days
+                        </p>
+                      </div>
+                    </>
                   )}
                 </div>
               </div>
