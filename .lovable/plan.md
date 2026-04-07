@@ -1,25 +1,29 @@
 
 
-## Plan: Move Trial Pack Messages Below Vehicle Tag Delivery + Update Text
+## Plan: Align Trial Pack Messages in Blue Summary Box
 
 ### File: `src/pages/Checkout.tsx`
 
-**1. Remove the current starter italic block (lines 500-509)** — delete entirely.
-
-**2. After the delivery section (after line 521, below "You are paying one time Account Activation Fee")**, add the starter-only messages:
+**Lines 512-521** — Replace the current starter block with a cleaner, left-aligned layout using bullet-style dots and consistent padding:
 
 ```tsx
 {selectedPlan === 'starter' && (
-  <div className="mt-3 space-y-1">
-    <p className="text-xs text-primary-foreground/50 italic">
-      Most owners upgrade to Business Pro within 2 days
-    </p>
-    <p className="text-xs text-primary-foreground/50 italic">
-      Create Account & Contact Support to Get the Vehicle Payment Tag at Discount Price
-    </p>
+  <div className="mt-4 pl-1 space-y-2">
+    <div className="flex items-start gap-2">
+      <span className="mt-1 w-1.5 h-1.5 rounded-full bg-primary-foreground/40 shrink-0" />
+      <p className="text-xs text-primary-foreground/60 italic leading-relaxed">
+        Most owners upgrade to Business Pro within 2 days
+      </p>
+    </div>
+    <div className="flex items-start gap-2">
+      <span className="mt-1 w-1.5 h-1.5 rounded-full bg-primary-foreground/40 shrink-0" />
+      <p className="text-xs text-primary-foreground/60 italic leading-relaxed">
+        Create Account & Contact Support to Get the Vehicle Payment Tag at Discount Price
+      </p>
+    </div>
   </div>
 )}
 ```
 
-This moves the two lines below the "Vehicle Tag Delivery" row and updates the second line's text. Single file, two small edits.
+This adds subtle bullet dots, consistent left alignment, `leading-relaxed` for readability, and proper spacing. Single file, one edit.
 
