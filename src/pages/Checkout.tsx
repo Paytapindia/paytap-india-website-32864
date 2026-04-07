@@ -498,9 +498,14 @@ const Checkout = () => {
 
 
               {selectedPlan === 'starter' && (
-                <p className="text-xs text-primary-foreground/50 italic mt-3">
-                  Most owners upgrade to Business Pro within 2 weeks.
-                </p>
+                <div className="mt-3 space-y-1">
+                  <p className="text-xs text-primary-foreground/50 italic">
+                    Most owners upgrade to Business Pro within 2 days
+                  </p>
+                  <p className="text-xs text-primary-foreground/50 italic">
+                    Contact Support to get the Vehicle Payment Tag at ₹699
+                  </p>
+                </div>
               )}
 
               <div className="flex flex-col gap-1.5 mt-5 pt-4 border-t border-primary-foreground/10">
@@ -512,7 +517,7 @@ const Checkout = () => {
                   <span className="text-2xl font-bold">{total === 0 ? 'Free' : formatINR(total)}</span>
                 </div>
                 <p className="text-xs text-primary-foreground/70">
-                  You are paying one time Activation Fee
+                  You are paying one time Account Activation Fee
                 </p>
               </div>
             </motion.div>
