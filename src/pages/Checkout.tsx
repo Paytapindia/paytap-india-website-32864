@@ -361,12 +361,13 @@ const Checkout = () => {
         <form onSubmit={handleSubmit(onSubmit)}>
           <div className="max-w-5xl mx-auto px-4 -mt-8 md:-mt-12 pb-16">
 
+            <div className="grid grid-cols-1 md:grid-cols-2 gap-6 md:gap-8 items-start">
             {/* ── SECTION 1: Plan Selector (List View) ── */}
             <motion.div
               initial={{ opacity: 0, y: 24 }}
               animate={{ opacity: 1, y: 0 }}
               transition={{ duration: 0.5, delay: 0.2 }}
-              className="rounded-3xl bg-card/80 backdrop-blur-xl shadow-2xl shadow-primary/5 border border-border/40 overflow-hidden mb-8 md:mb-12"
+              className="rounded-3xl bg-card/80 backdrop-blur-xl shadow-2xl shadow-primary/5 border border-border/40 overflow-hidden"
             >
               <div className="px-5 md:px-8 py-5 border-b border-border/40">
                 <h2 className="text-sm font-semibold text-muted-foreground uppercase tracking-widest">Activate Your Vehicle</h2>
