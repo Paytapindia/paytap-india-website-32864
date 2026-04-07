@@ -506,7 +506,7 @@ const Checkout = () => {
                   </div>
                   <span className="text-2xl font-bold">{total === 0 ? 'Free' : formatINR(total)}</span>
                 </div>
-                <div className="mt-3 pl-1 space-y-2.5">
+                <div className="mt-1 pl-1 space-y-2.5">
                   <div className="flex items-start gap-2">
                     <span className="mt-1.5 w-1.5 h-1.5 rounded-full bg-primary-foreground/40 shrink-0" />
                     <p className="text-xs text-primary-foreground/70 leading-relaxed">
