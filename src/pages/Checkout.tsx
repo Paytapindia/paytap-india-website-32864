@@ -506,9 +506,12 @@ const Checkout = () => {
                   </div>
                   <span className="text-2xl font-bold">{total === 0 ? 'Free' : formatINR(total)}</span>
                 </div>
-                <p className="text-xs text-primary-foreground/70">
-                  You are paying one time Account Activation Fee
-                </p>
+<div className="flex items-start gap-2 pl-1">
+                  <span className="mt-1 w-1.5 h-1.5 rounded-full bg-primary-foreground/40 shrink-0" />
+                  <p className="text-xs text-primary-foreground/70 leading-relaxed">
+                    You are paying one time Account Activation Fee
+                  </p>
+                </div>
 {selectedPlan === 'starter' && (
   <div className="mt-4 pl-1 space-y-2">
     <div className="flex items-start gap-2">
