@@ -506,28 +506,30 @@ const Checkout = () => {
                   </div>
                   <span className="text-2xl font-bold">{total === 0 ? 'Free' : formatINR(total)}</span>
                 </div>
-<div className="flex items-start gap-2 pl-1">
-                  <span className="mt-1 w-1.5 h-1.5 rounded-full bg-primary-foreground/40 shrink-0" />
-                  <p className="text-xs text-primary-foreground/70 leading-relaxed">
-                    You are paying one time Account Activation Fee
-                  </p>
+                <div className="mt-3 pl-1 space-y-2.5">
+                  <div className="flex items-start gap-2">
+                    <span className="mt-1.5 w-1.5 h-1.5 rounded-full bg-primary-foreground/40 shrink-0" />
+                    <p className="text-xs text-primary-foreground/70 leading-relaxed">
+                      You are paying one time Account Activation Fee
+                    </p>
+                  </div>
+                  {selectedPlan === 'starter' && (
+                    <>
+                      <div className="flex items-start gap-2">
+                        <span className="mt-1.5 w-1.5 h-1.5 rounded-full bg-primary-foreground/40 shrink-0" />
+                        <p className="text-xs text-primary-foreground/60 italic leading-relaxed">
+                          Most owners upgrade to Business Pro within 2 days
+                        </p>
+                      </div>
+                      <div className="flex items-start gap-2">
+                        <span className="mt-1.5 w-1.5 h-1.5 rounded-full bg-primary-foreground/40 shrink-0" />
+                        <p className="text-xs text-primary-foreground/60 italic leading-relaxed">
+                          Create Account & Contact Support to Get the Vehicle Payment Tag at Discount Price
+                        </p>
+                      </div>
+                    </>
+                  )}
                 </div>
-{selectedPlan === 'starter' && (
-  <div className="mt-4 pl-1 space-y-2">
-    <div className="flex items-start gap-2">
-      <span className="mt-1 w-1.5 h-1.5 rounded-full bg-primary-foreground/40 shrink-0" />
-      <p className="text-xs text-primary-foreground/60 italic leading-relaxed">
-        Most owners upgrade to Business Pro within 2 days
-      </p>
-    </div>
-    <div className="flex items-start gap-2">
-      <span className="mt-1 w-1.5 h-1.5 rounded-full bg-primary-foreground/40 shrink-0" />
-      <p className="text-xs text-primary-foreground/60 italic leading-relaxed">
-        Create Account & Contact Support to Get the Vehicle Payment Tag at Discount Price
-      </p>
-    </div>
-  </div>
-)}
               </div>
             </motion.div>
 
