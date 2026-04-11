@@ -448,7 +448,7 @@ const Navbar = memo(() => {
             </button>
             <button
               onClick={() => {
-                window.open("https://dashboard.myfleetai.in/login", "_blank");
+                window.open("https://business.paytap.co.in/login", "_blank");
                 setIsLoginDialogOpen(false);
               }}
               className="flex items-center gap-3 w-full p-4 rounded-lg border border-border hover:bg-accent text-foreground transition-colors"
