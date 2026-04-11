@@ -22,7 +22,7 @@ const CTASection = memo(() => {
         <Button 
           size="lg"
           className="bg-white text-paytap-navy hover:bg-gray-100 px-6 md:px-10 py-5 md:py-6 text-base md:text-lg font-medium rounded-xl shadow-lg transition-all duration-300 group"
-          onClick={() => navigate('/checkout')}
+          onClick={() => window.open('https://business.paytap.co.in/login', '_blank')}
         >
           Activate Paytap Platform
           <ArrowRight className="ml-2 w-4 h-4 md:w-5 md:h-5 group-hover:translate-x-1 transition-transform" />
