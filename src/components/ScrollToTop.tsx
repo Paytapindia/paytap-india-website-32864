@@ -8,11 +8,6 @@ const ScrollToTop = () => {
     // Scroll to top on route change
     window.scrollTo(0, 0);
 
-    // Fire Meta Pixel page view for SPA navigation (all domains, for testing)
-    if (window.fbq) {
-      window.fbq('track', 'PageView');
-    }
-
     // Only fire Google Ads on production domain
     const isProduction = window.location.hostname === 'paytap.co.in';
     if (!isProduction) return;
