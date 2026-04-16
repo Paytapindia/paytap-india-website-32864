@@ -1,14 +1,22 @@
 
 
-## Plan: Update CTA and Business Login URLs
+## Plan: Remove All Meta Pixel Code
 
-### File: `src/components/CTASection.tsx`
+### Files to edit (7 files):
 
-**Line 25** — Change `onClick={() => navigate('/checkout')}` to `onClick={() => window.open('https://business.paytap.co.in/login', '_blank')}` so the "Activate Paytap Platform" button redirects to the new URL.
+**1. `index.html`** — Remove the Meta Pixel base script (lines 65-78) and the noscript fallback (lines 336-339).
 
-### File: `src/components/Navbar.tsx`
+**2. `src/vite-env.d.ts`** — Remove the `fbq` type declaration from the Window interface.
 
-**Line 451** — Change `window.open("https://dashboard.myfleetai.in/login", "_blank")` to `window.open("https://business.paytap.co.in/login", "_blank")` for the Business Login button in the login dialog.
+**3. `src/components/ScrollToTop.tsx`** — Remove the `fbq('track', 'PageView')` block (lines 11-14).
 
-Two files, two one-line edits.
+**4. `src/components/ContactFormModal.tsx`** — Remove the `fbq('track', 'Lead')` block (lines 52-55).
+
+**5. `src/pages/Checkout.tsx`** — Remove `fbq('track', 'AddToCart')` (lines 156-158) and `fbq('track', 'InitiateCheckout')` (lines 258-262).
+
+**6. `src/pages/CheckoutSuccess.tsx`** — Remove `fbq('track', 'Purchase')` block (lines 92-99).
+
+**7. `src/pages/PayAtPump.tsx`** — Remove `fbq('track', 'InitiateCheckout')` block (lines 44-49).
+
+All Google Ads/GA4 tracking remains untouched.
 
