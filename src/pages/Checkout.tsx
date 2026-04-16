@@ -153,9 +153,6 @@ const Checkout = () => {
         items: [{ item_id: selectedPlan, item_name: plan.name, price: subtotal, quantity: 1 }],
       });
     }
-    if (typeof window !== 'undefined' && window.fbq) {
-      window.fbq('track', 'AddToCart', { value: total, currency: 'INR', content_ids: [selectedPlan], content_type: 'product' });
-    }
   }, []);
 
   // ── Returning customer lookup on phone blur ──
@@ -255,12 +252,6 @@ const Checkout = () => {
       });
     }
 
-    // Fire Meta Pixel InitiateCheckout event
-    if (typeof window !== 'undefined' && window.fbq) {
-      window.fbq('track', 'InitiateCheckout', {
-        value: total, currency: 'INR', content_name: plan.name, num_items: plan.tags,
-      });
-    }
 
     setIsLoading(true);
     try {

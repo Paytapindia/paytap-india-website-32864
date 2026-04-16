@@ -89,15 +89,6 @@ const CheckoutSuccess = () => {
       });
     }
 
-    // Fire Meta Pixel Purchase Event
-    if (typeof window !== 'undefined' && window.fbq && payuData.status === 'success') {
-      window.fbq('track', 'Purchase', {
-        value: parseFloat(payuData.amount || '999'),
-        currency: 'INR',
-        content_ids: [payuData.productinfo || 'paytap-tag'],
-        content_type: 'product'
-      });
-    }
   }, [location]);
 
   const { paymentId, orderId, orderData } = orderDetails || {};

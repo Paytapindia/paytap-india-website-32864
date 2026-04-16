@@ -49,11 +49,6 @@ const ContactFormModal = ({ open, onOpenChange }: ContactFormModalProps) => {
       // Simulate API call
       await new Promise(resolve => setTimeout(resolve, 1000));
       
-      // Fire Meta Pixel Lead event
-      if (typeof window !== 'undefined' && window.fbq) {
-        window.fbq('track', 'Lead');
-      }
-
       toast({
         title: "Success!",
         description: "We've received your request. Our team will contact you soon.",
