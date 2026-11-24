@@ -1,18 +1,20 @@
 import { lazy, Suspense, memo } from "react";
 import { Helmet } from "react-helmet-async";
 import Navbar from "@/components/Navbar";
-import HeroSection from "@/components/HeroSection";
-import ComplianceBadgeBar from "@/components/ComplianceBadgeBar";
-import MobileAppSection from "@/components/MobileAppSection";
-
+import HomeHero from "@/components/home/HomeHero";
+import ProblemTransformationSection from "@/components/home/ProblemTransformationSection";
 import ContactFormModal from "@/components/ContactFormModal";
 import StickyMobileCTA from "@/components/StickyMobileCTA";
 import { useModal } from "@/contexts/ModalContext";
 
 // Lazy load below-fold sections for better mobile performance
-const OurProductsSection = lazy(() => import("@/components/OurProductsSection"));
-const TestimonialsSection = lazy(() => import("@/components/TestimonialsSection"));
-const CTASection = lazy(() => import("@/components/CTASection"));
+const IntelligenceAndAIDemo = lazy(() => import("@/components/home/IntelligenceAndAIDemo"));
+const UnifiedDashboardAndCapabilities = lazy(
+  () => import("@/components/home/UnifiedDashboardAndCapabilities")
+);
+const HowIntelligenceAndScale = lazy(() => import("@/components/home/HowIntelligenceAndScale"));
+const TimeBackAndGovernance = lazy(() => import("@/components/home/TimeBackAndGovernance"));
+const PlansTrustAndConversion = lazy(() => import("@/components/home/PlansTrustAndConversion"));
 const PressSection = lazy(() => import("@/components/PressSection"));
 const FooterSection = lazy(() => import("@/components/FooterSection"));
 
@@ -41,20 +43,22 @@ const Index = () => {
       </Helmet>
       <div className="min-h-screen bg-background">
       <Navbar />
-      <HeroSection />
-      <ComplianceBadgeBar />
-      <MobileAppSection />
-      
-      
-      {/* Lazy-loaded sections for better mobile performance */}
+      <HomeHero />
+      <ProblemTransformationSection />
       <Suspense fallback={<SectionSkeleton />}>
-        <OurProductsSection />
+        <IntelligenceAndAIDemo />
       </Suspense>
       <Suspense fallback={<SectionSkeleton />}>
-        <TestimonialsSection />
+        <UnifiedDashboardAndCapabilities />
       </Suspense>
       <Suspense fallback={<SectionSkeleton />}>
-        <CTASection />
+        <HowIntelligenceAndScale />
+      </Suspense>
+      <Suspense fallback={<SectionSkeleton />}>
+        <TimeBackAndGovernance />
+      </Suspense>
+      <Suspense fallback={<SectionSkeleton />}>
+        <PlansTrustAndConversion />
       </Suspense>
       <Suspense fallback={<SectionSkeleton />}>
         <PressSection />

@@ -39,7 +39,8 @@
     --paytap-dark: 219 96% 14%;
     --paytap-navy: 219 96% 14%;
     --paytap-light: 346 92% 55%;
-    --paytap-gray: 210 11% 97%;
+    --paytap-gray: 214 47% 95%;
+    --surface-cool: 214 47% 95%;
   }
 
   .dark {
@@ -98,4 +99,13 @@
 @keyframes hero-float {
   0%, 100% { transform: perspective(1200px) rotateY(-3deg) rotateX(2deg) translateY(0); }
   50% { transform: perspective(1200px) rotateY(-3deg) rotateX(2deg) translateY(-8px); }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  *, *::before, *::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+    scroll-behavior: auto !important;
+  }
 }

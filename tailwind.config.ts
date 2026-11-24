@@ -20,7 +20,7 @@ export default {
 		},
 		extend: {
 			fontFamily: {
-				sans: ['-apple-system', 'BlinkMacSystemFont', 'SF Pro Display', 'Segoe UI', 'Roboto', 'sans-serif'],
+					sans: ['Poppins', '-apple-system', 'BlinkMacSystemFont', 'Segoe UI', 'Roboto', 'sans-serif'],
 			},
 			colors: {
 				border: 'hsl(var(--border))',
@@ -71,7 +71,7 @@ export default {
 					navy: '#021a42',
 					light: '#f6245b',
 					white: '#FFFFFF',
-					gray: '#F6F7F8',
+						gray: '#EAF0F8',
 				}
 			},
 			borderRadius: {

@@ -10,6 +10,9 @@ import GlobalModals from "./components/GlobalModals";
 import ErrorBoundary from "./components/ErrorBoundary";
 import ScrollToTop from "./components/ScrollToTop";
 import Index from "./pages/Index";
+import Platform from "./pages/Platform";
+import AIFleetManager from "./pages/AIFleetManager";
+import Solutions from "./pages/Solutions";
 import About from "./pages/About";
 import Support from "./pages/Support";
 import TermsAndConditions from "./pages/TermsAndConditions";
@@ -55,6 +58,9 @@ const App = () => (
             <ScrollToTop />
             <Routes>
               <Route path="/" element={<Index />} />
+              <Route path="/platform" element={<Platform />} />
+              <Route path="/ai-fleet-manager" element={<AIFleetManager />} />
+              <Route path="/solutions" element={<Solutions />} />
               <Route path="/about" element={<About />} />
               <Route path="/faq" element={<FAQ />} />
               <Route path="/how-it-works" element={<HowItWorks />} />
