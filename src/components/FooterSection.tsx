@@ -143,7 +143,7 @@ const FooterSection = memo(() => {
               <a href="#" className="w-10 h-10 md:w-12 md:h-12 bg-paytap-dark/50 hover:bg-paytap-light rounded-lg md:rounded-xl flex items-center justify-center transition-all duration-300 group">
                 <Instagram className="h-4 w-4 md:h-5 md:w-5 text-gray-300 group-hover:text-white" />
               </a>
-              <a href="#" className="w-10 h-10 md:w-12 md:h-12 bg-paytap-dark/50 hover:bg-paytap-light rounded-lg md:rounded-xl flex items-center justify-center transition-all duration-300 group">
+              <a href="https://www.youtube.com/@PaytapIndia" target="_blank" rel="noopener noreferrer" className="w-10 h-10 md:w-12 md:h-12 bg-paytap-dark/50 hover:bg-paytap-light rounded-lg md:rounded-xl flex items-center justify-center transition-all duration-300 group">
                 <Youtube className="h-4 w-4 md:h-5 md:w-5 text-gray-300 group-hover:text-white" />
               </a>
               <a href="https://www.linkedin.com/showcase/paytap-india/" target="_blank" rel="noopener noreferrer" className="w-10 h-10 md:w-12 md:h-12 bg-paytap-dark/50 hover:bg-paytap-light rounded-lg md:rounded-xl flex items-center justify-center transition-all duration-300 group">
