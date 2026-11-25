@@ -2,6 +2,7 @@ import { lazy, Suspense, memo } from "react";
 import { Helmet } from "react-helmet-async";
 import Navbar from "@/components/Navbar";
 import HomeHero from "@/components/home/HomeHero";
+import CompanyVideoGallery from "@/components/home/CompanyVideoGallery";
 import ProblemTransformationSection from "@/components/home/ProblemTransformationSection";
 import ContactFormModal from "@/components/ContactFormModal";
 import StickyMobileCTA from "@/components/StickyMobileCTA";
@@ -44,6 +45,7 @@ const Index = () => {
       <div className="min-h-screen bg-background">
       <Navbar />
       <HomeHero />
+      <CompanyVideoGallery />
       <ProblemTransformationSection />
       <Suspense fallback={<SectionSkeleton />}>
         <IntelligenceAndAIDemo />
