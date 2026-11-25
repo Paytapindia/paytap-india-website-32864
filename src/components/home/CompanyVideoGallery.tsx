@@ -1,5 +1,5 @@
-import { useState } from "react";
-import { Play, Film, Youtube } from "lucide-react";
+import { useEffect, useRef, useState } from "react";
+import { Play, Youtube } from "lucide-react";
 
 interface CompanyVideo {
   id: string;
@@ -10,6 +10,7 @@ interface CompanyVideo {
 }
 
 const CHANNEL_URL = "https://www.youtube.com/@PaytapIndia";
+const AUTO_ADVANCE_MS = 3000;
 
 const COMPANY_VIDEOS: CompanyVideo[] = [
   {
@@ -101,11 +102,62 @@ const COMPANY_VIDEOS: CompanyVideo[] = [
 const CompanyVideoGallery = () => {
   const [activeVideo, setActiveVideo] = useState<CompanyVideo>(COMPANY_VIDEOS[0]);
   const [isPlaying, setIsPlaying] = useState(false);
+  const [slide, setSlide] = useState(0);
+  const [isMobile, setIsMobile] = useState(false);
+  const [userTookOver, setUserTookOver] = useState(false);
+  const railRef = useRef<HTMLDivElement>(null);
+  const programmaticScroll = useRef(false);
 
   const handleSelect = (video: CompanyVideo) => {
     setActiveVideo(video);
     setIsPlaying(true);
   };
+
+  // Only the mobile layout is a sliding rail; desktop keeps the grid.
+  useEffect(() => {
+    const mq = window.matchMedia("(max-width: 639px)");
+    const sync = () => setIsMobile(mq.matches);
+    sync();
+    mq.addEventListener("change", sync);
+    return () => mq.removeEventListener("change", sync);
+  }, []);
+
+  // Slide to the next video every 3 seconds, looping back at the end.
+  useEffect(() => {
+    if (!isMobile || userTookOver) return;
+    if (window.matchMedia("(prefers-reduced-motion: reduce)").matches) return;
+
+    const timer = window.setInterval(() => {
+      setSlide((prev) => (prev + 1) % COMPANY_VIDEOS.length);
+    }, AUTO_ADVANCE_MS);
+
+    return () => window.clearInterval(timer);
+  }, [isMobile, userTookOver]);
+
+  useEffect(() => {
+    if (!isMobile) return;
+    const rail = railRef.current;
+    const card = rail?.children[slide] as HTMLElement | undefined;
+    if (!rail || !card) return;
+    programmaticScroll.current = true;
+    rail.scrollTo({ left: card.offsetLeft - rail.offsetLeft, behavior: "smooth" });
+    window.setTimeout(() => {
+      programmaticScroll.current = false;
+    }, 700);
+  }, [slide, isMobile]);
+
+  // Stop auto-sliding as soon as the visitor scrolls the rail themselves.
+  useEffect(() => {
+    if (!isMobile) return;
+    const rail = railRef.current;
+    if (!rail) return;
+    const onScroll = () => {
+      if (programmaticScroll.current) return;
+      setUserTookOver(true);
+    };
+    rail.addEventListener("scroll", onScroll, { passive: true });
+    return () => rail.removeEventListener("scroll", onScroll);
+  }, [isMobile]);
 
   return (
     <section id="company-videos" className="bg-background py-16 md:py-24">
@@ -170,8 +222,11 @@ const CompanyVideoGallery = () => {
           </div>
         </div>
 
-        {/* Video Gallery Grid */}
-        <div className="mt-6 grid grid-cols-1 gap-4 sm:grid-cols-2 lg:grid-cols-4">
+        {/* Video Gallery — sliding rail on mobile, grid on larger screens */}
+        <div
+          ref={railRef}
+          className="no-scrollbar mt-6 flex snap-x snap-mandatory gap-4 overflow-x-auto pb-1 sm:grid sm:grid-cols-2 sm:overflow-visible lg:grid-cols-4"
+        >
           {COMPANY_VIDEOS.map((video) => {
             const isSelected = video.id === activeVideo.id;
             return (
@@ -179,7 +234,7 @@ const CompanyVideoGallery = () => {
                 key={video.id}
                 type="button"
                 onClick={() => handleSelect(video)}
-                className={`group flex flex-col overflow-hidden rounded-xl border text-left transition-all ${
+                className={`group w-[78%] shrink-0 snap-center flex flex-col overflow-hidden rounded-xl border text-left transition-all sm:w-auto sm:shrink ${
                   isSelected
                     ? "border-accent bg-card ring-1 ring-accent"
                     : "border-border bg-card hover:border-foreground/25"

@@ -94,6 +94,15 @@
   .text-balance {
     text-wrap: balance;
   }
+
+  /* Hide the scroll bar on sliding rails (mobile video gallery) */
+  .no-scrollbar {
+    scrollbar-width: none;
+    -ms-overflow-style: none;
+  }
+  .no-scrollbar::-webkit-scrollbar {
+    display: none;
+  }
 }
 
 @keyframes hero-float {
