@@ -5,3 +5,4 @@
 - [x] Phase 3: Homepage implementation (Sections 01–17: Hero, Problem/Transformation, Intelligence Layer & Interactive AI Manager Demo, Unified Dashboard Hotspots, 6 Capabilities, 5-Stage Process, 5–500+ Scale Switcher, Industry Solutions, Time Back, Governance, Configurable Plans, Trust, About Evolution, Final Conversion)
 - [x] Phase 4: Core supporting pages (`/platform`, `/ai-fleet-manager`, `/solutions`) wired into routing while preserving all existing pages
 - [x] Phase 5: Build verification, responsive & interactive check, and git commit
+- [x] Simplify first-screen presentation without changing content; verify desktop, mobile, and all six demo screens.

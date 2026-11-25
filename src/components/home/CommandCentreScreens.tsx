@@ -1,4 +1,5 @@
 import { useEffect, useState } from "react";
+import { useReducedMotion } from "framer-motion";
 import {
   Bell,
   CheckCircle2,
@@ -69,10 +70,12 @@ export const DEMO_SCREENS: DemoScreenConfig[] = [
 
 const TapPayScreen = () => {
   const [step, setStep] = useState(0);
+  const reducedMotion = useReducedMotion();
   useEffect(() => {
+    if (reducedMotion) return;
     const t = setInterval(() => setStep((s) => (s + 1) % 4), 1400);
     return () => clearInterval(t);
-  }, []);
+  }, [reducedMotion]);
 
   const steps = [
     { icon: CreditCard, label: "Vehicle Tag", sub: "MH12 AB 4521" },
@@ -90,26 +93,26 @@ const TapPayScreen = () => {
           return (
             <div
               key={item.label}
-              className={`rounded-xl border p-2.5 text-center transition-all duration-300 ${
+              className={`border-b-2 py-3 px-1 text-center transition-colors duration-300 ${
                 current
-                  ? "border-paytap-light bg-paytap-light/15 scale-[1.03]"
+                  ? "border-accent bg-transparent"
                   : active
-                    ? "border-white/25 bg-paytap-navy/90"
-                    : "border-white/10 bg-paytap-navy/50 opacity-55"
+                    ? "border-border bg-transparent"
+                    : "border-border bg-transparent opacity-50"
               }`}
             >
               <item.icon
-                className={`mx-auto h-4 w-4 mb-1 ${current ? "text-paytap-light" : "text-white/80"}`}
+                className={`mx-auto h-4 w-4 mb-1 ${current ? "text-accent" : "text-card-foreground/80"}`}
               />
-              <div className="text-[11px] font-semibold text-white">{item.label}</div>
-              <div className="text-[10px] text-white/60 truncate">{item.sub}</div>
+              <div className="flex min-h-8 sm:min-h-0 items-center justify-center text-[10px] sm:text-[11px] font-semibold text-card-foreground">{item.label}</div>
+              <div className="min-h-7 sm:min-h-0 text-[9px] sm:text-[10px] leading-relaxed text-muted-foreground">{item.sub}</div>
             </div>
           );
         })}
       </div>
-      <div className="flex items-center justify-between rounded-lg bg-paytap-navy/85 border border-white/10 px-3 py-2 text-xs">
-        <span className="text-white/75">Zero cash · Zero driver reimbursement</span>
-        <span className="font-semibold text-paytap-light">₹2,450 Settled</span>
+      <div className="flex items-center justify-between flex-wrap gap-2 py-3 text-[10px]">
+        <span className="text-muted-foreground">Zero cash · Zero driver reimbursement</span>
+        <span className="font-semibold text-accent">₹2,450 Settled</span>
       </div>
     </div>
   );
@@ -117,10 +120,12 @@ const TapPayScreen = () => {
 
 const NfcPumpScreen = () => {
   const [stage, setStage] = useState(0);
+  const reducedMotion = useReducedMotion();
   useEffect(() => {
+    if (reducedMotion) return;
     const t = setInterval(() => setStage((s) => (s + 1) % 3), 1800);
     return () => clearInterval(t);
-  }, []);
+  }, [reducedMotion]);
 
   const checks = [
     "Car arrived at HP Pump, Pune",
@@ -129,27 +134,26 @@ const NfcPumpScreen = () => {
   ];
 
   return (
-    <div className="grid grid-cols-1 sm:grid-cols-12 gap-2.5 items-center">
-      <div className="sm:col-span-5 rounded-xl border border-paytap-light/35 bg-paytap-navy/90 p-3 text-center">
-        <div className="relative mx-auto mb-2 flex h-11 w-11 items-center justify-center rounded-full bg-paytap-light/20 text-paytap-light">
-          <span className="absolute inset-0 rounded-full border border-paytap-light/50 animate-ping opacity-40" />
+    <div className="grid grid-cols-1 grid-cols-12 gap-3 items-center">
+      <div className="col-span-5 py-3 text-center">
+        <div className="relative mx-auto mb-2 flex h-11 w-11 items-center justify-center rounded-full bg-accent/20 text-accent">
           <Fuel className="h-5 w-5 relative" />
         </div>
-        <div className="text-xs font-semibold text-white">NFC Tap Detected</div>
-        <div className="text-[10px] text-white/60">MH12 AB 4521 · RuPay Tag</div>
+        <div className="text-xs font-semibold text-card-foreground">NFC Tap Detected</div>
+        <div className="text-[10px] text-muted-foreground">MH12 AB 4521 · RuPay Tag</div>
       </div>
-      <div className="sm:col-span-7 space-y-1.5">
+      <div className="col-span-7 space-y-1.5">
         {checks.map((text, idx) => (
           <div
             key={text}
-            className={`flex items-center gap-2 rounded-lg border px-2.5 py-1.5 text-[11px] transition-all duration-300 ${
+            className={`flex items-center gap-2 py-2 text-[11px] transition-all duration-300 ${
               idx <= stage
-                ? "border-paytap-light/40 bg-white/10 text-white"
-                : "border-white/10 bg-paytap-navy/50 text-white/45"
+                ? "text-card-foreground"
+                : "text-muted-foreground/50"
             }`}
           >
             <CheckCircle2
-              className={`h-3.5 w-3.5 shrink-0 ${idx <= stage ? "text-paytap-light" : "text-white/30"}`}
+              className={`h-3.5 w-3.5 shrink-0 ${idx <= stage ? "text-accent" : "text-muted-foreground/40"}`}
             />
             <span>{text}</span>
           </div>
@@ -161,10 +165,12 @@ const NfcPumpScreen = () => {
 
 const OwnerControlScreen = () => {
   const [tick, setTick] = useState(0);
+  const reducedMotion = useReducedMotion();
   useEffect(() => {
+    if (reducedMotion) return;
     const t = setInterval(() => setTick((s) => (s + 1) % 3), 1800);
     return () => clearInterval(t);
-  }, []);
+  }, [reducedMotion]);
 
   const controls = [
     { label: "Daily Fuel Cap · MH12 AB 4521", value: "₹4,000 / day", active: true },
@@ -177,20 +183,20 @@ const OwnerControlScreen = () => {
       {controls.map((c) => (
         <div
           key={c.label}
-          className="flex items-center justify-between rounded-xl border border-white/10 bg-paytap-navy/85 px-3 py-2"
+          className="flex items-center justify-between border-b border-border py-2.5"
         >
           <div className="flex items-center gap-2 min-w-0">
-            <Sliders className="h-3.5 w-3.5 text-paytap-light shrink-0" />
-            <span className="text-xs text-white truncate">{c.label}</span>
+            <Sliders className="h-3.5 w-3.5 text-accent shrink-0" />
+            <span className="text-xs text-card-foreground truncate">{c.label}</span>
           </div>
           <div className="flex items-center gap-2 shrink-0">
-            <span className="text-[11px] font-medium text-white/75">{c.value}</span>
+            <span className="text-[11px] font-medium text-muted-foreground">{c.value}</span>
             <span
               className={`inline-flex h-4 w-7 items-center rounded-full p-0.5 transition-colors ${
-                c.active ? "bg-paytap-light justify-end" : "bg-white/20 justify-start"
+                c.active ? "bg-accent justify-end" : "bg-muted justify-start"
               }`}
             >
-              <span className="h-3 w-3 rounded-full bg-white" />
+              <span className="h-3 w-3 rounded-full bg-primary-foreground" />
             </span>
           </div>
         </div>
@@ -201,15 +207,17 @@ const OwnerControlScreen = () => {
 
 const NotificationsScreen = () => {
   const [visible, setVisible] = useState(1);
+  const reducedMotion = useReducedMotion();
   useEffect(() => {
+    if (reducedMotion) return;
     const t = setInterval(() => setVisible((v) => (v >= 3 ? 1 : v + 1)), 1700);
     return () => clearInterval(t);
-  }, []);
+  }, [reducedMotion]);
 
   const alerts = [
-    { icon: CheckCircle2, title: "Payment Done · ₹2,450", sub: "MH12 AB 4521 at HP Pump, Pune", tone: "text-emerald-400" },
-    { icon: AlertTriangle, title: "Limit Crossed · KA05 MN 1102", sub: "Attempted ₹4,200 (₹3,500 cap)", tone: "text-paytap-light" },
-    { icon: Bell, title: "Unusual Fuel Spend Flagged", sub: "DL01 XY 3319 · 2 fills in 4 hrs", tone: "text-amber-300" },
+    { icon: CheckCircle2, title: "Payment Done · ₹2,450", sub: "MH12 AB 4521 at HP Pump, Pune", tone: "text-card-foreground" },
+    { icon: AlertTriangle, title: "Limit Crossed · KA05 MN 1102", sub: "Attempted ₹4,200 (₹3,500 cap)", tone: "text-accent" },
+    { icon: Bell, title: "Unusual Fuel Spend Flagged", sub: "DL01 XY 3319 · 2 fills in 4 hrs", tone: "text-accent" },
   ];
 
   return (
@@ -217,18 +225,18 @@ const NotificationsScreen = () => {
       {alerts.map((a, idx) => (
         <div
           key={a.title}
-          className={`flex items-start gap-2.5 rounded-xl border px-3 py-2 transition-all duration-300 ${
+          className={`flex items-start gap-2.5 border-b border-border py-2 transition-opacity duration-300 ${
             idx < visible
-              ? "border-white/15 bg-paytap-navy/90 opacity-100 translate-y-0"
-              : "border-white/5 bg-paytap-navy/40 opacity-35 translate-y-1"
+              ? "opacity-100"
+              : "opacity-40"
           }`}
         >
           <a.icon className={`h-4 w-4 mt-0.5 shrink-0 ${a.tone}`} />
           <div className="min-w-0 flex-1">
-            <div className="text-xs font-semibold text-white truncate">{a.title}</div>
-            <div className="text-[11px] text-white/65 truncate">{a.sub}</div>
+            <div className="text-xs font-semibold text-card-foreground truncate">{a.title}</div>
+            <div className="text-[11px] text-muted-foreground truncate">{a.sub}</div>
           </div>
-          <span className="text-[10px] text-white/45 shrink-0">Just now</span>
+          <span className="text-[10px] text-muted-foreground shrink-0">Just now</span>
         </div>
       ))}
     </div>
@@ -237,15 +245,17 @@ const NotificationsScreen = () => {
 
 const FleetLiveScreen = () => {
   const [km, setKm] = useState(142);
+  const reducedMotion = useReducedMotion();
   useEffect(() => {
+    if (reducedMotion) return;
     const t = setInterval(() => setKm((k) => k + 1), 1500);
     return () => clearInterval(t);
-  }, []);
+  }, [reducedMotion]);
 
   const rows = [
-    { plate: "MH12 AB 4521", driver: "Rajesh K.", status: "On Trip", meta: `${km} km`, dot: "bg-emerald-400" },
-    { plate: "KA01 CD 8821", driver: "Suresh M.", status: "At Pump", meta: "₹2,450", dot: "bg-paytap-light" },
-    { plate: "DL01 XY 3319", driver: "Amit S.", status: "Alert", meta: "Review", dot: "bg-amber-300" },
+    { plate: "MH12 AB 4521", driver: "Rajesh K.", status: "On Trip", meta: `${km} km`, dot: "bg-primary" },
+    { plate: "KA01 CD 8821", driver: "Suresh M.", status: "At Pump", meta: "₹2,450", dot: "bg-accent" },
+    { plate: "DL01 XY 3319", driver: "Amit S.", status: "Alert", meta: "Review", dot: "bg-accent" },
   ];
 
   return (
@@ -253,19 +263,19 @@ const FleetLiveScreen = () => {
       {rows.map((r) => (
         <div
           key={r.plate}
-          className="flex items-center justify-between rounded-xl border border-white/10 bg-paytap-navy/85 px-3 py-2 text-xs"
+          className="flex items-center justify-between border-b border-border py-2.5 text-xs"
         >
           <div className="flex items-center gap-2">
-            <Truck className="h-3.5 w-3.5 text-paytap-light" />
+            <Truck className="h-3.5 w-3.5 text-accent" />
             <div>
-              <div className="font-semibold text-white">{r.plate}</div>
-              <div className="text-[10px] text-white/55">{r.driver}</div>
+              <div className="font-semibold text-card-foreground">{r.plate}</div>
+              <div className="text-[10px] text-muted-foreground">{r.driver}</div>
             </div>
           </div>
           <div className="flex items-center gap-3">
-            <span className="text-[11px] text-white/70">{r.meta}</span>
-            <span className="inline-flex items-center gap-1.5 rounded-full bg-white/10 px-2 py-0.5 text-[10px] text-white">
-              <span className={`h-1.5 w-1.5 rounded-full animate-pulse ${r.dot}`} />
+            <span className="text-[11px] text-muted-foreground">{r.meta}</span>
+            <span className="inline-flex items-center gap-1.5 px-1 py-0.5 text-[10px] text-card-foreground">
+              <span className={`h-1.5 w-1.5 rounded-full  ${r.dot}`} />
               {r.status}
             </span>
           </div>
@@ -276,26 +286,26 @@ const FleetLiveScreen = () => {
 };
 
 const AiCommandsScreen = () => (
-  <div className="rounded-xl border border-paytap-light/35 bg-paytap-navy/85 p-3 space-y-2.5">
+  <div className="py-2 space-y-4">
     <div className="flex items-center justify-between">
-      <span className="inline-flex items-center gap-1.5 text-xs font-semibold text-white">
-        <Sparkles className="h-3.5 w-3.5 text-paytap-light" />
+      <span className="inline-flex items-center gap-1.5 text-xs font-semibold text-card-foreground">
+        <Sparkles className="h-3.5 w-3.5 text-accent" />
         3 vehicles flagged for review
       </span>
-      <span className="inline-flex items-center gap-1 rounded-full bg-white/10 px-2 py-0.5 text-[10px] text-white/80">
-        <Shield className="h-3 w-3 text-paytap-light" />
+      <span className="inline-flex items-center gap-1 px-1 py-0.5 text-[10px] text-card-foreground/80">
+        <Shield className="h-3 w-3 text-accent" />
         Approval Required
       </span>
     </div>
     <div className="grid grid-cols-2 gap-2 text-[11px]">
-      <div className="rounded-lg bg-white/5 border border-white/10 px-2.5 py-1.5">
-        <div className="text-white/55">Variance detected</div>
-        <div className="font-semibold text-paytap-light">+28% vs route avg</div>
+      <div className="border-l border-border pl-3 py-1.5">
+        <div className="text-muted-foreground">Variance detected</div>
+        <div className="font-semibold text-accent">+28% vs route avg</div>
       </div>
-      <div className="rounded-lg bg-white/5 border border-white/10 px-2.5 py-1.5">
-        <div className="text-white/55">Evidence linked</div>
-        <div className="inline-flex items-center gap-1 font-semibold text-white">
-          <MapPin className="h-3 w-3 text-paytap-light" /> GPS &amp; Receipt
+      <div className="border-l border-border pl-3 py-1.5">
+        <div className="text-muted-foreground">Evidence linked</div>
+        <div className="inline-flex items-center gap-1 font-semibold text-card-foreground">
+          <MapPin className="h-3 w-3 text-accent" /> GPS &amp; Receipt
         </div>
       </div>
     </div>
